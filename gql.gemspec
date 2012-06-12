@@ -1,0 +1,37 @@
+# -*- encoding: utf-8 -*-
+$LOAD_PATH.unshift File.expand_path("../lib", __FILE__)
+require "cucumber/platform"
+
+Gem::Specification.new do |s|
+  s.name        = 'cql'
+  #s.version     = Cucumber::VERSION
+  s.version     = "0.0.1"
+  s.authors     = ["Jarrod Folino"]
+  s.description = 'Gherkin Query Language'
+  s.summary     = "cucumber-#{s.version}"
+  s.email       = 'jdfolino@gmail.com'
+
+  s.platform    = Gem::Platform::RUBY
+  s.post_install_message = %{
+(::) (::) (::) (::) (::) (::) (::) (::) (::) (::) (::) (::) (::) (::) (::)
+
+Thank you for installing gql (Gherkin Query Language)
+
+(::) (::) (::) (::) (::) (::) (::) (::) (::) (::) (::) (::) (::) (::) (::)
+
+}
+
+  s.add_runtime_dependency 'gherkin', '~> 2.8.0'
+  s.add_runtime_dependency 'json', '>= 1.4.6'
+
+  s.add_development_dependency 'rake', '>= 0.9.2'
+  s.add_development_dependency 'rspec', '~> 2.7.0' # We'll bump when gherkin is ready to bump
+
+
+  s.rubygems_version = ">= 1.6.1"
+  s.files            = `git ls-files`.split("\n").reject {|path| path =~ /\.gitignore$/ }
+  s.test_files       = `git ls-files -- {spec,features}/*`.split("\n")
+  s.executables      = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
+  s.rdoc_options     = ["--charset=UTF-8"]
+  s.require_path     = "lib"
+end
