@@ -1,6 +1,6 @@
 Feature: Simple 2
 
-  @two
+  @two @four
   Scenario: Has a table hmmm
     Given Something
       | a | a |
@@ -8,7 +8,7 @@ Feature: Simple 2
       | s | s |
     Then something else
 
-  @one
+  @one @five
   Scenario: Next
     Given anything
 

@@ -13,10 +13,29 @@ describe "cql" do
     end
   end
 
+  describe "tag searcher" do
+    it "should be able to search for tags" do
+      tag_counter_obj = Object.new
+      tag_counter_obj.extend(BDD::TagCounter)
+
+      tags_given = [{"name"=>"@one", "line"=>3}, {"name"=>"@four", "line"=>3}, {"name"=>"@six", "line"=>3}, {"name"=>"@seven", "line"=>3}]
+      tag_counter_obj.has_tags(tags_given, ["@one", "@four"]).should eql true
+
+      tags_given = [{"name"=>"@two", "line"=>3}, {"name"=>"@four", "line"=>3}, {"name"=>"@six", "line"=>3}, {"name"=>"@seven", "line"=>3}]
+      tag_counter_obj.has_tags(tags_given, ["@one", "@four"]).should eql false
+
+      tags_given = [{"name"=>"@two", "line"=>3}, {"name"=>"@four", "line"=>3}, {"name"=>"@six", "line"=>3}, {"name"=>"@seven", "line"=>3}]
+      tag_counter_obj.has_tags(tags_given, ["@four"]).should eql true
+
+      tags_given = [{"name"=>"@two", "line"=>3}, {"name"=>"@four", "line"=>3}, {"name"=>"@six", "line"=>3}, {"name"=>"@seven", "line"=>3}]
+      tag_counter_obj.has_tags(tags_given, ["@four", "@two", "@six", "@seven"]).should eql true
+    end
+  end
+
   describe "tags" do
     it "retrieve tags from a scenario" do
       gs = BDD::GherkinSlurper.new File.dirname(__FILE__) + "/../fixtures/features/tags2"
-      gs.tags.sort.should == ["@one", "@two"].sort
+      gs.tags.sort.should == ["@five", "@four", "@one", "@two"].sort
     end
   end
 
@@ -62,7 +81,7 @@ describe "cql" do
       gs.get_scenario("Test Feature", "Testing the slurping").should == expected
     end
 
-    it 'should find scenarios by tag' do
+    it 'should find scenarios by a single tag' do
       gs = BDD::GherkinSlurper.new File.expand_path(File.dirname(__FILE__)) + "/../fixtures/features/tags"
       gs.get_scenario_by_feature_and_tag("Simple", "@one").should == ['Next', 'Another']
       gs.get_scenario_by_feature_and_tag("Simple", "@two").should == ['Has a table', 'Blah']
@@ -75,6 +94,11 @@ describe "cql" do
 
       gs.get_scenario_by_feature_and_tag("Simple", "@three").should == []
 
+    end
+
+    it 'should find scenarios by multiple tags' do
+      gs = BDD::GherkinSlurper.new File.expand_path(File.dirname(__FILE__)) + "/../fixtures/features/tags2"
+      gs.get_scenario_by_feature_and_tag("Simple 2", ["@two", "@four"]).should == ['Has a table hmmm']
     end
 
     it 'should retrieve the table data' do

@@ -5,7 +5,21 @@ require 'json'
 require 'set'
 
 module BDD
+
+  module TagCounter
+
+     def has_tags tags_given, tags_for_search
+       tags_given = tags_given.map {|t| t["name"]}
+       found = 0
+       tags_for_search.each do |tag_for_search|
+         found = found + 1 if tags_given.include?(tag_for_search)
+       end
+       found == tags_for_search.size
+    end
+  end
+
   class GherkinSlurper
+    include TagCounter
     attr_reader :physical_feature_files, :parsed_feature_files
 
     def initialize features_home_dir
@@ -81,24 +95,18 @@ module BDD
       scenarios
     end
 
-    def get_scenario_by_feature_and_tag feature_to_find, tag_to_find
+    def get_scenario_by_feature_and_tag feature_to_find, tags_to_find
       scenarios = []
       @parsed_feature_files.each do |feature|
         if feature['name'] == feature_to_find
           feature['elements'].each do |element|
-            if (element['name'] != "") and element['type'] == "scenario" and element['tags'] != nil and tags_count(element['tags'], tag_to_find) > 0
+            if (element['name'] != "") and element['type'] == "scenario" and element['tags'] != nil and has_tags(element['tags'], tags_to_find.to_a)
               scenarios.push element['name']
             end
           end
         end
       end
       scenarios
-    end
-
-    def tags_count tags, search
-      found = 0
-      tags.map { |e| found = found + 1 if e['name'] == search }
-      found
     end
 
     def load_features sources
