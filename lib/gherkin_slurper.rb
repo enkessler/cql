@@ -6,26 +6,7 @@ require 'set'
 
 module GQL
 
-  module TagCounter
-
-     def has_tags tags_given, tags_for_search
-       tags_given = tags_given.map {|t| t["name"]}
-       found = 0
-       tags_for_search.each do |tag_for_search|
-         found = found + 1 if tags_given.include?(tag_for_search)
-       end
-       found == tags_for_search.size
-    end
-  end
-
-  class GherkinSlurper
-    include TagCounter
-    attr_reader :physical_feature_files, :parsed_feature_files
-
-    def initialize features_home_dir
-      @physical_feature_files = list_features(features_home_dir)
-      @parsed_feature_files = load_features @physical_feature_files
-    end
+  module Query
 
     def overview
       @parsed_feature_files.map { |a| a['name'] }
@@ -109,15 +90,30 @@ module GQL
       scenarios
     end
 
+    def has_tags tags_given, tags_for_search
+      tags_given = tags_given.map { |t| t["name"] }
+      found = 0
+      tags_for_search.each do |tag_for_search|
+        found = found + 1 if tags_given.include?(tag_for_search)
+      end
+      found == tags_for_search.size
+    end
+  end
+
+  class GherkinSlurper
+    include Query
+    attr_reader :physical_feature_files, :parsed_feature_files
+
+    def initialize features_home_dir
+      @physical_feature_files = list_features(features_home_dir)
+      @parsed_feature_files = load_features @physical_feature_files
+    end
+
     def load_features sources
       io = StringIO.new
       formatter = Gherkin::Formatter::JSONFormatter.new(io)
       parser = Gherkin::Parser::Parser.new(formatter)
-
-      sources.each do |s|
-        parser.parse(IO.read(s), s, 0)
-      end
-
+      sources.each { |s| parser.parse(IO.read(s), s, 0)}
       formatter.done
       JSON.parse(io.string)
     end
