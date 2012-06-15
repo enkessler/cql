@@ -4,7 +4,7 @@ require 'stringio'
 require 'json'
 require 'set'
 
-module BDD
+module GQL
 
   module TagCounter
 
