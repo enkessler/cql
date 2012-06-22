@@ -3,6 +3,7 @@
 .bundle
 .config
 coverage
+projectFilesBackup
 InstalledFiles
 lib/bundler/man
 pkg
