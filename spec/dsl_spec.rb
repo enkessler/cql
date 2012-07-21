@@ -4,7 +4,17 @@ require File.dirname(__FILE__) + "/../lib/" + "gherkin_slurper"
 describe "cql" do
 
   describe "select" do
-    it 'should find the physical files' do
+    it 'should find the physical file names' do
+      gs = GQL::GherkinSlurper.new File.dirname(__FILE__) + "/../fixtures/features/simple"
+
+      result = gs.query do
+        select features.names
+      end
+
+      result.should == ["Simple", "Test Feature", "Test2 Feature", "Test3 Feature"]
+    end
+
+    it 'should find the feature file names' do
       gs = GQL::GherkinSlurper.new File.dirname(__FILE__) + "/../fixtures/features/simple"
 
       result = gs.query do

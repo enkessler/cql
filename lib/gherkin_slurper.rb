@@ -11,6 +11,14 @@ module GQL
 
     end
 
+    class Names
+
+    end
+
+    def names
+      Names.new
+    end
+
     def file_names
       FilesNames.new
     end
@@ -40,6 +48,7 @@ module GQL
     def select what
       puts what
       return physical_feature_files if what.class.to_s == "GQL::Features::FilesNames"
+      return overview if what.class.to_s == "GQL::Features::Names"
       return get_all_scenario_outlines_from_feature if what.class.to_s == "GQL::ScenarioOutlines::Names"
       return get_scenarios_all_from_feature if what.class.to_s == "GQL::Scenarios::Names"
     end
@@ -57,7 +66,6 @@ module GQL
     end
 
     def query &block
-      #puts self
       instance_eval(&block)
     end
   end
