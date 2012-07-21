@@ -5,6 +5,31 @@ require 'json'
 require 'set'
 
 module GQL
+  class Features
+
+    class FilesNames
+
+    end
+
+    def file_names
+      FilesNames.new
+    end
+  end
+
+  module Dsl
+    def select what
+      physical_feature_files if what.class.to_s == "GQL::Features::FilesNames"
+    end
+
+    def features
+      Features.new
+    end
+
+    def query &block
+      #puts self
+      instance_eval(&block)
+    end
+  end
 
   module Query
 
@@ -102,6 +127,7 @@ module GQL
 
   class GherkinSlurper
     include Query
+    include Dsl
     attr_reader :physical_feature_files, :parsed_feature_files
 
     def initialize features_home_dir
