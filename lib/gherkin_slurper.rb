@@ -6,20 +6,16 @@ require 'set'
 
 module GQL
   class Features
-
     class FilesNames
-
     end
-
     class Names
-
     end
 
-    def names
+    def names()
       Names.new
     end
 
-    def file_names
+    def file_names()
       FilesNames.new
     end
   end
@@ -29,41 +25,32 @@ module GQL
     class Names
     end
 
-    def names
+    def names()
       Names.new
     end
   end
 
   class ScenarioOutlines
-
     class Names
     end
 
-    def names
+    def names()
       Names.new
     end
   end
 
   module Dsl
     def select what
-      puts what
-      return physical_feature_files if what.class.to_s == "GQL::Features::FilesNames"
-      return overview if what.class.to_s == "GQL::Features::Names"
-      return get_all_scenario_outlines_from_feature if what.class.to_s == "GQL::ScenarioOutlines::Names"
-      return get_scenarios_all_from_feature if what.class.to_s == "GQL::Scenarios::Names"
+      results_map = {"GQL::Features::FilesNames" => physical_feature_files,
+       "GQL::Features::Names" => overview,
+       "GQL::ScenarioOutlines::Names" => get_all_scenario_outlines_from_feature,
+       "GQL::Scenarios::Names" => get_scenarios_all_from_feature}
+      results_map[what.class.to_s]
     end
 
-    def features
-      Features.new
-    end
-
-    def scenario_outlines
-      ScenarioOutlines.new
-    end
-
-    def scenarios
-      Scenarios.new
-    end
+    def features() Features.new end
+    def scenario_outlines() ScenarioOutlines.new end
+    def scenarios() Scenarios.new end
 
     def query &block
       instance_eval(&block)
