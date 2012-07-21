@@ -16,6 +16,16 @@ module GQL
     end
   end
 
+  class Scenarios
+
+    class Names
+    end
+
+    def names
+      Names.new
+    end
+  end
+
   class ScenarioOutlines
 
     class Names
@@ -31,6 +41,7 @@ module GQL
       puts what
       return physical_feature_files if what.class.to_s == "GQL::Features::FilesNames"
       return get_all_scenario_outlines_from_feature if what.class.to_s == "GQL::ScenarioOutlines::Names"
+      return get_scenarios_all_from_feature if what.class.to_s == "GQL::Scenarios::Names"
     end
 
     def features
@@ -39,6 +50,10 @@ module GQL
 
     def scenario_outlines
       ScenarioOutlines.new
+    end
+
+    def scenarios
+      Scenarios.new
     end
 
     def query &block
@@ -105,6 +120,16 @@ module GQL
       scenarios
     end
 
+    def get_scenarios_all_from_feature
+      scenarios = []
+      @parsed_feature_files.each do |feature|
+        feature['elements'].each do |element|
+          scenarios.push element['name'] if (element['name'] != "") and element['type'] == "scenario"
+        end
+      end
+      scenarios
+    end
+
     def get_scenario_outlines_from_feature feature_to_find
       scenarios = []
       @parsed_feature_files.each do |feature|
@@ -121,9 +146,9 @@ module GQL
       scenarios = []
       @parsed_feature_files.each do |feature|
 
-          feature['elements'].each do |element|
-            scenarios.push element['name'] if (element['name'] != "") and element['type'] == "scenario_outline"
-          end
+        feature['elements'].each do |element|
+          scenarios.push element['name'] if (element['name'] != "") and element['type'] == "scenario_outline"
+        end
 
       end
       scenarios
@@ -167,7 +192,7 @@ module GQL
       io = StringIO.new
       formatter = Gherkin::Formatter::JSONFormatter.new(io)
       parser = Gherkin::Parser::Parser.new(formatter)
-      sources.each { |s| parser.parse(IO.read(s), s, 0)}
+      sources.each { |s| parser.parse(IO.read(s), s, 0) }
       formatter.done
       JSON.parse(io.string)
     end
