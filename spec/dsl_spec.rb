@@ -16,5 +16,14 @@ describe "cql" do
     end
   end
 
+  describe 'scenario outline query' do
+    it 'should get scenario outlines as a list' do
+      gs = GQL::GherkinSlurper.new File.expand_path(File.dirname(__FILE__)) + "/../fixtures/features/scen_outlines"
+      result = gs.query do
+        select scenario_outlines.names
+      end
+      result.should == ["An Outline"]
+    end
+  end
 
 end

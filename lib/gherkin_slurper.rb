@@ -16,13 +16,29 @@ module GQL
     end
   end
 
+  class ScenarioOutlines
+
+    class Names
+    end
+
+    def names
+      Names.new
+    end
+  end
+
   module Dsl
     def select what
-      physical_feature_files if what.class.to_s == "GQL::Features::FilesNames"
+      puts what
+      return physical_feature_files if what.class.to_s == "GQL::Features::FilesNames"
+      return get_all_scenario_outlines_from_feature if what.class.to_s == "GQL::ScenarioOutlines::Names"
     end
 
     def features
       Features.new
+    end
+
+    def scenario_outlines
+      ScenarioOutlines.new
     end
 
     def query &block
@@ -97,6 +113,18 @@ module GQL
             scenarios.push element['name'] if (element['name'] != "") and element['type'] == "scenario_outline"
           end
         end
+      end
+      scenarios
+    end
+
+    def get_all_scenario_outlines_from_feature
+      scenarios = []
+      @parsed_feature_files.each do |feature|
+
+          feature['elements'].each do |element|
+            scenarios.push element['name'] if (element['name'] != "") and element['type'] == "scenario_outline"
+          end
+
       end
       scenarios
     end
