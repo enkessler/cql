@@ -76,12 +76,12 @@ module GQL
       scenarios
     end
 
-    def get_scenario_by_feature_and_tag feature_to_find, tags_to_find
+    def get_scenario_by_feature_and_tag feature_to_find, *tags_to_find
       scenarios = []
       @parsed_feature_files.each do |feature|
         if feature['name'] == feature_to_find
           feature['elements'].each do |element|
-            if (element['name'] != "") and element['type'] == "scenario" and element['tags'] != nil and has_tags(element['tags'], tags_to_find.to_a)
+            if (element['name'] != "") and element['type'] == "scenario" and element['tags'] != nil and has_tags(element['tags'], tags_to_find)
               scenarios.push element['name']
             end
           end

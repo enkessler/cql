@@ -7,9 +7,10 @@ describe "cql" do
     it 'should find the physical files' do
       gs = GQL::GherkinSlurper.new File.dirname(__FILE__) + "/../fixtures/features/simple"
       result = gs.physical_feature_files
-      result[0].should =~ /test\.feature/
-      result[1].should =~ /test2\.feature/
-      result[2].should =~ /test_full\.feature/
+      result[0].should =~ /simple\.feature/
+      result[1].should =~ /test\.feature/
+      result[2].should =~ /test2\.feature/
+      result[3].should =~ /test_full\.feature/
     end
   end
 
@@ -23,7 +24,7 @@ describe "cql" do
   describe 'features query' do
     it 'should find all feature names' do
       gs = GQL::GherkinSlurper.new File.dirname(__FILE__) + "/../fixtures/features/simple"
-      gs.overview.should eql ["Test Feature", "Test2 Feature", "Test3 Feature"]
+      gs.overview.should eql ["Simple", "Test Feature", "Test2 Feature", "Test3 Feature"]
     end
 
     it 'should find a scenario by feature and tag' do
@@ -79,7 +80,7 @@ describe "cql" do
 
     it 'should find scenarios by multiple tags' do
       gs = GQL::GherkinSlurper.new File.expand_path(File.dirname(__FILE__)) + "/../fixtures/features/tags2"
-      gs.get_scenario_by_feature_and_tag("Simple 2", ["@two", "@four"]).should == ['Has a table hmmm']
+      gs.get_scenario_by_feature_and_tag("Simple 2", "@two", "@four").should == ['Has a table hmmm']
     end
 
     it 'should retrieve the table data' do
