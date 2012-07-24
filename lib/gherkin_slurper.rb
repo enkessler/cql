@@ -13,36 +13,53 @@ module GQL
     class Names
     end
 
-    def names() Names.new end
-    def file_names() FilesNames.new end
+    def names()
+      Names.new
+    end
+
+    def file_names()
+      FilesNames.new
+    end
   end
 
   class Scenarios
     class Names
     end
 
-    def names() Names.new end
+    def names()
+      Names.new
+    end
   end
 
   class ScenarioOutlines
     class Names
     end
 
-    def names() Names.new end
+    def names()
+      Names.new
+    end
   end
 
   module Dsl
     def select what
       results_map = {"GQL::Features::FilesNames" => physical_feature_files,
-       "GQL::Features::Names" => GQL::MapReduce.overview(parsed_feature_files),
-       "GQL::ScenarioOutlines::Names" => GQL::MapReduce.get_all_scenario_outlines_from_feature(parsed_feature_files),
-       "GQL::Scenarios::Names" => GQL::MapReduce.get_scenarios_all_from_feature(parsed_feature_files)}
+                     "GQL::Features::Names" => GQL::MapReduce.overview(parsed_feature_files),
+                     "GQL::ScenarioOutlines::Names" => GQL::MapReduce.get_all_scenario_outlines_from_feature(parsed_feature_files),
+                     "GQL::Scenarios::Names" => GQL::MapReduce.get_scenarios_all_from_feature(parsed_feature_files)}
       results_map[what.class.to_s]
     end
 
-    def features() Features.new end
-    def scenario_outlines() ScenarioOutlines.new end
-    def scenarios() Scenarios.new end
+    def features()
+      Features.new
+    end
+
+    def scenario_outlines()
+      ScenarioOutlines.new
+    end
+
+    def scenarios()
+      Scenarios.new
+    end
 
     def query &block
       instance_eval(&block)
@@ -66,14 +83,9 @@ module GQL
     end
 
     def self.get_scenario input, feature_to_find, scenario_to_find
+      input = find_feature input, feature_to_find
       scenario = nil
-      input.each do |feature|
-        if feature['name'] == feature_to_find
-          feature['elements'].each do |element|
-            scenario = element if element['name'] == scenario_to_find
-          end
-        end
-      end
+      input['elements'].each { |element| scenario = element if element['name'] == scenario_to_find }
       scenario
     end
 
@@ -93,12 +105,9 @@ module GQL
 
     def self.get_scenarios_from_feature input, feature_to_find
       scenarios = []
-      input.each do |feature|
-        if feature['name'] == feature_to_find
-          feature['elements'].each do |element|
-            scenarios.push element['name'] if (element['name'] != "") and element['type'] == "scenario"
-          end
-        end
+      input = find_feature input, feature_to_find
+      input['elements'].each do |element|
+        scenarios.push element['name'] if (element['name'] != "") and element['type'] == "scenario"
       end
       scenarios
     end
@@ -159,6 +168,7 @@ module GQL
       end
       found == tags_for_search.size
     end
+
   end
 
   class GherkinRepository
