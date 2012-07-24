@@ -34,9 +34,9 @@ module GQL
   module Dsl
     def select what
       results_map = {"GQL::Features::FilesNames" => physical_feature_files,
-       "GQL::Features::Names" => overview(parsed_feature_files),
-       "GQL::ScenarioOutlines::Names" => get_all_scenario_outlines_from_feature,
-       "GQL::Scenarios::Names" => get_scenarios_all_from_feature}
+       "GQL::Features::Names" => GQL::MapReduce.overview(parsed_feature_files),
+       "GQL::ScenarioOutlines::Names" => GQL::MapReduce.get_all_scenario_outlines_from_feature(parsed_feature_files),
+       "GQL::Scenarios::Names" => GQL::MapReduce.get_scenarios_all_from_feature(parsed_feature_files)}
       results_map[what.class.to_s]
     end
 
@@ -49,15 +49,15 @@ module GQL
     end
   end
 
-  module MapReduce
+  class MapReduce
 
-    def overview input
+    def self.overview input
       input.map { |a| a['name'] }
     end
 
-    def find_feature feature_to_find
+    def self.find_feature input, feature_to_find
       feature_found = nil
-      @parsed_feature_files.each do |feature|
+      input.each do |feature|
         if feature['name'] == feature_to_find
           feature_found = feature
         end
@@ -65,9 +65,9 @@ module GQL
       feature_found
     end
 
-    def get_scenario feature_to_find, scenario_to_find
+    def self.get_scenario input, feature_to_find, scenario_to_find
       scenario = nil
-      @parsed_feature_files.each do |feature|
+      input.each do |feature|
         if feature['name'] == feature_to_find
           feature['elements'].each do |element|
             scenario = element if element['name'] == scenario_to_find
@@ -77,9 +77,9 @@ module GQL
       scenario
     end
 
-    def tags
+    def self.tags input
       tags = Set.new
-      @parsed_feature_files.each do |feature|
+      input.each do |feature|
         feature['elements'].each do |element|
           if element['tags'] != nil
             element['tags'].each do |tag|
@@ -91,9 +91,9 @@ module GQL
       tags.to_a
     end
 
-    def get_scenarios_from_feature feature_to_find
+    def self.get_scenarios_from_feature input, feature_to_find
       scenarios = []
-      @parsed_feature_files.each do |feature|
+      input.each do |feature|
         if feature['name'] == feature_to_find
           feature['elements'].each do |element|
             scenarios.push element['name'] if (element['name'] != "") and element['type'] == "scenario"
@@ -103,9 +103,9 @@ module GQL
       scenarios
     end
 
-    def get_scenarios_all_from_feature
+    def self.get_scenarios_all_from_feature input
       scenarios = []
-      @parsed_feature_files.each do |feature|
+      input.each do |feature|
         feature['elements'].each do |element|
           scenarios.push element['name'] if (element['name'] != "") and element['type'] == "scenario"
         end
@@ -113,9 +113,9 @@ module GQL
       scenarios
     end
 
-    def get_scenario_outlines_from_feature feature_to_find
+    def self.get_scenario_outlines_from_feature input, feature_to_find
       scenarios = []
-      @parsed_feature_files.each do |feature|
+      input.each do |feature|
         if feature['name'] == feature_to_find
           feature['elements'].each do |element|
             scenarios.push element['name'] if (element['name'] != "") and element['type'] == "scenario_outline"
@@ -125,9 +125,9 @@ module GQL
       scenarios
     end
 
-    def get_all_scenario_outlines_from_feature
+    def self.get_all_scenario_outlines_from_feature input
       scenarios = []
-      @parsed_feature_files.each do |feature|
+      input.each do |feature|
 
         feature['elements'].each do |element|
           scenarios.push element['name'] if (element['name'] != "") and element['type'] == "scenario_outline"
@@ -137,9 +137,9 @@ module GQL
       scenarios
     end
 
-    def get_scenario_by_feature_and_tag feature_to_find, *tags_to_find
+    def self.get_scenario_by_feature_and_tag input, feature_to_find, *tags_to_find
       scenarios = []
-      @parsed_feature_files.each do |feature|
+      input.each do |feature|
         if feature['name'] == feature_to_find
           feature['elements'].each do |element|
             if (element['name'] != "") and element['type'] == "scenario" and element['tags'] != nil and has_tags(element['tags'], tags_to_find)
@@ -151,7 +151,7 @@ module GQL
       scenarios
     end
 
-    def has_tags tags_given, tags_for_search
+    def self.has_tags tags_given, tags_for_search
       tags_given = tags_given.map { |t| t["name"] }
       found = 0
       tags_for_search.each do |tag_for_search|
@@ -162,7 +162,6 @@ module GQL
   end
 
   class GherkinRepository
-    include MapReduce
     include Dsl
     attr_reader :physical_feature_files, :parsed_feature_files
 

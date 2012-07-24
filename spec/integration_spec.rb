@@ -17,24 +17,24 @@ describe "cql" do
   describe "tags" do
     it "retrieve tags from a scenario" do
       gs = GQL::GherkinRepository.new File.dirname(__FILE__) + "/../fixtures/features/tags2"
-      gs.tags.sort.should == ["@five", "@four", "@one", "@two"].sort
+      GQL::MapReduce.tags(gs.parsed_feature_files).sort.should == ["@five", "@four", "@one", "@two"].sort
     end
   end
 
   describe 'features query' do
     it 'should find all feature names' do
       gs = GQL::GherkinRepository.new File.dirname(__FILE__) + "/../fixtures/features/simple"
-      gs.overview(gs.parsed_feature_files).should eql ["Simple", "Test Feature", "Test2 Feature", "Test3 Feature"]
+      GQL::MapReduce.overview(gs.parsed_feature_files).should eql ["Simple", "Test Feature", "Test2 Feature", "Test3 Feature"]
     end
 
     it 'should filter by a scenario by feature and then by tag' do
       gs = GQL::GherkinRepository.new File.expand_path(File.dirname(__FILE__)) + "/../fixtures/features/tags2"
-      gs.get_scenario_by_feature_and_tag("Not here", "@three").should == []
+      GQL::MapReduce.get_scenario_by_feature_and_tag(gs.parsed_feature_files, "Not here", "@three").should == []
     end
 
     it 'should retrieve a full feature' do
       gs = GQL::GherkinRepository.new File.expand_path(File.dirname(__FILE__)) + "/../fixtures/features/simple"
-      result = gs.find_feature "Test Feature"
+      result = GQL::MapReduce.find_feature(gs.parsed_feature_files, "Test Feature")
       result['name'].should == "Test Feature"
       result['elements'][0]['name'].should == "Testing the slurping"
       result['elements'].should == [{"keyword"=>"Scenario", "name"=>"Testing the slurping", "line"=>3,
@@ -50,7 +50,7 @@ describe "cql" do
   describe 'scenario query' do
     it 'should get all scenarios as a list' do
       gs = GQL::GherkinRepository.new File.expand_path(File.dirname(__FILE__)) + "/../fixtures/features/scen_outlines"
-      gs.get_scenarios_from_feature("Test Feature").should == ["A Scenario"]
+      GQL::MapReduce.get_scenarios_from_feature(gs.parsed_feature_files,"Test Feature").should == ["A Scenario"]
     end
 
     it 'should get a full scenario' do
@@ -60,27 +60,27 @@ describe "cql" do
                   "description"=>"", "id"=>"test-feature;testing-the-slurping", "type"=>"scenario",
                   "steps"=>[{"keyword"=>"Given ", "name"=>"something happend", "line"=>4},
                             {"keyword"=>"Then ", "name"=>"I expect something else", "line"=>5}]}
-      gs.get_scenario("Test Feature", "Testing the slurping").should == expected
+      GQL::MapReduce.get_scenario(gs.parsed_feature_files,"Test Feature", "Testing the slurping").should == expected
     end
 
     it 'should find scenarios by a single tag' do
       gs = GQL::GherkinRepository.new File.expand_path(File.dirname(__FILE__)) + "/../fixtures/features/tags"
-      gs.get_scenario_by_feature_and_tag("Simple", "@one").should == ['Next', 'Another']
-      gs.get_scenario_by_feature_and_tag("Simple", "@two").should == ['Has a table', 'Blah']
+      GQL::MapReduce.get_scenario_by_feature_and_tag(gs.parsed_feature_files, "Simple", "@one").should == ['Next', 'Another']
+      GQL::MapReduce.get_scenario_by_feature_and_tag(gs.parsed_feature_files, "Simple", "@two").should == ['Has a table', 'Blah']
 
       gs = GQL::GherkinRepository.new File.expand_path(File.dirname(__FILE__)) + "/../fixtures/features/tags2"
-      gs.get_scenario_by_feature_and_tag("Simple", "@one").should == ['Next', 'Another']
-      gs.get_scenario_by_feature_and_tag("Simple", "@two").should == ['Has a table', 'Blah']
-      gs.get_scenario_by_feature_and_tag("Simple 2", "@one").should == ['Next', 'Another']
-      gs.get_scenario_by_feature_and_tag("Simple 2", "@two").should == ['Has a table hmmm', 'Blah blah']
+      GQL::MapReduce.get_scenario_by_feature_and_tag(gs.parsed_feature_files, "Simple", "@one").should == ['Next', 'Another']
+      GQL::MapReduce.get_scenario_by_feature_and_tag(gs.parsed_feature_files, "Simple", "@two").should == ['Has a table', 'Blah']
+      GQL::MapReduce.get_scenario_by_feature_and_tag(gs.parsed_feature_files, "Simple 2", "@one").should == ['Next', 'Another']
+      GQL::MapReduce.get_scenario_by_feature_and_tag(gs.parsed_feature_files, "Simple 2", "@two").should == ['Has a table hmmm', 'Blah blah']
 
-      gs.get_scenario_by_feature_and_tag("Simple", "@three").should == []
+      GQL::MapReduce.get_scenario_by_feature_and_tag(gs.parsed_feature_files, "Simple", "@three").should == []
 
     end
 
     it 'should find scenarios by multiple tags' do
       gs = GQL::GherkinRepository.new File.expand_path(File.dirname(__FILE__)) + "/../fixtures/features/tags2"
-      gs.get_scenario_by_feature_and_tag("Simple 2", "@two", "@four").should == ['Has a table hmmm']
+      GQL::MapReduce.get_scenario_by_feature_and_tag(gs.parsed_feature_files, "Simple 2", "@two", "@four").should == ['Has a table hmmm']
     end
 
     it 'should retrieve the table data' do
@@ -90,15 +90,15 @@ describe "cql" do
                              "rows"=>[{"cells"=>["a", "a"], "line"=>5},
                                       {"cells"=>["s", "a"], "line"=>6}, {"cells"=>["s", "s"], "line"=>7}]},
                             {"keyword"=>"Then ", "name"=>"something else", "line"=>8}]}
-      gs.get_scenario("Simple", "Has a table").should == expected
+      GQL::MapReduce.get_scenario(gs.parsed_feature_files, "Simple", "Has a table").should == expected
     end
   end
 
   describe 'scenario outline query' do
     it 'should get scenario outlines as a list' do
       gs = GQL::GherkinRepository.new File.expand_path(File.dirname(__FILE__)) + "/../fixtures/features/scen_outlines"
-      gs.get_scenarios_from_feature("Test Feature").should == ["A Scenario"]
-      gs.get_scenario_outlines_from_feature("Test Feature").should == ["An Outline"]
+      GQL::MapReduce.get_scenarios_from_feature(gs.parsed_feature_files,"Test Feature").should == ["A Scenario"]
+      GQL::MapReduce.get_scenario_outlines_from_feature(gs.parsed_feature_files, "Test Feature").should == ["An Outline"]
     end
   end
 
