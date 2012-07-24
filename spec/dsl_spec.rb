@@ -3,9 +3,22 @@ require File.dirname(__FILE__) + "/../lib/" + "gherkin_slurper"
 
 describe "cql" do
 
+  #describe 'filter' do
+  #  it 'should filter by tag' do
+  #    gs = GQL::GherkinRepository.new File.dirname(__FILE__) + "/../fixtures/features/tags2"
+  #
+  #    result = gs.query do
+  #      select features.names
+  #      where features.tags  = '@two'
+  #    end
+  #
+  #    result.should == ["Has a table", "Blah", "Has a table hmmm", "Blah blah"]
+  #  end
+  #end
+
   describe "select" do
     it 'should find the physical file names' do
-      gs = GQL::GherkinSlurper.new File.dirname(__FILE__) + "/../fixtures/features/simple"
+      gs = GQL::GherkinRepository.new File.dirname(__FILE__) + "/../fixtures/features/simple"
 
       result = gs.query do
         select features.names
@@ -15,7 +28,7 @@ describe "cql" do
     end
 
     it 'should find the feature file names' do
-      gs = GQL::GherkinSlurper.new File.dirname(__FILE__) + "/../fixtures/features/simple"
+      gs = GQL::GherkinRepository.new File.dirname(__FILE__) + "/../fixtures/features/simple"
 
       result = gs.query do
         select features.file_names
@@ -28,7 +41,7 @@ describe "cql" do
     end
 
     it 'should get scenario outlines as a list' do
-      gs = GQL::GherkinSlurper.new File.expand_path(File.dirname(__FILE__)) + "/../fixtures/features/scen_outlines"
+      gs = GQL::GherkinRepository.new File.expand_path(File.dirname(__FILE__)) + "/../fixtures/features/scen_outlines"
 
       result = gs.query do
         select scenario_outlines.names
@@ -38,7 +51,7 @@ describe "cql" do
     end
 
      it 'should get scenario as a list' do
-      gs = GQL::GherkinSlurper.new File.expand_path(File.dirname(__FILE__)) + "/../fixtures/features/simple2"
+      gs = GQL::GherkinRepository.new File.expand_path(File.dirname(__FILE__)) + "/../fixtures/features/simple2"
 
       result = gs.query do
         select scenarios.names

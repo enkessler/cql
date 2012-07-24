@@ -16,7 +16,7 @@ Feature: Simple 2
     Given a car
 
   @two
-  Scenario: Blah
+  Scenario: Blah blah
     Given lalala
 
   @one

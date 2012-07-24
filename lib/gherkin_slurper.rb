@@ -6,43 +6,35 @@ require 'set'
 
 module GQL
   class Features
+
     class FilesNames
     end
+
     class Names
     end
 
-    def names()
-      Names.new
-    end
-
-    def file_names()
-      FilesNames.new
-    end
+    def names() Names.new end
+    def file_names() FilesNames.new end
   end
 
   class Scenarios
-
     class Names
     end
 
-    def names()
-      Names.new
-    end
+    def names() Names.new end
   end
 
   class ScenarioOutlines
     class Names
     end
 
-    def names()
-      Names.new
-    end
+    def names() Names.new end
   end
 
   module Dsl
     def select what
       results_map = {"GQL::Features::FilesNames" => physical_feature_files,
-       "GQL::Features::Names" => overview,
+       "GQL::Features::Names" => overview(parsed_feature_files),
        "GQL::ScenarioOutlines::Names" => get_all_scenario_outlines_from_feature,
        "GQL::Scenarios::Names" => get_scenarios_all_from_feature}
       results_map[what.class.to_s]
@@ -57,14 +49,10 @@ module GQL
     end
   end
 
-  module Query
+  module MapReduce
 
-    def overview
-      @parsed_feature_files.map { |a| a['name'] }
-    end
-
-    def list_features base_dir
-      Dir.glob(base_dir + "/**/*.feature")
+    def overview input
+      input.map { |a| a['name'] }
     end
 
     def find_feature feature_to_find
@@ -173,14 +161,18 @@ module GQL
     end
   end
 
-  class GherkinSlurper
-    include Query
+  class GherkinRepository
+    include MapReduce
     include Dsl
     attr_reader :physical_feature_files, :parsed_feature_files
 
     def initialize features_home_dir
       @physical_feature_files = list_features(features_home_dir)
       @parsed_feature_files = load_features @physical_feature_files
+    end
+
+    def list_features base_dir
+      Dir.glob(base_dir + "/**/*.feature")
     end
 
     def load_features sources
