@@ -1,5 +1,5 @@
 require 'rspec'
-require File.dirname(__FILE__) + "/../lib/" + "gherkin_slurper"
+require File.dirname(__FILE__) + "/../lib/" + "gherkin_repo"
 
 describe "cql" do
 
