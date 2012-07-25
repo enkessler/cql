@@ -50,7 +50,7 @@ describe "cql" do
       result.should == ["An Outline"]
     end
 
-     it 'should get scenario as a list' do
+    it 'should get scenario as a list' do
       gs = GQL::GherkinRepository.new File.expand_path(File.dirname(__FILE__)) + "/../fixtures/features/simple2"
 
       result = gs.query do

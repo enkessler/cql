@@ -36,10 +36,10 @@ module GQL
 
   module Dsl
     def select what
-      results_map = {"GQL::Features::FilesNames" => GQL::MapReduce.uri(parsed_feature_files),
-                     "GQL::Features::Names" => GQL::MapReduce.overview(parsed_feature_files),
-                     "GQL::ScenarioOutlines::Names" => GQL::MapReduce.get_all_scenario_outlines_from_feature(parsed_feature_files),
-                     "GQL::Scenarios::Names" => GQL::MapReduce.get_scenarios_all_from_feature(parsed_feature_files)}
+      results_map = {"GQL::Features::FilesNames" => GQL::MapReduce.uri(@data),
+                     "GQL::Features::Names" => GQL::MapReduce.overview(@data),
+                     "GQL::ScenarioOutlines::Names" => GQL::MapReduce.get_all_scenario_outlines_from_feature(@data),
+                     "GQL::Scenarios::Names" => GQL::MapReduce.get_scenarios_all_from_feature(@data)}
       results_map[what.class.to_s]
     end
 
@@ -55,8 +55,15 @@ module GQL
       Scenarios.new
     end
 
-    def query &block
-      instance_eval(&block)
+  end
+
+  class Query
+    include Dsl
+    attr_reader :data
+    def initialize features, &block
+      @data = features
+      @data = self.instance_eval(&block)
     end
   end
+
 end

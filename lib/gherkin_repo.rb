@@ -13,11 +13,14 @@ module GQL
     attr_reader :parsed_feature_files
 
     def initialize features_home_dir
-      @parsed_feature_files = load_features list_features(features_home_dir)
+      @parsed_feature_files = load_features(list_features(features_home_dir))
+    end
+
+    def query &block
+      Query.new(parsed_feature_files.clone, &block).data
     end
 
     private
-
     def list_features base_dir
       Dir.glob(base_dir + "/**/*.feature")
     end
@@ -30,5 +33,6 @@ module GQL
       formatter.done
       JSON.parse(io.string)
     end
+
   end
 end
