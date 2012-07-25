@@ -5,6 +5,10 @@ module GQL
       input.map { |a| a['name'] }
     end
 
+    def self.uri input
+      input.map { |a| a['uri'] }
+    end
+
     def self.find_feature input, feature_to_find
       feature_found = nil
       input.each do |feature|

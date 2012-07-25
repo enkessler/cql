@@ -33,9 +33,10 @@ module GQL
       Names.new
     end
   end
+
   module Dsl
     def select what
-      results_map = {"GQL::Features::FilesNames" => physical_feature_files,
+      results_map = {"GQL::Features::FilesNames" => GQL::MapReduce.uri(parsed_feature_files),
                      "GQL::Features::Names" => GQL::MapReduce.overview(parsed_feature_files),
                      "GQL::ScenarioOutlines::Names" => GQL::MapReduce.get_all_scenario_outlines_from_feature(parsed_feature_files),
                      "GQL::Scenarios::Names" => GQL::MapReduce.get_scenarios_all_from_feature(parsed_feature_files)}

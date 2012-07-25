@@ -10,12 +10,13 @@ require File.dirname(__FILE__) + "/dsl"
 module GQL
   class GherkinRepository
     include Dsl
-    attr_reader :physical_feature_files, :parsed_feature_files
+    attr_reader :parsed_feature_files
 
     def initialize features_home_dir
-      @physical_feature_files = list_features(features_home_dir)
-      @parsed_feature_files = load_features @physical_feature_files
+      @parsed_feature_files = load_features list_features(features_home_dir)
     end
+
+    private
 
     def list_features base_dir
       Dir.glob(base_dir + "/**/*.feature")
