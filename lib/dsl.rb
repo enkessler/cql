@@ -7,12 +7,23 @@ module GQL
     class Names
     end
 
+    class Tag
+      attr_reader :tag
+      def initialize tag
+        @tag = tag
+      end
+    end
+
     def names()
       Names.new
     end
 
     def file_names()
       FilesNames.new
+    end
+
+    def tag tag
+      Tag.new(tag)
     end
   end
 
@@ -43,6 +54,11 @@ module GQL
       results_map[what.class.to_s]
     end
 
+    def filter filter
+
+      @data = GQL::MapReduce.filter_features_by_tag(@data, filter.tag)
+    end
+
     def features()
       Features.new
     end
@@ -60,6 +76,7 @@ module GQL
   class Query
     include Dsl
     attr_reader :data
+
     def initialize features, &block
       @data = features
       @data = self.instance_eval(&block)

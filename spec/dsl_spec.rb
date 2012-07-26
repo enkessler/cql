@@ -3,21 +3,21 @@ require File.dirname(__FILE__) + "/../lib/" + "gherkin_repo"
 
 describe "cql" do
 
-  #describe 'filter' do
-  #  it 'should filter by tag' do
-  #    gs = GQL::GherkinRepository.new File.dirname(__FILE__) + "/../fixtures/features/tags2"
-  #
-  #    result = gs.query do
-  #      select features.names
-  #      where features.tags  = '@two'
-  #    end
-  #
-  #    result.should == ["Has a table", "Blah", "Has a table hmmm", "Blah blah"]
-  #  end
-  #end
+  describe 'filter' do
+    it 'should filter by tag' do
+      gs = GQL::GherkinRepository.new File.dirname(__FILE__) + "/../fixtures/features/tagged_features"
+
+      result = gs.query do
+        filter features.tag '@one'
+        select features.names
+      end
+
+      result.should == ["Test Feature", "Test3 Feature"]
+    end
+  end
 
   describe "select" do
-    it 'should find the physical file names' do
+    it 'should find the feature file names' do
       gs = GQL::GherkinRepository.new File.dirname(__FILE__) + "/../fixtures/features/simple"
 
       result = gs.query do
@@ -57,7 +57,7 @@ describe "cql" do
         select scenarios.names
       end
 
-      result.should == ["Testing the slurping", "Testing again","Testing yet again" ,"Testing yet again part 2"]
+      result.should == ["Testing the slurping", "Testing again", "Testing yet again", "Testing yet again part 2"]
     end
   end
 end

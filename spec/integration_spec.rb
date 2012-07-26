@@ -19,6 +19,18 @@ describe "cql" do
       gs = GQL::GherkinRepository.new File.dirname(__FILE__) + "/../fixtures/features/tags2"
       GQL::MapReduce.tags(gs.parsed_feature_files).sort.should == ["@five", "@four", "@one", "@two"].sort
     end
+
+    it 'should filter features by tag' do
+      input = [{"keyword"=>"Feature", "name"=>"Simple", "line"=>1, "description"=>"", "tags"=>[{"name"=>"@two", "line"=>1}], "id"=>"simple", "uri"=>"/a/a"},
+              {"keyword"=>"Feature", "name"=>"Test Feature", "line"=>2, "description"=>"", "tags"=>[{"name"=>"@one", "line"=>1}], "id"=>"test-feature"},
+              {"keyword"=>"Feature", "name"=>"Test2 Feature", "line"=>1, "description"=>"", "id"=>"test2-feature"},
+              {"keyword"=>"Feature", "name"=>"Test3 Feature", "line"=>2, "description"=>"", "tags"=>[{"name"=>"@one", "line"=>1}], "id"=>"test3-feature"}]
+      result = GQL::MapReduce.filter_features_by_tag(input, '@one')
+      result.size.should == 2
+      result[0]['name'].should == "Test Feature"
+      result[1]['name'].should == "Test3 Feature"
+    end
+
   end
 
   describe 'features query' do

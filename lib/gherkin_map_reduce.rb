@@ -26,6 +26,16 @@ module GQL
       scenario
     end
 
+    def self.filter_features_by_tag input, *tags_to_find
+      features = []
+      input.each do |feature|
+          if (feature['tags'] != nil  and has_tags(feature['tags'], tags_to_find))
+            features.push feature
+          end
+      end
+      features
+    end
+
     def self.tags input
       tags = Set.new
       input.each do |feature|
