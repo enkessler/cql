@@ -1,82 +1,42 @@
 module GQL
-  class Features
-
-    class FilesNames
-    end
-
-    class Names
-    end
-
-    class Tag
-      attr_reader :tag
-      def initialize tag
-        @tag = tag
-      end
-    end
-
-    def names()
-      Names.new
-    end
-
-    def file_names()
-      FilesNames.new
-    end
-
-    def tag tag
-      Tag.new(tag)
-    end
-  end
-
-  class Scenarios
-    class Names
-    end
-
-    def names()
-      Names.new
-    end
-  end
-
-  class ScenarioOutlines
-    class Names
-    end
-
-    def names()
-      Names.new
-    end
-  end
-
   module Dsl
+
+    def names
+      'names'
+    end
+
+    def features
+      'features'
+    end
+
+    def scenario_outlines
+      'scenario_outlines'
+    end
+
+    def file_names
+      'uri'
+    end
+
+    def scenarios
+      'scenarios'
+    end
 
     def select what
       @what = what
+    end
+
+    def from where
+      @from = where
       @data
     end
 
-    def apply_select data
-      results_map = {"GQL::Features::FilesNames" => GQL::MapReduce.uri(data),
-                     "GQL::Features::Names" => GQL::MapReduce.overview(data),
-                     "GQL::ScenarioOutlines::Names" => GQL::MapReduce.get_all_scenario_outlines_from_feature(data),
-                     "GQL::Scenarios::Names" => GQL::MapReduce.get_scenarios_all_from_feature(data)}
-      results_map[@what.class.to_s]
+    def tag tag
+       {'tag'=>tag}
     end
 
-    def filter filter
-
-      @data = GQL::MapReduce.filter_features_by_tag(@data, filter.tag)
+    def with filter
+      @data = GQL::MapReduce.filter_features_by_tag(@data, filter['tag']) if filter.has_key? 'tag'
     end
-
-    def features()
-      Features.new
-    end
-
-    def scenario_outlines()
-      ScenarioOutlines.new
-    end
-
-    def scenarios()
-      Scenarios.new
-    end
-
   end
 
   class Query
@@ -86,11 +46,11 @@ module GQL
     def initialize features, &block
       @data = features
       @data = self.instance_eval(&block)
-      results_map = {"GQL::Features::FilesNames" => GQL::MapReduce.uri(@data),
-                     "GQL::Features::Names" => GQL::MapReduce.overview(@data),
-                     "GQL::ScenarioOutlines::Names" => GQL::MapReduce.get_all_scenario_outlines_from_feature(@data),
-                     "GQL::Scenarios::Names" => GQL::MapReduce.get_scenarios_all_from_feature(@data)}
-      @data = results_map[@what.class.to_s]
+      results_map = {"uri-features" => GQL::MapReduce.uri(@data),
+                     "names-features" => GQL::MapReduce.overview(@data),
+                     "names-scenario_outlines" => GQL::MapReduce.get_all_scenario_outlines_from_feature(@data),
+                     "names-scenarios" => GQL::MapReduce.get_scenarios_all_from_feature(@data)}
+      @data = results_map[@what + "-" + @from]
     end
   end
 

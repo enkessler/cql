@@ -1,3 +1,4 @@
+@two
 Feature: Test2 Feature
 
   Scenario: Testing the slurping

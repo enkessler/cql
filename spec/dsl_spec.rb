@@ -8,17 +8,20 @@ describe "cql" do
       gs = GQL::GherkinRepository.new File.dirname(__FILE__) + "/../fixtures/features/tagged_features"
 
       result = gs.query do
-        select features.names
-        filter features.tag '@one'
+        select names
+        from features
+        with tag '@one'
       end
 
-      #result = gs.query do
-      #  select names
-      #  from features
-      #  where tag '@one'
-      #end
-      #result = result.map {|w| w['name'] }
       result.should == ["Test Feature", "Test3 Feature"]
+
+      result = gs.query do
+        select names
+        from features
+        with tag '@two'
+      end
+
+      result.should == ["Test2 Feature"]
     end
   end
 
@@ -27,7 +30,8 @@ describe "cql" do
       gs = GQL::GherkinRepository.new File.dirname(__FILE__) + "/../fixtures/features/simple"
 
       result = gs.query do
-        select features.names
+        select names
+        from features
       end
 
       result.should == ["Simple", "Test Feature", "Test2 Feature", "Test3 Feature"]
@@ -37,7 +41,8 @@ describe "cql" do
       gs = GQL::GherkinRepository.new File.dirname(__FILE__) + "/../fixtures/features/simple"
 
       result = gs.query do
-        select features.file_names
+        select file_names
+        from features
       end
 
       result[0].should =~ /simple\.feature/
@@ -50,17 +55,19 @@ describe "cql" do
       gs = GQL::GherkinRepository.new File.expand_path(File.dirname(__FILE__)) + "/../fixtures/features/scen_outlines"
 
       result = gs.query do
-        select scenario_outlines.names
+        select names
+        from scenario_outlines
       end
 
       result.should == ["An Outline"]
     end
 
     it 'should get scenario as a list' do
-      gs = GQL::GherkinRepository.new File.expand_path(File.dirname(__FILE__)) + "/../fixtures/features/simple2"
+      gr = GQL::GherkinRepository.new File.expand_path(File.dirname(__FILE__)) + "/../fixtures/features/simple2"
 
-      result = gs.query do
-        select scenarios.names
+      result = gr.query do
+        select names
+        from scenarios
       end
 
       result.should == ["Testing the slurping", "Testing again", "Testing yet again", "Testing yet again part 2"]
