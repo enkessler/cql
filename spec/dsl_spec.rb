@@ -8,10 +8,16 @@ describe "cql" do
       gs = GQL::GherkinRepository.new File.dirname(__FILE__) + "/../fixtures/features/tagged_features"
 
       result = gs.query do
-        filter features.tag '@one'
         select features.names
+        filter features.tag '@one'
       end
 
+      #result = gs.query do
+      #  select names
+      #  from features
+      #  where tag '@one'
+      #end
+      #result = result.map {|w| w['name'] }
       result.should == ["Test Feature", "Test3 Feature"]
     end
   end

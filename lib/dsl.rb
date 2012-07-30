@@ -46,12 +46,18 @@ module GQL
   end
 
   module Dsl
+
     def select what
-      results_map = {"GQL::Features::FilesNames" => GQL::MapReduce.uri(@data),
-                     "GQL::Features::Names" => GQL::MapReduce.overview(@data),
-                     "GQL::ScenarioOutlines::Names" => GQL::MapReduce.get_all_scenario_outlines_from_feature(@data),
-                     "GQL::Scenarios::Names" => GQL::MapReduce.get_scenarios_all_from_feature(@data)}
-      results_map[what.class.to_s]
+      @what = what
+      @data
+    end
+
+    def apply_select data
+      results_map = {"GQL::Features::FilesNames" => GQL::MapReduce.uri(data),
+                     "GQL::Features::Names" => GQL::MapReduce.overview(data),
+                     "GQL::ScenarioOutlines::Names" => GQL::MapReduce.get_all_scenario_outlines_from_feature(data),
+                     "GQL::Scenarios::Names" => GQL::MapReduce.get_scenarios_all_from_feature(data)}
+      results_map[@what.class.to_s]
     end
 
     def filter filter
@@ -75,11 +81,16 @@ module GQL
 
   class Query
     include Dsl
-    attr_reader :data
+    attr_reader :data, :what
 
     def initialize features, &block
       @data = features
       @data = self.instance_eval(&block)
+      results_map = {"GQL::Features::FilesNames" => GQL::MapReduce.uri(@data),
+                     "GQL::Features::Names" => GQL::MapReduce.overview(@data),
+                     "GQL::ScenarioOutlines::Names" => GQL::MapReduce.get_all_scenario_outlines_from_feature(@data),
+                     "GQL::Scenarios::Names" => GQL::MapReduce.get_scenarios_all_from_feature(@data)}
+      @data = results_map[@what.class.to_s]
     end
   end
 
