@@ -19,13 +19,6 @@ module GQL
       feature_found
     end
 
-    def self.scenario input, feature_to_find, scenario_to_find
-      input = find_feature input, feature_to_find
-      scenario = nil
-      input['elements'].each { |element| scenario = element if element['name'] == scenario_to_find }
-      scenario
-    end
-
     def self.filter_features_by_tag input, *tags_to_find
       features = []
       input.each do |feature|
@@ -50,6 +43,24 @@ module GQL
       scenarios
     end
 
+    def self.scenario input, feature_to_find, scenario_to_find
+      input = find_feature input, feature_to_find
+      scenario = nil
+      input['elements'].each { |element| scenario = element if element['name'] == scenario_to_find }
+      scenario
+    end
+
+    def self.all input, args
+      scenarios = []
+      input = [find_feature(input, args['feature'])] if args.has_key?('feature')
+      input.each do |feature|
+        feature['elements'].each do |element|
+          scenarios.push element['name'] if (element['name'] != "") and element['type'] == args['what']
+        end
+      end
+      scenarios
+    end
+
     def self.tags input
       tags = Set.new
       input.each do |feature|
@@ -62,25 +73,6 @@ module GQL
         end
       end
       tags.to_a
-    end
-
-    def self.from_feature input, args
-      scenarios = []
-      input = find_feature input, args['feature'] if args.has_key?('feature')
-      input['elements'].each do |element|
-        scenarios.push element['name'] if (element['name'] != "") and element['type'] == args['what']
-      end
-      scenarios
-    end
-
-    def self.all input, args
-      scenarios = []
-      input.each do |feature|
-        feature['elements'].each do |element|
-          scenarios.push element['name'] if (element['name'] != "") and element['type'] == args['what']
-        end
-      end
-      scenarios
     end
 
     def self.has_tags tags_given, tags_for_search
