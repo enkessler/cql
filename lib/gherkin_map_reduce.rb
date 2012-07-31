@@ -2,19 +2,19 @@ module GQL
   class MapReduce
 
     def self.overview input
-      input.map{|a| a['name'] }
+      input.map { |a| a['name'] }
     end
 
     def self.uri input
-      input.map{|a| a['uri'] }
+      input.map { |a| a['uri'] }
     end
 
     def self.find_feature input, feature_to_find
-      input.find{|feature| feature['name'] == feature_to_find }
+      input.find { |feature| feature['name'] == feature_to_find }
     end
 
     def self.filter_features_by_tag input, *tags_to_find
-      input.find_all{|feature| has_tags feature['tags'], tags_to_find.flatten }
+      input.find_all { |feature| has_tags feature['tags'], tags_to_find.flatten }
     end
 
     def self.scenario_by_feature_and_tag input, feature_to_find, condition, *tags_to_find
@@ -34,6 +34,11 @@ module GQL
     def self.scenario input, feature_to_find, scenario_to_find
       input = find_feature input, feature_to_find
       input['elements'].find{|element|element['name'] == scenario_to_find }
+    end
+
+    def self.scenario input, feature_to_find, scenario_to_find
+      input = find_feature input, feature_to_find
+      input['elements'].find { |element| element['name'] == scenario_to_find }
     end
 
     def self.all input, args
@@ -60,7 +65,8 @@ module GQL
 
     def self.has_tags given, search
       return false if given == nil
-      search.count{|tag_for_search| given.map{|t| t["name"]}.include?(tag_for_search)}==search.size
+      search.count { |tag_for_search| given.map { |t| t["name"] }.include?(tag_for_search) }==search.size
     end
+
   end
 end
