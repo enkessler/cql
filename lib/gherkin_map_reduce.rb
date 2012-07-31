@@ -33,9 +33,7 @@ module GQL
 
     def self.scenario input, feature_to_find, scenario_to_find
       input = find_feature input, feature_to_find
-      scenario = nil
-      input['elements'].each { |element| scenario = element if element['name'] == scenario_to_find }
-      scenario
+      input['elements'].find{|element|element['name'] == scenario_to_find }
     end
 
     def self.all input, args
