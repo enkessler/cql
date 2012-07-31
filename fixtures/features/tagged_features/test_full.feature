@@ -1,4 +1,4 @@
-@one
+@one @two
 Feature: Test3 Feature
 
   @one

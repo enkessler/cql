@@ -29,7 +29,7 @@ module GQL
     def self.filter_features_by_tag input, *tags_to_find
       features = []
       input.each do |feature|
-          if (feature['tags'] != nil  and has_tags(feature['tags'], tags_to_find))
+          if (feature['tags'] != nil  and has_tags(feature['tags'], tags_to_find.flatten))
             features.push feature
           end
       end
