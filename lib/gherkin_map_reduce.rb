@@ -19,7 +19,7 @@ module GQL
       feature_found
     end
 
-    def self.get_scenario input, feature_to_find, scenario_to_find
+    def self.scenario input, feature_to_find, scenario_to_find
       input = find_feature input, feature_to_find
       scenario = nil
       input['elements'].each { |element| scenario = element if element['name'] == scenario_to_find }
@@ -50,7 +50,7 @@ module GQL
       tags.to_a
     end
 
-    def self.get_scenarios_from_feature input, feature_to_find
+    def self.scenarios_from_feature input, feature_to_find
       scenarios = []
       input = find_feature input, feature_to_find
       input['elements'].each do |element|
@@ -59,7 +59,7 @@ module GQL
       scenarios
     end
 
-    def self.get_scenarios_all_from_feature input
+    def self.scenarios_all_from_feature input
       scenarios = []
       input.each do |feature|
         feature['elements'].each do |element|
@@ -69,7 +69,7 @@ module GQL
       scenarios
     end
 
-    def self.get_scenario_outlines_from_feature input, feature_to_find
+    def self.scenario_outlines_from_feature input, feature_to_find
       scenarios = []
       input.each do |feature|
         if feature['name'] == feature_to_find
@@ -81,24 +81,22 @@ module GQL
       scenarios
     end
 
-    def self.get_all_scenario_outlines_from_feature input
+    def self.all_scenario_outlines_from_feature input
       scenarios = []
       input.each do |feature|
-
         feature['elements'].each do |element|
           scenarios.push element['name'] if (element['name'] != "") and element['type'] == "scenario_outline"
         end
-
       end
       scenarios
     end
 
-    def self.get_scenario_by_feature_and_tag input, feature_to_find, *tags_to_find
+    def self.scenario_by_feature_and_tag input, feature_to_find, condition, *tags_to_find
       scenarios = []
       input.each do |feature|
         if feature['name'] == feature_to_find
           feature['elements'].each do |element|
-            if (element['name'] != "") and element['type'] == "scenario" and element['tags'] != nil and has_tags(element['tags'], tags_to_find)
+            if (element['name'] != "") and element['type'] == "scenario" and has_tags(element['tags'], tags_to_find) == condition
               scenarios.push element['name']
             end
           end
@@ -108,6 +106,7 @@ module GQL
     end
 
     def self.has_tags tags_given, tags_for_search
+      return false if tags_given == nil
       tags_given = tags_given.map { |t| t["name"] }
       found = 0
       tags_for_search.each do |tag_for_search|

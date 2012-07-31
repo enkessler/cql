@@ -56,8 +56,8 @@ module GQL
         @data = self.instance_eval(&block)
         results_map = {"uri-features" => GQL::MapReduce.uri(@data),
                        "names-features" => GQL::MapReduce.overview(@data),
-                       "names-scenario_outlines" => GQL::MapReduce.get_all_scenario_outlines_from_feature(@data),
-                       "names-scenarios" => GQL::MapReduce.get_scenarios_all_from_feature(@data)}
+                       "names-scenario_outlines" => GQL::MapReduce.all_scenario_outlines_from_feature(@data),
+                       "names-scenarios" => GQL::MapReduce.scenarios_all_from_feature(@data)}
         @data = results_map[@what + "-" + @from]
       end
     end
