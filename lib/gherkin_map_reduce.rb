@@ -64,20 +64,20 @@ module GQL
       tags.to_a
     end
 
-    def self.from_feature input, feature_to_find, what = 'scenario'
+    def self.from_feature input, args
       scenarios = []
-      input = find_feature input, feature_to_find
+      input = find_feature input, args['feature'] if args.has_key?('feature')
       input['elements'].each do |element|
-        scenarios.push element['name'] if (element['name'] != "") and element['type'] == what
+        scenarios.push element['name'] if (element['name'] != "") and element['type'] == args['what']
       end
       scenarios
     end
 
-    def self.all what, input
+    def self.all input, args
       scenarios = []
       input.each do |feature|
         feature['elements'].each do |element|
-          scenarios.push element['name'] if (element['name'] != "") and element['type'] == what
+          scenarios.push element['name'] if (element['name'] != "") and element['type'] == args['what']
         end
       end
       scenarios

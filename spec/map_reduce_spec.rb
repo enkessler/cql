@@ -22,9 +22,9 @@ describe "cql" do
 
     it 'should filter features by tag' do
       input = [{"keyword"=>"Feature", "name"=>"Simple", "line"=>1, "description"=>"", "tags"=>[{"name"=>"@two", "line"=>1}], "id"=>"simple", "uri"=>"/a/a"},
-              {"keyword"=>"Feature", "name"=>"Test Feature", "line"=>2, "description"=>"", "tags"=>[{"name"=>"@one", "line"=>1}], "id"=>"test-feature"},
-              {"keyword"=>"Feature", "name"=>"Test2 Feature", "line"=>1, "description"=>"", "id"=>"test2-feature"},
-              {"keyword"=>"Feature", "name"=>"Test3 Feature", "line"=>2, "description"=>"", "tags"=>[{"name"=>"@one", "line"=>1}], "id"=>"test3-feature"}]
+               {"keyword"=>"Feature", "name"=>"Test Feature", "line"=>2, "description"=>"", "tags"=>[{"name"=>"@one", "line"=>1}], "id"=>"test-feature"},
+               {"keyword"=>"Feature", "name"=>"Test2 Feature", "line"=>1, "description"=>"", "id"=>"test2-feature"},
+               {"keyword"=>"Feature", "name"=>"Test3 Feature", "line"=>2, "description"=>"", "tags"=>[{"name"=>"@one", "line"=>1}], "id"=>"test3-feature"}]
       result = GQL::MapReduce.filter_features_by_tag(input, '@one')
       result.size.should == 2
       result[0]['name'].should == "Test Feature"
@@ -50,19 +50,19 @@ describe "cql" do
       result['name'].should == "Test Feature"
       result['elements'][0]['name'].should == "Testing the slurping"
       result['elements'].should == [{"keyword"=>"Scenario", "name"=>"Testing the slurping", "line"=>3,
-                                "description"=>"", "id"=>"test-feature;testing-the-slurping", "type"=>"scenario",
-                                "steps"=>[{"keyword"=>"Given ", "name"=>"something happend", "line"=>4},
-                                          {"keyword"=>"Then ", "name"=>"I expect something else", "line"=>5}]},
-                               {"keyword"=>"Scenario", "name"=>"Testing the slurping not to be found", "line"=>7,
-                                "description"=>"", "id"=>"test-feature;testing-the-slurping-not-to-be-found", "type"=>"scenario",
-                                "steps"=>[{"keyword"=>"Given ", "name"=>"something happend", "line"=>8}, {"keyword"=>"Then ", "name"=>"I expect something else", "line"=>9}]}]
+                                     "description"=>"", "id"=>"test-feature;testing-the-slurping", "type"=>"scenario",
+                                     "steps"=>[{"keyword"=>"Given ", "name"=>"something happend", "line"=>4},
+                                               {"keyword"=>"Then ", "name"=>"I expect something else", "line"=>5}]},
+                                    {"keyword"=>"Scenario", "name"=>"Testing the slurping not to be found", "line"=>7,
+                                     "description"=>"", "id"=>"test-feature;testing-the-slurping-not-to-be-found", "type"=>"scenario",
+                                     "steps"=>[{"keyword"=>"Given ", "name"=>"something happend", "line"=>8}, {"keyword"=>"Then ", "name"=>"I expect something else", "line"=>9}]}]
     end
   end
 
   describe 'scenario query' do
     it 'should get all scenarios as a list' do
       gs = GQL::GherkinRepository.new File.expand_path(File.dirname(__FILE__)) + "/../fixtures/features/scen_outlines"
-      GQL::MapReduce.from_feature(gs.parsed_feature_files,"Test Feature", 'scenario').should == ["A Scenario"]
+      GQL::MapReduce.from_feature(gs.parsed_feature_files, {'feature'=>"Test Feature", 'what'=>'scenario'}).should == ["A Scenario"]
     end
 
     it 'should get a full scenario' do
@@ -72,13 +72,13 @@ describe "cql" do
                   "description"=>"", "id"=>"test-feature;testing-the-slurping", "type"=>"scenario",
                   "steps"=>[{"keyword"=>"Given ", "name"=>"something happend", "line"=>4},
                             {"keyword"=>"Then ", "name"=>"I expect something else", "line"=>5}]}
-      GQL::MapReduce.scenario(gs.parsed_feature_files,"Test Feature", "Testing the slurping").should == expected
+      GQL::MapReduce.scenario(gs.parsed_feature_files, "Test Feature", "Testing the slurping").should == expected
     end
 
     it 'should find scenarios by a single tag' do
       gs = GQL::GherkinRepository.new File.expand_path(File.dirname(__FILE__)) + "/../fixtures/features/tags"
       GQL::MapReduce.scenario_by_feature_and_tag(gs.parsed_feature_files, "Simple", true, "@one").should == ['Next', 'Another']
-      GQL::MapReduce.scenario_by_feature_and_tag(gs.parsed_feature_files, "Simple", true,"@two").should == ['Has a table', 'Blah']
+      GQL::MapReduce.scenario_by_feature_and_tag(gs.parsed_feature_files, "Simple", true, "@two").should == ['Has a table', 'Blah']
 
       gs = GQL::GherkinRepository.new File.expand_path(File.dirname(__FILE__)) + "/../fixtures/features/tags2"
       GQL::MapReduce.scenario_by_feature_and_tag(gs.parsed_feature_files, "Simple", true, "@one").should == ['Next', 'Another']
@@ -92,7 +92,7 @@ describe "cql" do
 
     it 'should find scenarios that do not have a specified tag' do
       gs = GQL::GherkinRepository.new File.expand_path(File.dirname(__FILE__)) + "/../fixtures/features/tags"
-      GQL::MapReduce.scenario_by_feature_and_tag(gs.parsed_feature_files, "Simple", false,"@one").should == ['Has a table', 'Blah', 'Yet Another']
+      GQL::MapReduce.scenario_by_feature_and_tag(gs.parsed_feature_files, "Simple", false, "@one").should == ['Has a table', 'Blah', 'Yet Another']
       #GQL::MapReduce.scenario_by_feature_wo_tag(gs.parsed_feature_files, "Simple", "@two").should == ['Has a table', 'Blah']
     end
 
@@ -115,8 +115,8 @@ describe "cql" do
   describe 'scenario outline query' do
     it 'should get scenario outlines as a list' do
       gs = GQL::GherkinRepository.new File.expand_path(File.dirname(__FILE__)) + "/../fixtures/features/scen_outlines"
-      GQL::MapReduce.from_feature(gs.parsed_feature_files,"Test Feature", 'scenario').should == ["A Scenario"]
-      GQL::MapReduce.from_feature(gs.parsed_feature_files, "Test Feature", 'scenario_outline').should == ["An Outline"]
+      GQL::MapReduce.from_feature(gs.parsed_feature_files, {'feature'=>"Test Feature", 'what'=> 'scenario'}).should == ["A Scenario"]
+      GQL::MapReduce.from_feature(gs.parsed_feature_files, {'feature'=> "Test Feature", 'what'=> 'scenario_outline'}).should == ["An Outline"]
     end
   end
 
