@@ -36,6 +36,20 @@ module GQL
       features
     end
 
+    def self.scenario_by_feature_and_tag input, feature_to_find, condition, *tags_to_find
+      scenarios = []
+      input.each do |feature|
+        if feature['name'] == feature_to_find
+          feature['elements'].each do |element|
+            if (element['name'] != "") and element['type'] == "scenario" and has_tags(element['tags'], tags_to_find) == condition
+              scenarios.push element['name']
+            end
+          end
+        end
+      end
+      scenarios
+    end
+
     def self.tags input
       tags = Set.new
       input.each do |feature|
@@ -50,56 +64,20 @@ module GQL
       tags.to_a
     end
 
-    def self.scenarios_from_feature input, feature_to_find
+    def self.from_feature input, feature_to_find, what = 'scenario'
       scenarios = []
       input = find_feature input, feature_to_find
       input['elements'].each do |element|
-        scenarios.push element['name'] if (element['name'] != "") and element['type'] == "scenario"
+        scenarios.push element['name'] if (element['name'] != "") and element['type'] == what
       end
       scenarios
     end
 
-    def self.scenarios_all_from_feature input
+    def self.all what, input
       scenarios = []
       input.each do |feature|
         feature['elements'].each do |element|
-          scenarios.push element['name'] if (element['name'] != "") and element['type'] == "scenario"
-        end
-      end
-      scenarios
-    end
-
-    def self.scenario_outlines_from_feature input, feature_to_find
-      scenarios = []
-      input.each do |feature|
-        if feature['name'] == feature_to_find
-          feature['elements'].each do |element|
-            scenarios.push element['name'] if (element['name'] != "") and element['type'] == "scenario_outline"
-          end
-        end
-      end
-      scenarios
-    end
-
-    def self.all_scenario_outlines_from_feature input
-      scenarios = []
-      input.each do |feature|
-        feature['elements'].each do |element|
-          scenarios.push element['name'] if (element['name'] != "") and element['type'] == "scenario_outline"
-        end
-      end
-      scenarios
-    end
-
-    def self.scenario_by_feature_and_tag input, feature_to_find, condition, *tags_to_find
-      scenarios = []
-      input.each do |feature|
-        if feature['name'] == feature_to_find
-          feature['elements'].each do |element|
-            if (element['name'] != "") and element['type'] == "scenario" and has_tags(element['tags'], tags_to_find) == condition
-              scenarios.push element['name']
-            end
-          end
+          scenarios.push element['name'] if (element['name'] != "") and element['type'] == what
         end
       end
       scenarios
