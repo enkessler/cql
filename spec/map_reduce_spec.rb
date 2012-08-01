@@ -46,7 +46,7 @@ describe "cql" do
 
     it 'should retrieve a full feature' do
       gs = GQL::GherkinRepository.new File.expand_path(File.dirname(__FILE__)) + "/../fixtures/features/simple"
-      result = GQL::MapReduce.find_feature(gs.parsed_feature_files, "Test Feature")
+      result = GQL::MapReduce.find_feature(gs.parsed_feature_files, {'feature'=>"Test Feature"})
       result['name'].should == "Test Feature"
       result['elements'][0]['name'].should == "Testing the slurping"
       result['elements'].should == [{"keyword"=>"Scenario", "name"=>"Testing the slurping", "line"=>3,

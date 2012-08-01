@@ -9,8 +9,8 @@ module GQL
       input.map { |a| a['uri'] }
     end
 
-    def self.find_feature input, feature_to_find
-      input.find { |feature| feature['name'] == feature_to_find }
+    def self.find_feature input, args
+      input.find { |feature| feature['name'] == args['feature'] }
     end
 
     def self.filter_features_by_tag input, *tags_to_find
@@ -32,13 +32,13 @@ module GQL
     end
 
     def self.scenario input, args
-      input = find_feature input, args['feature']
+      input = find_feature input, 'feature'=>args['feature']
       input['elements'].find{|element|element['name'] == args['child_name'] }
     end
 
     def self.find input, args
       results = []
-      input = [find_feature(input, args['feature'])] if args.has_key?('feature')
+      input = [find_feature(input, 'feature'=>args['feature'])] if args.has_key?('feature')
       input.each do |feature|
         feature['elements'].each do |element|
           results.push element['name'] if element['type'] == args['what']
