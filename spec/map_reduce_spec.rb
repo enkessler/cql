@@ -25,7 +25,7 @@ describe "cql" do
                {"keyword"=>"Feature", "name"=>"Test Feature", "line"=>2, "description"=>"", "tags"=>[{"name"=>"@one", "line"=>1}], "id"=>"test-feature"},
                {"keyword"=>"Feature", "name"=>"Test2 Feature", "line"=>1, "description"=>"", "id"=>"test2-feature"},
                {"keyword"=>"Feature", "name"=>"Test3 Feature", "line"=>2, "description"=>"", "tags"=>[{"name"=>"@one", "line"=>1}], "id"=>"test3-feature"}]
-      result = GQL::MapReduce.filter_features_by_tag(input, 'tags'=>['@one'])
+      result = GQL::MapReduce.find_feature(input, 'tags'=>['@one'])
       result.size.should == 2
       result[0]['name'].should == "Test Feature"
       result[1]['name'].should == "Test3 Feature"

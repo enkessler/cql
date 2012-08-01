@@ -9,12 +9,17 @@ module GQL
       input.map { |a| a['uri'] }
     end
 
-    def self.find_feature input, args
-      input.find { |feature| feature['name'] == args['feature'] }
-    end
-
     def self.filter_features_by_tag input, args
       input.find_all { |feature| has_tags feature['tags'], args['tags'].flatten }
+    end
+
+    def self.find_feature input, args
+      input = input.find_all { |feature| feature['name'] == args['feature'] } if args.has_key? 'feature'
+      input = input.find_all { |feature| has_tags feature['tags'], args['tags'] } if args.has_key? 'tags'
+      if input.size == 1
+        input = input.first
+      end
+      input
     end
 
     def self.scenario_by_feature_and_tag input, feature_to_find, condition, *tags_to_find

@@ -31,7 +31,7 @@ module GQL
     end
 
     def tag tag
-      {'tag'=>tag}
+      {'tags'=>tag}
     end
 
     def tags *tags
@@ -39,10 +39,8 @@ module GQL
     end
 
     def with filter
-      if filter.has_key? 'tag'
-        @data = GQL::MapReduce.filter_features_by_tag(@data, 'tags'=>[filter['tag']])
-      elsif filter.has_key? 'tags'
-        @data = GQL::MapReduce.filter_features_by_tag(@data, 'tags'=>filter['tags'])
+      if filter.has_key? 'tags'
+        @data = GQL::MapReduce.find_feature(@data, 'tags'=>[filter['tags']])
       end
       @data
     end
