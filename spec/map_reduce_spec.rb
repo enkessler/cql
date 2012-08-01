@@ -62,7 +62,7 @@ describe "cql" do
   describe 'scenario query' do
     it 'should get all scenarios as a list' do
       gs = GQL::GherkinRepository.new File.expand_path(File.dirname(__FILE__)) + "/../fixtures/features/scen_outlines"
-      GQL::MapReduce.all(gs.parsed_feature_files, {'feature'=>"Test Feature", 'what'=>'scenario'}).should == ["A Scenario"]
+      GQL::MapReduce.find(gs.parsed_feature_files, {'feature'=>"Test Feature", 'what'=>'scenario'}).should == ["A Scenario"]
     end
 
     it 'should get a full scenario' do
@@ -115,8 +115,8 @@ describe "cql" do
   describe 'scenario outline query' do
     it 'should get scenario outlines as a list' do
       gs = GQL::GherkinRepository.new File.expand_path(File.dirname(__FILE__)) + "/../fixtures/features/scen_outlines"
-      GQL::MapReduce.all(gs.parsed_feature_files, {'feature'=>"Test Feature", 'what'=> 'scenario'}).should == ["A Scenario"]
-      GQL::MapReduce.all(gs.parsed_feature_files, {'feature'=> "Test Feature", 'what'=> 'scenario_outline'}).should == ["An Outline"]
+      GQL::MapReduce.find(gs.parsed_feature_files, {'feature'=>"Test Feature", 'what'=> 'scenario'}).should == ["A Scenario"]
+      GQL::MapReduce.find(gs.parsed_feature_files, {'feature'=> "Test Feature", 'what'=> 'scenario_outline'}).should == ["An Outline"]
     end
   end
 

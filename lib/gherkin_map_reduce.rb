@@ -36,7 +36,7 @@ module GQL
       input['elements'].find{|element|element['name'] == args['child_name'] }
     end
 
-    def self.all input, args
+    def self.find input, args
       results = []
       input = [find_feature(input, args['feature'])] if args.has_key?('feature')
       input.each do |feature|
