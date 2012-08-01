@@ -52,11 +52,17 @@ module GQL
       def initialize features, &block
         @data = features
         @data = self.instance_eval(&block)
-        results_map = {"uri-features" => GQL::MapReduce.uri(@data),
-                       "names-features" => GQL::MapReduce.overview(@data),
-                       "names-scenario_outlines" => GQL::MapReduce.find(@data, 'what'=>'scenario_outline'),
-                       "names-scenarios" => GQL::MapReduce.find(@data, 'what'=>'scenario')}
-        @data = results_map[@what + "-" + @from]
+        key = @what + "-" + @from
+        if key=="uri-features"
+          @data = GQL::MapReduce.uri(@data)
+        elsif key== "names-features"
+          @data = GQL::MapReduce.overview(@data)
+        elsif key== "names-scenario_outlines"
+          @data= GQL::MapReduce.find(@data, 'what'=>'scenario_outline')
+        elsif key== "names-scenarios"
+          @data = GQL::MapReduce.find(@data, 'what'=>'scenario')
+        end
+        @data
       end
     end
 
