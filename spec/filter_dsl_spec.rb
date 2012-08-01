@@ -10,7 +10,7 @@ describe "cql" do
       result = gs.query do
         select names
         from features
-        with tag '@one'
+        with tags '@one'
       end
 
       result.should == ["Test Feature", "Test3 Feature"]
@@ -18,23 +18,23 @@ describe "cql" do
       result = gs.query do
         select names
         from features
-        with tag '@two'
+        with tags '@two'
       end
 
       result.should == ["Test2 Feature", "Test3 Feature"]
     end
 
-    #it 'should filter by a multiple tags' do
-    #  gs = GQL::GherkinRepository.new File.dirname(__FILE__) + "/../fixtures/features/tagged_features"
-    #
-    #  result = gs.query do
-    #    select names
-    #    from features
-    #    with tags '@one', '@two'
-    #  end
-    #
-    #  result.should == ["Test3 Feature"]
-    #end
+    it 'should filter by a multiple tags' do
+      gs = GQL::GherkinRepository.new File.dirname(__FILE__) + "/../fixtures/features/tagged_features"
+
+      result = gs.query do
+        select names
+        from features
+        with tags '@one', '@two'
+      end
+
+      result.should == "Test3 Feature"
+    end
   end
 
 end

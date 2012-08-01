@@ -2,7 +2,7 @@ module GQL
   class MapReduce
 
     def self.overview input
-      input.map { |a| a['name'] }
+      input.class == Array ? input.map { |a| a['name'] } : input['name']
     end
 
     def self.uri input
