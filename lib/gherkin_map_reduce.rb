@@ -31,14 +31,9 @@ module GQL
       scenarios
     end
 
-    def self.scenario input, feature_to_find, scenario_to_find
-      input = find_feature input, feature_to_find
-      input['elements'].find{|element|element['name'] == scenario_to_find }
-    end
-
-    def self.scenario input, feature_to_find, scenario_to_find
-      input = find_feature input, feature_to_find
-      input['elements'].find { |element| element['name'] == scenario_to_find }
+    def self.scenario input, args
+      input = find_feature input, args['feature']
+      input['elements'].find{|element|element['name'] == args['child_name'] }
     end
 
     def self.all input, args

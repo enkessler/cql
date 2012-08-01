@@ -72,7 +72,7 @@ describe "cql" do
                   "description"=>"", "id"=>"test-feature;testing-the-slurping", "type"=>"scenario",
                   "steps"=>[{"keyword"=>"Given ", "name"=>"something happend", "line"=>4},
                             {"keyword"=>"Then ", "name"=>"I expect something else", "line"=>5}]}
-      GQL::MapReduce.scenario(gs.parsed_feature_files, "Test Feature", "Testing the slurping").should == expected
+      GQL::MapReduce.scenario(gs.parsed_feature_files, {'what'=>'scenario', 'feature'=>"Test Feature", 'child_name'=>"Testing the slurping"}).should == expected
     end
 
     it 'should find scenarios by a single tag' do
@@ -108,7 +108,7 @@ describe "cql" do
                              "rows"=>[{"cells"=>["a", "a"], "line"=>5},
                                       {"cells"=>["s", "a"], "line"=>6}, {"cells"=>["s", "s"], "line"=>7}]},
                             {"keyword"=>"Then ", "name"=>"something else", "line"=>8}]}
-      GQL::MapReduce.scenario(gs.parsed_feature_files, "Simple", "Has a table").should == expected
+      GQL::MapReduce.scenario(gs.parsed_feature_files, {'what'=>'scenario', 'feature'=>"Simple", 'child_name'=>"Has a table"}).should == expected
     end
   end
 
