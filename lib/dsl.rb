@@ -58,9 +58,9 @@ module GQL
         elsif key== "names-features"
           @data = GQL::MapReduce.overview(@data)
         elsif key== "names-scenario_outlines"
-          @data= GQL::MapReduce.find(@data, 'what'=>'scenario_outline')
+          @data= GQL::MapReduce.find_child(@data, 'what'=>'scenario_outline')
         elsif key== "names-scenarios"
-          @data = GQL::MapReduce.find(@data, 'what'=>'scenario')
+          @data = GQL::MapReduce.find_child(@data, 'what'=>'scenario')
         end
         @data
       end

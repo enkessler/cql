@@ -9,10 +9,6 @@ module GQL
       input.map { |a| a['uri'] }
     end
 
-    def self.filter_features_by_tag input, args
-      input.find_all { |feature| has_tags feature['tags'], args['tags'].flatten }
-    end
-
     def self.find_feature input, args
       input = input.find_all { |feature| feature['name'] == args['feature'] } if args.has_key? 'feature'
       input = input.find_all { |feature| has_tags feature['tags'], args['tags'] } if args.has_key? 'tags'
@@ -37,11 +33,11 @@ module GQL
     end
 
     def self.scenario input, args
-      input = find_feature input, 'feature'=>args['feature']
+      input = find_feature(input, 'feature'=>args['feature'])
       input['elements'].find{|element|element['name'] == args['child_name'] }
     end
 
-    def self.find input, args
+    def self.find_child input, args
       results = []
       input = [find_feature(input, 'feature'=>args['feature'])] if args.has_key?('feature')
       input.each do |feature|
