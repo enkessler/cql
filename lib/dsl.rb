@@ -40,9 +40,9 @@ module GQL
 
     def with filter
       if filter.has_key? 'tag'
-        @data = GQL::MapReduce.filter_features_by_tag(@data, filter['tag'])
+        @data = GQL::MapReduce.filter_features_by_tag(@data, 'tags'=>[filter['tag']])
       elsif filter.has_key? 'tags'
-        @data = GQL::MapReduce.filter_features_by_tag(@data, filter['tags'])
+        @data = GQL::MapReduce.filter_features_by_tag(@data, 'tags'=>filter['tags'])
       end
       @data
     end

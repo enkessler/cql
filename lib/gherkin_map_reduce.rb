@@ -13,8 +13,8 @@ module GQL
       input.find { |feature| feature['name'] == args['feature'] }
     end
 
-    def self.filter_features_by_tag input, *tags_to_find
-      input.find_all { |feature| has_tags feature['tags'], tags_to_find.flatten }
+    def self.filter_features_by_tag input, args
+      input.find_all { |feature| has_tags feature['tags'], args['tags'].flatten }
     end
 
     def self.scenario_by_feature_and_tag input, feature_to_find, condition, *tags_to_find
