@@ -43,6 +43,9 @@ module CQL
         elsif key== "names-scenarios"
           @data = CQL::MapReduce.filter_sso(@data, 'what'=>'scenario')
           @data = CQL::MapReduce.name(@data)
+        elsif key== "line-scenarios"
+          @data = CQL::MapReduce.filter_sso(@data, 'what'=>'scenario')
+          @data = CQL::MapReduce.line(@data)
         end
 
         if @from== "scenario_outlines"
