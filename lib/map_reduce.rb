@@ -1,12 +1,10 @@
 module CQL
   class MapReduce
 
-    def self.name input
-      input.class == Array ? input.map { |a| a['name'] } : input['name']
-    end
-
-    def self.uri input
-      input.map { |a| a['uri'] }
+    %w(name uri line).each do |property|
+      define_singleton_method (property) do |input|
+        input.class == Array ? input.map { |a| a[property] } : input[property]
+      end
     end
 
     def self.filter_features input, args

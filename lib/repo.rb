@@ -8,7 +8,7 @@ require File.dirname(__FILE__) + "/map_reduce"
 require File.dirname(__FILE__) + "/dsl"
 
 module CQL
-  class GherkinRepository
+  class Repository
     include Dsl
     attr_reader :parsed_feature_files
 

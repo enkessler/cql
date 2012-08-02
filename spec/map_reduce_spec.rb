@@ -5,7 +5,7 @@ describe "cql" do
 
   describe "file parsing" do
     it 'should find the physical files' do
-      gs = CQL::GherkinRepository.new File.dirname(__FILE__) + "/../fixtures/features/simple"
+      gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/simple"
       result = CQL::MapReduce.uri(gs.parsed_feature_files)
       result[0].should =~ /simple\.feature/
       result[1].should =~ /test\.feature/
@@ -16,7 +16,7 @@ describe "cql" do
 
   describe "tags" do
     it "retrieve tags from a scenario" do
-      gs = CQL::GherkinRepository.new File.dirname(__FILE__) + "/../fixtures/features/tags2"
+      gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/tags2"
       CQL::MapReduce.tags(gs.parsed_feature_files).sort.should == ["@five", "@four", "@one", "@two"].sort
     end
 
@@ -35,7 +35,7 @@ describe "cql" do
 
   describe 'features query' do
     it 'should find all feature names' do
-      gs = CQL::GherkinRepository.new File.dirname(__FILE__) + "/../fixtures/features/simple"
+      gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/simple"
       CQL::MapReduce.name(gs.parsed_feature_files).should eql ["Simple", "Test Feature", "Test2 Feature", "Test3 Feature"]
     end
 
@@ -45,7 +45,7 @@ describe "cql" do
     #end
 
     it 'should retrieve a full feature' do
-      gs = CQL::GherkinRepository.new File.expand_path(File.dirname(__FILE__)) + "/../fixtures/features/simple"
+      gs = CQL::Repository.new File.expand_path(File.dirname(__FILE__)) + "/../fixtures/features/simple"
       result = CQL::MapReduce.filter_features(gs.parsed_feature_files, {'feature'=>"Test Feature"})
       result['name'].should == "Test Feature"
       result['elements'][0]['name'].should == "Testing the slurping"
@@ -61,7 +61,7 @@ describe "cql" do
 
   describe 'scenario query' do
     it 'should get all scenarios as a list' do
-      gs = CQL::GherkinRepository.new File.expand_path(File.dirname(__FILE__)) + "/../fixtures/features/scen_outlines"
+      gs = CQL::Repository.new File.expand_path(File.dirname(__FILE__)) + "/../fixtures/features/scen_outlines"
       result = CQL::MapReduce.filter_sso(gs.parsed_feature_files, {'feature'=>"Test Feature", 'what'=>'scenario'})
       result.should == [{"keyword"=>"Scenario", "name"=>"A Scenario", "line"=>13, "description"=>"", "id"=>"test-feature;a-scenario", "type"=>"scenario", "steps"=>[{"keyword"=>"Given ", "name"=>"something happend", "line"=>14}, {"keyword"=>"Then ", "name"=>"I expect something else", "line"=>15}]}]
     end
@@ -115,7 +115,7 @@ describe "cql" do
 
   describe 'scenario outline query' do
     it 'should get scenario outlines as a list' do
-      gs = CQL::GherkinRepository.new File.expand_path(File.dirname(__FILE__)) + "/../fixtures/features/scen_outlines"
+      gs = CQL::Repository.new File.expand_path(File.dirname(__FILE__)) + "/../fixtures/features/scen_outlines"
       result = CQL::MapReduce.filter_sso(gs.parsed_feature_files, {'feature'=>"Test Feature", 'what'=> 'scenario'})
       result.should == [{"keyword"=>"Scenario", "name"=>"A Scenario", "line"=>13, "description"=>"", "id"=>"test-feature;a-scenario", "type"=>"scenario", "steps"=>[{"keyword"=>"Given ", "name"=>"something happend", "line"=>14}, {"keyword"=>"Then ", "name"=>"I expect something else", "line"=>15}]}]
       result = CQL::MapReduce.filter_sso(gs.parsed_feature_files, {'feature'=> "Test Feature", 'what'=> 'scenario_outline'})

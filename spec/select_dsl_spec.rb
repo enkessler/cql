@@ -4,7 +4,7 @@ require File.dirname(__FILE__) + "/../lib/repo"
 describe "cql" do
   describe "select" do
     it 'should find the feature file names' do
-      gs = CQL::GherkinRepository.new File.dirname(__FILE__) + "/../fixtures/features/simple"
+      gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/simple"
 
       result = gs.query do
         select names
@@ -14,8 +14,8 @@ describe "cql" do
       result.should == ["Simple", "Test Feature", "Test2 Feature", "Test3 Feature"]
     end
 
-    it 'should find the feature file names' do
-      gs = CQL::GherkinRepository.new File.dirname(__FILE__) + "/../fixtures/features/simple"
+    it 'should find the feature file uri' do
+      gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/simple"
 
       result = gs.query do
         select uri
@@ -25,11 +25,22 @@ describe "cql" do
       result[0].should =~ /simple\.feature/
       result[1].should =~ /test\.feature/
       result[2].should =~ /test2\.feature/
-      result[3].should =~ /test_full\.feature/
+      result[3].should =~ /test\_full\.feature/
     end
 
-    it 'should get scenario outlines as a list' do
-      gs = CQL::GherkinRepository.new File.expand_path(File.dirname(__FILE__)) + "/../fixtures/features/scen_outlines"
+    it 'should get scenario outlines line number' do
+      gs = CQL::Repository.new File.expand_path(File.dirname(__FILE__)) + "/../fixtures/features/scen_outlines"
+
+      result = gs.query do
+        select line
+        from scenario_outlines
+      end
+
+      result[0].should == 3
+    end
+
+    it 'should get scenario outlines names' do
+      gs = CQL::Repository.new File.expand_path(File.dirname(__FILE__)) + "/../fixtures/features/scen_outlines"
 
       result = gs.query do
         select names
@@ -39,8 +50,8 @@ describe "cql" do
       result.should == ["An Outline"]
     end
 
-    it 'should get scenario as a list' do
-      gr = CQL::GherkinRepository.new File.expand_path(File.dirname(__FILE__)) + "/../fixtures/features/simple2"
+    it 'should get scenario names' do
+      gr = CQL::Repository.new File.expand_path(File.dirname(__FILE__)) + "/../fixtures/features/simple2"
 
       result = gr.query do
         select names

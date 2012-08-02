@@ -14,7 +14,7 @@ Gem::Specification.new do |s|
   s.post_install_message = %{
 (::) (::) (::) (::) (::) (::) (::) (::) (::) (::) (::) (::) (::) (::) (::)
 
-Thank you for installing gql (Gherkin Query Language)
+Thank you for installing cql (Cucumber Query Language)
 
 (::) (::) (::) (::) (::) (::) (::) (::) (::) (::) (::) (::) (::) (::) (::)
 
