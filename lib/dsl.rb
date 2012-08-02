@@ -36,11 +36,13 @@ module CQL
         if key=="uri-features"
           @data = CQL::MapReduce.uri(@data)
         elsif key== "names-features"
-          @data = CQL::MapReduce.overview(@data)
+          @data = CQL::MapReduce.name(@data)
         elsif key== "names-scenario_outlines"
           @data= CQL::MapReduce.filter_sso(@data, 'what'=>'scenario_outline')
+          @data = CQL::MapReduce.name(@data)
         elsif key== "names-scenarios"
           @data = CQL::MapReduce.filter_sso(@data, 'what'=>'scenario')
+          @data = CQL::MapReduce.name(@data)
         end
         @data
       end

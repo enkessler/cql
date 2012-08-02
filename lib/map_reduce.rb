@@ -1,7 +1,7 @@
 module CQL
   class MapReduce
 
-    def self.overview input
+    def self.name input
       input.class == Array ? input.map { |a| a['name'] } : input['name']
     end
 
@@ -23,7 +23,7 @@ module CQL
       input = [filter_features(input, 'feature'=>args['feature'])] if args.has_key?('feature')
       input.each do |feature|
         feature['elements'].each do |element|
-          results.push element['name'] if element['type'] == args['what']
+          results.push element if element['type'] == args['what']
         end
       end
       results

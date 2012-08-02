@@ -4,7 +4,7 @@ require 'stringio'
 require 'json'
 require 'set'
 
-require File.dirname(__FILE__) + "/gherkin_map_reduce"
+require File.dirname(__FILE__) + "/map_reduce"
 require File.dirname(__FILE__) + "/dsl"
 
 module CQL
