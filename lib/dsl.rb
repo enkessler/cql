@@ -1,3 +1,4 @@
+require File.dirname(__FILE__) + "/map_reduce"
 module CQL
   module Dsl
     %w(names features scenario_outlines uri scenarios line all description).each do |method_name|
