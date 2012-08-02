@@ -48,9 +48,9 @@ describe "cql" do
       gs = CQL::Repository.new File.expand_path(File.dirname(__FILE__)) + "/../fixtures/features/simple"
       result = CQL::MapReduce.filter_features(gs.parsed_feature_files, {'feature'=>"Test Feature"})
       result['name'].should == "Test Feature"
-      result['elements'][0]['name'].should == "Testing the slurping"
-      result['elements'].should == [{"keyword"=>"Scenario", "name"=>"Testing the slurping", "line"=>3,
-                                     "description"=>"", "id"=>"test-feature;testing-the-slurping", "type"=>"scenario",
+      result['elements'][0]['name'].should == "Testing the slurping 1"
+      result['elements'].should == [{"keyword"=>"Scenario", "name"=>"Testing the slurping 1", "line"=>3,
+                                     "description"=>"", "id"=>"test-feature;testing-the-slurping-1", "type"=>"scenario",
                                      "steps"=>[{"keyword"=>"Given ", "name"=>"something happend", "line"=>4},
                                                {"keyword"=>"Then ", "name"=>"I expect something else", "line"=>5}]},
                                     {"keyword"=>"Scenario", "name"=>"Testing the slurping not to be found", "line"=>7,

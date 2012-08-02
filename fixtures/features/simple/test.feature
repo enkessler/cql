@@ -1,6 +1,6 @@
 Feature: Test Feature
 
-  Scenario: Testing the slurping
+  Scenario: Testing the slurping 1
     Given something happend
     Then I expect something else
 

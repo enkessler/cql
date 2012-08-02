@@ -53,6 +53,18 @@ describe "cql" do
       result.should == ["Testing the slurping", "Testing again", "Testing yet again", "Testing yet again part 2"]
     end
 
+    it 'should get scenario names from multiple feature files' do
+      gr = CQL::Repository.new File.expand_path(File.dirname(__FILE__)) + "/../fixtures/features/simple"
+      result = gr.query do
+        select names
+        from scenarios
+      end
+      result.should == ["Has a table", "Testing the slurping 1",
+                        "Testing the slurping not to be found", "Testing the slurping 2",
+                        "Testing the slurping 3", "Testing again",
+                        "Testing yet again", "Testing yet again part 2"]
+    end
+
     it 'should get scenario line number' do
       gr = CQL::Repository.new File.expand_path(File.dirname(__FILE__)) + "/../fixtures/features/simple2"
       result = gr.query do

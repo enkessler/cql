@@ -2,7 +2,7 @@
 Feature: Test3 Feature
 
   @one
-  Scenario: Testing the slurping
+  Scenario: Testing the slurping 3
     Given something happend
     Then I expect something else
 
