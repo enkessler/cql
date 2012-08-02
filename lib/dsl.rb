@@ -1,6 +1,5 @@
 module CQL
   module Dsl
-
     %w(names features scenario_outlines uri scenarios line all description).each do |method_name|
       define_method(method_name) { method_name }
     end
@@ -34,36 +33,25 @@ module CQL
       def initialize features, &block
         @data = features
         @data = self.instance_eval(&block)
-        key = @what + "-" + @from
-        if key=="uri-features"
-          @data = CQL::MapReduce.uri(@data)
-        elsif key== "names-features"
-          @data = CQL::MapReduce.name(@data)
-        elsif key== "description-features"
-          @data = CQL::MapReduce.description(@data)
-        elsif @from== "scenario_outlines"
+
+        if @from == "scenario_outlines"
           @data= CQL::MapReduce.filter_sso(@data, 'what'=>'scenario_outline')
-          #@data = CQL::MapReduce.name(@data)
-        elsif key== "names-scenarios"
+        elsif @from == "scenarios"
           @data = CQL::MapReduce.filter_sso(@data, 'what'=>'scenario')
-          @data = CQL::MapReduce.name(@data)
-        elsif key== "line-scenarios"
-          @data = CQL::MapReduce.filter_sso(@data, 'what'=>'scenario')
-          @data = CQL::MapReduce.line(@data)
         end
 
-        if @from== "scenario_outlines"
-          if @what=='names'
-            @data = CQL::MapReduce.name(@data)
-          elsif @what=='line'
-            @data = CQL::MapReduce.line(@data)
-          end
+        if @what=='names'
+          @data = CQL::MapReduce.name(@data)
+        elsif @what=='description'
+          @data = CQL::MapReduce.description(@data)
+        elsif @what=='uri'
+          @data = CQL::MapReduce.uri(@data)
+        elsif @what=='line'
+          @data = CQL::MapReduce.line(@data)
         end
 
         @data
       end
     end
-
   end
-
 end
