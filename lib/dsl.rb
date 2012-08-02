@@ -1,24 +1,8 @@
-module GQL
+module CQL
   module Dsl
 
-    def names
-      'names'
-    end
-
-    def features
-      'features'
-    end
-
-    def scenario_outlines
-      'scenario_outlines'
-    end
-
-    def file_names
-      'uri'
-    end
-
-    def scenarios
-      'scenarios'
+    %w(names features scenario_outlines uri scenarios).each do |method_name|
+      define_method(method_name) { method_name }
     end
 
     def select what
@@ -30,17 +14,13 @@ module GQL
       @data
     end
 
-    def tag tag
-      {'tags'=>tag}
-    end
-
     def tags *tags
       {'tags'=>tags}
     end
 
     def with filter
       if filter.has_key? 'tags'
-        @data = GQL::MapReduce.find_feature(@data, 'tags'=>filter['tags'])
+        @data = CQL::MapReduce.filter_features(@data, 'tags'=>filter['tags'])
       end
       @data
     end
@@ -54,13 +34,13 @@ module GQL
         @data = self.instance_eval(&block)
         key = @what + "-" + @from
         if key=="uri-features"
-          @data = GQL::MapReduce.uri(@data)
+          @data = CQL::MapReduce.uri(@data)
         elsif key== "names-features"
-          @data = GQL::MapReduce.overview(@data)
+          @data = CQL::MapReduce.overview(@data)
         elsif key== "names-scenario_outlines"
-          @data= GQL::MapReduce.find_child(@data, 'what'=>'scenario_outline')
+          @data= CQL::MapReduce.filter_sso(@data, 'what'=>'scenario_outline')
         elsif key== "names-scenarios"
-          @data = GQL::MapReduce.find_child(@data, 'what'=>'scenario')
+          @data = CQL::MapReduce.filter_sso(@data, 'what'=>'scenario')
         end
         @data
       end

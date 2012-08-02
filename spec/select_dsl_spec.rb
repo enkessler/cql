@@ -4,7 +4,7 @@ require File.dirname(__FILE__) + "/../lib/" + "gherkin_repo"
 describe "cql" do
   describe "select" do
     it 'should find the feature file names' do
-      gs = GQL::GherkinRepository.new File.dirname(__FILE__) + "/../fixtures/features/simple"
+      gs = CQL::GherkinRepository.new File.dirname(__FILE__) + "/../fixtures/features/simple"
 
       result = gs.query do
         select names
@@ -15,10 +15,10 @@ describe "cql" do
     end
 
     it 'should find the feature file names' do
-      gs = GQL::GherkinRepository.new File.dirname(__FILE__) + "/../fixtures/features/simple"
+      gs = CQL::GherkinRepository.new File.dirname(__FILE__) + "/../fixtures/features/simple"
 
       result = gs.query do
-        select file_names
+        select uri
         from features
       end
 
@@ -29,7 +29,7 @@ describe "cql" do
     end
 
     it 'should get scenario outlines as a list' do
-      gs = GQL::GherkinRepository.new File.expand_path(File.dirname(__FILE__)) + "/../fixtures/features/scen_outlines"
+      gs = CQL::GherkinRepository.new File.expand_path(File.dirname(__FILE__)) + "/../fixtures/features/scen_outlines"
 
       result = gs.query do
         select names
@@ -40,7 +40,7 @@ describe "cql" do
     end
 
     it 'should get scenario as a list' do
-      gr = GQL::GherkinRepository.new File.expand_path(File.dirname(__FILE__)) + "/../fixtures/features/simple2"
+      gr = CQL::GherkinRepository.new File.expand_path(File.dirname(__FILE__)) + "/../fixtures/features/simple2"
 
       result = gr.query do
         select names
