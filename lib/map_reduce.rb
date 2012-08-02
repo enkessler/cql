@@ -1,7 +1,7 @@
 module CQL
   class MapReduce
 
-    %w(name uri line).each do |property|
+    %w(name uri line description).each do |property|
       define_singleton_method (property) do |input|
         input.class == Array ? input.map { |a| a[property] } : input[property]
       end

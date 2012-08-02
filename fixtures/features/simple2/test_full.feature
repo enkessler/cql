@@ -1,5 +1,6 @@
 @top-tag
 Feature: Test3 Feature
+The cat in the hat
 
   @one
   Scenario: Testing the slurping

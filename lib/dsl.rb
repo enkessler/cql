@@ -1,9 +1,11 @@
 module CQL
   module Dsl
 
-    %w(names features scenario_outlines uri scenarios line).each do |method_name|
+    %w(names features scenario_outlines uri scenarios line all description).each do |method_name|
       define_method(method_name) { method_name }
     end
+
+    alias :* :all
 
     def select what
       @what = what
@@ -37,6 +39,8 @@ module CQL
           @data = CQL::MapReduce.uri(@data)
         elsif key== "names-features"
           @data = CQL::MapReduce.name(@data)
+        elsif key== "description-features"
+          @data = CQL::MapReduce.description(@data)
         elsif @from== "scenario_outlines"
           @data= CQL::MapReduce.filter_sso(@data, 'what'=>'scenario_outline')
           #@data = CQL::MapReduce.name(@data)

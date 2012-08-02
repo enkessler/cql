@@ -12,6 +12,15 @@ describe "cql" do
       result.should == ["Simple", "Test Feature", "Test2 Feature", "Test3 Feature"]
     end
 
+    it 'should find the feature description' do
+      gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/simple2"
+      result = gs.query do
+        select description
+        from features
+      end
+      result.should == ["The cat in the hat"]
+    end
+
     it 'should find the feature file uri' do
       gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/simple"
       result = gs.query do
@@ -71,7 +80,7 @@ describe "cql" do
         select line
         from scenarios
       end
-      result.should == [5,10,15,20]
+      result.should == [6,11,16,21]
     end
   end
 end
