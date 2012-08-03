@@ -1,8 +1,11 @@
 require File.dirname(__FILE__) + "/dsl"
 module CQL
+
+  QUERY_VALUES = %w(name uri line description type)
+
   class MapReduce
 
-    %w(name uri line description type).each do |property|
+    CQL::QUERY_VALUES.each do |property|
       define_singleton_method (property) do |input|
         input.class == Array ? input.map { |a| a[property] } : input[property]
       end
