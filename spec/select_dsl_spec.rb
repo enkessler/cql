@@ -88,11 +88,12 @@ describe "select" do
     it 'should get scenario outlines name and line numbers as a map' do
       gs = CQL::Repository.new File.expand_path(File.dirname(__FILE__)) + "/../fixtures/features/scen_outlines"
       result = gs.query do
-        select name, line
+        select name, line, type
         from scenario_outlines
       end
       result.should == {'name'=>"An Outline",
-                        'line'=>3}
+                        'line'=>3,
+                        'type'=>'scenario_outline'}
     end
 
     it 'should get multiple scenarios as a list of maps' do
