@@ -7,8 +7,9 @@ module CQL
 
     alias :* :all
 
-    def select what
-      @what = what
+    def select *what
+      @what = what.first if what.size == 1
+      @what = what if what.size > 1
     end
 
     def from where
@@ -41,17 +42,36 @@ module CQL
           @data = CQL::MapReduce.filter_sso(@data, 'what'=>'scenario')
         end
 
-        if @what=='names'
-          @data = CQL::MapReduce.name(@data)
-        elsif @what=='description'
-          @data = CQL::MapReduce.description(@data)
-        elsif @what=='uri'
-          @data = CQL::MapReduce.uri(@data)
-        elsif @what=='line'
-          @data = CQL::MapReduce.line(@data)
+        if @what.class != Array
+          if @what=='names'
+            @data = CQL::MapReduce.name(@data)
+          elsif @what=='description'
+            @data = CQL::MapReduce.description(@data)
+          elsif @what=='uri'
+            @data = CQL::MapReduce.uri(@data)
+          elsif @what=='line'
+            @data = CQL::MapReduce.line(@data)
+          end
+          return @data
         end
 
-        @data
+        if @what.class == Array
+          result = {}
+          @what.each do |w|
+            if w=='names'
+              result['name'] = CQL::MapReduce.name(@data).first
+            elsif w=='description'
+              result['description'] = CQL::MapReduce.description(@data).first
+            elsif w=='uri'
+              result['uri'] = CQL::MapReduce.uri(@data).first
+            elsif w=='line'
+              result['line'] = CQL::MapReduce.line(@data).first
+            end
+          end
+
+          @data = result
+        end
+
       end
     end
   end

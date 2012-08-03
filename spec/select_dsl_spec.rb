@@ -1,8 +1,8 @@
 require 'rspec'
 require File.dirname(__FILE__) + "/../lib/repo"
 
-describe "cql" do
-  describe "select" do
+describe "select" do
+  describe "single value" do
     it 'should find the feature file names' do
       gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/simple"
       result = gs.query do
@@ -82,5 +82,28 @@ describe "cql" do
       end
       result.should == [6,11,16,21]
     end
+  end
+
+  describe "multiple values" do
+    it 'should get scenario outlines names and line numbers as a map' do
+      gs = CQL::Repository.new File.expand_path(File.dirname(__FILE__)) + "/../fixtures/features/scen_outlines"
+      result = gs.query do
+        select names, line
+        from scenario_outlines
+      end
+      result.should == {'name'=>"An Outline",
+                        'line'=>3}
+    end
+
+    #it 'should return a 2D array for feature file names and description for multiple results' do
+    #  gr = CQL::Repository.new File.expand_path(File.dirname(__FILE__)) + "/../fixtures/features/simple2"
+    #  result = gr.query do
+    #    select line, name
+    #    from scenarios
+    #  end
+    #  result.should == [[6,"Testing the slurping"],[11,"Testing again"],
+    #                    [16,"Testing yet again"],[21,"Testing yet again part 2"]]
+    #end
+
   end
 end
