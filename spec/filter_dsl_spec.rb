@@ -8,7 +8,7 @@ describe "cql" do
       gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/tagged_features"
 
       result = gs.query do
-        select names
+        select name
         from features
         with tags '@one'
       end
@@ -16,7 +16,7 @@ describe "cql" do
       result.should == ["Test Feature", "Test3 Feature"]
 
       result = gs.query do
-        select names
+        select name
         from features
         with tags '@two'
       end
@@ -28,7 +28,7 @@ describe "cql" do
       gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/tagged_features"
 
       result = gs.query do
-        select names
+        select name
         from features
         with tags '@one', '@two'
       end

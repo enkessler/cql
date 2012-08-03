@@ -3,10 +3,10 @@ require File.dirname(__FILE__) + "/../lib/repo"
 
 describe "select" do
   describe "single value" do
-    it 'should find the feature file names' do
+    it 'should find the feature file name' do
       gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/simple"
       result = gs.query do
-        select names
+        select name
         from features
       end
       result.should == ["Simple", "Test Feature", "Test2 Feature", "Test3 Feature"]
@@ -44,28 +44,28 @@ describe "select" do
       result[0].should == 3
     end
 
-    it 'should get scenario outlines names' do
+    it 'should get scenario outlines name' do
       gs = CQL::Repository.new File.expand_path(File.dirname(__FILE__)) + "/../fixtures/features/scen_outlines"
       result = gs.query do
-        select names
+        select name
         from scenario_outlines
       end
       result.should == ["An Outline"]
     end
 
-    it 'should get scenario names' do
+    it 'should get scenario name' do
       gr = CQL::Repository.new File.expand_path(File.dirname(__FILE__)) + "/../fixtures/features/simple2"
       result = gr.query do
-        select names
+        select name
         from scenarios
       end
       result.should == ["Testing the slurping", "Testing again", "Testing yet again", "Testing yet again part 2"]
     end
 
-    it 'should get scenario names from multiple feature files' do
+    it 'should get scenario name from multiple feature files' do
       gr = CQL::Repository.new File.expand_path(File.dirname(__FILE__)) + "/../fixtures/features/simple"
       result = gr.query do
-        select names
+        select name
         from scenarios
       end
       result.should == ["Has a table", "Testing the slurping 1",
@@ -85,25 +85,25 @@ describe "select" do
   end
 
   describe "multiple values" do
-    it 'should get scenario outlines names and line numbers as a map' do
+    it 'should get scenario outlines name and line numbers as a map' do
       gs = CQL::Repository.new File.expand_path(File.dirname(__FILE__)) + "/../fixtures/features/scen_outlines"
       result = gs.query do
-        select names, line
+        select name, line
         from scenario_outlines
       end
       result.should == {'name'=>"An Outline",
                         'line'=>3}
     end
 
-    #it 'should return a 2D array for feature file names and description for multiple results' do
-    #  gr = CQL::Repository.new File.expand_path(File.dirname(__FILE__)) + "/../fixtures/features/simple2"
-    #  result = gr.query do
-    #    select line, name
-    #    from scenarios
-    #  end
-    #  result.should == [[6,"Testing the slurping"],[11,"Testing again"],
-    #                    [16,"Testing yet again"],[21,"Testing yet again part 2"]]
-    #end
+    it 'should get multiple scenarios as a list of maps' do
+      gr = CQL::Repository.new File.expand_path(File.dirname(__FILE__)) + "/../fixtures/features/simple2"
+      result = gr.query do
+        select line, name
+        from scenarios
+      end
+      result.should == [{'line'=>6,'name'=>"Testing the slurping"},{'line'=>11,'name'=>"Testing again"},
+                        {'line'=>16,'name'=>"Testing yet again"},{'line'=>21,'name'=>"Testing yet again part 2"}]
+    end
 
   end
 end

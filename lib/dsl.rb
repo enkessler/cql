@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + "/map_reduce"
 module CQL
   module Dsl
-    %w(names features scenario_outlines uri scenarios line all description).each do |method_name|
+    %w(name features scenario_outlines uri scenarios line all description).each do |method_name|
       define_method(method_name) { method_name }
     end
 
@@ -43,7 +43,7 @@ module CQL
         end
 
         if @what.class != Array
-          if @what=='names'
+          if @what=='name'
             @data = CQL::MapReduce.name(@data)
           elsif @what=='description'
             @data = CQL::MapReduce.description(@data)
@@ -56,20 +56,30 @@ module CQL
         end
 
         if @what.class == Array
-          result = {}
+          result = Array.new(@data.size)
+          result = result.map {|e|{}}
+
           @what.each do |w|
-            if w=='names'
-              result['name'] = CQL::MapReduce.name(@data).first
+            if w=='name'
+              CQL::MapReduce.name(@data).each_with_index do |e,i|
+                result[i]['name'] = e
+              end
             elsif w=='description'
-              result['description'] = CQL::MapReduce.description(@data).first
+              CQL::MapReduce.description(@data).each_with_index do |e,i|
+                result[i]['description'] = e
+              end
             elsif w=='uri'
-              result['uri'] = CQL::MapReduce.uri(@data).first
+              CQL::MapReduce.uri(@data).each_with_index do |e,i|
+                result[i]['uri'] = e
+              end
             elsif w=='line'
-              result['line'] = CQL::MapReduce.line(@data).first
+              CQL::MapReduce.line(@data).each_with_index do |e,i|
+                result[i]['line'] = e
+              end
             end
           end
 
-          @data = result
+          @data =  result.size == 1 ? result.first : result
         end
 
       end
