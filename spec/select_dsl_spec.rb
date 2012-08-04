@@ -80,7 +80,7 @@ describe "select" do
         select line
         from scenarios
       end
-      result.should == [6,11,16,21]
+      result.should == [6, 11, 16, 21]
     end
   end
 
@@ -88,13 +88,28 @@ describe "select" do
     it 'should get scenario outlines name and line numbers as a map' do
       gs = CQL::Repository.new File.expand_path(File.dirname(__FILE__)) + "/../fixtures/features/scen_outlines"
       result = gs.query do
-        select name, line, type
+        select name, line, type, steps, id
         from scenario_outlines
       end
       result.should == {'name'=>"An Outline",
                         'line'=>3,
-                        'type'=>'scenario_outline'}
+                        'id'=>'test-feature;an-outline',
+                        'type'=>'scenario_outline',
+                        "steps"=>[{"keyword"=>"Given ", "name"=>"something happend", "line"=>4}, {"keyword"=>"Then ", "name"=>"I expect something else", "line"=>5}]}
     end
+
+    #it 'should get the full step line scenario outlines' do
+    #  gs = CQL::Repository.new File.expand_path(File.dirname(__FILE__)) + "/../fixtures/features/scen_outlines"
+    #  result = gs.query do
+    #    select name, line, type, step_lines
+    #    from scenario_outlines
+    #  end
+    #  result.should == {'name'=>"An Outline",
+    #                    'line'=>3,
+    #                    'type'=>'scenario_outline',
+    #                    "steps"=>[{"keyword"=>"Given ", "name"=>"something happend", "line"=>4}, {"keyword"=>"Then ", "name"=>"I expect something else", "line"=>5}]}
+    #end
+
 
     it 'should get multiple scenarios as a list of maps' do
       gr = CQL::Repository.new File.expand_path(File.dirname(__FILE__)) + "/../fixtures/features/simple2"
@@ -102,8 +117,8 @@ describe "select" do
         select line, name
         from scenarios
       end
-      result.should == [{'line'=>6,'name'=>"Testing the slurping"},{'line'=>11,'name'=>"Testing again"},
-                        {'line'=>16,'name'=>"Testing yet again"},{'line'=>21,'name'=>"Testing yet again part 2"}]
+      result.should == [{'line'=>6, 'name'=>"Testing the slurping"}, {'line'=>11, 'name'=>"Testing again"},
+                        {'line'=>16, 'name'=>"Testing yet again"}, {'line'=>21, 'name'=>"Testing yet again part 2"}]
     end
 
   end
