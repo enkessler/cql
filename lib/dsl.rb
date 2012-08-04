@@ -37,11 +37,7 @@ module CQL
         @data = features
         @data = self.instance_eval(&block)
 
-        if @from == "scenario_outlines"
-          @data= CQL::MapReduce.filter_sso(@data, 'what'=>'scenario_outline')
-        elsif @from == "scenarios"
-          @data = CQL::MapReduce.filter_sso(@data, 'what'=>'scenario')
-        end
+        @data= CQL::MapReduce.filter_sso(@data, 'what'=>@from[0,@from.size-1])if @from != "features"
 
         if @what.class != Array
           @data = CQL::MapReduce.send(@what, @data)
