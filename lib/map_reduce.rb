@@ -1,4 +1,5 @@
 require File.dirname(__FILE__) + "/dsl"
+require 'pp'
 module CQL
 
   QUERY_VALUES = %w(name uri line description type steps id)
@@ -12,7 +13,9 @@ module CQL
     end
 
     def self.step_lines input
-      steps(input).first.map{|e| e['keyword']+e['name'] }
+      result = steps(input).map do |scen|
+        scen.map { |line| line['keyword'] + line['name'] }
+      end
     end
 
     def self.filter_features input, args
