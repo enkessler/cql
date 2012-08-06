@@ -61,63 +61,18 @@ describe "cql" do
 
   describe 'scenario query' do
     it 'should get all scenarios as a list' do
-      gs = CQL::Repository.new File.expand_path(File.dirname(__FILE__)) + "/../fixtures/features/scen_outlines"
+      gs = CQL::Repository.new File.expand_path(File.dirname(__FILE__)) + "/../fixtures/features/scen_outlines/basic"
       result = CQL::MapReduce.filter_sso(gs.parsed_feature_files, {'feature'=>"Test Feature", 'what'=>'scenario'})
       result.should == [{"keyword"=>"Scenario", "name"=>"A Scenario", "line"=>13, "description"=>"", "id"=>"test-feature;a-scenario", "type"=>"scenario", "steps"=>[{"keyword"=>"Given ", "name"=>"something happend", "line"=>14}, {"keyword"=>"Then ", "name"=>"I expect something else", "line"=>15}]}]
     end
-
-    #it 'should get a full scenario' do
-    #  simple_path = File.expand_path(File.dirname(__FILE__)) + "/../fixtures/features/simple"
-    #  gs = CQL::GherkinRepository.new simple_path
-    #  expected = {"keyword"=>"Scenario", "name"=>"Testing the slurping", "line"=>3,
-    #              "description"=>"", "id"=>"test-feature;testing-the-slurping", "type"=>"scenario",
-    #              "steps"=>[{"keyword"=>"Given ", "name"=>"something happend", "line"=>4},
-    #                        {"keyword"=>"Then ", "name"=>"I expect something else", "line"=>5}]}
-    #  CQL::MapReduce.scenario(gs.parsed_feature_files, {'what'=>'scenario', 'feature'=>"Test Feature", 'child_name'=>"Testing the slurping"}).should == expected
-    #end
-
-    #it 'should find scenarios by a single tag' do
-    #  gs = CQL::GherkinRepository.new File.expand_path(File.dirname(__FILE__)) + "/../fixtures/features/tags"
-    #  CQL::MapReduce.scenario_by_feature_and_tag(gs.parsed_feature_files, "Simple", true, "@one").should == ['Next', 'Another']
-    #  CQL::MapReduce.scenario_by_feature_and_tag(gs.parsed_feature_files, "Simple", true, "@two").should == ['Has a table', 'Blah']
-    #
-    #  gs = CQL::GherkinRepository.new File.expand_path(File.dirname(__FILE__)) + "/../fixtures/features/tags2"
-    #  CQL::MapReduce.scenario_by_feature_and_tag(gs.parsed_feature_files, "Simple", true, "@one").should == ['Next', 'Another']
-    #  CQL::MapReduce.scenario_by_feature_and_tag(gs.parsed_feature_files, "Simple", true, "@two").should == ['Has a table', 'Blah']
-    #  CQL::MapReduce.scenario_by_feature_and_tag(gs.parsed_feature_files, "Simple 2", true, "@one").should == ['Next', 'Another']
-    #  CQL::MapReduce.scenario_by_feature_and_tag(gs.parsed_feature_files, "Simple 2", true, "@two").should == ['Has a table hmmm', 'Blah blah']
-    #
-    #  CQL::MapReduce.scenario_by_feature_and_tag(gs.parsed_feature_files, "Simple", true, "@three").should == []
-    #
-    #end
-
-    #it 'should find scenarios that do not have a specified tag' do
-    #  gs = CQL::GherkinRepository.new File.expand_path(File.dirname(__FILE__)) + "/../fixtures/features/tags"
-    #  CQL::MapReduce.scenario_by_feature_and_tag(gs.parsed_feature_files, "Simple", false, "@one").should == ['Has a table', 'Blah', 'Yet Another']
-    #  #GQL::MapReduce.scenario_by_feature_wo_tag(gs.parsed_feature_files, "Simple", "@two").should == ['Has a table', 'Blah']
-    #end
-
-    #it 'should find scenarios by multiple tags' do
-    #  gs = CQL::GherkinRepository.new File.expand_path(File.dirname(__FILE__)) + "/../fixtures/features/tags2"
-    #  CQL::MapReduce.scenario_by_feature_and_tag(gs.parsed_feature_files, "Simple 2", true, "@two", "@four").should == ['Has a table hmmm']
-    #end
-
-    #it 'should retrieve the table data' do
-    #  gs = CQL::GherkinRepository.new File.expand_path(File.dirname(__FILE__)) + "/../fixtures/features/table"
-    #  expected = {"keyword"=>"Scenario", "name"=>"Has a table", "line"=>3, "description"=>"", "id"=>"simple;has-a-table", "type"=>"scenario",
-    #              "steps"=>[{"keyword"=>"Given ", "name"=>"Something", "line"=>4,
-    #                         "rows"=>[{"cells"=>["a", "a"], "line"=>5},
-    #                                  {"cells"=>["s", "a"], "line"=>6}, {"cells"=>["s", "s"], "line"=>7}]},
-    #                        {"keyword"=>"Then ", "name"=>"something else", "line"=>8}]}
-    #  CQL::MapReduce.scenario(gs.parsed_feature_files, {'what'=>'scenario', 'feature'=>"Simple", 'child_name'=>"Has a table"}).should == expected
-    #end
   end
 
   describe 'scenario outline query' do
     it 'should get scenario outlines as a list' do
-      gs = CQL::Repository.new File.expand_path(File.dirname(__FILE__)) + "/../fixtures/features/scen_outlines"
+      gs = CQL::Repository.new File.expand_path(File.dirname(__FILE__)) + "/../fixtures/features/scen_outlines/basic"
       result = CQL::MapReduce.filter_sso(gs.parsed_feature_files, {'feature'=>"Test Feature", 'what'=> 'scenario'})
       result.should == [{"keyword"=>"Scenario", "name"=>"A Scenario", "line"=>13, "description"=>"", "id"=>"test-feature;a-scenario", "type"=>"scenario", "steps"=>[{"keyword"=>"Given ", "name"=>"something happend", "line"=>14}, {"keyword"=>"Then ", "name"=>"I expect something else", "line"=>15}]}]
+
       result = CQL::MapReduce.filter_sso(gs.parsed_feature_files, {'feature'=> "Test Feature", 'what'=> 'scenario_outline'})
       result.should == [{"keyword"=>"Scenario Outline", "name"=>"An Outline", "line"=>3, "description"=>"", "id"=>"test-feature;an-outline", "type"=>"scenario_outline", "steps"=>[{"keyword"=>"Given ", "name"=>"something happend", "line"=>4}, {"keyword"=>"Then ", "name"=>"I expect something else", "line"=>5}], "examples"=>[{"keyword"=>"Examples", "name"=>"", "line"=>6, "description"=>"", "id"=>"test-feature;an-outline;", "rows"=>[{"cells"=>["var_a", "var_b"], "line"=>7, "id"=>"test-feature;an-outline;;1"}, {"cells"=>["1", "a"], "line"=>8, "id"=>"test-feature;an-outline;;2"}, {"cells"=>["2", "b"], "line"=>9, "id"=>"test-feature;an-outline;;3"}, {"cells"=>["3", "c"], "line"=>10, "id"=>"test-feature;an-outline;;4"}, {"cells"=>["4", "d"], "line"=>11, "id"=>"test-feature;an-outline;;5"}]}]}]
     end

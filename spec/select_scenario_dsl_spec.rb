@@ -2,9 +2,6 @@ require 'rspec'
 require File.dirname(__FILE__) + "/../lib/repo"
 
 describe "select" do
-  describe "single value, single results" do
-
-  end
 
   describe "single value, multiple results" do
     it 'should get scenario line number' do
@@ -39,10 +36,6 @@ describe "select" do
     end
   end
 
-  describe "select all" do
-
-  end
-
   describe "multiple values" do
     it 'should get multiple scenarios as a list of maps' do
       gr = CQL::Repository.new File.expand_path(File.dirname(__FILE__)) + "/../fixtures/features/scenario/simple2"
@@ -53,5 +46,28 @@ describe "select" do
       result.should == [{'line'=>6, 'name'=>"Testing the slurping"}, {'line'=>11, 'name'=>"Testing again"},
                         {'line'=>16, 'name'=>"Testing yet again"}, {'line'=>21, 'name'=>"Testing yet again part 2"}]
     end
+
+    it "should select all" do
+      gr = CQL::Repository.new File.expand_path(File.dirname(__FILE__)) + "/../fixtures/features/scenario/table"
+      expected = {"all"=>{"keyword"=>"Scenario", "name"=>"Has a table", "line"=>3,
+                          "description"=>"", "id"=>"simple;has-a-table", "type"=>"scenario",
+                          "steps"=>[{"keyword"=>"Given ", "name"=>"Something", "line"=>4,
+                                     "rows"=>[{"cells"=>["a", "a"], "line"=>5}, {"cells"=>["s", "a"], "line"=>6},
+                                              {"cells"=>["s", "s"], "line"=>7}]},
+                                    {"keyword"=>"Then ", "name"=>"something else", "line"=>8}]}}
+
+      result = gr.query do
+        select all
+        from scenarios
+      end
+      result.should == expected
+
+      result = gr.query do
+        select complete
+        from scenarios
+      end
+      result.should == expected
+    end
+
   end
 end
