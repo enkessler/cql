@@ -5,7 +5,7 @@ describe "cql" do
 
   describe "file parsing" do
     it 'should find the physical files' do
-      gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/simple"
+      gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/scenario/simple"
       result = CQL::MapReduce.uri(gs.parsed_feature_files)
       result[0].should =~ /simple\.feature/
       result[1].should =~ /test\.feature/
@@ -16,7 +16,7 @@ describe "cql" do
 
   describe "tags" do
     it "retrieve tags from a scenario" do
-      gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/tags2"
+      gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/scenario/tags2"
       CQL::MapReduce.tag_set(gs.parsed_feature_files).sort.should == ["@five", "@four", "@one", "@two"].sort
     end
 
@@ -35,7 +35,7 @@ describe "cql" do
 
   describe 'features query' do
     it 'should find all feature names' do
-      gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/simple"
+      gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/scenario/simple"
       CQL::MapReduce.name(gs.parsed_feature_files).should eql ["Simple", "Test Feature", "Test2 Feature", "Test3 Feature"]
     end
 
@@ -45,7 +45,7 @@ describe "cql" do
     #end
 
     it 'should retrieve a full feature' do
-      gs = CQL::Repository.new File.expand_path(File.dirname(__FILE__)) + "/../fixtures/features/simple"
+      gs = CQL::Repository.new File.expand_path(File.dirname(__FILE__)) + "/../fixtures/features/scenario/simple"
       result = CQL::MapReduce.filter_features(gs.parsed_feature_files, {'feature'=>"Test Feature"})
       result['name'].should == "Test Feature"
       result['elements'][0]['name'].should == "Testing the slurping 1"

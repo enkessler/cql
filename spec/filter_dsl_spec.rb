@@ -5,7 +5,7 @@ describe "cql" do
 
   describe 'filter' do
     it 'should filter by a single tag' do
-      gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/tagged_features"
+      gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/scenario/tagged_features"
 
       result = gs.query do
         select name

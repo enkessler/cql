@@ -4,7 +4,7 @@ require File.dirname(__FILE__) + "/../lib/repo"
 describe "select" do
   describe "feature" do
     it 'should return multiple feature file names' do
-      gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/simple"
+      gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/scenario/simple"
       result = gs.query do
         select name
         from features
@@ -14,7 +14,7 @@ describe "select" do
     end
 
     it 'should return multiple feature file names with associated tags' do
-      gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/tagged_features"
+      gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/scenario/tagged_features"
       result = gs.query do
         select name, tags
         from features
@@ -26,7 +26,7 @@ describe "select" do
     end
 
     it 'should find the feature description' do
-      gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/simple2"
+      gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/scenario/simple2"
       result = gs.query do
         select description
         from features
@@ -35,7 +35,7 @@ describe "select" do
     end
 
     it 'should find the feature file uri' do
-      gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/simple"
+      gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/scenario/simple"
       result = gs.query do
         select uri
         from features
