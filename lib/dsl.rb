@@ -9,8 +9,7 @@ module CQL
     alias :* :all
 
     def select *what
-      @what = what.first if what.size == 1
-      @what = what if what.size > 1
+      @what = what
     end
 
     def from where
@@ -38,10 +37,6 @@ module CQL
         @data = self.instance_eval(&block)
 
         @data= CQL::MapReduce.filter_sso(@data, 'what'=>@from[0,@from.size-1])if @from != "features"
-
-        if @what.class != Array
-          @data = CQL::MapReduce.send(@what, @data)
-        elsif @what.class == Array
           result = Array.new(@data.size)
           result = result.map { |e| {} }
           @what.each do |w|
@@ -50,8 +45,6 @@ module CQL
             end
           end
           @data = result.size == 1 ? result.first : result
-        end
-
       end
     end
   end

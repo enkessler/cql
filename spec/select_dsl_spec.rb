@@ -9,7 +9,8 @@ describe "select" do
         select name
         from features
       end
-      result.should == ["Simple", "Test Feature", "Test2 Feature", "Test3 Feature"]
+      result.should == [{"name"=>"Simple"}, {"name"=>"Test Feature"},
+                        {"name"=>"Test2 Feature"}, {"name"=>"Test3 Feature"}]
     end
 
     it 'should find the feature description' do
@@ -18,7 +19,7 @@ describe "select" do
         select description
         from features
       end
-      result.should == ["The cat in the hat"]
+      result.should == {"description"=>"The cat in the hat"}
     end
 
     it 'should find the feature file uri' do
@@ -27,21 +28,19 @@ describe "select" do
         select uri
         from features
       end
-      result[0].should =~ /simple\.feature/
-      result[1].should =~ /test\.feature/
-      result[2].should =~ /test2\.feature/
-      result[3].should =~ /test\_full\.feature/
+      result[0]['uri'].should =~ /simple\.feature/
+      result[1]['uri'].should =~ /test\.feature/
+      result[2]['uri'].should =~ /test2\.feature/
+      result[3]['uri'].should =~ /test\_full\.feature/
     end
 
     it 'should get scenario outlines line number' do
       gs = CQL::Repository.new File.expand_path(File.dirname(__FILE__)) + "/../fixtures/features/scen_outlines"
-
       result = gs.query do
         select line
         from scenario_outlines
       end
-
-      result[0].should == 3
+      result.should == {"line"=>3}
     end
 
     it 'should get scenario outlines name' do
@@ -50,7 +49,7 @@ describe "select" do
         select name
         from scenario_outlines
       end
-      result.should == ["An Outline"]
+      result.should == {"name"=> "An Outline"}
     end
 
     it 'should get scenario name' do
@@ -59,7 +58,8 @@ describe "select" do
         select name
         from scenarios
       end
-      result.should == ["Testing the slurping", "Testing again", "Testing yet again", "Testing yet again part 2"]
+      result.should == [{"name"=> "Testing the slurping"}, {"name"=> "Testing again"},
+                        {"name"=> "Testing yet again"}, {"name"=> "Testing yet again part 2"}]
     end
 
     it 'should get scenario name from multiple feature files' do
@@ -68,10 +68,10 @@ describe "select" do
         select name
         from scenarios
       end
-      result.should == ["Has a table", "Testing the slurping 1",
-                        "Testing the slurping not to be found", "Testing the slurping 2",
-                        "Testing the slurping 3", "Testing again",
-                        "Testing yet again", "Testing yet again part 2"]
+      result.should == [{"name"=> "Has a table"}, {"name"=> "Testing the slurping 1"},
+                        {"name"=> "Testing the slurping not to be found"}, {"name"=> "Testing the slurping 2"},
+                        {"name"=> "Testing the slurping 3"}, {"name"=> "Testing again"},
+                        {"name"=> "Testing yet again"}, {"name"=> "Testing yet again part 2"}]
     end
 
     it 'should get scenario line number' do
@@ -80,7 +80,7 @@ describe "select" do
         select line
         from scenarios
       end
-      result.should == [6, 11, 16, 21]
+      result.should == [{"line"=> 6}, {"line"=> 11}, {"line"=> 16}, {"line"=> 21}]
     end
   end
 
@@ -97,7 +97,7 @@ describe "select" do
                         'type'=>'scenario_outline',
                         "steps"=>[{"keyword"=>"Given ", "name"=>"something happend", "line"=>4}, {"keyword"=>"Then ", "name"=>"I expect something else", "line"=>5}],
                         "step_lines"=>["Given something happend", "Then I expect something else"]
-                         }
+      }
     end
 
     it 'should get the full step line scenario outlines' do
@@ -106,9 +106,8 @@ describe "select" do
         select step_lines
         from scenario_outlines
       end
-      result.should == [["Given something happend", "Then I expect something else"]]
+      result.should == {"step_lines"=> ["Given something happend", "Then I expect something else"]}
     end
-
 
     it 'should get multiple scenarios as a list of maps' do
       gr = CQL::Repository.new File.expand_path(File.dirname(__FILE__)) + "/../fixtures/features/simple2"
@@ -119,6 +118,5 @@ describe "select" do
       result.should == [{'line'=>6, 'name'=>"Testing the slurping"}, {'line'=>11, 'name'=>"Testing again"},
                         {'line'=>16, 'name'=>"Testing yet again"}, {'line'=>21, 'name'=>"Testing yet again part 2"}]
     end
-
   end
 end

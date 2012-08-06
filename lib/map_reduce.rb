@@ -8,12 +8,14 @@ module CQL
 
     CQL::QUERY_VALUES.each do |property|
       define_singleton_method (property) do |input|
-        input.class == Array ? input.map { |a| a[property] } : input[property]
+        input = [input] if input.class != Array
+        input.map { |a| a[property] }
       end
     end
 
     def self.step_lines input
-      result = steps(input).map do |scen|
+      input = [input] if input.class != Array
+      steps(input).map do |scen|
         scen.map { |line| line['keyword'] + line['name'] }
       end
     end
