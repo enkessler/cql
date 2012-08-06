@@ -98,17 +98,14 @@ describe "select" do
                         "steps"=>[{"keyword"=>"Given ", "name"=>"something happend", "line"=>4}, {"keyword"=>"Then ", "name"=>"I expect something else", "line"=>5}]}
     end
 
-    #it 'should get the full step line scenario outlines' do
-    #  gs = CQL::Repository.new File.expand_path(File.dirname(__FILE__)) + "/../fixtures/features/scen_outlines"
-    #  result = gs.query do
-    #    select name, line, type, step_lines
-    #    from scenario_outlines
-    #  end
-    #  result.should == {'name'=>"An Outline",
-    #                    'line'=>3,
-    #                    'type'=>'scenario_outline',
-    #                    "steps"=>[{"keyword"=>"Given ", "name"=>"something happend", "line"=>4}, {"keyword"=>"Then ", "name"=>"I expect something else", "line"=>5}]}
-    #end
+    it 'should get the full step line scenario outlines' do
+      gs = CQL::Repository.new File.expand_path(File.dirname(__FILE__)) + "/../fixtures/features/scen_outlines"
+      result = gs.query do
+        select step_lines
+        from scenario_outlines
+      end
+      result.should == ["Given something happend", "Then I expect something else"]
+    end
 
 
     it 'should get multiple scenarios as a list of maps' do
