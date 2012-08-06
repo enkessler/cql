@@ -17,6 +17,10 @@ module CQL
       input
     end
 
+    def self.everything input
+      input
+    end
+
     def self.step_lines input
       input = [input] if input.class != Array
       steps(input).map do |scen|

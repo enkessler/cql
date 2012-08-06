@@ -6,7 +6,7 @@ module CQL
       define_method(method_name) { method_name }
     end
 
-    alias :* :all
+    alias :everything :all
 
     def select *what
       @what = what
