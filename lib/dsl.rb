@@ -18,6 +18,7 @@ module CQL
     end
 
     def tags *tags
+      return "tags" if tags.size == 0
       {'tags'=>tags}
     end
 

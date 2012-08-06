@@ -17,7 +17,7 @@ describe "cql" do
   describe "tags" do
     it "retrieve tags from a scenario" do
       gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/tags2"
-      CQL::MapReduce.tags(gs.parsed_feature_files).sort.should == ["@five", "@four", "@one", "@two"].sort
+      CQL::MapReduce.tag_set(gs.parsed_feature_files).sort.should == ["@five", "@four", "@one", "@two"].sort
     end
 
     it 'should filter features by tag' do

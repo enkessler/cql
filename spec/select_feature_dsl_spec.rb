@@ -2,8 +2,8 @@ require 'rspec'
 require File.dirname(__FILE__) + "/../lib/repo"
 
 describe "select" do
-  describe "single value" do
-    it 'should find the feature file name' do
+  describe "feature" do
+    it 'should return multiple feature file names' do
       gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/simple"
       result = gs.query do
         select name
@@ -11,6 +11,18 @@ describe "select" do
       end
       result.should == [{"name"=>"Simple"}, {"name"=>"Test Feature"},
                         {"name"=>"Test2 Feature"}, {"name"=>"Test3 Feature"}]
+    end
+
+    it 'should return multiple feature file names with associated tags' do
+      gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/tagged_features"
+      result = gs.query do
+        select name, tags
+        from features
+      end
+      result.should == [{"name"=>"Simple", "tags"=>nil},
+                        {"name"=>"Test Feature", "tags"=>[{"name"=>"@one", "line"=>1}]},
+                        {"name"=>"Test2 Feature", "tags"=>[{"name"=>"@two", "line"=>1}]},
+                        {"name"=>"Test3 Feature", "tags"=>[{"name"=>"@one", "line"=>1}, {"name"=>"@two", "line"=>1}]}]
     end
 
     it 'should find the feature description' do

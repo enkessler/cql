@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + "/dsl"
 require 'pp'
 module CQL
 
-  QUERY_VALUES = %w(name uri line description type steps id)
+  QUERY_VALUES = %w(name uri line description type steps id tags)
 
   class MapReduce
 
@@ -40,7 +40,8 @@ module CQL
       results
     end
 
-    def self.tags input
+    def self.tag_set input
+      puts "in tag getter"
       tags = Set.new
       input.each do |feature|
         feature['elements'].each do |element|
