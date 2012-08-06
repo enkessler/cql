@@ -13,18 +13,6 @@ describe "select" do
                         {"name"=>"Test2 Feature"}, {"name"=>"Test3 Feature"}]
     end
 
-    it 'should return multiple feature file names with associated tags' do
-      gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/scenario/tagged_features"
-      result = gs.query do
-        select name, tags
-        from features
-      end
-      result.should == [{"name"=>"Simple", "tags"=>nil},
-                        {"name"=>"Test Feature", "tags"=>[{"name"=>"@one", "line"=>1}]},
-                        {"name"=>"Test2 Feature", "tags"=>[{"name"=>"@two", "line"=>1}]},
-                        {"name"=>"Test3 Feature", "tags"=>[{"name"=>"@one", "line"=>1}, {"name"=>"@two", "line"=>1}]}]
-    end
-
     it 'should find the feature description' do
       gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/scenario/simple2"
       result = gs.query do
@@ -45,5 +33,18 @@ describe "select" do
       result[2]['uri'].should =~ /test2\.feature/
       result[3]['uri'].should =~ /test\_full\.feature/
     end
+
+    it 'should return multiple feature file names with associated tags' do
+      gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/scenario/tagged_features"
+      result = gs.query do
+        select name, tags
+        from features
+      end
+      result.should == [{"name"=>"Simple", "tags"=>nil},
+                        {"name"=>"Test Feature", "tags"=>[{"name"=>"@one", "line"=>1}]},
+                        {"name"=>"Test2 Feature", "tags"=>[{"name"=>"@two", "line"=>1}]},
+                        {"name"=>"Test3 Feature", "tags"=>[{"name"=>"@one", "line"=>1}, {"name"=>"@two", "line"=>1}]}]
+    end
+
   end
 end
