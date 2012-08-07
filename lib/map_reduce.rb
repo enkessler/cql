@@ -24,7 +24,7 @@ module CQL
     end
 
     def self.filter_features input, args
-      input = input.find_all { |feature| feature['name'] == args['feature'] } if args.has_key? 'feature'
+      input = input.find_all { |feature| feature['name'] == args['feature'][0] } if args.has_key? 'feature'
       input = input.find_all { |feature| has_tags feature['tags'], args['tags'] } if args.has_key? 'tags'
       input
     end

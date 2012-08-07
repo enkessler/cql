@@ -3,7 +3,10 @@ module CQL
   DSL_KEYWORDS = %w(features scenario_outlines scenarios all step_lines examples)
   module Dsl
     (CQL::QUERY_VALUES + CQL::DSL_KEYWORDS).each do |method_name|
-      define_method(method_name) { method_name }
+      define_method(method_name) { |*args|
+        return method_name if args.size == 0
+        {method_name=>args}
+      }
     end
 
     alias :everything :all
@@ -26,6 +29,8 @@ module CQL
     def with filter
       if filter.has_key? 'tags'
         @data = CQL::MapReduce.filter_features(@data, 'tags'=>filter['tags'])
+      elsif filter.has_key? 'name'
+        @data = CQL::MapReduce.filter_features(@data, 'feature'=>filter['name'])
       end
       @data
     end
