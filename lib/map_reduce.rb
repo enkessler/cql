@@ -31,7 +31,7 @@ module CQL
 
     def self.filter_sso input, args
       results = []
-      input = [filter_features(input, 'feature'=>args['feature'])] if args.has_key?('feature')
+      input = filter_features(input, 'feature'=>args['feature']) if args.has_key?('feature')
       input.each do |feature|
         feature['elements'].each do |element|
           results.push element if element['type'] == args['what']

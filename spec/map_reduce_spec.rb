@@ -37,11 +37,11 @@ describe "cql" do
                {"keyword"=>"Feature", "name"=>"Test2 Feature", "line"=>2, "description"=>"", "tags"=>[{"name"=>"@two", "line"=>1}], "id"=>"test2-feature"},
                {"keyword"=>"Feature", "name"=>"Test3 Feature", "line"=>2, "description"=>"", "tags"=>[{"name"=>"@one", "line"=>1}, {"name"=>"@two", "line"=>1}], "id"=>"test3-feature"}]
       result = CQL::MapReduce.filter_features(input, 'tags'=>['@one', '@two'])
-      result.size.should == {"keyword"=>"Feature", "name"=>"Test3 Feature",
+      result.should == [{"keyword"=>"Feature", "name"=>"Test3 Feature",
                              "line"=>2, "description"=>"",
                              "tags"=>[{"name"=>"@one", "line"=>1},
                                       {"name"=>"@two", "line"=>1}],
-                             "id"=>"test3-feature"}
+                             "id"=>"test3-feature"}]
     end
   end
 
@@ -54,9 +54,9 @@ describe "cql" do
     it 'should retrieve a full feature' do
       gs = CQL::Repository.new File.expand_path(File.dirname(__FILE__)) + "/../fixtures/features/scenario/simple"
       result = CQL::MapReduce.filter_features(gs.parsed_feature_files, {'feature'=>"Test Feature"})
-      result['name'].should == "Test Feature"
-      result['elements'][0]['name'].should == "Testing the slurping 1"
-      result['elements'].should == [{"keyword"=>"Scenario", "name"=>"Testing the slurping 1", "line"=>3,
+      result[0]['name'].should == "Test Feature"
+      result[0]['elements'][0]['name'].should == "Testing the slurping 1"
+      result[0]['elements'].should == [{"keyword"=>"Scenario", "name"=>"Testing the slurping 1", "line"=>3,
                                      "description"=>"", "id"=>"test-feature;testing-the-slurping-1", "type"=>"scenario",
                                      "steps"=>[{"keyword"=>"Given ", "name"=>"something happend", "line"=>4},
                                                {"keyword"=>"Then ", "name"=>"I expect something else", "line"=>5}]},
