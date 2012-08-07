@@ -31,6 +31,18 @@ describe "cql" do
       result[1]['name'].should == "Test3 Feature"
     end
 
+    it 'should filter by multiple tags' do
+      input = [{"keyword"=>"Feature", "name"=>"Simple", "line"=>1, "description"=>"", "id"=>"simple"},
+               {"keyword"=>"Feature", "name"=>"Test Feature", "line"=>2, "description"=>"", "tags"=>[{"name"=>"@one", "line"=>1}], "id"=>"test-feature"},
+               {"keyword"=>"Feature", "name"=>"Test2 Feature", "line"=>2, "description"=>"", "tags"=>[{"name"=>"@two", "line"=>1}], "id"=>"test2-feature"},
+               {"keyword"=>"Feature", "name"=>"Test3 Feature", "line"=>2, "description"=>"", "tags"=>[{"name"=>"@one", "line"=>1}, {"name"=>"@two", "line"=>1}], "id"=>"test3-feature"}]
+      result = CQL::MapReduce.filter_features(input, 'tags'=>['@one', '@two'])
+      result.size.should == {"keyword"=>"Feature", "name"=>"Test3 Feature",
+                             "line"=>2, "description"=>"",
+                             "tags"=>[{"name"=>"@one", "line"=>1},
+                                      {"name"=>"@two", "line"=>1}],
+                             "id"=>"test3-feature"}
+    end
   end
 
   describe 'features query' do
@@ -38,11 +50,6 @@ describe "cql" do
       gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/scenario/simple"
       CQL::MapReduce.name(gs.parsed_feature_files).should eql ["Simple", "Test Feature", "Test2 Feature", "Test3 Feature"]
     end
-
-    #it 'should filter by a scenario by feature and then by tag' do
-    #  gs = CQL::GherkinRepository.new File.expand_path(File.dirname(__FILE__)) + "/../fixtures/features/tags2"
-    #  CQL::MapReduce.scenario_by_feature_and_tag(gs.parsed_feature_files, "Not here", "@three").should == []
-    #end
 
     it 'should retrieve a full feature' do
       gs = CQL::Repository.new File.expand_path(File.dirname(__FILE__)) + "/../fixtures/features/scenario/simple"
