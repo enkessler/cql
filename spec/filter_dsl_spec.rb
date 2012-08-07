@@ -3,7 +3,7 @@ require File.dirname(__FILE__) + "/../lib/repo"
 
 describe "cql" do
 
-  describe 'filter features by tag' do
+  describe 'filter features by name' do
     it 'should filter by name' do
       gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/scenario/tagged_features"
 
@@ -16,6 +16,17 @@ describe "cql" do
       result.should == {"name"=> "Test2 Feature"}
     end
 
+    it 'should filter by name regexp' do
+      gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/scenario/tagged_features"
+
+      result = gs.query do
+        select name
+        from features
+        with name /Test2 Feature/
+      end
+
+      result.should == {"name"=> "Test2 Feature"}
+    end
   end
 
   describe 'filter features by tag' do
