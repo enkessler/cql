@@ -13,7 +13,7 @@ module CQL
     end
 
     %w(all everything complete).each do |method_name|
-      define_singleton_method(method_name){|input|input}
+      define_singleton_method(method_name) { |input| input }
     end
 
     def self.step_lines input
@@ -28,6 +28,10 @@ module CQL
         input = input.find_all { |feature| feature['name'] == args['feature'][0] }
       elsif args.has_key?('feature') && args['feature'][0].class == Regexp
         input = input.find_all { |feature| feature['name'] =~ args['feature'][0] }
+      elsif args.has_key?('sc_gt')
+        input = input.find_all do |feature|
+          feature['elements'].find_all { |e| e['keyword'] == "Scenario" }.size > args['sc_gt']
+        end
       end
       input = input.find_all { |feature| has_tags feature['tags'], args['tags'] } if args.has_key? 'tags'
       input
