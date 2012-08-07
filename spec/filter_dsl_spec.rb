@@ -24,6 +24,19 @@ describe "cql" do
       result.should == [{"name"=> "Test2 Feature"}, {"name"=>"Test3 Feature"}]
     end
 
+    it 'should filter by multiple filters' do
+      gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/scenario/tagged_features"
+
+      result = gs.query do
+        select name
+        from features
+        with tags '@two'
+        with tags '@one'
+      end
+
+      result.should == {"name"=>"Test3 Feature"}
+    end
+
     it 'should filter by a multiple tags' do
       gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/scenario/tagged_features"
 
