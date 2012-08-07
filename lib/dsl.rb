@@ -30,6 +30,14 @@ module CQL
       {'sc_gt'=>num}
     end
 
+    def sc_gte num
+      {'sc_gte'=>num}
+    end
+
+    def sc_lt num
+      {'sc_lt'=>num}
+    end
+
     def with filter
       if filter.has_key? 'tags'
         @data = CQL::MapReduce.filter_features(@data, 'tags'=>filter['tags'])
@@ -37,6 +45,12 @@ module CQL
         @data = CQL::MapReduce.filter_features(@data, 'feature'=>filter['name'])
       elsif filter.has_key? 'sc_gt'
         @data = CQL::MapReduce.filter_features(@data, 'sc_gt'=>filter['sc_gt'])
+      elsif filter.has_key? 'sc_gte'
+        @data = CQL::MapReduce.filter_features(@data, 'sc_gte'=>filter['sc_gte'])
+      elsif filter.has_key? 'sc_lt'
+        @data = CQL::MapReduce.filter_features(@data, 'sc_lt'=>filter['sc_lt'])
+      elsif filter.has_key? 'sc_lte'
+        @data = CQL::MapReduce.filter_features(@data, 'sc_lte'=>filter['sc_lte'])
       end
       @data
     end

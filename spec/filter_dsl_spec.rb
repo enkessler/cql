@@ -17,19 +17,58 @@ describe "cql" do
                         {"name"=> "f2_7_scenarios_2_so"}]
     end
 
-    #it 'should filter based on the number of scenarios for sc_gte' do
-    #  gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/combined/a"
-    #
-    #  result = gs.query do
-    #    select name
-    #    from features
-    #    with sc_gte 2
-    #  end
-    #
-    #  result.should == [{"name"=> "f1_4_scenarios_5_so.feature"},
-    #                    {"name"=> "f2_7_scenarios_2_so.feature"},
-    #                    {"name"=> "f3_2_scenarios_3_so.feature"}]
-    #end
+    it 'should filter based on the number of scenarios for sc_gte' do
+      gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/combined/a"
+
+      result = gs.query do
+        select name
+        from features
+        with sc_gte 2
+      end
+
+      result.should == [{"name"=> "f1_4_scenarios_5_so"},
+                        {"name"=> "f2_7_scenarios_2_so"},
+                        {"name"=> "f3_2_scenarios_3_so"}]
+
+      result = gs.query do
+        select name
+        from features
+        with sc_gte 4
+      end
+
+      result.should == [{"name"=> "f1_4_scenarios_5_so"},
+                        {"name"=> "f2_7_scenarios_2_so"}]
+
+      result = gs.query do
+        select name
+        from features
+        with sc_gte 3
+      end
+
+      result.should == [{"name"=> "f1_4_scenarios_5_so"},
+                        {"name"=> "f2_7_scenarios_2_so"}]
+
+      result = gs.query do
+        select name
+        from features
+        with sc_gte 7
+      end
+
+      result.should == {"name"=> "f2_7_scenarios_2_so"}
+    end
+
+    it 'should filter based on the number of scenarios for sc_lt' do
+      gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/combined/a"
+
+      result = gs.query do
+        select name
+        from features
+        with sc_lt 7
+      end
+
+      result.should == [{"name"=> "f1_4_scenarios_5_so"},
+                        {"name"=> "f3_2_scenarios_3_so"}]
+    end
 
     it 'should filter based on the number of scenario outlines' do
 

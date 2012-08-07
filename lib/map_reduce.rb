@@ -32,7 +32,20 @@ module CQL
         input = input.find_all do |feature|
           feature['elements'].find_all { |e| e['keyword'] == "Scenario" }.size > args['sc_gt']
         end
+      elsif args.has_key?('sc_gte')
+        input = input.find_all do |feature|
+          feature['elements'].find_all { |e| e['keyword'] == "Scenario" }.size >= args['sc_gte']
+        end
+      elsif args.has_key?('sc_lt')
+        input = input.find_all do |feature|
+          feature['elements'].find_all { |e| e['keyword'] == "Scenario" }.size < args['sc_lt']
+        end
+      elsif args.has_key?('sc_lte')
+        input = input.find_all do |feature|
+          feature['elements'].find_all { |e| e['keyword'] == "Scenario" }.size <= args['sc_lte']
+        end
       end
+
       input = input.find_all { |feature| has_tags feature['tags'], args['tags'] } if args.has_key? 'tags'
       input
     end
