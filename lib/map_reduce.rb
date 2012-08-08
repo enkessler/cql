@@ -45,6 +45,22 @@ module CQL
         input = input.find_all do |feature|
           feature['elements'].find_all { |e| e['keyword'] == "Scenario" }.size <= args['sc_lte']
         end
+      elsif args.has_key?('soc_gt')
+        input = input.find_all do |feature|
+          feature['elements'].find_all { |e| e['keyword'] == "Scenario Outline" }.size > args['soc_gt']
+        end
+      elsif args.has_key?('soc_gte')
+        input = input.find_all do |feature|
+          feature['elements'].find_all { |e| e['keyword'] == "Scenario Outline" }.size >= args['soc_gte']
+        end
+      elsif args.has_key?('soc_lt')
+        input = input.find_all do |feature|
+          feature['elements'].find_all { |e| e['keyword'] == "Scenario Outline" }.size < args['soc_lt']
+        end
+      elsif args.has_key?('soc_lte')
+        input = input.find_all do |feature|
+          feature['elements'].find_all { |e| e['keyword'] == "Scenario Outline" }.size <= args['soc_lte']
+        end
       end
 
       input = input.find_all { |feature| has_tags feature['tags'], args['tags'] } if args.has_key? 'tags'
