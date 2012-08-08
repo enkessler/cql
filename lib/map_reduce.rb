@@ -35,10 +35,11 @@ module CQL
         if args.has_key?(fn)
           what, operator = fn.split "_"
           desc = {"sc"=>"Scenario", "soc"=>"Scenario Outline"}
+          operator_map = {"lt"=>'<', 'lte'=>'<=', 'gt'=>'>', 'gte'=>'>='}
           input = input.find_all do |feature|
             size = feature['elements'].find_all { |e| e['keyword'] == desc[what] }.size
-            send(operator, size, args[fn])
-        end
+            size.send(operator_map[operator], args[fn])
+          end
         end
       end
 
@@ -71,23 +72,6 @@ module CQL
     def self.has_tags given, search
       return false if given == nil
       search.count { |tag_for_search| given.map { |t| t["name"] }.include?(tag_for_search) }==search.size
-    end
-
-    private
-    def self.gt(a, b)
-      a > b
-    end
-
-    def self.gte(a, b)
-      a >= b
-    end
-
-    def self.lt(a, b)
-      a < b
-    end
-
-    def self.lte(a, b)
-      a <= b
     end
 
   end
