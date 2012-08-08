@@ -29,45 +29,16 @@ module CQL
         input = input.find_all { |feature| feature['name'] == args['feature'][0] }
       elsif args.has_key?('feature') && args['feature'][0].class == Regexp
         input = input.find_all { |feature| feature['name'] =~ args['feature'][0] }
-      elsif args.has_key?('sc_gt')
-        input = input.find_all do |feature|
-          size = feature['elements'].find_all { |e| e['keyword'] == "Scenario" }.size
-          gt size, args['sc_gt']
+      end
+
+      %w(sc_gt sc_gte sc_lt sc_lte soc_gt soc_gte soc_lt soc_lte).each do |fn|
+        if args.has_key?(fn)
+          what, operator = fn.split "_"
+          desc = {"sc"=>"Scenario", "soc"=>"Scenario Outline"}
+          input = input.find_all do |feature|
+            size = feature['elements'].find_all { |e| e['keyword'] == desc[what] }.size
+            send(operator, size, args[fn])
         end
-      elsif args.has_key?('sc_gte')
-        input = input.find_all do |feature|
-          size = feature['elements'].find_all { |e| e['keyword'] == "Scenario" }.size
-          gte size, args['sc_gte']
-        end
-      elsif args.has_key?('sc_lt')
-        input = input.find_all do |feature|
-          size = feature['elements'].find_all { |e| e['keyword'] == "Scenario" }.size
-          lt size, args['sc_lt']
-        end
-      elsif args.has_key?('sc_lte')
-        input = input.find_all do |feature|
-          size = feature['elements'].find_all { |e| e['keyword'] == "Scenario" }.size
-          lte size, args['sc_lte']
-        end
-      elsif args.has_key?('soc_gt')
-        input = input.find_all do |feature|
-          size = feature['elements'].find_all { |e| e['keyword'] == "Scenario Outline" }.size
-          gt size, args['soc_gt']
-        end
-      elsif args.has_key?('soc_gte')
-        input = input.find_all do |feature|
-          size = feature['elements'].find_all { |e| e['keyword'] == "Scenario Outline" }.size
-          gte size, args['soc_gte']
-        end
-      elsif args.has_key?('soc_lt')
-        input = input.find_all do |feature|
-          size = feature['elements'].find_all { |e| e['keyword'] == "Scenario Outline" }.size
-          lt size, args['soc_lt']
-        end
-      elsif args.has_key?('soc_lte')
-        input = input.find_all do |feature|
-          size = feature['elements'].find_all { |e| e['keyword'] == "Scenario Outline" }.size
-          lte size, args['soc_lte']
         end
       end
 
@@ -103,10 +74,21 @@ module CQL
     end
 
     private
-    def self.gt(a, b) a > b end
-    def self.gte(a, b) a >= b end
-    def self.lt(a, b) a < b end
-    def self.lte(a, b) a <= b end
+    def self.gt(a, b)
+      a > b
+    end
+
+    def self.gte(a, b)
+      a >= b
+    end
+
+    def self.lt(a, b)
+      a < b
+    end
+
+    def self.lte(a, b)
+      a <= b
+    end
 
   end
 end
