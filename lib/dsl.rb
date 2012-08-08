@@ -9,6 +9,10 @@ module CQL
       }
     end
 
+    %w(sc_gt sc_gte sc_lt sc_lte).each do |meth|
+      define_method(meth) { |num| {meth=>num} }
+    end
+
     alias :everything :all
     alias :complete :all
 
@@ -26,31 +30,11 @@ module CQL
       {'tags'=>tags}
     end
 
-    def sc_gt num
-      {'sc_gt'=>num}
-    end
-
-    def sc_gte num
-      {'sc_gte'=>num}
-    end
-
-    def sc_lt num
-      {'sc_lt'=>num}
-    end
-
     def with filter
-      if filter.has_key? 'tags'
-        @data = CQL::MapReduce.filter_features(@data, 'tags'=>filter['tags'])
-      elsif filter.has_key? 'name'
+      if filter.has_key? 'name'
         @data = CQL::MapReduce.filter_features(@data, 'feature'=>filter['name'])
-      elsif filter.has_key? 'sc_gt'
-        @data = CQL::MapReduce.filter_features(@data, 'sc_gt'=>filter['sc_gt'])
-      elsif filter.has_key? 'sc_gte'
-        @data = CQL::MapReduce.filter_features(@data, 'sc_gte'=>filter['sc_gte'])
-      elsif filter.has_key? 'sc_lt'
-        @data = CQL::MapReduce.filter_features(@data, 'sc_lt'=>filter['sc_lt'])
-      elsif filter.has_key? 'sc_lte'
-        @data = CQL::MapReduce.filter_features(@data, 'sc_lte'=>filter['sc_lte'])
+      else
+        filter.each { |k, v| @data = CQL::MapReduce.filter_features(@data, k=>v) }
       end
       @data
     end
