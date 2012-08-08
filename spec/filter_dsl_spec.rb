@@ -68,6 +68,54 @@ describe "cql" do
 
       result.should == [{"name"=> "f1_4_scenarios_5_so"},
                         {"name"=> "f3_2_scenarios_3_so"}]
+
+      result = gs.query do
+        select name
+        from features
+        with sc_lt 5
+      end
+
+      result.should == [{"name"=> "f1_4_scenarios_5_so"},
+                        {"name"=> "f3_2_scenarios_3_so"}]
+
+      result = gs.query do
+        select name
+        from features
+        with sc_lt 4
+      end
+
+      result.should == {"name"=> "f3_2_scenarios_3_so"}
+    end
+
+    it 'should filter based on the number of scenarios for sc_lte' do
+      gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/combined/a"
+
+      result = gs.query do
+        select name
+        from features
+        with sc_lte 7
+      end
+
+      result.should == [{"name"=> "f1_4_scenarios_5_so"},
+                        {"name"=>"f2_7_scenarios_2_so"},
+                        {"name"=> "f3_2_scenarios_3_so"}]
+
+      result = gs.query do
+        select name
+        from features
+        with sc_lte 5
+      end
+
+      result.should == [{"name"=> "f1_4_scenarios_5_so"},
+                        {"name"=> "f3_2_scenarios_3_so"}]
+
+      result = gs.query do
+        select name
+        from features
+        with sc_lte 4
+      end
+
+      result.should == [{"name"=> "f1_4_scenarios_5_so"},{"name"=> "f3_2_scenarios_3_so"}]
     end
 
     it 'should filter based on the number of scenario outlines' do
