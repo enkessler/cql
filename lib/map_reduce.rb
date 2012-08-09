@@ -41,15 +41,14 @@ module CQL
         end
       end
 
-      %w(tc_lt).each do |fn|
+      %w(tc_lt tc_lte).each do |fn|
         what, operator = fn.split "_"
         operator_map = {"lt"=>'<', 'lte'=>'<=', 'gt'=>'>', 'gte'=>'>='}
         if args.has_key?(fn)
           input = input.find_all do |feature|
-            feature['tags'] && feature['tags'].size < args['tc_lt']
+            feature['tags'] && feature['tags'].size.send(operator_map[operator], args[fn])
           end
         end
-
       end
 
       input = input.find_all { |feature| has_tags feature['tags'], args['tags'] } if args.has_key? 'tags'
