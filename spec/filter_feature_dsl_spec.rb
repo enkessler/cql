@@ -252,6 +252,31 @@ describe "cql" do
     end
   end
 
+  describe 'filter by tag count' do
+
+    {
+        0=>[],
+        1=>[],
+        2=>{"name"=> "f1_1_tag"},
+        3=>[{"name"=> "f1_1_tag"}, {"name"=> "f2_2_tags"}],
+        4=>[{"name"=> "f1_1_tag"}, {"name"=> "f2_2_tags"}, {"name"=> "f3_3_tags"}],
+        5=>[{"name"=> "f1_1_tag"}, {"name"=> "f2_2_tags"}, {"name"=> "f3_3_tags"}]
+
+    }.each do |number, expected|
+      it "should filter features by the number of tags with the 'tc_lt' operator for count of #{number}" do
+        gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/combined/b"
+
+        result = gs.query do
+          select name
+          from features
+          with tc_lt number
+        end
+
+        result.should == expected
+      end
+    end
+  end
+
   describe 'scenario outline count functions' do
     {
         2=>[{"name"=> "f1_4_scenarios_5_so"}, {"name"=> "f2_7_scenarios_2_so"}, {"name"=> "f3_2_scenarios_3_so"}],
