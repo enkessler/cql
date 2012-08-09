@@ -296,6 +296,50 @@ describe "cql" do
         result.should == expected
       end
     end
+
+    {
+        0=>[{"name"=> "f1_1_tag"}, {"name"=> "f2_2_tags"}, {"name"=> "f3_3_tags"}],
+        1=>[{"name"=> "f2_2_tags"}, {"name"=> "f3_3_tags"}],
+        2=>{"name"=> "f3_3_tags"},
+        3=>[],
+        4=>[]
+
+    }.each do |number, expected|
+      it "should filter features by the number of tags with the 'tc_gt' operator for count of #{number}" do
+        gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/combined/b"
+
+        result = gs.query do
+          select name
+          from features
+          with tc_gt number
+        end
+
+        result.should == expected
+      end
+    end
+
+    {
+        0=>[{"name"=> "f1_1_tag"}, {"name"=> "f2_2_tags"}, {"name"=> "f3_3_tags"}],
+        1=>[{"name"=> "f1_1_tag"}, {"name"=> "f2_2_tags"}, {"name"=> "f3_3_tags"}],
+        2=>[{"name"=> "f2_2_tags"}, {"name"=> "f3_3_tags"}],
+        3=>{"name"=> "f3_3_tags"},
+        4=>[],
+        5=>[]
+
+    }.each do |number, expected|
+      it "should filter features by the number of tags with the 'tc_gte' operator for count of #{number}" do
+        gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/combined/b"
+
+        result = gs.query do
+          select name
+          from features
+          with tc_gte number
+        end
+
+        result.should == expected
+      end
+    end
+
   end
 
   describe 'scenario outline count functions' do

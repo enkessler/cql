@@ -41,7 +41,7 @@ module CQL
         end
       end
 
-      %w(tc_lt tc_lte).each do |fn|
+      %w(tc_lt tc_lte tc_gt tc_gte).each do |fn|
         what, operator = fn.split "_"
         operator_map = {"lt"=>'<', 'lte'=>'<=', 'gt'=>'>', 'gte'=>'>='}
         if args.has_key?(fn)
