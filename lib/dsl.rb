@@ -9,7 +9,7 @@ module CQL
       }
     end
 
-    %w(sc_gt sc_gte sc_lt sc_lte soc_gt soc_gte soc_lt soc_lte).each do |meth|
+    %w(sc_gt sc_gte sc_lt sc_lte soc_gt soc_gte soc_lt soc_lte ssoc_gt ssoc_gte ssoc_lt ssoc_lte).each do |meth|
       define_method(meth) { |num| {meth=>num} }
     end
 

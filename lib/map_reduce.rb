@@ -1,11 +1,9 @@
 require File.dirname(__FILE__) + "/dsl"
 require 'set'
 module CQL
-
   QUERY_VALUES = %w(name uri line description type steps id tags examples)
 
   class MapReduce
-
     CQL::QUERY_VALUES.each do |property|
       define_singleton_method(property) do |input|
         input = [input] if input.class != Array
@@ -31,13 +29,13 @@ module CQL
         input = input.find_all { |feature| feature['name'] =~ args['feature'][0] }
       end
 
-      %w(sc_gt sc_gte sc_lt sc_lte soc_gt soc_gte soc_lt soc_lte).each do |fn|
+      %w(sc_gt sc_gte sc_lt sc_lte soc_gt soc_gte soc_lt soc_lte ssoc_gt ssoc_gte ssoc_lt ssoc_lte).each do |fn|
         if args.has_key?(fn)
           what, operator = fn.split "_"
-          desc = {"sc"=>"Scenario", "soc"=>"Scenario Outline"}
+          desc = {"sc"=>["Scenario"], "soc"=>["Scenario Outline"], "ssoc"=>["Scenario", "Scenario Outline"]}
           operator_map = {"lt"=>'<', 'lte'=>'<=', 'gt'=>'>', 'gte'=>'>='}
           input = input.find_all do |feature|
-            size = feature['elements'].find_all { |e| e['keyword'] == desc[what] }.size
+            size = feature['elements'].find_all { |e| desc[what].include? e['keyword'] }.size
             size.send(operator_map[operator], args[fn])
           end
         end

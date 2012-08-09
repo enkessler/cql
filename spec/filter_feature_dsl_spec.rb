@@ -3,6 +3,135 @@ require File.dirname(__FILE__) + "/../lib/repo"
 
 describe "cql" do
 
+  describe 'scenario outline and scenario count functions' do
+    it 'should filter based on the number of scenarios for ssoc_gt' do
+      gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/combined/a"
+
+      result = gs.query do
+        select name
+        from features
+        with ssoc_gt 5
+      end
+
+      result.should == [{"name"=> "f1_4_scenarios_5_so"},
+                        {"name"=> "f2_7_scenarios_2_so"}]
+    end
+
+    it 'should filter based on the number of scenario outlines for ssoc_gte' do
+      gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/combined/a"
+
+      result = gs.query do
+        select name
+        from features
+        with ssoc_gte 5
+      end
+
+      result.should == [{"name"=> "f1_4_scenarios_5_so"},
+                        {"name"=> "f2_7_scenarios_2_so"},
+                        {"name"=> "f3_2_scenarios_3_so"}]
+
+      result = gs.query do
+        select name
+        from features
+        with ssoc_gte 9
+      end
+
+      result.should == [{"name"=> "f1_4_scenarios_5_so"},
+                        {"name"=> "f2_7_scenarios_2_so"}]
+
+      result = gs.query do
+        select name
+        from features
+        with soc_gte 1
+      end
+
+      result.should == [{"name"=> "f1_4_scenarios_5_so"},
+                        {"name"=> "f2_7_scenarios_2_so"},
+                        {"name"=> "f3_2_scenarios_3_so"}]
+
+      result = gs.query do
+        select name
+        from features
+        with soc_gte 10
+      end
+
+      result.should == []
+    end
+
+    it 'should filter based on the number of scenarios for ssoc_lt' do
+      gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/combined/a"
+
+      result = gs.query do
+        select name
+        from features
+        with ssoc_lt 10
+      end
+
+      result.should == [{"name"=> "f1_4_scenarios_5_so"},
+                        {"name"=> "f2_7_scenarios_2_so"},
+                        {"name"=> "f3_2_scenarios_3_so"}]
+
+      result = gs.query do
+        select name
+        from features
+        with ssoc_lt 9
+      end
+
+      result.should ==  {"name"=> "f3_2_scenarios_3_so"}
+
+      result = gs.query do
+        select name
+        from features
+        with ssoc_lt 3
+      end
+
+      result.should == []
+    end
+
+    it 'should filter based on the number of scenarios for ssoc_lte' do
+      gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/combined/a"
+
+      result = gs.query do
+        select name
+        from features
+        with ssoc_lte 10
+      end
+
+      result.should == [{"name"=> "f1_4_scenarios_5_so"},
+                        {"name"=>"f2_7_scenarios_2_so"},
+                        {"name"=> "f3_2_scenarios_3_so"}]
+
+      result = gs.query do
+        select name
+        from features
+        with ssoc_lte 9
+      end
+
+      result.should == [{"name"=> "f1_4_scenarios_5_so"},
+                        {"name"=>"f2_7_scenarios_2_so"},
+                        {"name"=> "f3_2_scenarios_3_so"}]
+
+      result = gs.query do
+        select name
+        from features
+        with ssoc_lte 5
+      end
+
+      result.should == {"name"=> "f3_2_scenarios_3_so"}
+
+
+      result = gs.query do
+        select name
+        from features
+        with ssoc_lte 4
+      end
+
+      result.should == []
+    end
+
+  end
+
+
   describe 'scenario count functions' do
     it 'should filter based on the number of scenarios for sc_gt' do
       gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/combined/a"
