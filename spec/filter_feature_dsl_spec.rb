@@ -264,7 +264,7 @@ describe "cql" do
         7=>[]
 
     }.each do |number, expected|
-      it "soc_gt filter should filter scenarios for input '#{number}'" do
+      it "soc_gte filter should filter scenarios for input '#{number}'" do
         gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/combined/a"
 
         result = gs.query do
@@ -277,36 +277,22 @@ describe "cql" do
       end
     end
 
-    it 'should filter based on the number of scenarios for soc_lt' do
-      gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/combined/a"
+    {
+        7=>[{"name"=> "f1_4_scenarios_5_so"}, {"name"=> "f2_7_scenarios_2_so"}, {"name"=> "f3_2_scenarios_3_so"}],
+        5=>[{"name"=> "f2_7_scenarios_2_so"}, {"name"=> "f3_2_scenarios_3_so"}],
+        4=>[{"name"=> "f2_7_scenarios_2_so"}, {"name"=> "f3_2_scenarios_3_so"}],
 
-      result = gs.query do
-        select name
-        from features
-        with soc_lt 7
+    }.each do |number, expected|
+      it "soc_lt filter should filter scenarios for input '#{number}'" do
+        gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/combined/a"
+        result = gs.query do
+          select name
+          from features
+          with soc_lt number
+        end
+
+        result.should == expected
       end
-
-      result.should == [{"name"=> "f1_4_scenarios_5_so"},
-                        {"name"=> "f2_7_scenarios_2_so"},
-                        {"name"=> "f3_2_scenarios_3_so"}]
-
-      result = gs.query do
-        select name
-        from features
-        with soc_lt 5
-      end
-
-      result.should == [{"name"=> "f2_7_scenarios_2_so"},
-                        {"name"=> "f3_2_scenarios_3_so"}]
-
-      result = gs.query do
-        select name
-        from features
-        with soc_lt 4
-      end
-
-      result.should == [{"name"=> "f2_7_scenarios_2_so"},
-                        {"name"=> "f3_2_scenarios_3_so"}]
     end
 
     it 'should filter based on the number of scenarios for soc_lte' do
