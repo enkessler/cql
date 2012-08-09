@@ -77,7 +77,7 @@ describe "cql" do
         with ssoc_lt 9
       end
 
-      result.should ==  {"name"=> "f3_2_scenarios_3_so"}
+      result.should == {"name"=> "f3_2_scenarios_3_so"}
 
       result = gs.query do
         select name
@@ -244,7 +244,7 @@ describe "cql" do
         with sc_lte 4
       end
 
-      result.should == [{"name"=> "f1_4_scenarios_5_so"},{"name"=> "f3_2_scenarios_3_so"}]
+      result.should == [{"name"=> "f1_4_scenarios_5_so"}, {"name"=> "f3_2_scenarios_3_so"}]
     end
 
     it 'should filter based on the combined number of scenario and scenario outlines' do
@@ -257,56 +257,24 @@ describe "cql" do
   end
 
   describe 'scenario outline count functions' do
-    it 'should filter based on the number of scenarios for soc_gt' do
-      gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/combined/a"
+    {
+        2=>[{"name"=> "f1_4_scenarios_5_so"}, {"name"=> "f2_7_scenarios_2_so"}, {"name"=> "f3_2_scenarios_3_so"}],
+        3=>[{"name"=> "f1_4_scenarios_5_so"}, {"name"=> "f3_2_scenarios_3_so"}],
+        4=>{"name"=> "f1_4_scenarios_5_so"},
+        7=>[]
 
-      result = gs.query do
-        select name
-        from features
-        with soc_gt 2
+    }.each do |number, expected|
+      it "soc_gt filter should filter scenarios for input '#{number}'" do
+        gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/combined/a"
+
+        result = gs.query do
+          select name
+          from features
+          with soc_gte number
+        end
+
+        result.should == expected
       end
-
-      result.should == [{"name"=> "f1_4_scenarios_5_so"},
-                        {"name"=> "f3_2_scenarios_3_so"}]
-    end
-
-    it 'should filter based on the number of scenario outlines for soc_gte' do
-      gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/combined/a"
-
-      result = gs.query do
-        select name
-        from features
-        with soc_gte 2
-      end
-
-      result.should == [{"name"=> "f1_4_scenarios_5_so"},
-                        {"name"=> "f2_7_scenarios_2_so"},
-                        {"name"=> "f3_2_scenarios_3_so"}]
-
-      result = gs.query do
-        select name
-        from features
-        with soc_gte 4
-      end
-
-      result.should == {"name"=> "f1_4_scenarios_5_so"}
-
-      result = gs.query do
-        select name
-        from features
-        with soc_gte 3
-      end
-
-      result.should == [{"name"=> "f1_4_scenarios_5_so"},
-                        {"name"=> "f3_2_scenarios_3_so"}]
-
-      result = gs.query do
-        select name
-        from features
-        with soc_gte 7
-      end
-
-      result.should == []
     end
 
     it 'should filter based on the number of scenarios for soc_lt' do
