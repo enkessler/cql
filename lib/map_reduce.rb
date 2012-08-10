@@ -80,6 +80,21 @@ module CQL
           end
         end
       end
+
+      %w(lc_lt lc_lte lc_gt lc_gte).each do |fn|
+        what, operator = fn.split "_"
+        operator_map = {"lt"=>'<', 'lte'=>'<=', 'gt'=>'>', 'gte'=>'>='}
+        if args.has_key?(fn)
+          input.each_with_index do |feature, index|
+            filtered_elements= feature['elements'].find_all do |sso|
+              sso['steps'].size.send(operator_map[operator], args[fn])
+            end
+            input[index]['elements'] = filtered_elements
+
+          end
+        end
+      end
+
       input
     end
 
