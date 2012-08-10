@@ -274,7 +274,6 @@ describe "cql" do
   # Has tag
   # Name
   # Name match
-  # Line match
 
   # Example count
 end

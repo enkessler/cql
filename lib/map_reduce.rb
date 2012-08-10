@@ -109,9 +109,7 @@ module CQL
               else
                 result = false
               end
-
             end
-
             result
           end
           input[index]['elements'] = filtered_elements

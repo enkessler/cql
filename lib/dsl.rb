@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + "/map_reduce"
 module CQL
-  DSL_KEYWORDS = %w(features scenario_outlines scenarios all step_lines examples)
+  DSL_KEYWORDS = %w(features scenario_outlines scenarios all step_lines examples name)
   module Dsl
     (CQL::QUERY_VALUES + CQL::DSL_KEYWORDS).each do |method_name|
       define_method(method_name) { |*args|
