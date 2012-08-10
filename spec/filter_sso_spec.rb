@@ -201,13 +201,38 @@ describe "cql" do
       result.size.should == 1
 
     end
+
+    it 'should filter all results when the exact line given does not match' do
+      gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/scenario/line_filter"
+
+      result = gs.query do
+        select name
+        from scenarios
+        with line 'no match'
+      end
+
+      result.size.should == 0
+
+    end
+
+    it 'should filter no results when the exact line given is present in all scenarios' do
+      gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/scenario/line_filter"
+
+      result = gs.query do
+        select name
+        from scenarios
+        with line 'a cat in a hat'
+      end
+
+      result.size.should == 2
+
+    end
   end
 
   # Has tag
   # Name
   # Name match
   # Line match
-  # line
 
   # Example count
 end
