@@ -94,7 +94,7 @@ describe "cql" do
 
 
   end
-  
+
   describe 'line count' do
     {
         0=>[],
@@ -186,6 +186,21 @@ describe "cql" do
     end
 
 
+  end
+
+  describe 'exact line match' do
+    it 'should filter based on an exact line' do
+      gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/scenario/line_filter"
+
+      result = gs.query do
+        select name
+        from scenarios
+        with line 'green eggs and ham'
+      end
+
+      result.size.should == 1
+
+    end
   end
 
   # Has tag

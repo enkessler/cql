@@ -90,8 +90,17 @@ module CQL
               sso['steps'].size.send(operator_map[operator], args[fn])
             end
             input[index]['elements'] = filtered_elements
-
           end
+        end
+      end
+
+      if args.has_key? 'line'
+        input.each_with_index do |feature, index|
+          filtered_elements= feature['elements'].find_all do |sso|
+            raw_step_line = sso['steps'].map{|sl|sl['name']}
+            raw_step_line.include? args['line'].first
+          end
+          input[index]['elements'] = filtered_elements
         end
       end
 
