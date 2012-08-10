@@ -67,13 +67,13 @@ module CQL
     end
 
     def self.filter_sso2 input, args
-      %w(tc_lt).each do |fn|
+      %w(tc_lt tc_lte tc_gt tc_gte).each do |fn|
         what, operator = fn.split "_"
         operator_map = {"lt"=>'<', 'lte'=>'<=', 'gt'=>'>', 'gte'=>'>='}
         if args.has_key?(fn)
           input.each_with_index do |feature, index|
             filtered_elements= feature['elements'].find_all do |sso|
-              sso['tags'].size < args['tc_lt']
+              sso['tags'].size.send(operator_map[operator], args[fn])
             end
             input[index]['elements'] = filtered_elements
 
