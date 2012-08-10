@@ -1,4 +1,4 @@
-Feature: Simple
+Feature: Simple2
 
   @one @two @three
   Scenario: 3 tags

@@ -37,7 +37,7 @@ module CQL
         filter.each { |k, v| @data = CQL::MapReduce.filter_features(@data, k=>v) }
       elsif @from == 'scenarios'
         filter.each { |k, v|
-          @data = CQL::MapReduce.filter_sso(@data, k=>v)
+          @data = CQL::MapReduce.filter_sso2(@data, k=>v)
         }
       end
       @data

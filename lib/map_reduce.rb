@@ -66,6 +66,23 @@ module CQL
       results
     end
 
+    def self.filter_sso2 input, args
+      %w(tc_lt).each do |fn|
+        what, operator = fn.split "_"
+        operator_map = {"lt"=>'<', 'lte'=>'<=', 'gt'=>'>', 'gte'=>'>='}
+        if args.has_key?(fn)
+          input.each_with_index do |feature, index|
+            filtered_elements= feature['elements'].find_all do |sso|
+              sso['tags'].size < args['tc_lt']
+            end
+            input[index]['elements'] = filtered_elements
+
+          end
+        end
+      end
+      input
+    end
+
     def self.tag_set input
       tags = Set.new
       input.each do |feature|

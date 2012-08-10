@@ -6,10 +6,10 @@ describe "cql" do
     {
         0=>[],
         1=>[],
-        2=>{"name"=> "1_tag"},
-        3=>[{"name"=> "1_tag"}, {"name"=> "2_tags"}],
-        4=>[{"name"=> "1_tag"}, {"name"=> "2_tags"}, {"name"=> "3_tags"}],
-        5=>[{"name"=> "1_tag"}, {"name"=> "2_tags"}, {"name"=> "3_tags"}, {"name"=> "4_tags"}]
+        2=>{"name"=> "1 tag"},
+        3=>[{"name"=> "1 tag"}, {"name"=> "2 tags"}],
+        4=>[{"name"=> "1 tag"}, {"name"=> "2 tags"}, {"name"=> "3 tags"}],
+        5=>[{"name"=> "1 tag"}, {"name"=> "2 tags"}, {"name"=> "3 tags"}, {"name"=> "4 tags"}]
 
     }.each do |number, expected|
       it "should filter scenarios by the number of tags with the 'tc_lt' operator for count of #{number}" do
