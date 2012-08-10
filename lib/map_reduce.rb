@@ -97,8 +97,22 @@ module CQL
       if args.has_key? 'line'
         input.each_with_index do |feature, index|
           filtered_elements= feature['elements'].find_all do |sso|
-            raw_step_line = sso['steps'].map{|sl|sl['name']}
-            raw_step_line.include? args['line'].first
+            raw_step_lines = sso['steps'].map { |sl| sl['name'] }
+            line_to_match = args['line'].first
+            result = nil
+            if line_to_match.class == String
+              result = raw_step_lines.include? line_to_match
+            elsif line_to_match.class == Regexp
+              result = raw_step_lines.find { |line| line =~ line_to_match }
+              if result.class == String
+                result = result.size > 0
+              else
+                result = false
+              end
+
+            end
+
+            result
           end
           input[index]['elements'] = filtered_elements
         end

@@ -229,6 +229,48 @@ describe "cql" do
     end
   end
 
+  describe 'exact line match' do
+    it 'should filter based on a regexp match' do
+      gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/scenario/line_filter"
+
+      result = gs.query do
+        select name
+        from scenarios
+        with line /green/
+      end
+
+      result.size.should == 1
+
+    end
+
+    it 'should filter all if no regexp match' do
+      gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/scenario/line_filter"
+
+      result = gs.query do
+        select name
+        from scenarios
+        with line /will not be found/
+      end
+
+      result.size.should == 0
+
+    end
+
+    it 'should filter none if all match regexp' do
+      gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/scenario/line_filter"
+
+      result = gs.query do
+        select name
+        from scenarios
+        with line /cat/
+      end
+
+      result.size.should == 2
+
+    end
+
+  end
+
   # Has tag
   # Name
   # Name match
