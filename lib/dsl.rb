@@ -33,8 +33,12 @@ module CQL
     def with filter
       if filter.has_key? 'name'
         @data = CQL::MapReduce.filter_features(@data, 'feature'=>filter['name'])
-      else
+      elsif @from == 'features'
         filter.each { |k, v| @data = CQL::MapReduce.filter_features(@data, k=>v) }
+      elsif @from == 'scenarios'
+        filter.each { |k, v|
+          @data = CQL::MapReduce.filter_sso(@data, k=>v)
+        }
       end
       @data
     end
