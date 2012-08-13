@@ -4,7 +4,7 @@ require "cucumber/platform"
 
 Gem::Specification.new do |s|
   s.name        = 'cql'
-  s.version     = "0.0.2"
+  s.version     = "0.1.2"
   s.authors     = ["Jarrod Folino"]
   s.description = 'Cucumber Query Language'
   s.summary     = "cucumber-#{s.version}"
@@ -28,9 +28,8 @@ Thank you for installing cql (Cucumber Query Language)
 
 
   s.rubygems_version = ">= 1.6.1"
-  s.files            = `git ls-files`.split("\n").reject {|path| path =~ /\.gitignore$/ }
-  s.test_files       = `git ls-files -- {spec}/*`.split("\n")
-  s.executables      = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
+  s.files            = Dir.glob('spec/*').reject {|path| path =~ /\.gitignore$/ }
+  s.test_files       = Dir.glob('spec/*')
   s.rdoc_options     = ["--charset=UTF-8"]
   s.require_path     = "lib"
 end
