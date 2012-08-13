@@ -257,9 +257,9 @@ describe "cql" do
     end
 
     it 'should filter none if all match regexp' do
-      gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/scenario/line_filter"
+      repo = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/scenario/line_filter"
 
-      result = gs.query do
+      result = repo.query do
         select name
         from scenarios
         with line /cat/
@@ -269,6 +269,20 @@ describe "cql" do
 
     end
 
+  end
+
+  describe 'tag search' do
+    it 'should return scenarios with matching tags' do
+      repo = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/scenario/tags"
+
+      result = repo.query do
+        select name
+        from scenarios
+        with tags '@one'
+      end
+
+      result.should == [{'name'=>'Next'},{'name'=>'Another'}]
+    end
   end
 
   # Has tag
