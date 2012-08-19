@@ -189,3 +189,36 @@ Please note that this will work for both scenarios and scenario outlines
         with tags '@one', '@two'
    end
 ```
+
+### Filter features by tag count
+
+   The following operators are available:
+
+   * tc_lt   (Tag count less than)
+   * tc_lte  (Tag count less or equals)
+   * tc_gt   (Tag count greater than)
+   * tc_gte  (Tag count greater or equal)
+
+   To filter features with a tag count less than 8:
+
+```ruby
+   require 'cql'
+   cql_repo = CQL::Repository.new "/path-to-my-feature-files"
+   result = gs.query do
+        select name, uri, tags, description
+        from features
+        with tc_lt 8
+   end
+```
+
+   To filter features with a tag count greater than or equal to 8:
+
+```ruby
+   require 'cql'
+   cql_repo = CQL::Repository.new "/path-to-my-feature-files"
+   result = gs.query do
+        select name, uri, tags, description
+        from features
+        with gte_lt 8
+   end
+```
