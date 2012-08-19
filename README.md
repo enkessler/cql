@@ -140,3 +140,52 @@ Please note that this will work for both scenarios and scenario outlines
         from scenario_outlines
    end
 ```
+
+## Filtering features with the 'with' clause
+
+    Features can be filtered by the following:
+
+    * By specific tags on the feature
+    * Number of scenarios they contain
+    * Number of scenario outlines they contain
+    * Combined number of scenarios and scenario outlines they contain
+    * The number of tags they have
+
+### Filter features by tag
+
+   To filter features by a single tag:
+
+```ruby
+   require 'cql'
+   cql_repo = CQL::Repository.new "/path-to-my-feature-files"
+   result = gs.query do
+        select name, uri, tags, description
+        from features
+        with tags '@one'
+   end
+```
+
+   To filter features by multiple tags (method one):
+
+```ruby
+   require 'cql'
+   cql_repo = CQL::Repository.new "/path-to-my-feature-files"
+   result = gs.query do
+        select name, uri, tags, description
+        from features
+        with tags '@one'
+        with tags '@two'
+   end
+```
+
+   To filter features by multiple tags (method two):
+
+```ruby
+   require 'cql'
+   cql_repo = CQL::Repository.new "/path-to-my-feature-files"
+   result = gs.query do
+        select name, uri, tags, description
+        from features
+        with tags '@one', '@two'
+   end
+```
