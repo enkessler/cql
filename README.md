@@ -222,3 +222,19 @@ Please note that this will work for both scenarios and scenario outlines
         with gte_lt 8
    end
 ```
+
+### Filter features by scenario count, scenario outline count or both
+
+   The following operators are available for scenario counts:
+
+   * sc_lt   (Scenario count less than)
+   * sc_lte  (Scenario count less or equals)
+   * sc_gt   (Scenario count greater than)
+   * sc_gte  (Scenario count greater or equal)
+
+   The following operators are available for scenario counts:
+
+   * soc_lt   (Scenario Outline count less than)
+   * soc_lte  (Scenario Outline count less or equals)
+   * soc_gt   (Scenario Outline count greater than)
+   * soc_gte  (Scenario Outline count greater or equal)

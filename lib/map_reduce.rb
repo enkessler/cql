@@ -116,6 +116,15 @@ module CQL
         end
       end
 
+      if args.has_key? 'tags'
+        input.each_with_index do |feature, index|
+          filtered_elements= feature['elements'].find_all do |sso|
+            has_tags(sso['tags'], args['tags'])
+          end
+          input[index]['elements'] = filtered_elements
+        end
+      end
+
       input
     end
 
