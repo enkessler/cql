@@ -1,5 +1,6 @@
-require File.dirname(__FILE__) + "/dsl"
 require 'set'
+require File.dirname(__FILE__) + "/dsl"
+require File.dirname(__FILE__) + "/handlers"
 module CQL
   QUERY_VALUES = %w(name uri line description type steps id tags examples)
 
@@ -67,65 +68,7 @@ module CQL
     end
 
     def self.filter_sso2 input, args
-      %w(tc_lt tc_lte tc_gt tc_gte).each do |fn|
-        what, operator = fn.split "_"
-        operator_map = {"lt"=>'<', 'lte'=>'<=', 'gt'=>'>', 'gte'=>'>='}
-        if args.has_key?(fn)
-          input.each_with_index do |feature, index|
-            filtered_elements= feature['elements'].find_all do |sso|
-              sso['tags'].size.send(operator_map[operator], args[fn])
-            end
-            input[index]['elements'] = filtered_elements
-
-          end
-        end
-      end
-
-      %w(lc_lt lc_lte lc_gt lc_gte).each do |fn|
-        what, operator = fn.split "_"
-        operator_map = {"lt"=>'<', 'lte'=>'<=', 'gt'=>'>', 'gte'=>'>='}
-        if args.has_key?(fn)
-          input.each_with_index do |feature, index|
-            filtered_elements= feature['elements'].find_all do |sso|
-              sso['steps'].size.send(operator_map[operator], args[fn])
-            end
-            input[index]['elements'] = filtered_elements
-          end
-        end
-      end
-
-      if args.has_key? 'line'
-        input.each_with_index do |feature, index|
-          filtered_elements= feature['elements'].find_all do |sso|
-            raw_step_lines = sso['steps'].map { |sl| sl['name'] }
-            line_to_match = args['line'].first
-            result = nil
-            if line_to_match.class == String
-              result = raw_step_lines.include? line_to_match
-            elsif line_to_match.class == Regexp
-              result = raw_step_lines.find { |line| line =~ line_to_match }
-              if result.class == String
-                result = result.size > 0
-              else
-                result = false
-              end
-            end
-            result
-          end
-          input[index]['elements'] = filtered_elements
-        end
-      end
-
-      if args.has_key? 'tags'
-        input.each_with_index do |feature, index|
-          filtered_elements= feature['elements'].find_all do |sso|
-            has_tags(sso['tags'], args['tags'])
-          end
-          input[index]['elements'] = filtered_elements
-        end
-      end
-
-      input
+      SsoHandlerChain.new.handle(args, input)
     end
 
     def self.tag_set input
@@ -145,4 +88,5 @@ module CQL
     end
 
   end
+
 end
