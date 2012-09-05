@@ -194,10 +194,10 @@ Please note that this will work for both scenarios and scenario outlines
 
    The following operators are available:
 
-   * tc_lt   (Tag count less than)
-   * tc_lte  (Tag count less or equals)
-   * tc_gt   (Tag count greater than)
-   * tc_gte  (Tag count greater or equal)
+   * lt   (Less than)
+   * lte  (Less or equals)
+   * gt   (Greater than)
+   * gte  (Greater or equal)
 
    To filter features with a tag count less than 8:
 
@@ -207,7 +207,7 @@ Please note that this will work for both scenarios and scenario outlines
    result = gs.query do
         select name, uri, tags, description
         from features
-        with tc_lt 8
+        with tc lt 8
    end
 ```
 
@@ -219,22 +219,8 @@ Please note that this will work for both scenarios and scenario outlines
    result = gs.query do
         select name, uri, tags, description
         from features
-        with gte_lt 8
+        with gte lt 8
    end
 ```
 
 ### Filter features by scenario count, scenario outline count or both
-
-   The following operators are available for scenario counts:
-
-   * sc_lt   (Scenario count less than)
-   * sc_lte  (Scenario count less or equals)
-   * sc_gt   (Scenario count greater than)
-   * sc_gte  (Scenario count greater or equal)
-
-   The following operators are available for scenario counts:
-
-   * soc_lt   (Scenario Outline count less than)
-   * soc_lte  (Scenario Outline count less or equals)
-   * soc_gt   (Scenario Outline count greater than)
-   * soc_gte  (Scenario Outline count greater or equal)
