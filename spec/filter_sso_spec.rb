@@ -12,13 +12,13 @@ describe "cql" do
         5=>[{"name"=> "1 tag"}, {"name"=> "2 tags"}, {"name"=> "3 tags"}, {"name"=> "4 tags"}]
 
     }.each do |number, expected|
-      it "should filter scenarios by the number of tags with the 'tc_lt' operator for count of #{number}" do
+      it "should filter scenarios by the number of tags with the 'tc lt' operator for count of #{number}" do
         gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/scenario/tag_count"
 
         result = gs.query do
           select name
           from scenarios
-          with tc_lt number
+          with tc lt number
         end
 
         result.should == expected
@@ -40,7 +40,7 @@ describe "cql" do
         result = gs.query do
           select name
           from scenarios
-          with tc_lte number
+          with tc lte number
         end
 
         result.should == expected
@@ -62,7 +62,7 @@ describe "cql" do
         result = gs.query do
           select name
           from scenarios
-          with tc_gt number
+          with tc gt number
         end
 
         result.should == expected
@@ -85,7 +85,7 @@ describe "cql" do
         result = gs.query do
           select name
           from scenarios
-          with tc_gte number
+          with tc gte number
         end
 
         result.should == expected
@@ -111,7 +111,7 @@ describe "cql" do
         result = gs.query do
           select name
           from scenarios
-          with lc_lt number
+          with lc lt number
         end
 
         result.should == expected
@@ -133,7 +133,7 @@ describe "cql" do
         result = gs.query do
           select name
           from scenarios
-          with lc_lte number
+          with lc lte number
         end
 
         result.should == expected
@@ -155,7 +155,7 @@ describe "cql" do
         result = gs.query do
           select name
           from scenarios
-          with lc_gt number
+          with lc gt number
         end
 
         result.should == expected
@@ -178,7 +178,7 @@ describe "cql" do
         result = gs.query do
           select name
           from scenarios
-          with lc_gte number
+          with lc gte number
         end
 
         result.should == expected

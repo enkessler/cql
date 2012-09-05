@@ -152,7 +152,7 @@ describe "cql" do
       result = gs.query do
         select name
         from features
-        with sc_gte 2
+        with sc gte 2
       end
 
       result.should == [{"name"=> "f1_4_scenarios_5_so"},
@@ -180,7 +180,7 @@ describe "cql" do
       result = gs.query do
         select name
         from features
-        with sc_gte 7
+        with sc gte 7
       end
 
       result.should == {"name"=> "f2_7_scenarios_2_so"}
@@ -201,7 +201,7 @@ describe "cql" do
       result = gs.query do
         select name
         from features
-        with sc_lt 5
+        with sc lt 5
       end
 
       result.should == [{"name"=> "f1_4_scenarios_5_so"},
@@ -290,7 +290,7 @@ describe "cql" do
         result = gs.query do
           select name
           from features
-          with tc_lte number
+          with tc lte number
         end
 
         result.should == expected
@@ -311,7 +311,7 @@ describe "cql" do
         result = gs.query do
           select name
           from features
-          with tc_gt number
+          with tc gt number
         end
 
         result.should == expected
@@ -333,7 +333,7 @@ describe "cql" do
         result = gs.query do
           select name
           from features
-          with tc_gte number
+          with tc gte number
         end
 
         result.should == expected

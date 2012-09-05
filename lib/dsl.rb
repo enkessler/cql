@@ -9,10 +9,6 @@ module CQL
       }
     end
 
-    %w(sc_gt sc_gte sc_lt sc_lte soc_gt soc_gte soc_lt soc_lte ssoc_gt ssoc_gte ssoc_lt ssoc_lte tc_lt tc_lte tc_gt tc_gte lc_lt lc_lte lc_gt lc_gte).each do |meth|
-      define_method(meth) { |num| {meth=>num} }
-    end
-
     alias :everything :all
     alias :complete :all
 
@@ -36,6 +32,10 @@ module CQL
 
     def tc comparison
       {"tc_#{comparison.op}"=>comparison.amount}
+    end
+
+    def lc comparison
+      {"lc_#{comparison.op}"=>comparison.amount}
     end
 
     def soc comparison
