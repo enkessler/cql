@@ -10,7 +10,7 @@ describe "cql" do
       result = gs.query do
         select name
         from features
-        with ssoc_gt 5
+        with ssoc gt 5
       end
 
       result.should == [{"name"=> "f1_4_scenarios_5_so"},
@@ -23,7 +23,7 @@ describe "cql" do
       result = gs.query do
         select name
         from features
-        with ssoc_gte 5
+        with ssoc gte 5
       end
 
       result.should == [{"name"=> "f1_4_scenarios_5_so"},
@@ -33,7 +33,7 @@ describe "cql" do
       result = gs.query do
         select name
         from features
-        with ssoc_gte 9
+        with ssoc gte 9
       end
 
       result.should == [{"name"=> "f1_4_scenarios_5_so"},
@@ -42,7 +42,7 @@ describe "cql" do
       result = gs.query do
         select name
         from features
-        with soc_gte 1
+        with soc gte 1
       end
 
       result.should == [{"name"=> "f1_4_scenarios_5_so"},
@@ -52,7 +52,7 @@ describe "cql" do
       result = gs.query do
         select name
         from features
-        with soc_gte 10
+        with soc gte 10
       end
 
       result.should == []
@@ -64,7 +64,7 @@ describe "cql" do
       result = gs.query do
         select name
         from features
-        with ssoc_lt 10
+        with ssoc lt 10
       end
 
       result.should == [{"name"=> "f1_4_scenarios_5_so"},
@@ -74,7 +74,7 @@ describe "cql" do
       result = gs.query do
         select name
         from features
-        with ssoc_lt 9
+        with ssoc lt 9
       end
 
       result.should == {"name"=> "f3_2_scenarios_3_so"}
@@ -82,7 +82,7 @@ describe "cql" do
       result = gs.query do
         select name
         from features
-        with ssoc_lt 3
+        with ssoc lt 3
       end
 
       result.should == []
@@ -94,7 +94,7 @@ describe "cql" do
       result = gs.query do
         select name
         from features
-        with ssoc_lte 10
+        with ssoc lte 10
       end
 
       result.should == [{"name"=> "f1_4_scenarios_5_so"},
@@ -104,7 +104,7 @@ describe "cql" do
       result = gs.query do
         select name
         from features
-        with ssoc_lte 9
+        with ssoc lte 9
       end
 
       result.should == [{"name"=> "f1_4_scenarios_5_so"},
@@ -114,7 +114,7 @@ describe "cql" do
       result = gs.query do
         select name
         from features
-        with ssoc_lte 5
+        with ssoc lte 5
       end
 
       result.should == {"name"=> "f3_2_scenarios_3_so"}
@@ -123,7 +123,7 @@ describe "cql" do
       result = gs.query do
         select name
         from features
-        with ssoc_lte 4
+        with ssoc lte 4
       end
 
       result.should == []
@@ -139,7 +139,7 @@ describe "cql" do
       result = gs.query do
         select name
         from features
-        with sc_gt 2
+        with sc gt 2
       end
 
       result.should == [{"name"=> "f1_4_scenarios_5_so"},
@@ -162,7 +162,7 @@ describe "cql" do
       result = gs.query do
         select name
         from features
-        with sc_gte 4
+        with sc gte 4
       end
 
       result.should == [{"name"=> "f1_4_scenarios_5_so"},
@@ -171,7 +171,7 @@ describe "cql" do
       result = gs.query do
         select name
         from features
-        with sc_gte 3
+        with sc gte 3
       end
 
       result.should == [{"name"=> "f1_4_scenarios_5_so"},
@@ -192,7 +192,7 @@ describe "cql" do
       result = gs.query do
         select name
         from features
-        with sc_lt 7
+        with sc lt 7
       end
 
       result.should == [{"name"=> "f1_4_scenarios_5_so"},
@@ -210,7 +210,7 @@ describe "cql" do
       result = gs.query do
         select name
         from features
-        with sc_lt 4
+        with sc lt 4
       end
 
       result.should == {"name"=> "f3_2_scenarios_3_so"}
@@ -222,7 +222,7 @@ describe "cql" do
       result = gs.query do
         select name
         from features
-        with sc_lte 7
+        with sc lte 7
       end
 
       result.should == [{"name"=> "f1_4_scenarios_5_so"},
@@ -232,7 +232,7 @@ describe "cql" do
       result = gs.query do
         select name
         from features
-        with sc_lte 5
+        with sc lte 5
       end
 
       result.should == [{"name"=> "f1_4_scenarios_5_so"},
@@ -241,7 +241,7 @@ describe "cql" do
       result = gs.query do
         select name
         from features
-        with sc_lte 4
+        with sc lte 4
       end
 
       result.should == [{"name"=> "f1_4_scenarios_5_so"}, {"name"=> "f3_2_scenarios_3_so"}]
@@ -269,7 +269,7 @@ describe "cql" do
         result = gs.query do
           select name
           from features
-          with tc_lt number
+          with tc lt number
         end
 
         result.should == expected
@@ -356,7 +356,7 @@ describe "cql" do
         result = gs.query do
           select name
           from features
-          with soc_gte number
+          with soc gte number
         end
 
         result.should == expected
@@ -374,7 +374,7 @@ describe "cql" do
         result = gs.query do
           select name
           from features
-          with soc_lt number
+          with soc lt number
         end
 
         result.should == expected
@@ -393,7 +393,7 @@ describe "cql" do
         result = gs.query do
           select name
           from features
-          with soc_lte num
+          with soc lte num
         end
 
         result.should == expected

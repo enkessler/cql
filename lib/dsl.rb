@@ -16,6 +16,48 @@ module CQL
     alias :everything :all
     alias :complete :all
 
+    class Comparison
+      attr_accessor :op, :amount
+
+      def initialize op, amount
+        @op = op
+        @amount = amount
+      end
+
+    end
+
+    def ssoc comparison
+      {"ssoc_#{comparison.op}"=>comparison.amount}
+    end
+
+    def sc comparison
+      {"sc_#{comparison.op}"=>comparison.amount}
+    end
+
+    def tc comparison
+      {"tc_#{comparison.op}"=>comparison.amount}
+    end
+
+    def soc comparison
+      {"soc_#{comparison.op}"=>comparison.amount}
+    end
+
+    def gt amount
+      Comparison.new 'gt', amount
+    end
+
+    def gte amount
+      Comparison.new 'gte', amount
+    end
+
+    def lt amount
+      Comparison.new 'lt', amount
+    end
+
+    def lte amount
+      Comparison.new 'lte', amount
+    end
+
     def select *what
       @what = what
     end
