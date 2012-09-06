@@ -24,26 +24,27 @@ module CQL
     end
 
     def self.filter_features input, args
-      if args.class == CQL::Dsl::Filter && args.type != 'tc'
+      if args.class == CQL::Dsl::NameFilter
+        if args.name.class == String
+          input = input.find_all { |feature| feature['name'] == args.name }
+        elsif args.name.class == Regexp
+          input = input.find_all { |feature| feature['name'] =~ args.name }
+        end
+      elsif args.class == CQL::Dsl::Filter && args.type != 'tc'
         input = input.find_all do |feature|
           size = feature['elements'].find_all { |e| args.full_type.include? e['keyword'] }.size
           size.send(args.comparison.operator, args.comparison.amount)
         end
-        return input
       elsif args.class == CQL::Dsl::Filter && args.type == 'tc'
         input = input.find_all do |feature|
           feature['tags'] && feature['tags'].size.send(args.comparison.operator, args.comparison.amount)
         end
-        return input
+      elsif args.class == CQL::Dsl::TagFilter
+        input = input.find_all { |feature|
+          has_tags feature['tags'], args.tags
+        }
       end
 
-      if args.has_key?('feature') && args['feature'][0].class == String
-        input = input.find_all { |feature| feature['name'] == args['feature'][0] }
-      elsif args.has_key?('feature') && args['feature'][0].class == Regexp
-        input = input.find_all { |feature| feature['name'] =~ args['feature'][0] }
-      end
-
-      input = input.find_all { |feature| has_tags feature['tags'], args['tags'] } if args.has_key? 'tags'
       input
     end
 

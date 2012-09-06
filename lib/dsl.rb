@@ -27,6 +27,20 @@ module CQL
 
     end
 
+    class NameFilter
+      attr_reader :name
+      def initialize name
+        @name = name
+      end
+    end
+
+    class TagFilter
+      attr_reader :tags
+      def initialize tags
+        @tags = tags
+      end
+    end
+
     class Filter
       attr_reader :type, :comparison
       def initialize type, comparison
@@ -92,7 +106,8 @@ module CQL
 
     def with filter
       if filter.has_key? 'name'
-        @data = CQL::MapReduce.filter_features(@data, 'feature'=>filter['name'])
+        filter_obj = NameFilter.new filter['name'][0]
+        @data = CQL::MapReduce.filter_features(@data, filter_obj)
       elsif @from == 'features'
         filter.each { |k, v|
           what, op = k.split /_/
@@ -100,8 +115,8 @@ module CQL
           filter_obj = Filter.new what, comp
           if k =~ /ssoc/ || k =~ /sc/ || k =~ /soc/ || k =~ /tc/
             @data = CQL::MapReduce.filter_features(@data, filter_obj)
-          else
-            @data = CQL::MapReduce.filter_features(@data, k=>v)
+          elsif k =~ /tags/
+            @data = CQL::MapReduce.filter_features(@data, TagFilter.new(v))
           end
 
         }
