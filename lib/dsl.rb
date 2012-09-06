@@ -20,6 +20,24 @@ module CQL
         @amount = amount
       end
 
+
+      def operator
+        {"lt"=>'<', 'lte'=>'<=', 'gt'=>'>', 'gte'=>'>='}[@op]
+      end
+
+    end
+
+    class Filter
+      attr_reader :type, :comparison
+      def initialize type, comparison
+        @type = type
+        @comparison = comparison
+      end
+
+      def full_type
+        {"sc"=>["Scenario"], "soc"=>["Scenario Outline"], "ssoc"=>["Scenario", "Scenario Outline"]}[@type]
+      end
+
     end
 
     def ssoc comparison
@@ -76,7 +94,17 @@ module CQL
       if filter.has_key? 'name'
         @data = CQL::MapReduce.filter_features(@data, 'feature'=>filter['name'])
       elsif @from == 'features'
-        filter.each { |k, v| @data = CQL::MapReduce.filter_features(@data, k=>v) }
+        filter.each { |k, v|
+          what, op = k.split /_/
+          comp = Comparison.new op, v
+          filter_obj = Filter.new what, comp
+          if k =~ /ssoc/
+            @data = CQL::MapReduce.filter_features(@data, filter_obj)
+          else
+            @data = CQL::MapReduce.filter_features(@data, k=>v)
+          end
+
+        }
       elsif @from == 'scenarios'
         filter.each { |k, v|
           @data = CQL::MapReduce.filter_sso2(@data, k=>v)

@@ -24,6 +24,15 @@ module CQL
     end
 
     def self.filter_features input, args
+      if args.class == CQL::Dsl::Filter
+        input = input.find_all do |feature|
+          size = feature['elements'].find_all { |e| args.full_type.include? e['keyword'] }.size
+          size.send(args.comparison.operator, args.comparison.amount)
+        end
+
+        return input
+      end
+
       if args.has_key?('feature') && args['feature'][0].class == String
         input = input.find_all { |feature| feature['name'] == args['feature'][0] }
       elsif args.has_key?('feature') && args['feature'][0].class == Regexp
