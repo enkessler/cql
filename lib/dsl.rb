@@ -98,7 +98,7 @@ module CQL
           what, op = k.split /_/
           comp = Comparison.new op, v
           filter_obj = Filter.new what, comp
-          if k =~ /ssoc/
+          if k =~ /ssoc/ || k =~ /sc/ || k =~ /soc/ || k =~ /tc/
             @data = CQL::MapReduce.filter_features(@data, filter_obj)
           else
             @data = CQL::MapReduce.filter_features(@data, k=>v)

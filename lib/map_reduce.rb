@@ -24,12 +24,16 @@ module CQL
     end
 
     def self.filter_features input, args
-      if args.class == CQL::Dsl::Filter
+      if args.class == CQL::Dsl::Filter && args.type != 'tc'
         input = input.find_all do |feature|
           size = feature['elements'].find_all { |e| args.full_type.include? e['keyword'] }.size
           size.send(args.comparison.operator, args.comparison.amount)
         end
-
+        return input
+      elsif args.class == CQL::Dsl::Filter && args.type == 'tc'
+        input = input.find_all do |feature|
+          feature['tags'] && feature['tags'].size.send(args.comparison.operator, args.comparison.amount)
+        end
         return input
       end
 
@@ -37,28 +41,6 @@ module CQL
         input = input.find_all { |feature| feature['name'] == args['feature'][0] }
       elsif args.has_key?('feature') && args['feature'][0].class == Regexp
         input = input.find_all { |feature| feature['name'] =~ args['feature'][0] }
-      end
-
-      %w(sc_gt sc_gte sc_lt sc_lte soc_gt soc_gte soc_lt soc_lte ssoc_gt ssoc_gte ssoc_lt ssoc_lte).each do |fn|
-        if args.has_key?(fn)
-          what, operator = fn.split "_"
-          desc = {"sc"=>["Scenario"], "soc"=>["Scenario Outline"], "ssoc"=>["Scenario", "Scenario Outline"]}
-          operator_map = {"lt"=>'<', 'lte'=>'<=', 'gt'=>'>', 'gte'=>'>='}
-          input = input.find_all do |feature|
-            size = feature['elements'].find_all { |e| desc[what].include? e['keyword'] }.size
-            size.send(operator_map[operator], args[fn])
-          end
-        end
-      end
-
-      %w(tc_lt tc_lte tc_gt tc_gte).each do |fn|
-        what, operator = fn.split "_"
-        operator_map = {"lt"=>'<', 'lte'=>'<=', 'gt'=>'>', 'gte'=>'>='}
-        if args.has_key?(fn)
-          input = input.find_all do |feature|
-            feature['tags'] && feature['tags'].size.send(operator_map[operator], args[fn])
-          end
-        end
       end
 
       input = input.find_all { |feature| has_tags feature['tags'], args['tags'] } if args.has_key? 'tags'
