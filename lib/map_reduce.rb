@@ -65,9 +65,19 @@ module CQL
           filtered_elements= feature['elements'].find_all do |sso|
             sso['tags'].size.send(args.comparison.operator, args.comparison.amount)
           end
-         input[index]['elements'] = filtered_elements
+          input[index]['elements'] = filtered_elements
         end
         return input
+      elsif args.class == CQL::Dsl::Filter and args.type == 'lc'
+
+        input.each_with_index do |feature, index|
+          filtered_elements= feature['elements'].find_all do |sso|
+            sso['steps'].size.send(args.comparison.operator, args.comparison.amount)
+          end
+          input[index]['elements'] = filtered_elements
+        end
+        return input
+
       else
         SsoHandlerChain.new.handle(args, input)
       end

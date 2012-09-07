@@ -100,7 +100,7 @@ describe "cql" do
         5=>[{"name"=> "1 line"}, {"name"=> "2 lines"}, {"name"=> "3 lines"}, {"name"=> "4 lines"}]
 
     }.each do |number, expected|
-      it "should filter scenarios by the number of lines with the 'tc_lt' operator for count of #{number}" do
+      it "should filter scenarios by the number of lines with the 'lc_lt' operator for count of #{number}" do
         gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/scenario/line_count"
 
         result = gs.query do

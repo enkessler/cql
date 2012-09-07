@@ -122,7 +122,7 @@ module CQL
         }
       elsif @from == 'scenarios'
         filter.each { |k, v|
-          if k =~ /tc/
+          if k =~ /tc/ || k =~ /lc/
             what, op = k.split /_/
             comp = Comparison.new op, v
             filter_obj = Filter.new what, comp

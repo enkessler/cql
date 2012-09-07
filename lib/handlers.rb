@@ -10,15 +10,6 @@ module CQL
       {"lt"=>'<', 'lte'=>'<=', 'gt'=>'>', 'gte'=>'>='}[operator]
     end
 
-    def lc_handle(args, input, fn)
-      input.each_with_index do |feature, index|
-        filtered_elements= feature['elements'].find_all do |sso|
-          sso['steps'].size.send(comparison_operator(fn), args[fn])
-        end
-        input[index]['elements'] = filtered_elements
-      end
-    end
-
     def line_handler(line_to_match, input)
       input.each_with_index do |feature, index|
         filtered_elements= feature['elements'].find_all do |sso|
@@ -50,9 +41,6 @@ module CQL
     end
 
     def handle(args, input)
-      %w(lc_lt lc_lte lc_gt lc_gte).each do |fn|
-        lc_handle(args, input, fn) if args.has_key?(fn)
-      end
       line_handler(args['line'].first, input) if args.has_key?('line')
       tag_search_handler(args, input) if args.has_key?('tags')
       input
