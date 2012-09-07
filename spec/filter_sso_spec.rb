@@ -10,7 +10,6 @@ describe "cql" do
         3=>[{"name"=> "1 tag"}, {"name"=> "2 tags"}],
         4=>[{"name"=> "1 tag"}, {"name"=> "2 tags"}, {"name"=> "3 tags"}],
         5=>[{"name"=> "1 tag"}, {"name"=> "2 tags"}, {"name"=> "3 tags"}, {"name"=> "4 tags"}]
-
     }.each do |number, expected|
       it "should filter scenarios by the number of tags with the 'tc lt' operator for count of #{number}" do
         gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/scenario/tag_count"
@@ -53,8 +52,6 @@ describe "cql" do
         2=>[{"name"=> "3 tags"}, {"name"=> "4 tags"}],
         3=>{"name"=> "4 tags"},
         4=>[]
-
-
     }.each do |number, expected|
       it "should filter scenarios by the number of tags with the 'tc_gt' operator for count of #{number}" do
         gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/scenario/tag_count"
@@ -76,8 +73,6 @@ describe "cql" do
         3=>[{"name"=> "3 tags"}, {"name"=> "4 tags"}],
         4=>{"name"=> "4 tags"},
         5 =>[]
-
-
     }.each do |number, expected|
       it "should filter scenarios by the number of tags with the 'tc_gte' operator for count of #{number}" do
         gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/scenario/tag_count"

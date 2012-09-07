@@ -122,7 +122,17 @@ module CQL
         }
       elsif @from == 'scenarios'
         filter.each { |k, v|
-          @data = CQL::MapReduce.filter_sso2(@data, k=>v)
+          what, op = k.split /_/
+          comp = Comparison.new op, v
+          filter_obj = Filter.new what, comp
+          if k =~ /tc/
+            what, op = k.split /_/
+            comp = Comparison.new op, v
+            filter_obj = Filter.new what, comp
+            @data = CQL::MapReduce.filter_sso2(@data, filter_obj)
+          else
+            @data = CQL::MapReduce.filter_sso2(@data, k=>v)
+          end
         }
       end
       @data

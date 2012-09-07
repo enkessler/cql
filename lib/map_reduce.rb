@@ -60,7 +60,17 @@ module CQL
     end
 
     def self.filter_sso2 input, args
-      SsoHandlerChain.new.handle(args, input)
+      if args.class == CQL::Dsl::Filter
+        input.each_with_index do |feature, index|
+          filtered_elements= feature['elements'].find_all do |sso|
+            sso['tags'].size.send(args.comparison.operator, args.comparison.amount)
+          end
+         input[index]['elements'] = filtered_elements
+        end
+        return input
+      else
+        SsoHandlerChain.new.handle(args, input)
+      end
     end
 
     def self.tag_set input

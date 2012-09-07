@@ -35,27 +35,27 @@ describe "cql" do
   #end
 
   describe 'filter by tag count' do
-    it 'should filter by tag count' do
-      input = [
-          {"keyword"=>"Feature", "name"=>"Simple", "line"=>1, "description"=>"", "id"=>"simple", "uri"=>"",
-           "elements"=>[
-               {"keyword"=>"Scenario", "name"=>"1 tag", "line"=>4, "description"=>"", "tags"=>[{"name"=>"@one", "line"=>3}], "id"=>"simple;1-tag", "type"=>"scenario"},
-               {"keyword"=>"Scenario", "name"=>"2 tags", "line"=>12, "description"=>"", "tags"=>[{"name"=>"@one", "line"=>11}, {"name"=>"@two", "line"=>11}], "id"=>"simple;2-tags", "type"=>"scenario"}]},
-          {"keyword"=>"Feature", "name"=>"Simple2", "line"=>1, "description"=>"", "id"=>"simple", "uri"=>"", "elements"=>[
-              {"keyword"=>"Scenario", "name"=>"3 tags", "line"=>4, "description"=>"", "tags"=>[{"name"=>"@one", "line"=>3}, {"name"=>"@two", "line"=>3}, {"name"=>"@three", "line"=>3}], "id"=>"simple;3-tags", "type"=>"scenario"},
-              {"keyword"=>"Scenario", "name"=>"4 tags", "line"=>12, "description"=>"", "tags"=>[{"name"=>"@one", "line"=>11}, {"name"=>"@two", "line"=>11}, {"name"=>"@three", "line"=>11}, {"name"=>"@four", "line"=>11}], "id"=>"simple;4-tags", "type"=>"scenario", }]}
-      ]
-
-      expected = [{"keyword"=>"Feature", "name"=>"Simple", "line"=>1, "description"=>"", "id"=>"simple", "uri"=>"",
-                   "elements"=>[
-                       {"keyword"=>"Scenario", "name"=>"1 tag", "line"=>4, "description"=>"", "tags"=>[{"name"=>"@one", "line"=>3}], "id"=>"simple;1-tag", "type"=>"scenario"},
-                       {"keyword"=>"Scenario", "name"=>"2 tags", "line"=>12, "description"=>"", "tags"=>[{"name"=>"@one", "line"=>11}, {"name"=>"@two", "line"=>11}], "id"=>"simple;2-tags", "type"=>"scenario"}]},
-                  {"keyword"=>"Feature", "name"=>"Simple", "line"=>1, "description"=>"", "id"=>"simple", "uri"=>"", "elements"=>[]}]
-      CQL::MapReduce.filter_sso2(input, {"tc_lt"=>3}).size.should == expected.size
-      CQL::MapReduce.filter_sso2(input, {"tc_lt"=>3}).first['elements'].size.should == expected.first['elements'].size
-      CQL::MapReduce.filter_sso2(input, {"tc_lt"=>3})[1]['elements'].size.should == expected[1]['elements'].size
-
-    end
+    #it 'should filter by tag count' do
+    #  input = [
+    #      {"keyword"=>"Feature", "name"=>"Simple", "line"=>1, "description"=>"", "id"=>"simple", "uri"=>"",
+    #       "elements"=>[
+    #           {"keyword"=>"Scenario", "name"=>"1 tag", "line"=>4, "description"=>"", "tags"=>[{"name"=>"@one", "line"=>3}], "id"=>"simple;1-tag", "type"=>"scenario"},
+    #           {"keyword"=>"Scenario", "name"=>"2 tags", "line"=>12, "description"=>"", "tags"=>[{"name"=>"@one", "line"=>11}, {"name"=>"@two", "line"=>11}], "id"=>"simple;2-tags", "type"=>"scenario"}]},
+    #      {"keyword"=>"Feature", "name"=>"Simple2", "line"=>1, "description"=>"", "id"=>"simple", "uri"=>"", "elements"=>[
+    #          {"keyword"=>"Scenario", "name"=>"3 tags", "line"=>4, "description"=>"", "tags"=>[{"name"=>"@one", "line"=>3}, {"name"=>"@two", "line"=>3}, {"name"=>"@three", "line"=>3}], "id"=>"simple;3-tags", "type"=>"scenario"},
+    #          {"keyword"=>"Scenario", "name"=>"4 tags", "line"=>12, "description"=>"", "tags"=>[{"name"=>"@one", "line"=>11}, {"name"=>"@two", "line"=>11}, {"name"=>"@three", "line"=>11}, {"name"=>"@four", "line"=>11}], "id"=>"simple;4-tags", "type"=>"scenario", }]}
+    #  ]
+    #
+    #  expected = [{"keyword"=>"Feature", "name"=>"Simple", "line"=>1, "description"=>"", "id"=>"simple", "uri"=>"",
+    #               "elements"=>[
+    #                   {"keyword"=>"Scenario", "name"=>"1 tag", "line"=>4, "description"=>"", "tags"=>[{"name"=>"@one", "line"=>3}], "id"=>"simple;1-tag", "type"=>"scenario"},
+    #                   {"keyword"=>"Scenario", "name"=>"2 tags", "line"=>12, "description"=>"", "tags"=>[{"name"=>"@one", "line"=>11}, {"name"=>"@two", "line"=>11}], "id"=>"simple;2-tags", "type"=>"scenario"}]},
+    #              {"keyword"=>"Feature", "name"=>"Simple", "line"=>1, "description"=>"", "id"=>"simple", "uri"=>"", "elements"=>[]}]
+    #  CQL::MapReduce.filter_sso2(input, {"tc_lt"=>3}).size.should == expected.size
+    #  CQL::MapReduce.filter_sso2(input, {"tc_lt"=>3}).first['elements'].size.should == expected.first['elements'].size
+    #  CQL::MapReduce.filter_sso2(input, {"tc_lt"=>3})[1]['elements'].size.should == expected[1]['elements'].size
+    #
+    #end
   end
 
   #describe "tags" do
