@@ -55,7 +55,9 @@ module CQL
 
     def has_tags given, search
       return false if given == nil
-      search.count { |tag_for_search| given.map { |t| t["name"] }.include?(tag_for_search) }==search.size
+      search.count do |tag_for_search|
+        given.map { |t| t["name"] }.include?(tag_for_search)
+      end ==search.size
     end
   end
 
@@ -66,9 +68,7 @@ module CQL
     end
 
     def execute input
-      input.find_all { |feature|
-        has_tags feature['tags'], tags
-      }
+      input.find_all { |feature| has_tags feature['tags'], tags }
     end
   end
 
