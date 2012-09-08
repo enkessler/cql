@@ -1,5 +1,6 @@
 require 'set'
 require File.dirname(__FILE__) + "/dsl"
+require File.dirname(__FILE__) + "/filters"
 module CQL
   QUERY_VALUES = %w(name uri line description type steps id tags examples)
 
@@ -23,7 +24,7 @@ module CQL
     end
 
     def self.filter_features input, args
-      if args.class == CQL::Dsl::NameFilter
+      if args.class == CQL::NameFilter
         #if args.name.class == String
         #  input = input.find_all { |feature| feature['name'] == args.name }
         #elsif args.name.class == Regexp

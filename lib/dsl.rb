@@ -27,23 +27,6 @@ module CQL
 
     end
 
-    class NameFilter
-      attr_reader :name
-
-      def initialize name
-        @name = name
-      end
-
-      def execute input
-        if name.class == String
-          input = input.find_all { |feature| feature['name'] == name }
-        elsif name.class == Regexp
-          input = input.find_all { |feature| feature['name'] =~ name }
-        end
-        input
-      end
-    end
-
     class TagFilter
       attr_reader :tags
 
@@ -126,7 +109,7 @@ module CQL
 
     def with filter
       if filter.has_key? 'name'
-        filter_obj = NameFilter.new filter['name'][0]
+        filter_obj = CQL::NameFilter.new filter['name'][0]
         @data = CQL::MapReduce.filter_features(@data, filter_obj)
       elsif @from == 'features'
         filter.each do |k, v|
