@@ -99,16 +99,23 @@ module CQL
         @data = CQL::MapReduce.filter_features(@data, filter_obj)
       elsif @from == 'features'
         filter.each do |k, v|
-          what, op = k.split /_/
-          comp = Comparison.new op, v
-          filter_obj = Filter.new what, comp
-          if k =~ /ssoc/ || k =~ /sc/ || k =~ /soc/ || k =~ /tc/
+          if k =~ /ssoc/ || k =~ /sc/ || k =~ /soc/
+            what, op = k.split /_/
+            comp = Comparison.new(op, v)
+            filter_obj = Filter.new what, comp
+            @data = CQL::MapReduce.filter_features(@data, filter_obj)
+          elsif k =~ /tc/
+            what, op = k.split /_/
+            comp = Comparison.new op, v
+            filter_obj = FeatureTagCountFilter.new what, comp
             @data = CQL::MapReduce.filter_features(@data, filter_obj)
           elsif k =~ /tags/
             @data = CQL::MapReduce.filter_features(@data, TagFilter.new(v))
           end
 
         end
+
+
       elsif @from == 'scenarios'
         filter.each { |k, v|
           if k =~ /tc/ || k =~ /lc/

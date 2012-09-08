@@ -31,5 +31,13 @@ module CQL
 
   end
 
+  class FeatureTagCountFilter < Filter
+    def execute input
+      input.find_all do |feature|
+        feature['tags'] && feature['tags'].size.send(comparison.operator, comparison.amount)
+      end
+    end
+  end
+
 
 end
