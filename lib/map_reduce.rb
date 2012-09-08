@@ -44,14 +44,8 @@ module CQL
         return args.execute input
 
       elsif args.class == SsoLineCountFilter
+        return args.execute input
 
-        input.each_with_index do |feature, index|
-          filtered_elements= feature['elements'].find_all do |sso|
-            sso['steps'].size.send(args.comparison.operator, args.comparison.amount)
-          end
-          input[index]['elements'] = filtered_elements
-        end
-        return input
       elsif args.class == CQL::LineFilter
         return args.execute input
       else
