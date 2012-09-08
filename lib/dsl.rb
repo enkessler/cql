@@ -27,14 +27,6 @@ module CQL
 
     end
 
-    class TagFilter
-      attr_reader :tags
-
-      def initialize tags
-        @tags = tags
-      end
-    end
-
     class LineFilter
       attr_reader :line
 
@@ -110,7 +102,7 @@ module CQL
             filter_obj = FeatureTagCountFilter.new what, comp
             @data = CQL::MapReduce.filter_features(@data, filter_obj)
           elsif k =~ /tags/
-            @data = CQL::MapReduce.filter_features(@data, TagFilter.new(v))
+            @data = CQL::MapReduce.filter_features(@data, CQL::TagFilter.new(v))
           end
 
         end
@@ -127,7 +119,7 @@ module CQL
             lf = LineFilter.new v.first
             @data = CQL::MapReduce.filter_sso2(@data, lf)
           else
-            obj = TagFilter.new v
+            obj = CQL::TagFilter.new v
             @data = CQL::MapReduce.filter_sso2(@data, obj)
           end
         }

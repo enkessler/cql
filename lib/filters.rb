@@ -39,5 +39,12 @@ module CQL
     end
   end
 
+  class TagFilter
+    attr_reader :tags
+
+    def initialize tags
+      @tags = tags
+    end
+  end
 
 end

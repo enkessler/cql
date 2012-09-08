@@ -31,7 +31,7 @@ module CQL
           size = feature['elements'].find_all { |e| args.full_type.include? e['keyword'] }.size
           size.send(args.comparison.operator, args.comparison.amount)
         end
-      elsif args.class == CQL::Dsl::TagFilter
+      elsif args.class == CQL::TagFilter
         input = input.find_all { |feature|
           has_tags feature['tags'], args.tags
         }
