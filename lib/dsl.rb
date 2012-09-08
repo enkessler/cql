@@ -92,7 +92,7 @@ module CQL
         elsif k =~ /tags/
           filter_obj = CQL::FeatureTagFilter.new(v)
         end
-        @data = CQL::MapReduce.filter(@data, filter_obj)
+        @data = filter_obj.execute(@data)
       end
     end
 
@@ -102,18 +102,18 @@ module CQL
         if k =~ /tc/
           what, op = k.split /_/
           comp = Comparison.new(op, v)
-          filter_obj = SsoTagCountFilter.new what, comp
+          filter_obj = SsoTagCountFilter.new(what, comp)
         elsif k =~ /lc/
           what, op = k.split /_/
           comp = Comparison.new op, v
-          filter_obj = SsoLineCountFilter.new what, comp
+          filter_obj = SsoLineCountFilter.new(what, comp)
         elsif k == 'line'
           filter_obj = CQL::LineFilter.new v.first
         else
           filter_obj = CQL::SsoTagFilter.new v
         end
       }
-      @data = CQL::MapReduce.filter(@data, filter_obj)
+      @data = filter_obj.execute(@data)
     end
 
     def with filter

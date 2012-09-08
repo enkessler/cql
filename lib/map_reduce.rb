@@ -24,10 +24,6 @@ module CQL
       end
     end
 
-    def self.filter input, args
-      return args.execute input
-    end
-
     def self.filter_sso input, args
       results = []
       input = filter_features(input, 'feature'=>args['feature']) if args.has_key?('feature')
