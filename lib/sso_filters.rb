@@ -1,4 +1,11 @@
 module CQL
+
+  class SsoTagCountFilter < Filter
+    def execute input
+
+    end
+  end
+
   class LineFilter
     attr_reader :line
 

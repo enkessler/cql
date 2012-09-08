@@ -40,7 +40,7 @@ module CQL
     end
 
     def self.filter_sso2 input, args
-      if args.class == CQL::Filter and args.type == 'tc'
+      if args.class == SsoTagCountFilter
         input.each_with_index do |feature, index|
           filtered_elements= feature['elements'].find_all do |sso|
             sso['tags'].size.send(args.comparison.operator, args.comparison.amount)

@@ -95,7 +95,12 @@ module CQL
 
     def with_sso_filter(filter)
       filter.each { |k, v|
-        if k =~ /tc/ || k =~ /lc/
+        if k =~ /tc/
+          what, op = k.split /_/
+          comp = Comparison.new op, v
+          filter_obj = SsoTagCountFilter.new what, comp
+          @data = CQL::MapReduce.filter_sso2(@data, filter_obj)
+        elsif k =~ /lc/
           what, op = k.split /_/
           comp = Comparison.new op, v
           filter_obj = Filter.new what, comp
