@@ -79,13 +79,16 @@ module CQL
 
     def with_feature_filter(filter)
       filter_obj = nil
+
       filter.each do |k, v|
         what, op = k.split /_/
         comp = Comparison.new(op, v)
-        if k =~ /ssoc/ || k =~ /sc/ || k =~ /soc/
-          filter_obj = Filter.new what, comp
+        if k == 'name'
+          filter_obj = CQL::NameFilter.new v[0]
+        elsif k =~ /ssoc/ || k =~ /sc/ || k =~ /soc/
+          filter_obj = Filter.new(what, comp)
         elsif k =~ /tc/
-          filter_obj = FeatureTagCountFilter.new what, comp
+          filter_obj = FeatureTagCountFilter.new(what, comp)
         elsif k =~ /tags/
           filter_obj = CQL::FeatureTagFilter.new(v)
         end
@@ -97,7 +100,7 @@ module CQL
       filter.each { |k, v|
         if k =~ /tc/
           what, op = k.split /_/
-          comp = Comparison.new op, v
+          comp = Comparison.new(op, v)
           filter_obj = SsoTagCountFilter.new what, comp
           @data = CQL::MapReduce.filter_sso2(@data, filter_obj)
         elsif k =~ /lc/
@@ -116,10 +119,7 @@ module CQL
     end
 
     def with filter
-      if filter.has_key? 'name'
-        filter_obj = CQL::NameFilter.new filter['name'][0]
-        @data = CQL::MapReduce.filter_features(@data, filter_obj)
-      elsif @from == 'features'
+      if @from == 'features'
         with_feature_filter(filter)
       elsif @from == 'scenarios'
         with_sso_filter(filter)
