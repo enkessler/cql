@@ -142,7 +142,8 @@ module CQL
             lf = LineFilter.new v.first
             @data = CQL::MapReduce.filter_sso2(@data, lf)
           else
-            @data = CQL::MapReduce.filter_sso2(@data, k=>v)
+            obj = TagFilter.new v
+            @data = CQL::MapReduce.filter_sso2(@data, obj)
           end
         }
       end
