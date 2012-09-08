@@ -43,20 +43,6 @@ module CQL
       end
     end
 
-    class Filter
-      attr_reader :type, :comparison
-
-      def initialize type, comparison
-        @type = type
-        @comparison = comparison
-      end
-
-      def full_type
-        {"sc"=>["Scenario"], "soc"=>["Scenario Outline"], "ssoc"=>["Scenario", "Scenario Outline"]}[@type]
-      end
-
-    end
-
     def ssoc comparison
       {"ssoc_#{comparison.op}"=>comparison.amount}
     end

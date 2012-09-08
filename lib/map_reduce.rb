@@ -25,19 +25,13 @@ module CQL
 
     def self.filter_features input, args
       if args.class == CQL::NameFilter
-        #if args.name.class == String
-        #  input = input.find_all { |feature| feature['name'] == args.name }
-        #elsif args.name.class == Regexp
-        #  input = input.find_all { |feature| feature['name'] =~ args.name }
-        #end
-
         return args.execute input
-      elsif args.class == CQL::Dsl::Filter && args.type != 'tc'
+      elsif args.class == CQL::Filter && args.type != 'tc'
         input = input.find_all do |feature|
           size = feature['elements'].find_all { |e| args.full_type.include? e['keyword'] }.size
           size.send(args.comparison.operator, args.comparison.amount)
         end
-      elsif args.class == CQL::Dsl::Filter && args.type == 'tc'
+      elsif args.class == CQL::Filter && args.type == 'tc'
         input = input.find_all do |feature|
           feature['tags'] && feature['tags'].size.send(args.comparison.operator, args.comparison.amount)
         end
@@ -62,7 +56,7 @@ module CQL
     end
 
     def self.filter_sso2 input, args
-      if args.class == CQL::Dsl::Filter and args.type == 'tc'
+      if args.class == CQL::Filter and args.type == 'tc'
         input.each_with_index do |feature, index|
           filtered_elements= feature['elements'].find_all do |sso|
             sso['tags'].size.send(args.comparison.operator, args.comparison.amount)
@@ -72,7 +66,7 @@ module CQL
         return input
 
 
-      elsif args.class == CQL::Dsl::Filter and args.type == 'lc'
+      elsif args.class == CQL::Filter and args.type == 'lc'
 
         input.each_with_index do |feature, index|
           filtered_elements= feature['elements'].find_all do |sso|
