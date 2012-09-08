@@ -29,6 +29,13 @@ module CQL
       {"sc"=>["Scenario"], "soc"=>["Scenario Outline"], "ssoc"=>["Scenario", "Scenario Outline"]}[@type]
     end
 
+    def execute input
+      input.find_all do |feature|
+        size = feature['elements'].find_all { |e| full_type.include? e['keyword'] }.size
+        size.send(comparison.operator, comparison.amount)
+      end
+    end
+
   end
 
   class FeatureTagCountFilter < Filter

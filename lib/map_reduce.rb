@@ -24,13 +24,8 @@ module CQL
     end
 
     def self.filter_features input, args
-      if args.class == CQL::NameFilter || args.class == CQL::FeatureTagCountFilter
+      if args.class == CQL::NameFilter || args.class == CQL::FeatureTagCountFilter || args.class == CQL::Filter
         return args.execute input
-      elsif args.class == CQL::Filter && args.type != 'tc'
-        input = input.find_all do |feature|
-          size = feature['elements'].find_all { |e| args.full_type.include? e['keyword'] }.size
-          size.send(args.comparison.operator, args.comparison.amount)
-        end
       elsif args.class == CQL::TagFilter
         input = input.find_all { |feature|
           has_tags feature['tags'], args.tags
