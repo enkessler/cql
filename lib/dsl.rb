@@ -97,25 +97,23 @@ module CQL
     end
 
     def with_sso_filter(filter)
+      filter_obj = nil
       filter.each { |k, v|
         if k =~ /tc/
           what, op = k.split /_/
           comp = Comparison.new(op, v)
           filter_obj = SsoTagCountFilter.new what, comp
-          @data = CQL::MapReduce.filter(@data, filter_obj)
         elsif k =~ /lc/
           what, op = k.split /_/
           comp = Comparison.new op, v
           filter_obj = SsoLineCountFilter.new what, comp
-          @data = CQL::MapReduce.filter(@data, filter_obj)
         elsif k == 'line'
-          lf = CQL::LineFilter.new v.first
-          @data = CQL::MapReduce.filter(@data, lf)
+          filter_obj = CQL::LineFilter.new v.first
         else
-          obj = CQL::SsoTagFilter.new v
-          @data = CQL::MapReduce.filter(@data, obj)
+          filter_obj = CQL::SsoTagFilter.new v
         end
       }
+      @data = CQL::MapReduce.filter(@data, filter_obj)
     end
 
     def with filter
