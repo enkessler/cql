@@ -24,11 +24,13 @@ module CQL
 
     def self.filter_features input, args
       if args.class == CQL::Dsl::NameFilter
-        if args.name.class == String
-          input = input.find_all { |feature| feature['name'] == args.name }
-        elsif args.name.class == Regexp
-          input = input.find_all { |feature| feature['name'] =~ args.name }
-        end
+        #if args.name.class == String
+        #  input = input.find_all { |feature| feature['name'] == args.name }
+        #elsif args.name.class == Regexp
+        #  input = input.find_all { |feature| feature['name'] =~ args.name }
+        #end
+
+        return args.execute input
       elsif args.class == CQL::Dsl::Filter && args.type != 'tc'
         input = input.find_all do |feature|
           size = feature['elements'].find_all { |e| args.full_type.include? e['keyword'] }.size

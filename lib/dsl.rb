@@ -33,6 +33,15 @@ module CQL
       def initialize name
         @name = name
       end
+
+      def execute input
+        if name.class == String
+          input = input.find_all { |feature| feature['name'] == name }
+        elsif name.class == Regexp
+          input = input.find_all { |feature| feature['name'] =~ name }
+        end
+        input
+      end
     end
 
     class TagFilter
