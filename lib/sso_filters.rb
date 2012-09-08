@@ -12,6 +12,19 @@ module CQL
     end
   end
 
+  class SsoTagFilter < TagFilter
+    def execute input
+      input.each_with_index do |feature, index|
+        features_with_contents_filtered = feature['elements'].find_all do |sso|
+          has_tags(sso['tags'], tags)
+        end
+        input[index]['elements'] = features_with_contents_filtered
+      end
+
+      return input
+    end
+  end
+
   class SsoLineCountFilter < Filter
     def execute input
       input.each_with_index do |feature, index|
