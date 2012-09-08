@@ -29,6 +29,7 @@ module CQL
 
     class NameFilter
       attr_reader :name
+
       def initialize name
         @name = name
       end
@@ -36,13 +37,23 @@ module CQL
 
     class TagFilter
       attr_reader :tags
+
       def initialize tags
         @tags = tags
       end
     end
 
+    class LineFilter
+      attr_reader :line
+
+      def initialize line
+        @line = line
+      end
+    end
+
     class Filter
       attr_reader :type, :comparison
+
       def initialize type, comparison
         @type = type
         @comparison = comparison
@@ -109,7 +120,7 @@ module CQL
         filter_obj = NameFilter.new filter['name'][0]
         @data = CQL::MapReduce.filter_features(@data, filter_obj)
       elsif @from == 'features'
-        filter.each { |k, v|
+        filter.each do |k, v|
           what, op = k.split /_/
           comp = Comparison.new op, v
           filter_obj = Filter.new what, comp
@@ -119,7 +130,7 @@ module CQL
             @data = CQL::MapReduce.filter_features(@data, TagFilter.new(v))
           end
 
-        }
+        end
       elsif @from == 'scenarios'
         filter.each { |k, v|
           if k =~ /tc/ || k =~ /lc/
@@ -127,6 +138,9 @@ module CQL
             comp = Comparison.new op, v
             filter_obj = Filter.new what, comp
             @data = CQL::MapReduce.filter_sso2(@data, filter_obj)
+          elsif k == 'line'
+            lf = LineFilter.new v.first
+            @data = CQL::MapReduce.filter_sso2(@data, lf)
           else
             @data = CQL::MapReduce.filter_sso2(@data, k=>v)
           end
@@ -145,7 +159,7 @@ module CQL
 
         @data= CQL::MapReduce.filter_sso(@data, 'what'=>@from[0, @from.size-1]) if @from != "features"
         result = Array.new(@data.size)
-        result = result.map {|e|{}}
+        result = result.map { |e| {} }
         @what.each do |w|
           CQL::MapReduce.send(w, @data).each_with_index { |e, i| result[i][w]=e }
         end

@@ -68,11 +68,33 @@ module CQL
           input[index]['elements'] = filtered_elements
         end
         return input
+
+
       elsif args.class == CQL::Dsl::Filter and args.type == 'lc'
 
         input.each_with_index do |feature, index|
           filtered_elements= feature['elements'].find_all do |sso|
             sso['steps'].size.send(args.comparison.operator, args.comparison.amount)
+          end
+          input[index]['elements'] = filtered_elements
+        end
+        return input
+      elsif args.class == CQL::Dsl::LineFilter
+        input.each_with_index do |feature, index|
+          filtered_elements= feature['elements'].find_all do |sso|
+            raw_step_lines = sso['steps'].map { |sl| sl['name'] }
+            result = nil
+            if args.line.class == String
+              result = raw_step_lines.include? args.line
+            elsif args.line.class == Regexp
+              result = raw_step_lines.find { |line| line =~ args.line }
+              if result.class == String
+                result = result.size > 0
+              else
+                result = false
+              end
+            end
+            result
           end
           input[index]['elements'] = filtered_elements
         end
