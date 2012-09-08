@@ -25,7 +25,7 @@ module CQL
     end
 
     def self.filter_features input, args
-        return args.execute input
+      return args.execute input
     end
 
     def self.filter_sso input, args
@@ -41,14 +41,8 @@ module CQL
 
     def self.filter_sso2 input, args
       if args.class == SsoTagCountFilter
-        input.each_with_index do |feature, index|
-          filtered_elements= feature['elements'].find_all do |sso|
-            sso['tags'].size.send(args.comparison.operator, args.comparison.amount)
-          end
-          input[index]['elements'] = filtered_elements
-        end
+        input = args.execute input
         return input
-
 
       elsif args.class == CQL::Filter and args.type == 'lc'
 
