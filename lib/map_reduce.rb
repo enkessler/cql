@@ -26,10 +26,11 @@ module CQL
     def self.filter_features input, args
       if args.class == CQL::NameFilter || args.class == CQL::FeatureTagCountFilter || args.class == CQL::Filter
         return args.execute input
-      elsif args.class == CQL::TagFilter
-        input = input.find_all { |feature|
-          has_tags feature['tags'], args.tags
-        }
+      elsif args.class == CQL::FeatureTagFilter
+        #input = input.find_all { |feature|
+        #  has_tags feature['tags'], args.tags
+        #}
+        return args.execute input
       end
 
       input

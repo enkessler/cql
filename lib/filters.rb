@@ -52,6 +52,24 @@ module CQL
     def initialize tags
       @tags = tags
     end
+
+    def has_tags given, search
+      return false if given == nil
+      search.count { |tag_for_search| given.map { |t| t["name"] }.include?(tag_for_search) }==search.size
+    end
+  end
+
+  class FeatureTagFilter < TagFilter
+
+    def initialize tags
+      super tags
+    end
+
+    def execute input
+      input.find_all { |feature|
+        has_tags feature['tags'], tags
+      }
+    end
   end
 
 end

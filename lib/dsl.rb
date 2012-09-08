@@ -98,7 +98,7 @@ module CQL
           filter_obj = FeatureTagCountFilter.new what, comp
           @data = CQL::MapReduce.filter_features(@data, filter_obj)
         elsif k =~ /tags/
-          @data = CQL::MapReduce.filter_features(@data, CQL::TagFilter.new(v))
+          @data = CQL::MapReduce.filter_features(@data, CQL::FeatureTagFilter.new(v))
         end
 
       end
@@ -127,8 +127,6 @@ module CQL
         @data = CQL::MapReduce.filter_features(@data, filter_obj)
       elsif @from == 'features'
         with_feature_filter(filter)
-
-
       elsif @from == 'scenarios'
         with_sso_filter(filter)
       end
