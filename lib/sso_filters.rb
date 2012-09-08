@@ -12,6 +12,12 @@ module CQL
     end
   end
 
+  class SsoLineCountFilter < Filter
+    def execute input
+
+    end
+  end
+
   class LineFilter
     attr_reader :line
 

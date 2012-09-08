@@ -103,7 +103,7 @@ module CQL
         elsif k =~ /lc/
           what, op = k.split /_/
           comp = Comparison.new op, v
-          filter_obj = Filter.new what, comp
+          filter_obj = SsoLineCountFilter.new what, comp
           @data = CQL::MapReduce.filter_sso2(@data, filter_obj)
         elsif k == 'line'
           lf = CQL::LineFilter.new v.first

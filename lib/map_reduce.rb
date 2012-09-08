@@ -41,10 +41,9 @@ module CQL
 
     def self.filter_sso2 input, args
       if args.class == SsoTagCountFilter
-        input = args.execute input
-        return input
+        return args.execute input
 
-      elsif args.class == CQL::Filter and args.type == 'lc'
+      elsif args.class == SsoLineCountFilter
 
         input.each_with_index do |feature, index|
           filtered_elements= feature['elements'].find_all do |sso|
