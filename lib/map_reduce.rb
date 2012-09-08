@@ -1,6 +1,6 @@
 require 'set'
 require File.dirname(__FILE__) + "/dsl"
-require File.dirname(__FILE__) + "/filters"
+require File.dirname(__FILE__) + "/feature_filters"
 module CQL
   QUERY_VALUES = %w(name uri line description type steps id tags examples)
 
@@ -24,10 +24,7 @@ module CQL
     end
 
     def self.filter_features input, args
-      if args.class == CQL::NameFilter || args.class == CQL::FeatureTagCountFilter || args.class == CQL::Filter || args.class == CQL::FeatureTagFilter
         return args.execute input
-      end
-      input
     end
 
     def self.filter_sso input, args

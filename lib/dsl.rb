@@ -86,21 +86,21 @@ module CQL
     end
 
     def with_feature_filter(filter)
+      filter_obj = nil
       filter.each do |k, v|
         if k =~ /ssoc/ || k =~ /sc/ || k =~ /soc/
           what, op = k.split /_/
           comp = Comparison.new(op, v)
           filter_obj = Filter.new what, comp
-          @data = CQL::MapReduce.filter_features(@data, filter_obj)
         elsif k =~ /tc/
           what, op = k.split /_/
           comp = Comparison.new op, v
           filter_obj = FeatureTagCountFilter.new what, comp
           @data = CQL::MapReduce.filter_features(@data, filter_obj)
         elsif k =~ /tags/
-          @data = CQL::MapReduce.filter_features(@data, CQL::FeatureTagFilter.new(v))
+          filter_obj = CQL::FeatureTagFilter.new(v)
         end
-
+        @data = CQL::MapReduce.filter_features(@data, filter_obj)
       end
     end
 

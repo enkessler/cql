@@ -110,23 +110,23 @@ describe "cql" do
     #end
   end
 
-  describe 'scenario query' do
-    it 'should get all scenarios as a list' do
-      gs = CQL::Repository.new File.expand_path(File.dirname(__FILE__)) + "/../fixtures/features/scen_outlines/basic"
-      result = CQL::MapReduce.filter_sso(gs.parsed_feature_files, {'feature'=>["Test Feature"], 'what'=>'scenario'})
-      result.should == [{"keyword"=>"Scenario", "name"=>"A Scenario", "line"=>13, "description"=>"", "id"=>"test-feature;a-scenario", "type"=>"scenario", "steps"=>[{"keyword"=>"Given ", "name"=>"something happend", "line"=>14}, {"keyword"=>"Then ", "name"=>"I expect something else", "line"=>15}]}]
-    end
-  end
-
-  describe 'scenario outline query' do
-    it 'should get scenario outlines as a list' do
-      gs = CQL::Repository.new File.expand_path(File.dirname(__FILE__)) + "/../fixtures/features/scen_outlines/basic"
-      result = CQL::MapReduce.filter_sso(gs.parsed_feature_files, {'feature'=>["Test Feature"], 'what'=> 'scenario'})
-      result.should == [{"keyword"=>"Scenario", "name"=>"A Scenario", "line"=>13, "description"=>"", "id"=>"test-feature;a-scenario", "type"=>"scenario", "steps"=>[{"keyword"=>"Given ", "name"=>"something happend", "line"=>14}, {"keyword"=>"Then ", "name"=>"I expect something else", "line"=>15}]}]
-
-      result = CQL::MapReduce.filter_sso(gs.parsed_feature_files, {'feature'=> ["Test Feature"], 'what'=> 'scenario_outline'})
-      result.should == [{"keyword"=>"Scenario Outline", "name"=>"An Outline", "line"=>3, "description"=>"", "id"=>"test-feature;an-outline", "type"=>"scenario_outline", "steps"=>[{"keyword"=>"Given ", "name"=>"something happend", "line"=>4}, {"keyword"=>"Then ", "name"=>"I expect something else", "line"=>5}], "examples"=>[{"keyword"=>"Examples", "name"=>"", "line"=>6, "description"=>"", "id"=>"test-feature;an-outline;", "rows"=>[{"cells"=>["var_a", "var_b"], "line"=>7, "id"=>"test-feature;an-outline;;1"}, {"cells"=>["1", "a"], "line"=>8, "id"=>"test-feature;an-outline;;2"}, {"cells"=>["2", "b"], "line"=>9, "id"=>"test-feature;an-outline;;3"}, {"cells"=>["3", "c"], "line"=>10, "id"=>"test-feature;an-outline;;4"}, {"cells"=>["4", "d"], "line"=>11, "id"=>"test-feature;an-outline;;5"}]}]}]
-    end
-  end
+  #describe 'scenario query' do
+  #  it 'should get all scenarios as a list' do
+  #    gs = CQL::Repository.new File.expand_path(File.dirname(__FILE__)) + "/../fixtures/features/scen_outlines/basic"
+  #    result = CQL::MapReduce.filter_sso(gs.parsed_feature_files, {'feature'=>["Test Feature"], 'what'=>'scenario'})
+  #    result.should == [{"keyword"=>"Scenario", "name"=>"A Scenario", "line"=>13, "description"=>"", "id"=>"test-feature;a-scenario", "type"=>"scenario", "steps"=>[{"keyword"=>"Given ", "name"=>"something happend", "line"=>14}, {"keyword"=>"Then ", "name"=>"I expect something else", "line"=>15}]}]
+  #  end
+  #end
+  #
+  #describe 'scenario outline query' do
+  #  it 'should get scenario outlines as a list' do
+  #    gs = CQL::Repository.new File.expand_path(File.dirname(__FILE__)) + "/../fixtures/features/scen_outlines/basic"
+  #    result = CQL::MapReduce.filter_sso(gs.parsed_feature_files, {'feature'=>["Test Feature"], 'what'=> 'scenario'})
+  #    result.should == [{"keyword"=>"Scenario", "name"=>"A Scenario", "line"=>13, "description"=>"", "id"=>"test-feature;a-scenario", "type"=>"scenario", "steps"=>[{"keyword"=>"Given ", "name"=>"something happend", "line"=>14}, {"keyword"=>"Then ", "name"=>"I expect something else", "line"=>15}]}]
+  #
+  #    result = CQL::MapReduce.filter_sso(gs.parsed_feature_files, {'feature'=> ["Test Feature"], 'what'=> 'scenario_outline'})
+  #    result.should == [{"keyword"=>"Scenario Outline", "name"=>"An Outline", "line"=>3, "description"=>"", "id"=>"test-feature;an-outline", "type"=>"scenario_outline", "steps"=>[{"keyword"=>"Given ", "name"=>"something happend", "line"=>4}, {"keyword"=>"Then ", "name"=>"I expect something else", "line"=>5}], "examples"=>[{"keyword"=>"Examples", "name"=>"", "line"=>6, "description"=>"", "id"=>"test-feature;an-outline;", "rows"=>[{"cells"=>["var_a", "var_b"], "line"=>7, "id"=>"test-feature;an-outline;;1"}, {"cells"=>["1", "a"], "line"=>8, "id"=>"test-feature;an-outline;;2"}, {"cells"=>["2", "b"], "line"=>9, "id"=>"test-feature;an-outline;;3"}, {"cells"=>["3", "c"], "line"=>10, "id"=>"test-feature;an-outline;;4"}, {"cells"=>["4", "d"], "line"=>11, "id"=>"test-feature;an-outline;;5"}]}]}]
+  #  end
+  #end
 
 end
