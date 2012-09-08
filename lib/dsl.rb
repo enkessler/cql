@@ -40,7 +40,8 @@ module CQL
     end
 
     def lc comparison
-      {"lc_#{comparison.op}"=>comparison.amount}
+      CQL::SsoLineCountFilter.new 'lc', comparison
+      #{"lc_#{comparison.op}"=>comparison.amount}
     end
 
     def soc comparison
@@ -98,21 +99,25 @@ module CQL
 
     def with_sso_filter(filter)
       filter_obj = nil
-      filter.each { |k, v|
-        if k =~ /tc/
-          what, op = k.split /_/
-          comp = Comparison.new(op, v)
-          filter_obj = SsoTagCountFilter.new(what, comp)
-        elsif k =~ /lc/
-          what, op = k.split /_/
-          comp = Comparison.new op, v
-          filter_obj = SsoLineCountFilter.new(what, comp)
-        elsif k == 'line'
-          filter_obj = CQL::LineFilter.new v.first
-        else
-          filter_obj = CQL::SsoTagFilter.new v
-        end
-      }
+      if filter.class == Hash
+        filter.each { |k, v|
+          if k =~ /tc/
+            what, op = k.split /_/
+            comp = Comparison.new(op, v)
+            filter_obj = SsoTagCountFilter.new(what, comp)
+          elsif k =~ /lc/
+            what, op = k.split /_/
+            comp = Comparison.new op, v
+            filter_obj = SsoLineCountFilter.new(what, comp)
+          elsif k == 'line'
+            filter_obj = CQL::LineFilter.new v.first
+          else
+            filter_obj = CQL::SsoTagFilter.new v
+          end
+        }
+      else
+        filter_obj = filter
+      end
       @data = filter_obj.execute(@data)
     end
 
