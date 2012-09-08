@@ -40,41 +40,7 @@ module CQL
     end
 
     def self.filter_sso2 input, args
-      if args.class == SsoTagCountFilter
-        return args.execute input
-
-      elsif args.class == SsoLineCountFilter
-        return args.execute input
-
-      elsif args.class == CQL::LineFilter
-        return args.execute input
-      elsif args.class == SsoTagFilter
-        #input.each_with_index do |feature, index|
-        #  features_with_contents_filtered = feature['elements'].find_all do |sso|
-        #    has_tags(sso['tags'], args.tags)
-        #  end
-        #  input[index]['elements'] = features_with_contents_filtered
-        #end
-        #
-        #return input
-        return args.execute input
-      end
-    end
-
-    def self.tag_set input
-      tags = Set.new
-      input.each do |feature|
-        feature['elements'].each do |element|
-          break if element['tags'] == nil
-          element['tags'].each { |tag| tags.add tag['name'] }
-        end
-      end
-      tags.to_a
-    end
-
-    def self.has_tags given, search
-      return false if given == nil
-      search.count { |tag_for_search| given.map { |t| t["name"] }.include?(tag_for_search) }==search.size
+      return args.execute input
     end
 
   end
