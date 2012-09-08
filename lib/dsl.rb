@@ -85,44 +85,52 @@ module CQL
       {'tags'=>tags}
     end
 
+    def with_feature_filter(filter)
+      filter.each do |k, v|
+        if k =~ /ssoc/ || k =~ /sc/ || k =~ /soc/
+          what, op = k.split /_/
+          comp = Comparison.new(op, v)
+          filter_obj = Filter.new what, comp
+          @data = CQL::MapReduce.filter_features(@data, filter_obj)
+        elsif k =~ /tc/
+          what, op = k.split /_/
+          comp = Comparison.new op, v
+          filter_obj = FeatureTagCountFilter.new what, comp
+          @data = CQL::MapReduce.filter_features(@data, filter_obj)
+        elsif k =~ /tags/
+          @data = CQL::MapReduce.filter_features(@data, CQL::TagFilter.new(v))
+        end
+
+      end
+    end
+
+    def with_sso_filter(filter)
+      filter.each { |k, v|
+        if k =~ /tc/ || k =~ /lc/
+          what, op = k.split /_/
+          comp = Comparison.new op, v
+          filter_obj = Filter.new what, comp
+          @data = CQL::MapReduce.filter_sso2(@data, filter_obj)
+        elsif k == 'line'
+          lf = LineFilter.new v.first
+          @data = CQL::MapReduce.filter_sso2(@data, lf)
+        else
+          obj = CQL::TagFilter.new v
+          @data = CQL::MapReduce.filter_sso2(@data, obj)
+        end
+      }
+    end
+
     def with filter
       if filter.has_key? 'name'
         filter_obj = CQL::NameFilter.new filter['name'][0]
         @data = CQL::MapReduce.filter_features(@data, filter_obj)
       elsif @from == 'features'
-        filter.each do |k, v|
-          if k =~ /ssoc/ || k =~ /sc/ || k =~ /soc/
-            what, op = k.split /_/
-            comp = Comparison.new(op, v)
-            filter_obj = Filter.new what, comp
-            @data = CQL::MapReduce.filter_features(@data, filter_obj)
-          elsif k =~ /tc/
-            what, op = k.split /_/
-            comp = Comparison.new op, v
-            filter_obj = FeatureTagCountFilter.new what, comp
-            @data = CQL::MapReduce.filter_features(@data, filter_obj)
-          elsif k =~ /tags/
-            @data = CQL::MapReduce.filter_features(@data, CQL::TagFilter.new(v))
-          end
-
-        end
+        with_feature_filter(filter)
 
 
       elsif @from == 'scenarios'
-        filter.each { |k, v|
-          if k =~ /tc/ || k =~ /lc/
-            what, op = k.split /_/
-            comp = Comparison.new op, v
-            filter_obj = Filter.new what, comp
-            @data = CQL::MapReduce.filter_sso2(@data, filter_obj)
-          elsif k == 'line'
-            lf = LineFilter.new v.first
-            @data = CQL::MapReduce.filter_sso2(@data, lf)
-          else
-            obj = CQL::TagFilter.new v
-            @data = CQL::MapReduce.filter_sso2(@data, obj)
-          end
-        }
+        with_sso_filter(filter)
       end
       @data
     end
