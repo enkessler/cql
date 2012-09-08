@@ -22,7 +22,9 @@ module CQL
       @data = features
       @data = self.instance_eval(&block)
 
+      #getting the clidren of features
       @data= CQL::MapReduce.filter_sso(@data, 'what'=>@from[0, @from.size-1]) if @from != "features"
+
       @data= format_to_ary_of_hsh(@data)
     end
   end

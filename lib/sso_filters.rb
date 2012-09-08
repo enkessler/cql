@@ -8,7 +8,7 @@ module CQL
         end
         input[index]['elements'] = filtered_elements
       end
-      return input
+      input
     end
   end
 
@@ -20,8 +20,7 @@ module CQL
         end
         input[index]['elements'] = features_with_contents_filtered
       end
-
-      return input
+      input
     end
   end
 
@@ -33,7 +32,7 @@ module CQL
         end
         input[index]['elements'] = filtered_elements
       end
-      return input
+      input
     end
   end
 
