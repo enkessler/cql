@@ -1,6 +1,5 @@
 require 'set'
 require File.dirname(__FILE__) + "/dsl"
-require File.dirname(__FILE__) + "/handlers"
 module CQL
   QUERY_VALUES = %w(name uri line description type steps id tags examples)
 
