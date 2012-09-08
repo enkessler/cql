@@ -27,14 +27,6 @@ module CQL
 
     end
 
-    class LineFilter
-      attr_reader :line
-
-      def initialize line
-        @line = line
-      end
-    end
-
     def ssoc comparison
       {"ssoc_#{comparison.op}"=>comparison.amount}
     end
@@ -109,7 +101,7 @@ module CQL
           filter_obj = Filter.new what, comp
           @data = CQL::MapReduce.filter_sso2(@data, filter_obj)
         elsif k == 'line'
-          lf = LineFilter.new v.first
+          lf = CQL::LineFilter.new v.first
           @data = CQL::MapReduce.filter_sso2(@data, lf)
         else
           obj = CQL::TagFilter.new v

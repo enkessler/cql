@@ -1,6 +1,7 @@
 require 'set'
 require File.dirname(__FILE__) + "/dsl"
 require File.dirname(__FILE__) + "/feature_filters"
+require File.dirname(__FILE__) + "/sso_filters"
 module CQL
   QUERY_VALUES = %w(name uri line description type steps id tags examples)
 
@@ -58,27 +59,8 @@ module CQL
           input[index]['elements'] = filtered_elements
         end
         return input
-      elsif args.class == CQL::Dsl::LineFilter
-        input.each_with_index do |feature, index|
-          filtered_elements= feature['elements'].find_all do |sso|
-            raw_step_lines = sso['steps'].map { |sl| sl['name'] }
-            result = nil
-            if args.line.class == String
-              result = raw_step_lines.include? args.line
-            elsif args.line.class == Regexp
-              result = raw_step_lines.find { |line| line =~ args.line }
-              if result.class == String
-                result = result.size > 0
-              else
-                result = false
-              end
-            end
-            result
-          end
-          input[index]['elements'] = filtered_elements
-        end
-        return input
-
+      elsif args.class == CQL::LineFilter
+        return args.execute input
       else
         input.each_with_index do |feature, index|
           features_with_contents_filtered = feature['elements'].find_all do |sso|
