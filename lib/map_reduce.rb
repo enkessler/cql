@@ -24,7 +24,7 @@ module CQL
       end
     end
 
-    def self.filter_features input, args
+    def self.filter input, args
       return args.execute input
     end
 
@@ -37,10 +37,6 @@ module CQL
         end
       end
       results
-    end
-
-    def self.filter_sso2 input, args
-      return args.execute input
     end
 
   end
