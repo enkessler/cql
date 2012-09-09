@@ -28,12 +28,10 @@ module CQL
     end
 
     def ssoc comparison
-      {"ssoc_#{comparison.op}"=>comparison.amount}
       Filter.new('ssoc', comparison)
     end
 
     def sc comparison
-      {"sc_#{comparison.op}"=>comparison.amount}
       Filter.new('sc', comparison)
     end
 
@@ -47,7 +45,6 @@ module CQL
 
     def soc comparison
       Filter.new('soc', comparison)
-      #{"soc_#{comparison.op}"=>comparison.amount}
     end
 
     def gt amount
@@ -88,8 +85,6 @@ module CQL
           comp = Comparison.new(op, v)
           if k == 'name'
             filter_obj = CQL::NameFilter.new v[0]
-          elsif k =~ /ssoc/ || k =~ /sc/ || k =~ /soc/
-            filter_obj = Filter.new(what, comp)
           elsif k =~ /tc/
             filter_obj = FeatureTagCountFilter.new(what, comp)
           elsif k =~ /tags/
@@ -111,10 +106,6 @@ module CQL
             what, op = k.split /_/
             comp = Comparison.new(op, v)
             filter_obj = SsoTagCountFilter.new(what, comp)
-          elsif k =~ /lc/
-            what, op = k.split /_/
-            comp = Comparison.new op, v
-            filter_obj = SsoLineCountFilter.new(what, comp)
           elsif k == 'line'
             filter_obj = CQL::LineFilter.new v.first
           else
