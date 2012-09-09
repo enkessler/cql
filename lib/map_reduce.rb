@@ -24,7 +24,7 @@ module CQL
       end
     end
 
-    def self.filter_sso input, args
+    def self.feature_children input, args
       results = []
       input = filter_features(input, 'feature'=>args['feature']) if args.has_key?('feature')
       input.each do |feature|

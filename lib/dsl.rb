@@ -20,7 +20,6 @@ module CQL
         @amount = amount
       end
 
-
       def operator
         {"lt"=>'<', 'lte'=>'<=', 'gt'=>'>', 'gte'=>'>='}[@op]
       end
