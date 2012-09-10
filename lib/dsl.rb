@@ -45,8 +45,6 @@ module CQL
       else
         return SsoTagCountFilter.new 'tc', comparison
       end
-
-      #{"tc_#{comparison.op}"=>comparison.amount}
     end
 
     def lc comparison
@@ -84,18 +82,18 @@ module CQL
 
     def tags *tags
       return "tags" if tags.size == 0
-      {'tags'=>tags}
+      if @from == 'features'
+        return FeatureTagFilter.new tags
+      else
+        return CQL::SsoTagFilter.new tags
+      end
     end
 
     def with_feature_filter(filter)
       filter_obj = nil
       if filter.class == Hash
         filter.each do |k, v|
-          what, op = k.split /_/
-          comp = Comparison.new(op, v)
-          if k =~ /tags/
-            filter_obj = CQL::FeatureTagFilter.new(v)
-          end
+
         end
       else
         filter_obj = filter
@@ -110,8 +108,6 @@ module CQL
         filter.each { |k, v|
         if k == 'line'
             filter_obj = CQL::LineFilter.new v.first
-          else
-            filter_obj = CQL::SsoTagFilter.new v
           end
         }
       else
