@@ -89,19 +89,6 @@ module CQL
       end
     end
 
-    def with_feature_filter(filter)
-      filter_obj = nil
-      if filter.class == Hash
-        filter.each do |k, v|
-
-        end
-      else
-        filter_obj = filter
-      end
-      @data = filter_obj.execute(@data)
-
-    end
-
     def with_sso_filter(filter)
       filter_obj = nil
       if filter.class == Hash
@@ -118,7 +105,7 @@ module CQL
 
     def with filter
       if @from == 'features'
-        with_feature_filter(filter)
+        @data = filter.execute(@data)
       elsif @from == 'scenarios'
         with_sso_filter(filter)
       end
