@@ -31,7 +31,6 @@ module CQL
 
 
   class Repository
-    include Dsl
     attr_reader :parsed_feature_files
 
     def initialize features_home_dir

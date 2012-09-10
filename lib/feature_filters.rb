@@ -16,7 +16,6 @@ module CQL
     end
   end
 
-
   class Filter
     attr_reader :type, :comparison
 

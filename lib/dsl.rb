@@ -1,13 +1,20 @@
 require File.dirname(__FILE__) + "/map_reduce"
 module CQL
-  DSL_KEYWORDS = %w(features scenario_outlines scenarios all step_lines examples)
   module Dsl
-    (CQL::QUERY_VALUES + CQL::DSL_KEYWORDS).each do |method_name|
+    #Select clause
+    def select *what
+      @what = what
+    end
+
+    (CQL::QUERY_VALUES + %w(all step_lines examples)).each do |method_name|
       define_method(method_name) { |*args|
         return method_name if args.size == 0
         {method_name=>args}
       }
     end
+
+    alias :everything :all
+    alias :complete :all
 
     def name *args
       return 'name' if args.size == 0
@@ -19,8 +26,23 @@ module CQL
       CQL::LineFilter.new args.first
     end
 
-    alias :everything :all
-    alias :complete :all
+    #from clause
+    def from where
+      @from = where
+      @data
+    end
+
+    %w(features scenario_outlines scenarios).each do |method_name|
+      define_method(method_name) { |*args|
+        return method_name if args.size == 0
+        {method_name=>args}
+      }
+    end
+
+    #with clause
+    def with filter
+      @data = filter.execute(@data)
+    end
 
     class Comparison
       attr_accessor :op, :amount
@@ -46,9 +68,9 @@ module CQL
 
     def tc comparison
       if @from == 'features'
-        return FeatureTagCountFilter.new('tc', comparison)
+        FeatureTagCountFilter.new('tc', comparison)
       else
-        return SsoTagCountFilter.new 'tc', comparison
+        SsoTagCountFilter.new 'tc', comparison
       end
     end
 
@@ -76,15 +98,6 @@ module CQL
       Comparison.new 'lte', amount
     end
 
-    def select *what
-      @what = what
-    end
-
-    def from where
-      @from = where
-      @data
-    end
-
     def tags *tags
       return "tags" if tags.size == 0
       if @from == 'features'
@@ -92,10 +105,6 @@ module CQL
       else
         CQL::SsoTagFilter.new tags
       end
-    end
-
-    def with filter
-      @data = filter.execute(@data)
     end
 
   end
