@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + "/map_reduce"
 module CQL
-  DSL_KEYWORDS = %w(features scenario_outlines scenarios all step_lines examples name)
+  DSL_KEYWORDS = %w(features scenario_outlines scenarios all step_lines examples)
   module Dsl
     (CQL::QUERY_VALUES + CQL::DSL_KEYWORDS).each do |method_name|
       define_method(method_name) { |*args|
@@ -9,7 +9,7 @@ module CQL
       }
     end
 
-    def name  *args
+    def name *args
       return 'name' if args.size == 0
       CQL::NameFilter.new args[0]
     end
@@ -40,7 +40,13 @@ module CQL
     end
 
     def tc comparison
-      {"tc_#{comparison.op}"=>comparison.amount}
+      if @from == 'features'
+        return FeatureTagCountFilter.new('tc', comparison)
+      else
+        return SsoTagCountFilter.new 'tc', comparison
+      end
+
+      #{"tc_#{comparison.op}"=>comparison.amount}
     end
 
     def lc comparison
@@ -87,9 +93,7 @@ module CQL
         filter.each do |k, v|
           what, op = k.split /_/
           comp = Comparison.new(op, v)
-         if k =~ /tc/
-            filter_obj = FeatureTagCountFilter.new(what, comp)
-          elsif k =~ /tags/
+          if k =~ /tags/
             filter_obj = CQL::FeatureTagFilter.new(v)
           end
         end
@@ -104,11 +108,7 @@ module CQL
       filter_obj = nil
       if filter.class == Hash
         filter.each { |k, v|
-          if k =~ /tc/
-            what, op = k.split /_/
-            comp = Comparison.new(op, v)
-            filter_obj = SsoTagCountFilter.new(what, comp)
-          elsif k == 'line'
+        if k == 'line'
             filter_obj = CQL::LineFilter.new v.first
           else
             filter_obj = CQL::SsoTagFilter.new v
