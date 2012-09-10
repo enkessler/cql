@@ -14,6 +14,11 @@ module CQL
       CQL::NameFilter.new args[0]
     end
 
+    def line *args
+      return 'line' if args.size == 0
+      CQL::LineFilter.new args.first
+    end
+
     alias :everything :all
     alias :complete :all
 
@@ -83,33 +88,14 @@ module CQL
     def tags *tags
       return "tags" if tags.size == 0
       if @from == 'features'
-        return FeatureTagFilter.new tags
+        FeatureTagFilter.new tags
       else
-        return CQL::SsoTagFilter.new tags
+        CQL::SsoTagFilter.new tags
       end
-    end
-
-    def with_sso_filter(filter)
-      filter_obj = nil
-      if filter.class == Hash
-        filter.each { |k, v|
-        if k == 'line'
-            filter_obj = CQL::LineFilter.new v.first
-          end
-        }
-      else
-        filter_obj = filter
-      end
-      @data = filter_obj.execute(@data)
     end
 
     def with filter
-      if @from == 'features'
-        @data = filter.execute(@data)
-      elsif @from == 'scenarios'
-        with_sso_filter(filter)
-      end
-      @data
+      @data = filter.execute(@data)
     end
 
   end
