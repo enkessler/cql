@@ -9,6 +9,11 @@ module CQL
       }
     end
 
+    def name  *args
+      return 'name' if args.size == 0
+      CQL::NameFilter.new args[0]
+    end
+
     alias :everything :all
     alias :complete :all
 
@@ -82,9 +87,7 @@ module CQL
         filter.each do |k, v|
           what, op = k.split /_/
           comp = Comparison.new(op, v)
-          if k == 'name'
-            filter_obj = CQL::NameFilter.new v[0]
-          elsif k =~ /tc/
+         if k =~ /tc/
             filter_obj = FeatureTagCountFilter.new(what, comp)
           elsif k =~ /tags/
             filter_obj = CQL::FeatureTagFilter.new(v)
