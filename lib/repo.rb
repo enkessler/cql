@@ -10,8 +10,7 @@ module CQL
     attr_reader :data, :what
 
     def format_to_ary_of_hsh data
-      result = Array.new(data.size)
-      result = result.map { |e| {} }
+      result = Array.new(data.size).map{ |e| {} }
       @what.each do |w|
         CQL::MapReduce.send(w, data).each_with_index { |e, i| result[i][w]=e }
       end
@@ -22,7 +21,7 @@ module CQL
       @data = features
       @data = self.instance_eval(&block)
 
-      #getting the clidren of features
+      #getting the children of features
       @data= CQL::MapReduce.feature_children(@data, 'what'=>@from[0, @from.size-1]) if @from != "features"
 
       @data= format_to_ary_of_hsh(@data)
@@ -34,7 +33,7 @@ module CQL
     attr_reader :parsed_feature_files
 
     def initialize features_home_dir
-      @parsed_feature_files = load_features(list_features(features_home_dir))
+      @parsed_feature_files = load_features list_features features_home_dir
     end
 
     def query &block

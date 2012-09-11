@@ -58,14 +58,6 @@ module CQL
 
     end
 
-    def ssoc comparison
-      Filter.new('ssoc', comparison)
-    end
-
-    def sc comparison
-      Filter.new('sc', comparison)
-    end
-
     def tc comparison
       if @from == 'features'
         FeatureTagCountFilter.new('tc', comparison)
@@ -76,6 +68,14 @@ module CQL
 
     def lc comparison
       CQL::SsoLineCountFilter.new('lc', comparison)
+    end
+
+    def ssoc comparison
+      Filter.new('ssoc', comparison)
+    end
+
+    def sc comparison
+      Filter.new('sc', comparison)
     end
 
     def soc comparison

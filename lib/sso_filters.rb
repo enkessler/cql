@@ -57,7 +57,6 @@ module CQL
         end
         input[index]['elements'] = filtered_elements
       end
-
     end
 
     def filter_by_regexp(raw_step_lines)
@@ -69,6 +68,6 @@ module CQL
       end
       result
     end
-
   end
+
 end

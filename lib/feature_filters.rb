@@ -61,7 +61,6 @@ module CQL
   end
 
   class FeatureTagFilter < TagFilter
-
     def initialize tags
       super tags
     end
