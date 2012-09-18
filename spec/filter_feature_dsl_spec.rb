@@ -1,5 +1,5 @@
 require 'rspec'
-require File.dirname(__FILE__) + "/../lib/repo"
+require File.dirname(__FILE__) + "/../lib/cql"
 
 describe "cql" do
 
