@@ -10,7 +10,7 @@ module CQL
     attr_reader :data, :what
 
     def format_to_ary_of_hsh data
-      result = Array.new(data.size).map{ |e| {} }
+      result = Array.new(data.size).map { |e| {} }
       @what.each do |w|
         CQL::MapReduce.send(w, data).each_with_index { |e, i| result[i][w]=e }
       end
@@ -42,7 +42,12 @@ module CQL
 
     private
     def list_features base_dir
-      Dir.glob(base_dir + "/**/*.feature")
+      require 'find'
+      res = []
+      Find.find(base_dir) do |f|
+        res << f if f.match(/\.feature\Z/)
+      end
+      res
     end
 
     def load_features sources
