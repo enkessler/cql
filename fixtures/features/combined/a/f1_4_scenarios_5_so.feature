@@ -1,8 +1,9 @@
 Feature: f1_4_scenarios_5_so
 
-  Scenario: f1_scen1
-    Given Something
-    Then something else
+  Scenario: A cat in a hat (4 scenarios, 5 scenario outlines)
+    Given A cat in a hat
+    And walked across the road
+    Then he was on the other side
 
   Scenario: f1_scen2
     Given Something
