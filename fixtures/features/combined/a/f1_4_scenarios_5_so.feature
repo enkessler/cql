@@ -1,17 +1,22 @@
 Feature: f1_4_scenarios_5_so
+  (4 scenarios, 5 scenario outlines)
 
-  Scenario: A cat in a hat (4 scenarios, 5 scenario outlines)
+  Scenario: A cat in a hat
     Given A cat in a hat
     And walked across the road
     Then he was on the other side
 
-  Scenario: f1_scen2
-    Given Something
-    Then something else
+  Scenario: The lonely giant
+    Given he was very big
+    And he was an orphan
+    And no one wanted to play with him
+    And he couldn't fit into normal sized building
+    Then he was all alone
 
-  Scenario: f1_scen3
-    Given Something
-    Then something else
+  Scenario: The king of kings
+    Given king "George"
+    And king "Bruce"
+    Then George is the king of kings
 
   Scenario: f1_scen4
     Given Something
