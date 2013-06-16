@@ -6,7 +6,7 @@ describe "cql" do
     {
         0=>[],
         1=>[],
-        2=>{"name"=> "1 tag"},
+        2=>[{"name"=> "1 tag"}],
         3=>[{"name"=> "1 tag"}, {"name"=> "2 tags"}],
         4=>[{"name"=> "1 tag"}, {"name"=> "2 tags"}, {"name"=> "3 tags"}],
         5=>[{"name"=> "1 tag"}, {"name"=> "2 tags"}, {"name"=> "3 tags"}, {"name"=> "4 tags"}]
@@ -26,7 +26,7 @@ describe "cql" do
 
     {
         0=>[],
-        1=>{"name"=> "1 tag"},
+        1=>[{"name"=> "1 tag"}],
         2=>[{"name"=> "1 tag"}, {"name"=> "2 tags"}],
         3=>[{"name"=> "1 tag"}, {"name"=> "2 tags"}, {"name"=> "3 tags"}],
         4=>[{"name"=> "1 tag"}, {"name"=> "2 tags"}, {"name"=> "3 tags"}, {"name"=> "4 tags"}],
@@ -50,7 +50,7 @@ describe "cql" do
         0=>[{"name"=> "1 tag"}, {"name"=> "2 tags"}, {"name"=> "3 tags"}, {"name"=> "4 tags"}],
         1=>[{"name"=> "2 tags"}, {"name"=> "3 tags"}, {"name"=> "4 tags"}],
         2=>[{"name"=> "3 tags"}, {"name"=> "4 tags"}],
-        3=>{"name"=> "4 tags"},
+        3=>[{"name"=> "4 tags"}],
         4=>[]
     }.each do |number, expected|
       it "should filter scenarios by the number of tags with the 'tc_gt' operator for count of #{number}" do
@@ -71,7 +71,7 @@ describe "cql" do
         1=>[{"name"=> "1 tag"}, {"name"=> "2 tags"}, {"name"=> "3 tags"}, {"name"=> "4 tags"}],
         2=>[{"name"=> "2 tags"}, {"name"=> "3 tags"}, {"name"=> "4 tags"}],
         3=>[{"name"=> "3 tags"}, {"name"=> "4 tags"}],
-        4=>{"name"=> "4 tags"},
+        4=>[{"name"=> "4 tags"}],
         5 =>[]
     }.each do |number, expected|
       it "should filter scenarios by the number of tags with the 'tc_gte' operator for count of #{number}" do
@@ -94,7 +94,7 @@ describe "cql" do
     {
         0=>[],
         1=>[],
-        2=>{"name"=> "1 line"},
+        2=>[{"name"=> "1 line"}],
         3=>[{"name"=> "1 line"}, {"name"=> "2 lines"}],
         4=>[{"name"=> "1 line"}, {"name"=> "2 lines"}, {"name"=> "3 lines"}],
         5=>[{"name"=> "1 line"}, {"name"=> "2 lines"}, {"name"=> "3 lines"}, {"name"=> "4 lines"}]
@@ -115,7 +115,7 @@ describe "cql" do
 
     {
         0=>[],
-        1=>{"name"=> "1 line"},
+        1=>[{"name"=> "1 line"}],
         2=>[{"name"=> "1 line"}, {"name"=> "2 lines"}],
         3=>[{"name"=> "1 line"}, {"name"=> "2 lines"}, {"name"=> "3 lines"}],
         4=>[{"name"=> "1 line"}, {"name"=> "2 lines"}, {"name"=> "3 lines"}, {"name"=> "4 lines"}],
@@ -139,7 +139,7 @@ describe "cql" do
         0=>[{"name"=> "1 line"}, {"name"=> "2 lines"}, {"name"=> "3 lines"}, {"name"=> "4 lines"}],
         1=>[{"name"=> "2 lines"}, {"name"=> "3 lines"}, {"name"=> "4 lines"}],
         2=>[{"name"=> "3 lines"}, {"name"=> "4 lines"}],
-        3=>{"name"=> "4 lines"},
+        3=>[{"name"=> "4 lines"}],
         4=>[]
 
 
@@ -162,7 +162,7 @@ describe "cql" do
         1=>[{"name"=> "1 line"}, {"name"=> "2 lines"}, {"name"=> "3 lines"}, {"name"=> "4 lines"}],
         2=>[{"name"=> "2 lines"}, {"name"=> "3 lines"}, {"name"=> "4 lines"}],
         3=>[{"name"=> "3 lines"}, {"name"=> "4 lines"}],
-        4=>{"name"=> "4 lines"},
+        4=>[{"name"=> "4 lines"}],
         5 =>[]
 
 

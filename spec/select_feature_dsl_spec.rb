@@ -19,7 +19,7 @@ describe "select" do
         select description
         from features
       end
-      result.should == {"description"=>"The cat in the hat"}
+      result.should == [{"description"=>"The cat in the hat"}]
     end
 
     it 'should find the feature file uri' do

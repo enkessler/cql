@@ -9,7 +9,7 @@ describe "select" do
         select line
         from scenario_outlines
       end
-      result.should == {"line"=>3}
+      result.should ==[{"line"=>3}   ]
     end
 
     it 'should get scenario outlines name' do
@@ -18,7 +18,7 @@ describe "select" do
         select name
         from scenario_outlines
       end
-      result.should == {"name"=> "An Outline"}
+      result.should == [{"name"=> "An Outline"}]
     end
 
     it "should return the examples used" do
@@ -27,14 +27,14 @@ describe "select" do
         select examples
         from scenario_outlines
       end
-      result.should == {"examples"=>[{"keyword"=>"Examples", "name"=>"", "line"=>6,
+      result.should == [{"examples"=>[{"keyword"=>"Examples", "name"=>"", "line"=>6,
                                       "description"=>"", "id"=>"test-feature;an-outline;",
                                       "rows"=>[{"cells"=>["var_a", "var_b"], "line"=>7, "id"=>"test-feature;an-outline;;1"},
                                               {"cells"=>["1", "a"], "line"=>8, "id"=>"test-feature;an-outline;;2"},
                                               {"cells"=>["2", "b"], "line"=>9, "id"=>"test-feature;an-outline;;3"},
                                               {"cells"=>["3", "c"], "line"=>10, "id"=>"test-feature;an-outline;;4"},
                                               {"cells"=>["4", "d"], "line"=>11, "id"=>"test-feature;an-outline;;5"}]
-                                     }]}
+                                     }]}]
     end
 
     it "should return multiple examples used for a single scenario outline" do
@@ -43,21 +43,21 @@ describe "select" do
         select examples
         from scenario_outlines
       end
-      result.should == {"examples"=>[{"keyword"=>"Examples", "name"=>"One", "line"=>6, "description"=>"", "id"=>"test-feature;an-outline;one",
+      result.should == [{"examples"=>[{"keyword"=>"Examples", "name"=>"One", "line"=>6, "description"=>"", "id"=>"test-feature;an-outline;one",
                                       "rows"=>[{"cells"=>["var_a", "var_b"], "line"=>7, "id"=>"test-feature;an-outline;one;1"},
                                                {"cells"=>["1", "a"], "line"=>8, "id"=>"test-feature;an-outline;one;2"},
                                                {"cells"=>["2", "b"], "line"=>9, "id"=>"test-feature;an-outline;one;3"}]},
                                      {"keyword"=>"Examples", "name"=>"Two", "line"=>11, "description"=>"", "id"=>"test-feature;an-outline;two",
                                       "rows"=>[{"cells"=>["var_a", "var_b"], "line"=>12, "id"=>"test-feature;an-outline;two;1"},
                                                {"cells"=>["1", "a"], "line"=>13, "id"=>"test-feature;an-outline;two;2"},
-                                               {"cells"=>["2", "b"], "line"=>14, "id"=>"test-feature;an-outline;two;3"}]}]}
+                                               {"cells"=>["2", "b"], "line"=>14, "id"=>"test-feature;an-outline;two;3"}]}]}]
     end
 
   end
 
   describe "single value, multiple results" do
     it 'should get scenario outlines as is when no select criteria given' do
-      expected = {"all"=>{"keyword"=>"Scenario Outline",
+      expected = [{"all"=>{"keyword"=>"Scenario Outline",
                           "name"=>"An Outline",
                           "line"=>3, "description"=>"",
                           "id"=>"test-feature;an-outline", "type"=>"scenario_outline",
@@ -68,7 +68,7 @@ describe "select" do
                                                  {"cells"=>["1", "a"], "line"=>8, "id"=>"test-feature;an-outline;;2"},
                                                  {"cells"=>["2", "b"], "line"=>9, "id"=>"test-feature;an-outline;;3"},
                                                  {"cells"=>["3", "c"], "line"=>10, "id"=>"test-feature;an-outline;;4"},
-                                                 {"cells"=>["4", "d"], "line"=>11, "id"=>"test-feature;an-outline;;5"}]}]}}
+                                                 {"cells"=>["4", "d"], "line"=>11, "id"=>"test-feature;an-outline;;5"}]}]}}]
 
       gs = CQL::Repository.new File.expand_path(File.dirname(__FILE__)) + "/../fixtures/features/scen_outlines/basic"
       result = gs.query do
@@ -102,7 +102,7 @@ describe "select" do
         select step_lines
         from scenario_outlines
       end
-      result.should == {"step_lines"=> ["Given something happend", "Then I expect something else"]}
+      result.should == [{"step_lines"=> ["Given something happend", "Then I expect something else"]}]
     end
   end
 
@@ -113,13 +113,13 @@ describe "select" do
         select name, line, type, step_lines, id, steps
         from scenario_outlines
       end
-      result.should == {'name'=>"An Outline",
+      result.should == [{'name'=>"An Outline",
                         'line'=>3,
                         'id'=>'test-feature;an-outline',
                         'type'=>'scenario_outline',
                         "steps"=>[{"keyword"=>"Given ", "name"=>"something happend", "line"=>4}, {"keyword"=>"Then ", "name"=>"I expect something else", "line"=>5}],
                         "step_lines"=>["Given something happend", "Then I expect something else"]
-      }
+      }]
     end
 
   end

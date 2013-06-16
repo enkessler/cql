@@ -49,12 +49,12 @@ describe "select" do
 
     it "should select all" do
       gr = CQL::Repository.new File.expand_path(File.dirname(__FILE__)) + "/../fixtures/features/scenario/table"
-      expected = {"all"=>{"keyword"=>"Scenario", "name"=>"Has a table", "line"=>3,
+      expected = [{"all"=>{"keyword"=>"Scenario", "name"=>"Has a table", "line"=>3,
                           "description"=>"", "id"=>"simple;has-a-table", "type"=>"scenario",
                           "steps"=>[{"keyword"=>"Given ", "name"=>"Something", "line"=>4,
                                      "rows"=>[{"cells"=>["a", "a"], "line"=>5}, {"cells"=>["s", "a"], "line"=>6},
                                               {"cells"=>["s", "s"], "line"=>7}]},
-                                    {"keyword"=>"Then ", "name"=>"something else", "line"=>8}]}}
+                                    {"keyword"=>"Then ", "name"=>"something else", "line"=>8}]}} ]
 
       result = gr.query do
         select all

@@ -77,7 +77,7 @@ describe "cql" do
         with ssoc lt 9
       end
 
-      result.should == {"name"=> "f3_2_scenarios_3_so"}
+      result.should == [{"name"=> "f3_2_scenarios_3_so"}  ]
 
       result = gs.query do
         select name
@@ -117,7 +117,7 @@ describe "cql" do
         with ssoc lte 5
       end
 
-      result.should == {"name"=> "f3_2_scenarios_3_so"}
+      result.should == [{"name"=> "f3_2_scenarios_3_so"}]
 
 
       result = gs.query do
@@ -183,7 +183,7 @@ describe "cql" do
         with sc gte 7
       end
 
-      result.should == {"name"=> "f2_7_scenarios_2_so"}
+      result.should ==[ {"name"=> "f2_7_scenarios_2_so"}  ]
     end
 
     it 'should filter based on the number of scenarios for sc_lt' do
@@ -213,7 +213,7 @@ describe "cql" do
         with sc lt 4
       end
 
-      result.should == {"name"=> "f3_2_scenarios_3_so"}
+      result.should == [{"name"=> "f3_2_scenarios_3_so"} ]
     end
 
     it 'should filter based on the number of scenarios for sc_lte' do
@@ -257,7 +257,7 @@ describe "cql" do
     {
         0=>[],
         1=>[],
-        2=>{"name"=> "f1_1_tag"},
+        2=>[{"name"=> "f1_1_tag"}],
         3=>[{"name"=> "f1_1_tag"}, {"name"=> "f2_2_tags"}],
         4=>[{"name"=> "f1_1_tag"}, {"name"=> "f2_2_tags"}, {"name"=> "f3_3_tags"}],
         5=>[{"name"=> "f1_1_tag"}, {"name"=> "f2_2_tags"}, {"name"=> "f3_3_tags"}]
@@ -278,7 +278,7 @@ describe "cql" do
 
     {
         0=>[],
-        1=>{"name"=> "f1_1_tag"},
+        1=>[{"name"=> "f1_1_tag"}],
         2=>[{"name"=> "f1_1_tag"}, {"name"=> "f2_2_tags"}],
         3=>[{"name"=> "f1_1_tag"}, {"name"=> "f2_2_tags"}, {"name"=> "f3_3_tags"}],
         4=>[{"name"=> "f1_1_tag"}, {"name"=> "f2_2_tags"}, {"name"=> "f3_3_tags"}]
@@ -300,7 +300,7 @@ describe "cql" do
     {
         0=>[{"name"=> "f1_1_tag"}, {"name"=> "f2_2_tags"}, {"name"=> "f3_3_tags"}],
         1=>[{"name"=> "f2_2_tags"}, {"name"=> "f3_3_tags"}],
-        2=>{"name"=> "f3_3_tags"},
+        2=>[{"name"=> "f3_3_tags"}],
         3=>[],
         4=>[]
 
@@ -322,7 +322,7 @@ describe "cql" do
         0=>[{"name"=> "f1_1_tag"}, {"name"=> "f2_2_tags"}, {"name"=> "f3_3_tags"}],
         1=>[{"name"=> "f1_1_tag"}, {"name"=> "f2_2_tags"}, {"name"=> "f3_3_tags"}],
         2=>[{"name"=> "f2_2_tags"}, {"name"=> "f3_3_tags"}],
-        3=>{"name"=> "f3_3_tags"},
+        3=>[{"name"=> "f3_3_tags"}],
         4=>[],
         5=>[]
 
@@ -346,7 +346,7 @@ describe "cql" do
     {
         2=>[{"name"=> "f1_4_scenarios_5_so"}, {"name"=> "f2_7_scenarios_2_so"}, {"name"=> "f3_2_scenarios_3_so"}],
         3=>[{"name"=> "f1_4_scenarios_5_so"}, {"name"=> "f3_2_scenarios_3_so"}],
-        4=>{"name"=> "f1_4_scenarios_5_so"},
+        4=>[{"name"=> "f1_4_scenarios_5_so"}],
         7=>[]
 
     }.each do |number, expected|
@@ -412,7 +412,7 @@ describe "cql" do
         with name 'Test2 Feature'
       end
 
-      result.should == {"name"=> "Test2 Feature"}
+      result.should == [{"name"=> "Test2 Feature"}]
     end
 
     it 'should filter by name regexp' do
@@ -424,7 +424,7 @@ describe "cql" do
         with name /Test2 Feature/
       end
 
-      result.should == {"name"=> "Test2 Feature"}
+      result.should == [{"name"=> "Test2 Feature"}]
 
       result = gs.query do
         select name
@@ -467,7 +467,7 @@ describe "cql" do
         with tags '@one'
       end
 
-      result.should == {"name"=>"Test3 Feature"}
+      result.should == [{"name"=>"Test3 Feature"} ]
     end
 
     it 'should filter by a multiple tags' do
@@ -479,7 +479,7 @@ describe "cql" do
         with tags '@one', '@two'
       end
 
-      result.should == {"name"=>"Test3 Feature"}
+      result.should == [{"name"=>"Test3 Feature"} ]
     end
   end
 

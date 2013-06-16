@@ -14,7 +14,7 @@ module CQL
       @what.each do |w|
         CQL::MapReduce.send(w, data).each_with_index { |e, i| result[i][w]=e }
       end
-      result.size == 1 ? result.first : result
+      result
     end
 
     def initialize features, &block

@@ -18,9 +18,10 @@ Feature: f1_4_scenarios_5_so
     And king "Bruce"
     Then George is the king of kings
 
-  Scenario: f1_scen4
-    Given Something
-    Then something else
+  Scenario: A deer
+    * A deer
+    * A female deer
+    * Ray, a drop of golden sun
 
   Scenario Outline: f1_so1
     Given blah <e>
