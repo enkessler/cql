@@ -1,6 +1,7 @@
 require 'gherkin/parser/parser'
 require 'gherkin/formatter/json_formatter'
 require 'stringio'
+require 'deep_clone'
 require File.dirname(__FILE__) + "/dsl"
 
 module CQL
@@ -37,7 +38,7 @@ module CQL
     end
 
     def query &block
-      Query.new(parsed_feature_files.clone, &block).data
+      Query.new(parsed_feature_files.__deep_clone__, &block).data
     end
 
     private
