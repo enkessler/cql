@@ -2,6 +2,7 @@ require 'gherkin/parser/parser'
 require 'gherkin/formatter/json_formatter'
 require 'stringio'
 require 'deep_clone'
+require 'json'
 require File.dirname(__FILE__) + "/dsl"
 
 module CQL

@@ -46,5 +46,18 @@ describe "select" do
                         {"name"=>"Test3 Feature", "tags"=>[{"name"=>"@one", "line"=>1}, {"name"=>"@two", "line"=>1}]}]
     end
 
+    it 'should return simplified tags' do
+      pending
+      gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/scenario/tagged_features"
+      result = gs.query do
+        select name, basic_tag
+        from features
+      end
+      result.should == [{ "tags"=>nil},
+                        { "tags"=>"@one"},
+                         {"tags"=>"@two"},
+                         "tags"=>"@two"
+      ]
+    end
   end
 end
