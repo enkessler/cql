@@ -1,8 +1,5 @@
-require 'gherkin/parser/parser'
-require 'gherkin/formatter/json_formatter'
-require 'stringio'
+require 'cucumber_analytics'
 require 'deep_clone'
-require 'json'
 require File.dirname(__FILE__) + "/dsl"
 
 module CQL
@@ -13,9 +10,17 @@ module CQL
 
     def format_to_ary_of_hsh data
       result = Array.new(data.size).map { |e| {} }
+
       @what.each do |w|
-        CQL::MapReduce.send(w, data).each_with_index { |e, i| result[i][w]=e }
+        CQL::MapReduce.send(w, data).each_with_index do |e, i|
+          if e.class.to_s =~ /CucumberAnalytics/
+            result[i][w]=e.raw_element
+          else
+            result[i][w]=e
+          end
+        end
       end
+
       result
     end
 
@@ -35,7 +40,7 @@ module CQL
     attr_reader :parsed_feature_files
 
     def initialize features_home_dir
-      @parsed_feature_files = load_features list_features features_home_dir
+      @parsed_feature_files = CucumberAnalytics::World.features_in(CucumberAnalytics::Directory.new(features_home_dir))
     end
 
     def query &block
