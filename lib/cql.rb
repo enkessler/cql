@@ -44,7 +44,9 @@ module CQL
     end
 
     def query &block
-      Query.new(parsed_feature_files.__deep_clone__, &block).data
+      new_repo = Marshal::load(Marshal.dump(parsed_feature_files))
+
+      Query.new(new_repo, &block).data
     end
 
     private
