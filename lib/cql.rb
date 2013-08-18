@@ -49,24 +49,5 @@ module CQL
       Query.new(new_repo, &block).data
     end
 
-    private
-    def list_features base_dir
-      require 'find'
-      res = []
-      Find.find(base_dir) do |f|
-        res << f if f.match(/\.feature\Z/)
-      end
-      res
-    end
-
-    def load_features sources
-      io = StringIO.new
-      formatter = Gherkin::Formatter::JSONFormatter.new(io)
-      parser = Gherkin::Parser::Parser.new(formatter)
-      sources.each { |s| parser.parse(IO.read(s), s, 0) }
-      formatter.done
-      JSON.parse(io.string)
-    end
-
   end
 end
