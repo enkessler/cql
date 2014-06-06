@@ -8,10 +8,11 @@ module CQL
 
     def execute input
       if name.class == String
-        input = input.find_all { |feature| feature['name'] == name }
+        input = input.find_all { |feature| feature.name == name }
       elsif name.class == Regexp
-        input = input.find_all { |feature| feature['name'] =~ name }
+        input = input.find_all { |feature| feature.name =~ name }
       end
+
       input
     end
   end
@@ -30,7 +31,22 @@ module CQL
 
     def execute input
       input.find_all do |feature|
-        size = feature['elements'].find_all { |e| full_type.include? e['keyword'] }.size
+        size = feature.tests.find_all { |test|
+
+          element_class = test.class.to_s[/::.*$/].gsub(':', '')
+
+          case element_class
+            when 'Outline'
+              element_class = 'Scenario Outline'
+            when 'Scenario'
+              element_class = 'Scenario'
+            else
+              raise "Unknown class: #{element_class}"
+          end
+
+          full_type.include?(element_class)
+        }.size
+
         size.send(comparison.operator, comparison.amount)
       end
     end
@@ -40,7 +56,7 @@ module CQL
   class FeatureTagCountFilter < Filter
     def execute input
       input.find_all do |feature|
-        feature['tags'] && feature['tags'].size.send(comparison.operator, comparison.amount)
+        feature.tags && feature.tags.size.send(comparison.operator, comparison.amount)
       end
     end
   end
@@ -66,7 +82,7 @@ module CQL
     end
 
     def execute input
-      input.find_all { |feature| has_tags feature['tags'], tags }
+      input.find_all { |feature| has_tags feature.raw_element['tags'], tags }
     end
   end
 
