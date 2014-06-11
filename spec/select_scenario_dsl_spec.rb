@@ -1,11 +1,10 @@
-require 'rspec'
-require File.dirname(__FILE__) + "/../lib/cql"
+require 'spec_helper'
 
 describe "select" do
 
   describe "single value, multiple results" do
     it 'should get scenario line number' do
-      gr = CQL::Repository.new File.expand_path(File.dirname(__FILE__)) + "/../fixtures/features/scenario/simple2"
+      gr = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/simple2")
       result = gr.query do
         select line
         from scenarios
@@ -14,7 +13,7 @@ describe "select" do
     end
 
     it 'should get scenario name' do
-      gr = CQL::Repository.new File.expand_path(File.dirname(__FILE__)) + "/../fixtures/features/scenario/simple2"
+      gr = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/simple2")
       result = gr.query do
         select name
         from scenarios
@@ -24,7 +23,7 @@ describe "select" do
     end
 
     it 'should get scenario name from multiple feature files' do
-      gr = CQL::Repository.new File.expand_path(File.dirname(__FILE__)) + "/../fixtures/features/scenario/simple"
+      gr = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/simple")
       result = gr.query do
         select name
         from scenarios
@@ -38,7 +37,7 @@ describe "select" do
 
   describe "multiple values" do
     it 'should get multiple scenarios as a list of maps' do
-      gr = CQL::Repository.new File.expand_path(File.dirname(__FILE__)) + "/../fixtures/features/scenario/simple2"
+      gr = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/simple2")
       result = gr.query do
         select line, name
         from scenarios
@@ -48,7 +47,7 @@ describe "select" do
     end
 
     it "should select all" do
-      gr = CQL::Repository.new File.expand_path(File.dirname(__FILE__)) + "/../fixtures/features/scenario/table"
+      gr = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/table")
       expected = [{"all"=>{"keyword"=>"Scenario", "name"=>"Has a table", "line"=>3,
                           "description"=>"", "id"=>"simple;has-a-table", "type"=>"scenario",
                           "steps"=>[{"keyword"=>"Given ", "name"=>"Something", "line"=>4,

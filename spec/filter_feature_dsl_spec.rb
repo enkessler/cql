@@ -1,11 +1,10 @@
-require 'rspec'
-require File.dirname(__FILE__) + "/../lib/cql"
+require 'spec_helper'
 
 describe "cql" do
 
   describe 'scenario outline and scenario count functions' do
     it 'should filter based on the number of scenarios for ssoc_gt' do
-      gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/combined/a"
+      gs = CQL::Repository.new("#{@feature_fixtures_directory}/combined/a")
 
       result = gs.query do
         select name
@@ -18,7 +17,7 @@ describe "cql" do
     end
 
     it 'should filter based on the number of scenario outlines for ssoc_gte' do
-      gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/combined/a"
+      gs = CQL::Repository.new("#{@feature_fixtures_directory}/combined/a")
 
       result = gs.query do
         select name
@@ -59,7 +58,7 @@ describe "cql" do
     end
 
     it 'should filter based on the number of scenarios for ssoc_lt' do
-      gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/combined/a"
+      gs = CQL::Repository.new("#{@feature_fixtures_directory}/combined/a")
 
       result = gs.query do
         select name
@@ -89,7 +88,7 @@ describe "cql" do
     end
 
     it 'should filter based on the number of scenarios for ssoc_lte' do
-      gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/combined/a"
+      gs = CQL::Repository.new("#{@feature_fixtures_directory}/combined/a")
 
       result = gs.query do
         select name
@@ -134,7 +133,7 @@ describe "cql" do
 
   describe 'scenario count functions' do
     it 'should filter based on the number of scenarios for sc_gt' do
-      gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/combined/a"
+      gs = CQL::Repository.new("#{@feature_fixtures_directory}/combined/a")
 
       result = gs.query do
         select name
@@ -147,7 +146,7 @@ describe "cql" do
     end
 
     it 'should filter based on the number of scenarios for sc_gte' do
-      gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/combined/a"
+      gs = CQL::Repository.new("#{@feature_fixtures_directory}/combined/a")
 
       result = gs.query do
         select name
@@ -187,7 +186,7 @@ describe "cql" do
     end
 
     it 'should filter based on the number of scenarios for sc_lt' do
-      gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/combined/a"
+      gs = CQL::Repository.new("#{@feature_fixtures_directory}/combined/a")
 
       result = gs.query do
         select name
@@ -217,7 +216,7 @@ describe "cql" do
     end
 
     it 'should filter based on the number of scenarios for sc_lte' do
-      gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/combined/a"
+      gs = CQL::Repository.new("#{@feature_fixtures_directory}/combined/a")
 
       result = gs.query do
         select name
@@ -264,7 +263,7 @@ describe "cql" do
 
     }.each do |number, expected|
       it "should filter features by the number of tags with the 'tc_lt' operator for count of #{number}" do
-        gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/combined/b"
+        gs = CQL::Repository.new("#{@feature_fixtures_directory}/combined/b")
 
         result = gs.query do
           select name
@@ -285,7 +284,7 @@ describe "cql" do
 
     }.each do |number, expected|
       it "should filter features by the number of tags with the 'tc_lte' operator for count of #{number}" do
-        gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/combined/b"
+        gs = CQL::Repository.new("#{@feature_fixtures_directory}/combined/b")
 
         result = gs.query do
           select name
@@ -306,7 +305,7 @@ describe "cql" do
 
     }.each do |number, expected|
       it "should filter features by the number of tags with the 'tc_gt' operator for count of #{number}" do
-        gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/combined/b"
+        gs = CQL::Repository.new("#{@feature_fixtures_directory}/combined/b")
 
         result = gs.query do
           select name
@@ -328,7 +327,7 @@ describe "cql" do
 
     }.each do |number, expected|
       it "should filter features by the number of tags with the 'tc_gte' operator for count of #{number}" do
-        gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/combined/b"
+        gs = CQL::Repository.new("#{@feature_fixtures_directory}/combined/b")
 
         result = gs.query do
           select name
@@ -351,7 +350,7 @@ describe "cql" do
 
     }.each do |number, expected|
       it "soc_gte filter should filter scenarios for input '#{number}'" do
-        gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/combined/a"
+        gs = CQL::Repository.new("#{@feature_fixtures_directory}/combined/a")
 
         result = gs.query do
           select name
@@ -370,7 +369,7 @@ describe "cql" do
 
     }.each do |number, expected|
       it "soc_lt filter should filter scenarios for input '#{number}'" do
-        gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/combined/a"
+        gs = CQL::Repository.new("#{@feature_fixtures_directory}/combined/a")
         result = gs.query do
           select name
           from features
@@ -388,7 +387,7 @@ describe "cql" do
         4=>[{"name"=> "f2_7_scenarios_2_so"}, {"name"=> "f3_2_scenarios_3_so"}],
     }.each do |num, expected|
       it "should filter based on the number of scenarios for soc_lte with input '#{num}'" do
-        gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/combined/a"
+        gs = CQL::Repository.new("#{@feature_fixtures_directory}/combined/a")
 
         result = gs.query do
           select name
@@ -404,7 +403,7 @@ describe "cql" do
 
   describe 'filter features by name' do
     it 'should filter by name' do
-      gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/scenario/tagged_features"
+      gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/tagged_features")
 
       result = gs.query do
         select name
@@ -416,7 +415,7 @@ describe "cql" do
     end
 
     it 'should filter by name regexp' do
-      gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/scenario/tagged_features"
+      gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/tagged_features")
 
       result = gs.query do
         select name
@@ -438,7 +437,7 @@ describe "cql" do
 
   describe 'filter features by tag' do
     it 'should filter by a single tag' do
-      gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/scenario/tagged_features"
+      gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/tagged_features")
 
       result = gs.query do
         select name
@@ -458,7 +457,7 @@ describe "cql" do
     end
 
     it 'should filter by multiple filters' do
-      gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/scenario/tagged_features"
+      gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/tagged_features")
 
       result = gs.query do
         select name
@@ -471,7 +470,7 @@ describe "cql" do
     end
 
     it 'should filter by a multiple tags' do
-      gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/scenario/tagged_features"
+      gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/tagged_features")
 
       result = gs.query do
         select name

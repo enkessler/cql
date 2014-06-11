@@ -1,10 +1,9 @@
-require 'rspec'
-require File.dirname(__FILE__) + "/../lib/cql"
+require 'spec_helper'
 
 describe "select" do
   describe "feature" do
     it 'should return multiple feature file names' do
-      gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/scenario/simple"
+      gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/simple")
       result = gs.query do
         select name
         from features
@@ -14,7 +13,7 @@ describe "select" do
     end
 
     it 'should find the feature description' do
-      gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/scenario/simple2"
+      gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/simple2")
       result = gs.query do
         select description
         from features
@@ -23,7 +22,7 @@ describe "select" do
     end
 
     it 'should find the feature file uri' do
-      gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/scenario/simple"
+      gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/simple")
       result = gs.query do
         select uri
         from features
@@ -35,7 +34,7 @@ describe "select" do
     end
 
     it 'should return multiple feature file names with associated tags' do
-      gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/scenario/tagged_features"
+      gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/tagged_features")
       result = gs.query do
         select name, tags
         from features
@@ -48,7 +47,7 @@ describe "select" do
 
     it 'should return simplified tags' do
       pending
-      gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/scenario/tagged_features"
+      gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/tagged_features")
       result = gs.query do
         select name, basic_tag
         from features

@@ -6,7 +6,7 @@ require "#{File.dirname(__FILE__)}/../lib/cql"
 
 RSpec.configure do |config|
   config.before(:all) do
-    # Nothing yet
+    @feature_fixtures_directory = "#{File.dirname(__FILE__)}/../fixtures/features"
   end
 
   config.before(:each) do

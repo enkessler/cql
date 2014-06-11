@@ -1,10 +1,9 @@
-require 'rspec'
-require File.dirname(__FILE__) + "/../lib/cql"
+require 'spec_helper'
 
 describe "select" do
   describe "single value, single results" do
     it 'should get scenario outlines line number' do
-      gs = CQL::Repository.new File.expand_path(File.dirname(__FILE__)) + "/../fixtures/features/scen_outlines/basic"
+      gs = CQL::Repository.new("#{@feature_fixtures_directory}/scen_outlines/basic")
       result = gs.query do
         select line
         from scenario_outlines
@@ -13,7 +12,7 @@ describe "select" do
     end
 
     it 'should get scenario outlines name' do
-      gs = CQL::Repository.new File.expand_path(File.dirname(__FILE__)) + "/../fixtures/features/scen_outlines/basic"
+      gs = CQL::Repository.new("#{@feature_fixtures_directory}/scen_outlines/basic")
       result = gs.query do
         select name
         from scenario_outlines
@@ -22,7 +21,7 @@ describe "select" do
     end
 
     it "should return the examples used" do
-      gr = CQL::Repository.new File.expand_path(File.dirname(__FILE__)) + "/../fixtures/features/scen_outlines/basic"
+      gr = CQL::Repository.new("#{@feature_fixtures_directory}/scen_outlines/basic")
       result = gr.query do
         select examples
         from scenario_outlines
@@ -38,7 +37,7 @@ describe "select" do
     end
 
     it "should return multiple examples used for a single scenario outline" do
-      gr = CQL::Repository.new File.expand_path(File.dirname(__FILE__)) + "/../fixtures/features/scen_outlines/multiple_examples"
+      gr = CQL::Repository.new("#{@feature_fixtures_directory}/scen_outlines/multiple_examples")
       result = gr.query do
         select examples
         from scenario_outlines
@@ -70,7 +69,7 @@ describe "select" do
                                                  {"cells"=>["3", "c"], "line"=>10, "id"=>"test-feature;an-outline;;4"},
                                                  {"cells"=>["4", "d"], "line"=>11, "id"=>"test-feature;an-outline;;5"}]}]}}]
 
-      gs = CQL::Repository.new File.expand_path(File.dirname(__FILE__)) + "/../fixtures/features/scen_outlines/basic"
+      gs = CQL::Repository.new("#{@feature_fixtures_directory}/scen_outlines/basic")
       result = gs.query do
         select all
         from scenario_outlines
@@ -97,7 +96,7 @@ describe "select" do
 
   describe "special selectors" do
     it 'should get the full step line scenario outlines' do
-      gs = CQL::Repository.new File.expand_path(File.dirname(__FILE__)) + "/../fixtures/features/scen_outlines/basic"
+      gs = CQL::Repository.new("#{@feature_fixtures_directory}/scen_outlines/basic")
       result = gs.query do
         select step_lines
         from scenario_outlines
@@ -108,7 +107,7 @@ describe "select" do
 
   describe "multiple values" do
     it 'should get scenario outlines name and line numbers as a map' do
-      gs = CQL::Repository.new File.expand_path(File.dirname(__FILE__)) + "/../fixtures/features/scen_outlines/basic"
+      gs = CQL::Repository.new("#{@feature_fixtures_directory}/scen_outlines/basic")
       result = gs.query do
         select name, line, type, step_lines, id, steps
         from scenario_outlines

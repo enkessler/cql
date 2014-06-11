@@ -1,5 +1,4 @@
-require 'rspec'
-require File.dirname(__FILE__) + "/../lib/cql"
+require 'spec_helper'
 
 describe "cql" do
   describe 'tag count' do
@@ -12,7 +11,7 @@ describe "cql" do
         5=>[{"name"=> "1 tag"}, {"name"=> "2 tags"}, {"name"=> "3 tags"}, {"name"=> "4 tags"}]
     }.each do |number, expected|
       it "should filter scenarios by the number of tags with the 'tc lt' operator for count of #{number}" do
-        gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/scenario/tag_count"
+        gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/tag_count")
 
         result = gs.query do
           select name
@@ -34,7 +33,7 @@ describe "cql" do
 
     }.each do |number, expected|
       it "should filter scenarios by the number of tags with the 'tc_lte' operator for count of #{number}" do
-        gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/scenario/tag_count"
+        gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/tag_count")
 
         result = gs.query do
           select name
@@ -54,7 +53,7 @@ describe "cql" do
         4=>[]
     }.each do |number, expected|
       it "should filter scenarios by the number of tags with the 'tc_gt' operator for count of #{number}" do
-        gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/scenario/tag_count"
+        gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/tag_count")
 
         result = gs.query do
           select name
@@ -75,7 +74,7 @@ describe "cql" do
         5 =>[]
     }.each do |number, expected|
       it "should filter scenarios by the number of tags with the 'tc_gte' operator for count of #{number}" do
-        gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/scenario/tag_count"
+        gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/tag_count")
 
         result = gs.query do
           select name
@@ -101,7 +100,7 @@ describe "cql" do
 
     }.each do |number, expected|
       it "should filter scenarios by the number of lines with the 'lc_lt' operator for count of #{number}" do
-        gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/scenario/line_count"
+        gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/line_count")
 
         result = gs.query do
           select name
@@ -123,7 +122,7 @@ describe "cql" do
 
     }.each do |number, expected|
       it "should filter scenarios by the number of lines with the 'lc_lte' operator for count of #{number}" do
-        gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/scenario/line_count"
+        gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/line_count")
 
         result = gs.query do
           select name
@@ -145,7 +144,7 @@ describe "cql" do
 
     }.each do |number, expected|
       it "should filter scenarios by the number of lines with the 'lc_gt' operator for count of #{number}" do
-        gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/scenario/line_count"
+        gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/line_count")
 
         result = gs.query do
           select name
@@ -168,7 +167,7 @@ describe "cql" do
 
     }.each do |number, expected|
       it "should filter scenarios by the number of lines with the 'lc_gte' operator for count of #{number}" do
-        gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/scenario/line_count"
+        gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/line_count")
 
         result = gs.query do
           select name
@@ -185,7 +184,7 @@ describe "cql" do
 
   describe 'exact line match' do
     it 'should filter based on an exact line' do
-      gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/scenario/line_filter"
+      gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/line_filter")
 
       result = gs.query do
         select name
@@ -198,7 +197,7 @@ describe "cql" do
     end
 
     it 'should filter all results when the exact line given does not match' do
-      gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/scenario/line_filter"
+      gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/line_filter")
 
       result = gs.query do
         select name
@@ -211,7 +210,7 @@ describe "cql" do
     end
 
     it 'should filter no results when the exact line given is present in all scenarios' do
-      gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/scenario/line_filter"
+      gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/line_filter")
 
       result = gs.query do
         select name
@@ -226,7 +225,7 @@ describe "cql" do
 
   describe 'exact line match' do
     it 'should filter based on a regexp match' do
-      gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/scenario/line_filter"
+      gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/line_filter")
 
       result = gs.query do
         select name
@@ -239,7 +238,7 @@ describe "cql" do
     end
 
     it 'should filter all if no regexp match' do
-      gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/scenario/line_filter"
+      gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/line_filter")
 
       result = gs.query do
         select name
@@ -252,7 +251,7 @@ describe "cql" do
     end
 
     it 'should filter none if all match regexp' do
-      repo = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/scenario/line_filter"
+      repo = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/line_filter")
 
       result = repo.query do
         select name
@@ -268,7 +267,7 @@ describe "cql" do
 
   describe 'tag search' do
     it 'should return scenarios with matching tags' do
-      repo = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/scenario/tags"
+      repo = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/tags")
 
       result = repo.query do
         select name
