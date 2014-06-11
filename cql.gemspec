@@ -20,9 +20,7 @@ Thank you for installing cql (Cucumber Query Language)
 
 }
 
-  s.add_runtime_dependency 'gherkin', '~> 2.11'
-  s.add_runtime_dependency 'json', '>= 1.4.6'
-  s.add_runtime_dependency 'deep_clone'
+  s.add_runtime_dependency 'cuke_modeler'
 
   s.add_development_dependency 'rake', '>= 0.9'
   s.add_development_dependency 'rspec', '~> 2.7'
