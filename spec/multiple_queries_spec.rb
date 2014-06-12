@@ -20,8 +20,8 @@ describe "cql" do
         with line /child/
       end
 
-      result.should == [{"name"=> "Strange relations"},
-                        {"name"=> "Bastard Child"}]
+      expect(result).to eq([{"name" => "Strange relations"},
+                            {"name" => "Bastard Child"}])
     end
   end
 end
