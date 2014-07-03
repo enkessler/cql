@@ -52,6 +52,8 @@ module CQL
         case element_class
           when 'Outline'
             type = 'scenario_outline'
+          when 'Scenario'
+            type = 'scenario'
           else
             raise "Unknown class: #{element_class}"
         end
