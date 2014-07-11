@@ -71,7 +71,7 @@ describe "select" do
 
 
     it 'should return multiple things from scenario outlines' do
-      gs = CQL::Repository.new("#{@feature_fixtures_directory}/scen_outlines")
+      gs = CQL::Repository.new("#{@feature_fixtures_directory}/scen_outlines/multiple_examples")
 
       result = gs.query do
         select name, tags
@@ -79,21 +79,27 @@ describe "select" do
       end
 
       expect(result).to eq([{"name" => "An Outline", "tags" => nil},
-                            {"name" => "An Outline", "tags" => nil},
                             {"name" => "An Outline with everything", "tags" => [{"name" => "@outline_tag", "line" => 21}]}])
     end
 
     it 'should return things from multiple feature files' do
-      gr = CQL::Repository.new("#{@feature_fixtures_directory}/scen_outlines")
+      gr = CQL::Repository.new("#{@feature_fixtures_directory}/scen_outlines/filters/tags2")
 
       result = gr.query do
         select name
         from scenario_outlines
       end
 
-      expect(result).to eq([{"name" => "An Outline"},
-                            {"name" => "An Outline"},
-                            {"name" => "An Outline with everything"}])
+      expect(result).to eq([{"name" => "Has a table"},
+                            {"name" => "Next"},
+                            {"name" => "Another"},
+                            {"name" => "Blah"},
+                            {"name" => "Another"},
+                            {"name" => "Has a table hmmm"},
+                            {"name" => "Next"},
+                            {"name" => "Another"},
+                            {"name" => "Blah blah"},
+                            {"name" => "Another"}])
     end
 
     it 'should return multiple scenario outlines as a list of maps' do
@@ -104,9 +110,11 @@ describe "select" do
         from scenario_outlines
       end
 
-      expect(result).to eq([{"name" => "An Outline"},
-                            {"name" => "An Outline"},
-                            {"name" => "An Outline with everything"}])
+      expect(result).to be_an_instance_of(Array)
+
+      result.each do |item|
+        expect(item).to be_an_instance_of(Hash)
+      end
     end
 
     it "should return the examples from scenario outlines" do
