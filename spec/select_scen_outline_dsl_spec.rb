@@ -3,6 +3,37 @@ require 'spec_helper'
 describe "select" do
   describe 'from scenario_outlines' do
 
+    it 'should return tags from scenario outlines' do
+      gs = CQL::Repository.new("#{@feature_fixtures_directory}/scen_outlines/filters/tags2")
+
+      result = gs.query do
+        select tags
+        from scenario_outlines
+      end
+
+      expect(result).to eq([{"tags" => [{"name" => "@two", "line" => 3}]},
+                            {"tags" => [{"name" => "@one", "line" => 13}]},
+                            {"tags" => nil},
+                            {"tags" => [{"name" => "@two", "line" => 24}]},
+                            {"tags" => [{"name" => "@one", "line" => 30}]},
+                            {"tags" => [{"name" => "@two", "line" => 3}, {"name" => "@four", "line" => 3}]},
+                            {"tags" => [{"name" => "@one", "line" => 13}, {"name" => "@five", "line" => 13}]},
+                            {"tags" => nil},
+                            {"tags" => [{"name" => "@two", "line" => 24}]},
+                            {"tags" => [{"name" => "@one", "line" => 30}]}])
+    end
+
+    it 'should return descriptions from scenario outlines' do
+      gs = CQL::Repository.new("#{@feature_fixtures_directory}/scen_outlines/multiple_examples")
+
+      result = gs.query do
+        select description
+        from scenario_outlines
+      end
+
+      expect(result).to eq([{"description" => ""}, {"description" => "Outline description."}])
+    end
+
     it 'should return lines from scenario outlines' do
       gs = CQL::Repository.new("#{@feature_fixtures_directory}/scen_outlines/basic")
 

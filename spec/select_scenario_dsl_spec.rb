@@ -3,6 +3,37 @@ require 'spec_helper'
 describe "select" do
   describe 'from scenarios' do
 
+    it 'should return tags from scenarios' do
+      gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/tags2")
+
+      result = gs.query do
+        select tags
+        from scenarios
+      end
+
+      expect(result).to eq([{"tags" => [{"name" => "@two", "line" => 3}]},
+                            {"tags" => [{"name" => "@one", "line" => 11}]},
+                            {"tags" => nil},
+                            {"tags" => [{"name" => "@two", "line" => 18}]},
+                            {"tags" => [{"name" => "@one", "line" => 22}]},
+                            {"tags" => [{"name" => "@two", "line" => 3}, {"name" => "@four", "line" => 3}]},
+                            {"tags" => [{"name" => "@one", "line" => 11}, {"name" => "@five", "line" => 11}]},
+                            {"tags" => nil},
+                            {"tags" => [{"name" => "@two", "line" => 18}]},
+                            {"tags" => [{"name" => "@one", "line" => 22}]}])
+    end
+
+    it 'should return descriptions from scenarios' do
+      gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/table")
+
+      result = gs.query do
+        select description
+        from scenarios
+      end
+
+      expect(result).to eq([{"description" => "Scenario description."}])
+    end
+
     it 'should return lines from scenarios' do
       gr = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/simple2")
 
@@ -119,7 +150,7 @@ describe "select" do
                             {'line' => 16, 'name' => "Testing yet again"}, {'line' => 21, 'name' => "Testing yet again part 2"}])
     end
 
-    it "should should return all, complete, everything from scenarios" do
+    it "should return all, complete, everything from scenarios" do
       gr = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/table")
 
       expected = [{"all" => {"keyword" => "Scenario",

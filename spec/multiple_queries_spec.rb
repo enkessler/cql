@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe "cql" do
 
-  describe 'cql repo is not mutable' do
+  describe 'repo' do
     it 'should not change between queries' do
 
       repo = CQL::Repository.new("#{@feature_fixtures_directory}/got")

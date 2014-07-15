@@ -185,6 +185,23 @@ describe "feature filters (with)" do
   }
 
   describe 'scenario outline count functions (soc)' do
+    it 'should filter based on soc_gt' do
+      gs = CQL::Repository.new("#{@feature_fixtures_directory}/combined/a")
+
+      expected_results = {2 => [{"name" => "f1_4_scenarios_5_so"}, {"name" => "f3_2_scenarios_3_so"}],
+                          5 => []}
+
+      expected_results.each do |number, expected|
+        result = gs.query do
+          select name
+          from features
+          with soc gt number
+        end
+
+        expect(result).to eq(expected)
+      end
+    end
+
     it 'should filter based on soc_gte' do
       gs = CQL::Repository.new("#{@feature_fixtures_directory}/combined/a")
 
