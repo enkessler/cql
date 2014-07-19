@@ -1,226 +1,124 @@
-# CQL (Cucumber Query Language)
+= CQL (Cucumber Query Language)
 
-**Need help?** Please email me directly at jdfolino@gmail.com. I'm more than happy to help. Any feedback would also be
-much appreciated.
-
-CQL is a domain specific language used for querying feature files. It is written in ruby. The
+CQL is a domain specific language used for querying a Cucumber test suite. It is written in ruby. The
 goal of CQL is to enable to create summarized data on the collection of feature files. Some uses for example are:
 
 * Build systems
 * Reporting
 
-# Quick Start
+== Quick Start
 
 * Install the gem
 
 Use the following command:
 
-```bash
-gem install cql
-```
+    gem install cql
 
-Alternatively you can add it to your Gemfile if you are using bundler
+Alternatively you can add it to your Gemfile if you are using bundler.
 
 * Create a new ruby file
 
 * The first thing that needs to be done is to create a CQL Repository. This can be done with the following line:
 
-```ruby
-   require 'cql'
-   cql_repo = CQL::Repository.new "/path-to-my-feature-files"
-```
+    require 'cql'
+    cql_repo = CQL::Repository.new "/path-to-my-feature-files"
 
 * Now that you have a repository you can write a query. A simple example is given below
 
-```ruby
-   require 'cql'
-   cql_repo = CQL::Repository.new "/path-to-my-feature-files"
-   result = gs.query do
+    cql_repo.query do
         select name
         from features
-   end
-```
+    end
+
 This will return a list of all of the feature names in the form of a list of hashes.
 
-# CQL DSL
-## The 'from' clause
+== CQL DSL
+=== The 'from' clause
 
-The following values are supported for the 'from' clause:
+The *from* clause specifies what type of things that *select* will gather its values from. The following
+values are supported for the *from* clause:
 
- * scenario_outlines
- * scenarios
- * features
+* scenario_outlines
+* scenarios
+* features
 
-To select all names from scenarios use:
+Sample usage:
 
-```ruby
-   require 'cql'
-   cql_repo = CQL::Repository.new "/path-to-my-feature-files"
-   result = gs.query do
+    cql_repo.query do
         select name
         from scenarios
-   end
-```
+    end
 
-To select all names from scenario_outlines use:
+=== The 'select' clause
 
-```ruby
-   require 'cql'
-   cql_repo = CQL::Repository.new "/path-to-my-feature-files"
-   result = gs.query do
-        select name
-        from scenario_outlines
-   end
-```
+The *select* clause specifies what values will be retrieved from the things specified by *from*. Multiple
+values can be given and they are deliminated by a comma.
 
-To select all names from features use:
-
-```ruby
-   require 'cql'
-   cql_repo = CQL::Repository.new "/path-to-my-feature-files"
-   result = gs.query do
-        select name
-        from features
-   end
-```
-## The 'select' clause for features
-
-The following values are supported when the from clause is set as 'features':
-
-  * name
-  * uri
-  * description
-  * tags
-
-Multiple values can be given and they are deliminated by a comma as such:
-
-```ruby
-   require 'cql'
-   cql_repo = CQL::Repository.new "/path-to-my-feature-files"
-   result = gs.query do
+Sample usage:
+    cql_repo.query do
         select name, uri, tags, description
         from features
-   end
-```
+    end
 
-## The 'select' clause for 'scenarios' and 'scenario outlines'
+The following selection values are supported for all values of the *from* clause:
 
-The following values are supported when the from clause is set as 'scenarios' or 'scenario outlines':
+* name
+* id
+* description
+* tags
+* all
+* complete (alias for 'all')
+* everything (alias for 'all')
 
-  * name
-  * line
-  * type,
-  * step_lines,
-  * id
-  * steps
-  * all
+The following additional selection values are supported when the *from* clause is set as 'features':
 
-Multiple values can be given and they are deliminated by a comma as such:
+* uri
 
-```ruby
-   require 'cql'
-   cql_repo = CQL::Repository.new "/path-to-my-feature-files"
-   result = gs.query do
-        select name, line, type,  step_lines, id, steps
-        from scenarios
-   end
-```
+The following additional selection values are supported when the *from* clause is set as 'scenarios' or 'scenario_outlines':
 
-Please note that this will work for both scenarios and scenario outlines
+* line
+* type
+* step_lines
+* steps
 
-## 'scenario outlines' select clause specific
+The following additional selection values are supported when the *from* clause is set as 'scenario_outlines':
 
-   * examples
+* examples
 
-```ruby
-   require 'cql'
-   cql_repo = CQL::Repository.new "/path-to-my-feature-files"
-   result = gs.query do
-        select examples
-        from scenario_outlines
-   end
-```
 
-## Filtering features with the 'with' clause
+=== The 'with' clause
 
-    Features can be filtered by the following:
+The *with* specifies filter conditions that will reduce the number of things targeted by the by *from*. Multiple
+*with* clauses can be used in a query.
 
-    * By specific tags on the feature
-    * Number of scenarios they contain
-    * Number of scenario outlines they contain
-    * Combined number of scenarios and scenario outlines they contain
-    * The number of tags they have
-
-### Filter features by tag
-
-   To filter features by a single tag:
-
-```ruby
-   require 'cql'
-   cql_repo = CQL::Repository.new "/path-to-my-feature-files"
-   result = gs.query do
+Sample usage:
+    cql_repo.query do
         select name, uri, tags, description
         from features
-        with tags '@one'
-   end
-```
+        with tc gt 1
+        with tc lt 3
+    end
 
-   To filter features by multiple tags (method one):
+The following filters are supported for all values of the *from* clause:
 
-```ruby
-   require 'cql'
-   cql_repo = CQL::Repository.new "/path-to-my-feature-files"
-   result = gs.query do
-        select name, uri, tags, description
-        from features
-        with tags '@one'
-        with tags '@two'
-   end
-```
+* tags
+* tc   (tag count)
 
-   To filter features by multiple tags (method two):
+The following additional filters are supported when the *from* clause is set as 'features':
 
-```ruby
-   require 'cql'
-   cql_repo = CQL::Repository.new "/path-to-my-feature-files"
-   result = gs.query do
-        select name, uri, tags, description
-        from features
-        with tags '@one', '@two'
-   end
-```
+* name (exact match or regular expression)
+* sc   (scenario count)
+* soc  (scenario outline count)
+* ssoc (scenario and scenario outline count)
 
-### Filter features by tag count
+The following additional filters are supported when the *from* clause is set as 'scenarios' or 'scenario_outlines':
 
-   The following operators are available:
+* lc   (line count)
+* line (exact match or regular expression)
 
-   * lt   (Less than)
-   * lte  (Less or equals)
-   * gt   (Greater than)
-   * gte  (Greater or equal)
+For count filters, the following operators are available:
 
-   To filter features with a tag count less than 8:
-
-```ruby
-   require 'cql'
-   cql_repo = CQL::Repository.new "/path-to-my-feature-files"
-   result = gs.query do
-        select name, uri, tags, description
-        from features
-        with tc lt 8
-   end
-```
-
-   To filter features with a tag count greater than or equal to 8:
-
-```ruby
-   require 'cql'
-   cql_repo = CQL::Repository.new "/path-to-my-feature-files"
-   result = gs.query do
-        select name, uri, tags, description
-        from features
-        with gte lt 8
-   end
-```
-
-### Filter features by scenario count, scenario outline count or both
+* lt   (Less than)
+* lte  (Less or equals)
+* gt   (Greater than)
+* gte  (Greater or equal)
