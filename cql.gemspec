@@ -9,6 +9,7 @@ Gem::Specification.new do |s|
   s.description = 'Cucumber Query Language'
   s.summary     = "cucumber-#{s.version}"
   s.email       = 'jdfolino@gmail.com'
+  s.license     = 'MIT'
 
   s.platform    = Gem::Platform::RUBY
   s.post_install_message = %{
