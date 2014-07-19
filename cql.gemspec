@@ -5,10 +5,10 @@ require 'cucumber/platform'
 Gem::Specification.new do |s|
   s.name        = 'cql'
   s.version     = '0.2.1'
-  s.authors     = ['Jarrod Folino']
+  s.authors     = ['Jarrod Folino', 'Eric Kessler']
   s.description = 'Cucumber Query Language'
-  s.summary     = "cucumber-#{s.version}"
-  s.email       = 'jdfolino@gmail.com'
+  s.summary     = "A gem providing functionality to query a Cucumber test suite."
+  s.email       = 'morrow748@gmail.com'
   s.license     = 'MIT'
 
   s.platform    = Gem::Platform::RUBY
