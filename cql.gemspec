@@ -4,7 +4,7 @@ require 'cucumber/platform'
 
 Gem::Specification.new do |s|
   s.name        = 'cql'
-  s.version     = '0.2.1'
+  s.version     = '0.3.0'
   s.authors     = ['Jarrod Folino', 'Eric Kessler']
   s.description = 'Cucumber Query Language'
   s.summary     = "A gem providing functionality to query a Cucumber test suite."
