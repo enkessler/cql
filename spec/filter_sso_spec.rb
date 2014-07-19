@@ -125,6 +125,32 @@ describe "scenario and outline filters (with)" do
                                                                                                   /green/ => [{"name" => "sc1"}],
                                                                                                   /will not be found/ => []}}}
 
+  it 'should filter by multiple filters' do
+    gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/tag_count")
+
+    result = gs.query do
+      select name
+      from scenarios
+      with tc gt 1
+      with tc lt 3
+    end
+
+    expect(result).to eq([{"name" => "2 tags"}])
+  end
+
+  it 'should filter by multiple filters' do
+    gs = CQL::Repository.new("#{@feature_fixtures_directory}/scen_outlines/filters/tag_count")
+
+    result = gs.query do
+      select name
+      from scenario_outlines
+      with tc gt 1
+      with tc lt 3
+    end
+
+    expect(result).to eq([{"name" => "2 tags"}])
+  end
+
   #todo - add line filter tests for scenario outlines
   #todo - add line count filter tests for scenario outlines
 
