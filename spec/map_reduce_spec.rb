@@ -1,16 +1,16 @@
-require 'rspec'
-require File.dirname(__FILE__) + "/../lib/cql"
+require 'spec_helper'
 
 describe "cql" do
 
   describe "file parsing" do
     it 'should find the physical files' do
-      gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/scenario/simple"
+      gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/simple")
       result = CQL::MapReduce.uri(gs.parsed_feature_files)
-      result[0].should =~ /simple\.feature/
-      result[1].should =~ /test\.feature/
-      result[2].should =~ /test2\.feature/
-      result[3].should =~ /test_full\.feature/
+
+      expect(result[0]).to match(/simple\.feature/)
+      expect(result[1]).to match(/test\.feature/)
+      expect(result[2]).to match(/test2\.feature/)
+      expect(result[3]).to match(/test_full\.feature/)
     end
   end
 

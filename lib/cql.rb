@@ -1,8 +1,4 @@
-require 'gherkin/parser/parser'
-require 'gherkin/formatter/json_formatter'
-require 'stringio'
-require 'deep_clone'
-require 'json'
+require 'cuke_modeler'
 require File.dirname(__FILE__) + "/dsl"
 
 module CQL
@@ -13,9 +9,17 @@ module CQL
 
     def format_to_ary_of_hsh data
       result = Array.new(data.size).map { |e| {} }
+
       @what.each do |w|
-        CQL::MapReduce.send(w, data).each_with_index { |e, i| result[i][w]=e }
+        CQL::MapReduce.send(w, data).each_with_index do |e, i|
+          if e.class.to_s =~ /CukeModeler/
+            result[i][w]=e.raw_element
+          else
+            result[i][w]=e
+          end
+        end
       end
+
       result
     end
 
@@ -35,30 +39,32 @@ module CQL
     attr_reader :parsed_feature_files
 
     def initialize features_home_dir
-      @parsed_feature_files = load_features list_features features_home_dir
+      @parsed_feature_files = collect_feature_models(CukeModeler::Directory.new(features_home_dir))
     end
 
     def query &block
-      Query.new(parsed_feature_files.__deep_clone__, &block).data
+      new_repo = Marshal::load(Marshal.dump(parsed_feature_files))
+
+      Query.new(new_repo, &block).data
     end
+
 
     private
-    def list_features base_dir
-      require 'find'
-      res = []
-      Find.find(base_dir) do |f|
-        res << f if f.match(/\.feature\Z/)
-      end
-      res
+
+
+    def collect_feature_models(directory_model)
+      Array.new.tap { |accumulated_features| collect_all_in(:features, directory_model, accumulated_features) }
     end
 
-    def load_features sources
-      io = StringIO.new
-      formatter = Gherkin::Formatter::JSONFormatter.new(io)
-      parser = Gherkin::Parser::Parser.new(formatter)
-      sources.each { |s| parser.parse(IO.read(s), s, 0) }
-      formatter.done
-      JSON.parse(io.string)
+    # Recursively gathers all things of the given type found in the passed container.
+    def collect_all_in(type_of_thing, container, accumulated_things)
+      accumulated_things.concat container.send(type_of_thing) if container.respond_to?(type_of_thing)
+
+      if container.respond_to?(:contains)
+        container.contains.each do |child_container|
+          collect_all_in(type_of_thing, child_container, accumulated_things)
+        end
+      end
     end
 
   end

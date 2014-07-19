@@ -1,63 +1,191 @@
-require 'rspec'
-require File.dirname(__FILE__) + "/../lib/cql"
+require 'spec_helper'
 
 describe "select" do
-  describe "feature" do
-    it 'should return multiple feature file names' do
-      gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/scenario/simple"
+  describe "from features" do
+
+    it 'should return names from features' do
+      gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/simple")
+
       result = gs.query do
         select name
         from features
       end
-      result.should == [{"name"=>"Simple"}, {"name"=>"Test Feature"},
-                        {"name"=>"Test2 Feature"}, {"name"=>"Test3 Feature"}]
+
+      expect(result).to eq([{"name" => "Simple"}, {"name" => "Test Feature"},
+                            {"name" => "Test2 Feature"}, {"name" => "Test3 Feature"}])
     end
 
-    it 'should find the feature description' do
-      gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/scenario/simple2"
+    it 'should return descriptions from features' do
+      gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/simple2")
+
       result = gs.query do
         select description
         from features
       end
-      result.should == [{"description"=>"The cat in the hat"}]
+
+      expect(result).to eq([{"description" => "The cat in the hat"}])
     end
 
-    it 'should find the feature file uri' do
-      gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/scenario/simple"
+    it 'should return uris from features' do
+      repo_path = "#{@feature_fixtures_directory}/scenario/simple"
+      gs = CQL::Repository.new(repo_path)
+
       result = gs.query do
         select uri
         from features
       end
-      result[0]['uri'].should =~ /simple\.feature/
-      result[1]['uri'].should =~ /test\.feature/
-      result[2]['uri'].should =~ /test2\.feature/
-      result[3]['uri'].should =~ /test\_full\.feature/
+
+      expect(result[0]['uri']).to eq("#{repo_path}/simple.feature")
+      expect(result[1]['uri']).to eq("#{repo_path}/test.feature")
+      expect(result[2]['uri']).to eq("#{repo_path}/test2.feature")
+      expect(result[3]['uri']).to eq("#{repo_path}/test_full.feature")
     end
 
-    it 'should return multiple feature file names with associated tags' do
-      gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/scenario/tagged_features"
+    it 'should return tags from features' do
+      gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/tagged_features")
+
+      result = gs.query do
+        select tags
+        from features
+      end
+
+      expect(result).to eq([{"tags" => nil},
+                            {"tags" => [{"name" => "@one", "line" => 1}]},
+                            {"tags" => [{"name" => "@two", "line" => 1}]},
+                            {"tags" => [{"name" => "@one", "line" => 1}, {"name" => "@two", "line" => 1}]}])
+    end
+
+
+    it 'should return multiple things from features' do
+      gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/tagged_features")
+
       result = gs.query do
         select name, tags
         from features
       end
-      result.should == [{"name"=>"Simple", "tags"=>nil},
-                        {"name"=>"Test Feature", "tags"=>[{"name"=>"@one", "line"=>1}]},
-                        {"name"=>"Test2 Feature", "tags"=>[{"name"=>"@two", "line"=>1}]},
-                        {"name"=>"Test3 Feature", "tags"=>[{"name"=>"@one", "line"=>1}, {"name"=>"@two", "line"=>1}]}]
+
+      expect(result).to eq([{"name" => "Simple", "tags" => nil},
+                            {"name" => "Test Feature", "tags" => [{"name" => "@one", "line" => 1}]},
+                            {"name" => "Test2 Feature", "tags" => [{"name" => "@two", "line" => 1}]},
+                            {"name" => "Test3 Feature", "tags" => [{"name" => "@one", "line" => 1}, {"name" => "@two", "line" => 1}]}])
     end
 
-    it 'should return simplified tags' do
-      pending
-      gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/scenario/tagged_features"
-      result = gs.query do
-        select name, basic_tag
+    it 'should return things from multiple feature files' do
+      gr = CQL::Repository.new("#{@feature_fixtures_directory}/combined/b")
+
+      result = gr.query do
+        select name
         from features
       end
-      result.should == [{ "tags"=>nil},
-                        { "tags"=>"@one"},
-                         {"tags"=>"@two"},
-                         "tags"=>"@two"
-      ]
+
+      expect(result).to eq([{"name" => "f1_1_tag"},
+                            {"name" => "f2_2_tags"},
+                            {"name" => "f3_3_tags"}])
     end
+
+    it 'should return multiple features as a list of maps' do
+      gr = CQL::Repository.new("#{@feature_fixtures_directory}/combined/b")
+
+      result = gr.query do
+        select name
+        from features
+      end
+
+      expect(result).to eq([{"name" => "f1_1_tag"},
+                            {"name" => "f2_2_tags"},
+                            {"name" => "f3_3_tags"}])
+    end
+
+    it 'should return ids from features' do
+      gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/simple2")
+
+      result = gs.query do
+        select id
+        from features
+      end
+
+      expect(result).to eq([{"id" => "test3-feature"}])
+    end
+
+    it "should return all, complete, everything from features" do
+      gr = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/simple2")
+
+      expected = [{"all" => {"keyword" => "Feature",
+                             "name" => "Test3 Feature",
+                             "line" => 2,
+                             "description" => "The cat in the hat",
+                             "tags" => [{"name" => "@top-tag", "line" => 1}],
+                             "id" => "test3-feature",
+                             "uri" => "fake_file.txt",
+                             "elements" => [{"keyword" => "Scenario",
+                                             "name" => "Testing the slurping",
+                                             "line" => 6,
+                                             "description" => "",
+                                             "tags" => [{"name" => "@one", "line" => 5}],
+                                             "id" => "test3-feature;testing-the-slurping",
+                                             "type" => "scenario",
+                                             "steps" => [{"keyword" => "Given ", "name" => "something happend", "line" => 7},
+                                                         {"keyword" => "Then ", "name" => "I expect something else", "line" => 8}]},
+                                            {"keyword" => "Scenario",
+                                             "name" => "Testing again",
+                                             "line" => 11,
+                                             "description" => "",
+                                             "tags" => [{"name" => "@two", "line" => 10}],
+                                             "id" => "test3-feature;testing-again",
+                                             "type" => "scenario",
+                                             "steps" => [{"keyword" => "Given ", "name" => "something happend", "line" => 12},
+                                                         {"keyword" => "Then ", "name" => "I expect something else", "line" => 13}]},
+                                            {"keyword" => "Scenario",
+                                             "name" => "Testing yet again",
+                                             "line" => 16,
+                                             "description" => "",
+                                             "tags" => [{"name" => "@one", "line" => 15}],
+                                             "id" => "test3-feature;testing-yet-again",
+                                             "type" => "scenario",
+                                             "steps" => [{"keyword" => "Given ", "name" => "something happend", "line" => 17},
+                                                         {"keyword" => "Then ", "name" => "I expect something else", "line" => 18}]},
+                                            {"keyword" => "Scenario",
+                                             "name" => "Testing yet again part 2",
+                                             "line" => 21,
+                                             "description" => "",
+                                             "tags" => [{"name" => "@one", "line" => 20}, {"name" => "@two", "line" => 20}],
+                                             "id" => "test3-feature;testing-yet-again-part-2",
+                                             "type" => "scenario",
+                                             "steps" => [{"keyword" => "Given ", "name" => "something happend", "line" => 22},
+                                                         {"keyword" => "Then ", "name" => "I expect something else", "line" => 23}]}]}}]
+
+      result = gr.query do
+        select all
+        from features
+      end
+      expect(result).to eq(expected)
+
+      result = gr.query do
+        select complete
+        from features
+      end
+      expect(result).to eq(expected)
+
+      result = gr.query do
+        select everything
+        from features
+      end
+      expect(result).to eq(expected)
+    end
+
+#    it 'should return simplified tags' do
+#      skip
+#
+#      gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/tagged_features")
+#      result = gs.query do
+#        select name, basic_tag
+#        from features
+#      end
+#
+#      expect(result).to eq([{"tags" => nil},
+#                            {"tags" => "@one"},
+#                            {"tags" => "@two"},
+#                            "tags" => "@two"])
+#    end
   end
 end

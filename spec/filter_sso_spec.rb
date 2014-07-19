@@ -1,288 +1,161 @@
-require 'rspec'
-require File.dirname(__FILE__) + "/../lib/cql"
+require 'spec_helper'
 
-describe "cql" do
-  describe 'tag count' do
-    {
-        0=>[],
-        1=>[],
-        2=>[{"name"=> "1 tag"}],
-        3=>[{"name"=> "1 tag"}, {"name"=> "2 tags"}],
-        4=>[{"name"=> "1 tag"}, {"name"=> "2 tags"}, {"name"=> "3 tags"}],
-        5=>[{"name"=> "1 tag"}, {"name"=> "2 tags"}, {"name"=> "3 tags"}, {"name"=> "4 tags"}]
-    }.each do |number, expected|
-      it "should filter scenarios by the number of tags with the 'tc lt' operator for count of #{number}" do
-        gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/scenario/tag_count"
+describe "scenario and outline filters (with)" do
 
-        result = gs.query do
-          select name
-          from scenarios
-          with tc lt number
-        end
 
-        result.should == expected
-      end
+  # todo - seems like this kind of filtering should be available at the scenario level as well as the feature level
+  #it_behaves_like 'a name filterable target set', 'scenarios', {:exact_name => {:fixture_location => "#{CQL_FEATURE_FIXTURES_DIRECTORY}/scenario/name_filter",
+  #                                                                             :expected_results => {'name1' => [{"name" => "name1"}]}},
+  #                                                             :regexp => {:fixture_location => "#{CQL_FEATURE_FIXTURES_DIRECTORY}/scenario/name_filter",
+  #                                                                         :expected_results => {/name/ => [{"name" => "name1"},{"name" => "name2"},{"name" => "name3"}],
+  #                                                                                               /name1/ => [{"name" => "name1"}]}}
+  #}
+
+  it_behaves_like 'a tag filterable target set', 'scenarios', {:single_tag => {:fixture_location => "#{CQL_FEATURE_FIXTURES_DIRECTORY}/scenario/tags",
+                                                                               :expected_results => {'@one' => [{'name' => 'Next'}, {'name' => 'Another'}]}},
+
+                                                               :multiple_tags => {:fixture_location => "#{CQL_FEATURE_FIXTURES_DIRECTORY}/scenario/tags2",
+                                                                                  :expected_results => {['@one', '@five'] => [{'name' => 'Next'}]}},
+
+                                                               :tc_lt => {:fixture_location => "#{CQL_FEATURE_FIXTURES_DIRECTORY}/scenario/tag_count",
+                                                                          :expected_results => {0 => [],
+                                                                                                1 => [],
+                                                                                                2 => [{"name" => "1 tag"}],
+                                                                                                3 => [{"name" => "1 tag"}, {"name" => "2 tags"}],
+                                                                                                4 => [{"name" => "1 tag"}, {"name" => "2 tags"}, {"name" => "3 tags"}],
+                                                                                                5 => [{"name" => "1 tag"}, {"name" => "2 tags"}, {"name" => "3 tags"}, {"name" => "4 tags"}]}},
+
+                                                               :tc_lte => {:fixture_location => "#{CQL_FEATURE_FIXTURES_DIRECTORY}/scenario/tag_count",
+                                                                           :expected_results => {0 => [],
+                                                                                                 1 => [{"name" => "1 tag"}],
+                                                                                                 2 => [{"name" => "1 tag"}, {"name" => "2 tags"}],
+                                                                                                 3 => [{"name" => "1 tag"}, {"name" => "2 tags"}, {"name" => "3 tags"}],
+                                                                                                 4 => [{"name" => "1 tag"}, {"name" => "2 tags"}, {"name" => "3 tags"}, {"name" => "4 tags"}],
+                                                                                                 5 => [{"name" => "1 tag"}, {"name" => "2 tags"}, {"name" => "3 tags"}, {"name" => "4 tags"}]}},
+
+                                                               :tc_gt => {:fixture_location => "#{CQL_FEATURE_FIXTURES_DIRECTORY}/scenario/tag_count",
+                                                                          :expected_results => {0 => [{"name" => "1 tag"}, {"name" => "2 tags"}, {"name" => "3 tags"}, {"name" => "4 tags"}],
+                                                                                                1 => [{"name" => "2 tags"}, {"name" => "3 tags"}, {"name" => "4 tags"}],
+                                                                                                2 => [{"name" => "3 tags"}, {"name" => "4 tags"}],
+                                                                                                3 => [{"name" => "4 tags"}],
+                                                                                                4 => []}},
+
+                                                               :tc_gte => {:fixture_location => "#{CQL_FEATURE_FIXTURES_DIRECTORY}/scenario/tag_count",
+                                                                           :expected_results => {0 => [{"name" => "1 tag"}, {"name" => "2 tags"}, {"name" => "3 tags"}, {"name" => "4 tags"}],
+                                                                                                 1 => [{"name" => "1 tag"}, {"name" => "2 tags"}, {"name" => "3 tags"}, {"name" => "4 tags"}],
+                                                                                                 2 => [{"name" => "2 tags"}, {"name" => "3 tags"}, {"name" => "4 tags"}],
+                                                                                                 3 => [{"name" => "3 tags"}, {"name" => "4 tags"}],
+                                                                                                 4 => [{"name" => "4 tags"}],
+                                                                                                 5 => []}}
+  }
+
+  it_behaves_like 'a tag filterable target set', 'scenario_outlines', {:single_tag => {:fixture_location => "#{CQL_FEATURE_FIXTURES_DIRECTORY}/scen_outlines/filters/tags",
+                                                                                       :expected_results => {'@one' => [{'name' => 'Next'}, {'name' => 'Another'}]}},
+
+                                                                       :multiple_tags => {:fixture_location => "#{CQL_FEATURE_FIXTURES_DIRECTORY}/scen_outlines/filters/tags2",
+                                                                                          :expected_results => {['@one', '@five'] => [{'name' => 'Next'}]}},
+
+                                                                       :tc_lt => {:fixture_location => "#{CQL_FEATURE_FIXTURES_DIRECTORY}/scen_outlines/filters/tag_count",
+                                                                                  :expected_results => {0 => [],
+                                                                                                        1 => [],
+                                                                                                        2 => [{"name" => "1 tag"}],
+                                                                                                        3 => [{"name" => "1 tag"}, {"name" => "2 tags"}],
+                                                                                                        4 => [{"name" => "1 tag"}, {"name" => "2 tags"}, {"name" => "3 tags"}],
+                                                                                                        5 => [{"name" => "1 tag"}, {"name" => "2 tags"}, {"name" => "3 tags"}, {"name" => "4 tags"}]}},
+
+                                                                       :tc_lte => {:fixture_location => "#{CQL_FEATURE_FIXTURES_DIRECTORY}/scen_outlines/filters/tag_count",
+                                                                                   :expected_results => {0 => [],
+                                                                                                         1 => [{"name" => "1 tag"}],
+                                                                                                         2 => [{"name" => "1 tag"}, {"name" => "2 tags"}],
+                                                                                                         3 => [{"name" => "1 tag"}, {"name" => "2 tags"}, {"name" => "3 tags"}],
+                                                                                                         4 => [{"name" => "1 tag"}, {"name" => "2 tags"}, {"name" => "3 tags"}, {"name" => "4 tags"}],
+                                                                                                         5 => [{"name" => "1 tag"}, {"name" => "2 tags"}, {"name" => "3 tags"}, {"name" => "4 tags"}]}},
+
+                                                                       :tc_gt => {:fixture_location => "#{CQL_FEATURE_FIXTURES_DIRECTORY}/scen_outlines/filters/tag_count",
+                                                                                  :expected_results => {0 => [{"name" => "1 tag"}, {"name" => "2 tags"}, {"name" => "3 tags"}, {"name" => "4 tags"}],
+                                                                                                        1 => [{"name" => "2 tags"}, {"name" => "3 tags"}, {"name" => "4 tags"}],
+                                                                                                        2 => [{"name" => "3 tags"}, {"name" => "4 tags"}],
+                                                                                                        3 => [{"name" => "4 tags"}],
+                                                                                                        4 => []}},
+
+                                                                       :tc_gte => {:fixture_location => "#{CQL_FEATURE_FIXTURES_DIRECTORY}/scen_outlines/filters/tag_count",
+                                                                                   :expected_results => {0 => [{"name" => "1 tag"}, {"name" => "2 tags"}, {"name" => "3 tags"}, {"name" => "4 tags"}],
+                                                                                                         1 => [{"name" => "1 tag"}, {"name" => "2 tags"}, {"name" => "3 tags"}, {"name" => "4 tags"}],
+                                                                                                         2 => [{"name" => "2 tags"}, {"name" => "3 tags"}, {"name" => "4 tags"}],
+                                                                                                         3 => [{"name" => "3 tags"}, {"name" => "4 tags"}],
+                                                                                                         4 => [{"name" => "4 tags"}],
+                                                                                                         5 => []}}
+  }
+
+  it_behaves_like 'a line count filterable target set', 'scenarios', {:lc_lt => {:fixture_location => "#{CQL_FEATURE_FIXTURES_DIRECTORY}/scenario/line_count",
+                                                                                 :expected_results => {0 => [],
+                                                                                                       1 => [],
+                                                                                                       2 => [{"name" => "1 line"}],
+                                                                                                       3 => [{"name" => "1 line"}, {"name" => "2 lines"}],
+                                                                                                       4 => [{"name" => "1 line"}, {"name" => "2 lines"}, {"name" => "3 lines"}],
+                                                                                                       5 => [{"name" => "1 line"}, {"name" => "2 lines"}, {"name" => "3 lines"}, {"name" => "4 lines"}]}},
+                                                                      :lc_lte => {:fixture_location => "#{CQL_FEATURE_FIXTURES_DIRECTORY}/scenario/line_count",
+                                                                                  :expected_results => {0 => [],
+                                                                                                        1 => [{"name" => "1 line"}],
+                                                                                                        2 => [{"name" => "1 line"}, {"name" => "2 lines"}],
+                                                                                                        3 => [{"name" => "1 line"}, {"name" => "2 lines"}, {"name" => "3 lines"}],
+                                                                                                        4 => [{"name" => "1 line"}, {"name" => "2 lines"}, {"name" => "3 lines"}, {"name" => "4 lines"}],
+                                                                                                        5 => [{"name" => "1 line"}, {"name" => "2 lines"}, {"name" => "3 lines"}, {"name" => "4 lines"}]}},
+                                                                      :lc_gt => {:fixture_location => "#{CQL_FEATURE_FIXTURES_DIRECTORY}/scenario/line_count",
+                                                                                 :expected_results => {0 => [{"name" => "1 line"}, {"name" => "2 lines"}, {"name" => "3 lines"}, {"name" => "4 lines"}],
+                                                                                                       1 => [{"name" => "2 lines"}, {"name" => "3 lines"}, {"name" => "4 lines"}],
+                                                                                                       2 => [{"name" => "3 lines"}, {"name" => "4 lines"}],
+                                                                                                       3 => [{"name" => "4 lines"}],
+                                                                                                       4 => []}},
+                                                                      :lc_gte => {:fixture_location => "#{CQL_FEATURE_FIXTURES_DIRECTORY}/scenario/line_count",
+                                                                                  :expected_results => {0 => [{"name" => "1 line"}, {"name" => "2 lines"}, {"name" => "3 lines"}, {"name" => "4 lines"}],
+                                                                                                        1 => [{"name" => "1 line"}, {"name" => "2 lines"}, {"name" => "3 lines"}, {"name" => "4 lines"}],
+                                                                                                        2 => [{"name" => "2 lines"}, {"name" => "3 lines"}, {"name" => "4 lines"}],
+                                                                                                        3 => [{"name" => "3 lines"}, {"name" => "4 lines"}],
+                                                                                                        4 => [{"name" => "4 lines"}],
+                                                                                                        5 => []}}}
+
+
+  it_behaves_like 'a line filterable target set', 'scenarios', {:exact_line => {:fixture_location => "#{CQL_FEATURE_FIXTURES_DIRECTORY}/scenario/line_filter",
+                                                                                :expected_results => {'all match' => [{"name" => "sc1"}, {"name" => "sc2"}],
+                                                                                                      'green eggs and ham' => [{"name" => "sc1"}],
+                                                                                                      'no match' => []}},
+                                                                :regexp => {:fixture_location => "#{CQL_FEATURE_FIXTURES_DIRECTORY}/scenario/line_filter",
+                                                                            :expected_results => {/all/ => [{"name" => "sc1"}, {"name" => "sc2"}],
+                                                                                                  /green/ => [{"name" => "sc1"}],
+                                                                                                  /will not be found/ => []}}}
+
+  it 'should filter by multiple filters' do
+    gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/tag_count")
+
+    result = gs.query do
+      select name
+      from scenarios
+      with tc gt 1
+      with tc lt 3
     end
 
-    {
-        0=>[],
-        1=>[{"name"=> "1 tag"}],
-        2=>[{"name"=> "1 tag"}, {"name"=> "2 tags"}],
-        3=>[{"name"=> "1 tag"}, {"name"=> "2 tags"}, {"name"=> "3 tags"}],
-        4=>[{"name"=> "1 tag"}, {"name"=> "2 tags"}, {"name"=> "3 tags"}, {"name"=> "4 tags"}],
-        5=>[{"name"=> "1 tag"}, {"name"=> "2 tags"}, {"name"=> "3 tags"}, {"name"=> "4 tags"}]
-
-    }.each do |number, expected|
-      it "should filter scenarios by the number of tags with the 'tc_lte' operator for count of #{number}" do
-        gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/scenario/tag_count"
-
-        result = gs.query do
-          select name
-          from scenarios
-          with tc lte number
-        end
-
-        result.should == expected
-      end
-    end
-
-    {
-        0=>[{"name"=> "1 tag"}, {"name"=> "2 tags"}, {"name"=> "3 tags"}, {"name"=> "4 tags"}],
-        1=>[{"name"=> "2 tags"}, {"name"=> "3 tags"}, {"name"=> "4 tags"}],
-        2=>[{"name"=> "3 tags"}, {"name"=> "4 tags"}],
-        3=>[{"name"=> "4 tags"}],
-        4=>[]
-    }.each do |number, expected|
-      it "should filter scenarios by the number of tags with the 'tc_gt' operator for count of #{number}" do
-        gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/scenario/tag_count"
-
-        result = gs.query do
-          select name
-          from scenarios
-          with tc gt number
-        end
-
-        result.should == expected
-      end
-    end
-
-    {
-        0=>[{"name"=> "1 tag"}, {"name"=> "2 tags"}, {"name"=> "3 tags"}, {"name"=> "4 tags"}],
-        1=>[{"name"=> "1 tag"}, {"name"=> "2 tags"}, {"name"=> "3 tags"}, {"name"=> "4 tags"}],
-        2=>[{"name"=> "2 tags"}, {"name"=> "3 tags"}, {"name"=> "4 tags"}],
-        3=>[{"name"=> "3 tags"}, {"name"=> "4 tags"}],
-        4=>[{"name"=> "4 tags"}],
-        5 =>[]
-    }.each do |number, expected|
-      it "should filter scenarios by the number of tags with the 'tc_gte' operator for count of #{number}" do
-        gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/scenario/tag_count"
-
-        result = gs.query do
-          select name
-          from scenarios
-          with tc gte number
-        end
-
-        result.should == expected
-      end
-    end
-
-
+    expect(result).to eq([{"name" => "2 tags"}])
   end
 
-  describe 'line count' do
-    {
-        0=>[],
-        1=>[],
-        2=>[{"name"=> "1 line"}],
-        3=>[{"name"=> "1 line"}, {"name"=> "2 lines"}],
-        4=>[{"name"=> "1 line"}, {"name"=> "2 lines"}, {"name"=> "3 lines"}],
-        5=>[{"name"=> "1 line"}, {"name"=> "2 lines"}, {"name"=> "3 lines"}, {"name"=> "4 lines"}]
+  it 'should filter by multiple filters' do
+    gs = CQL::Repository.new("#{@feature_fixtures_directory}/scen_outlines/filters/tag_count")
 
-    }.each do |number, expected|
-      it "should filter scenarios by the number of lines with the 'lc_lt' operator for count of #{number}" do
-        gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/scenario/line_count"
-
-        result = gs.query do
-          select name
-          from scenarios
-          with lc lt number
-        end
-
-        result.should == expected
-      end
+    result = gs.query do
+      select name
+      from scenario_outlines
+      with tc gt 1
+      with tc lt 3
     end
 
-    {
-        0=>[],
-        1=>[{"name"=> "1 line"}],
-        2=>[{"name"=> "1 line"}, {"name"=> "2 lines"}],
-        3=>[{"name"=> "1 line"}, {"name"=> "2 lines"}, {"name"=> "3 lines"}],
-        4=>[{"name"=> "1 line"}, {"name"=> "2 lines"}, {"name"=> "3 lines"}, {"name"=> "4 lines"}],
-        5=>[{"name"=> "1 line"}, {"name"=> "2 lines"}, {"name"=> "3 lines"}, {"name"=> "4 lines"}]
-
-    }.each do |number, expected|
-      it "should filter scenarios by the number of lines with the 'lc_lte' operator for count of #{number}" do
-        gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/scenario/line_count"
-
-        result = gs.query do
-          select name
-          from scenarios
-          with lc lte number
-        end
-
-        result.should == expected
-      end
-    end
-
-    {
-        0=>[{"name"=> "1 line"}, {"name"=> "2 lines"}, {"name"=> "3 lines"}, {"name"=> "4 lines"}],
-        1=>[{"name"=> "2 lines"}, {"name"=> "3 lines"}, {"name"=> "4 lines"}],
-        2=>[{"name"=> "3 lines"}, {"name"=> "4 lines"}],
-        3=>[{"name"=> "4 lines"}],
-        4=>[]
-
-
-    }.each do |number, expected|
-      it "should filter scenarios by the number of lines with the 'lc_gt' operator for count of #{number}" do
-        gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/scenario/line_count"
-
-        result = gs.query do
-          select name
-          from scenarios
-          with lc gt number
-        end
-
-        result.should == expected
-      end
-    end
-
-    {
-        0=>[{"name"=> "1 line"}, {"name"=> "2 lines"}, {"name"=> "3 lines"}, {"name"=> "4 lines"}],
-        1=>[{"name"=> "1 line"}, {"name"=> "2 lines"}, {"name"=> "3 lines"}, {"name"=> "4 lines"}],
-        2=>[{"name"=> "2 lines"}, {"name"=> "3 lines"}, {"name"=> "4 lines"}],
-        3=>[{"name"=> "3 lines"}, {"name"=> "4 lines"}],
-        4=>[{"name"=> "4 lines"}],
-        5 =>[]
-
-
-    }.each do |number, expected|
-      it "should filter scenarios by the number of lines with the 'lc_gte' operator for count of #{number}" do
-        gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/scenario/line_count"
-
-        result = gs.query do
-          select name
-          from scenarios
-          with lc gte number
-        end
-
-        result.should == expected
-      end
-    end
-
-
+    expect(result).to eq([{"name" => "2 tags"}])
   end
 
-  describe 'exact line match' do
-    it 'should filter based on an exact line' do
-      gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/scenario/line_filter"
+  #todo - add line filter tests for scenario outlines
+  #todo - add line count filter tests for scenario outlines
 
-      result = gs.query do
-        select name
-        from scenarios
-        with line 'green eggs and ham'
-      end
-
-      result.size.should == 1
-
-    end
-
-    it 'should filter all results when the exact line given does not match' do
-      gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/scenario/line_filter"
-
-      result = gs.query do
-        select name
-        from scenarios
-        with line 'no match'
-      end
-
-      result.size.should == 0
-
-    end
-
-    it 'should filter no results when the exact line given is present in all scenarios' do
-      gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/scenario/line_filter"
-
-      result = gs.query do
-        select name
-        from scenarios
-        with line 'a cat in a hat'
-      end
-
-      result.size.should == 2
-
-    end
-  end
-
-  describe 'exact line match' do
-    it 'should filter based on a regexp match' do
-      gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/scenario/line_filter"
-
-      result = gs.query do
-        select name
-        from scenarios
-        with line /green/
-      end
-
-      result.size.should == 1
-
-    end
-
-    it 'should filter all if no regexp match' do
-      gs = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/scenario/line_filter"
-
-      result = gs.query do
-        select name
-        from scenarios
-        with line /will not be found/
-      end
-
-      result.size.should == 0
-
-    end
-
-    it 'should filter none if all match regexp' do
-      repo = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/scenario/line_filter"
-
-      result = repo.query do
-        select name
-        from scenarios
-        with line /cat/
-      end
-
-      result.size.should == 2
-
-    end
-
-  end
-
-  describe 'tag search' do
-    it 'should return scenarios with matching tags' do
-      repo = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/scenario/tags"
-
-      result = repo.query do
-        select name
-        from scenarios
-        with tags '@one'
-      end
-
-      result.should == [{'name'=>'Next'},{'name'=>'Another'}]
-    end
-  end
-
-  # Has tag
-  # Name
-  # Name match
-
-  # Example count
+  #  # Name
+  #  # Name match
+  #
+  #  # Example count
 end

@@ -1,0 +1,124 @@
+= CQL (Cucumber Query Language)
+
+CQL is a domain specific language used for querying a Cucumber test suite. It is written in ruby. The
+goal of CQL is to enable to create summarized data on the collection of feature files. Some uses for example are:
+
+* Build systems
+* Reporting
+
+== Quick Start
+
+* Install the gem
+
+Use the following command:
+
+    gem install cql
+
+Alternatively you can add it to your Gemfile if you are using bundler.
+
+* Create a new ruby file
+
+* The first thing that needs to be done is to create a CQL Repository. This can be done with the following line:
+
+    require 'cql'
+    cql_repo = CQL::Repository.new "/path-to-my-feature-files"
+
+* Now that you have a repository you can write a query. A simple example is given below
+
+    cql_repo.query do
+        select name
+        from features
+    end
+
+This will return a list of all of the feature names in the form of a list of hashes.
+
+== CQL DSL
+=== The 'from' clause
+
+The *from* clause specifies what type of things that *select* will gather its values from. The following
+values are supported for the *from* clause:
+
+* scenario_outlines
+* scenarios
+* features
+
+Sample usage:
+
+    cql_repo.query do
+        select name
+        from scenarios
+    end
+
+=== The 'select' clause
+
+The *select* clause specifies what values will be retrieved from the things specified by *from*. Multiple
+values can be given and they are deliminated by a comma.
+
+Sample usage:
+    cql_repo.query do
+        select name, uri, tags, description
+        from features
+    end
+
+The following selection values are supported for all values of the *from* clause:
+
+* name
+* id
+* description
+* tags
+* all
+* complete (alias for 'all')
+* everything (alias for 'all')
+
+The following additional selection values are supported when the *from* clause is set as 'features':
+
+* uri
+
+The following additional selection values are supported when the *from* clause is set as 'scenarios' or 'scenario_outlines':
+
+* line
+* type
+* step_lines
+* steps
+
+The following additional selection values are supported when the *from* clause is set as 'scenario_outlines':
+
+* examples
+
+
+=== The 'with' clause
+
+The *with* specifies filter conditions that will reduce the number of things targeted by the by *from*. Multiple
+*with* clauses can be used in a query.
+
+Sample usage:
+    cql_repo.query do
+        select name, uri, tags, description
+        from features
+        with tc gt 1
+        with tc lt 3
+    end
+
+The following filters are supported for all values of the *from* clause:
+
+* tags
+* tc   (tag count)
+
+The following additional filters are supported when the *from* clause is set as 'features':
+
+* name (exact match or regular expression)
+* sc   (scenario count)
+* soc  (scenario outline count)
+* ssoc (scenario and scenario outline count)
+
+The following additional filters are supported when the *from* clause is set as 'scenarios' or 'scenario_outlines':
+
+* lc   (line count)
+* line (exact match or regular expression)
+
+For count filters, the following operators are available:
+
+* lt   (Less than)
+* lte  (Less or equals)
+* gt   (Greater than)
+* gte  (Greater or equal)

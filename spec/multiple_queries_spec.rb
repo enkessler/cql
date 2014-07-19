@@ -1,12 +1,11 @@
-require 'rspec'
-require File.dirname(__FILE__) + "/../lib/cql"
+require 'spec_helper'
 
 describe "cql" do
 
-  describe 'cql repo is not mutable' do
+  describe 'repo' do
     it 'should not change between queries' do
 
-      repo = CQL::Repository.new File.dirname(__FILE__) + "/../fixtures/features/got"
+      repo = CQL::Repository.new("#{@feature_fixtures_directory}/got")
 
       result = repo.query do
         select name
@@ -21,8 +20,8 @@ describe "cql" do
         with line /child/
       end
 
-      result.should == [{"name"=> "Strange relations"},
-                        {"name"=> "Bastard Child"}]
+      expect(result).to eq([{"name" => "Strange relations"},
+                            {"name" => "Bastard Child"}])
     end
   end
 end

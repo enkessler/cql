@@ -23,3 +23,5 @@ tmp
 _yardoc
 doc/
 .DS_Store
+
+Gemfile.lock
