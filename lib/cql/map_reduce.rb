@@ -1,6 +1,6 @@
-require_relative "dsl"
-require_relative "feature_filters"
-require_relative "sso_filters"
+require 'cql/dsl'
+require 'cql/feature_filters'
+require 'cql/sso_filters'
 
 require 'set'
 

@@ -1,4 +1,5 @@
-require File.dirname(__FILE__) + "/map_reduce"
+require 'cql/map_reduce'
+
 module CQL
   module Dsl
     #Select clause

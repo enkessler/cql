@@ -1,5 +1,5 @@
 require 'cuke_modeler'
-require File.dirname(__FILE__) + "/dsl"
+require 'cql/dsl'
 
 module CQL
 
