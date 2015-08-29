@@ -5,6 +5,8 @@ shared_examples_for 'a name filterable target set' do |target_type, test_data|
   describe 'name filters' do
 
     it 'should filter by exact name' do
+      skip("Not sure if I want to keep these predefined methods")
+
       gs = CQL::Repository.new(test_data[:exact_name][:fixture_location])
 
       expected_results = test_data[:exact_name][:expected_results]
@@ -21,6 +23,8 @@ shared_examples_for 'a name filterable target set' do |target_type, test_data|
     end
 
     it 'should filter by regexp' do
+      skip("Not sure if I want to keep these predefined methods")
+
       gs = CQL::Repository.new(test_data[:regexp][:fixture_location])
 
       expected_results = test_data[:regexp][:expected_results]

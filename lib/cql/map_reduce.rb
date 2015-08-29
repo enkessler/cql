@@ -78,25 +78,40 @@ module CQL
       end
     end
 
-    def self.feature_children input, args
-      results = []
+    def self.gather_objects(current_object, target_classes, filters)
+      # puts "current_object: #{ current_object.class.to_s =~ /CukeModeler/ ? current_object.class : current_object }"
+      # puts "input: #{input.collect { |datum| datum.class.to_s =~ /CukeModeler/ ? datum.class : datum }}"
+      # puts "target_classes: #{target_classes}"
+      # puts "filters: #{filters}"
 
-      input.each do |feature|
-        feature.contains.each do |element|
+      gathered_objects = Array.new.tap { |gathered_objects| collect_all_in(target_classes, current_object, gathered_objects) }
 
-          case args['what']
-            when 'scenario'
-              results.push element if element.class.to_s[/::.*$/].gsub(':', '') == 'Scenario'
-            when 'scenario_outline'
-              results.push element if element.class.to_s[/::.*$/].gsub(':', '') == 'Outline'
-            else
-              raise "Unknown type: #{args['what']}"
+      if filters
+        # puts "Filter (#{filters.class}): #{filters}"
+        filters.each { |filter| gathered_objects.select!(&filter) }
+      end
+
+      gathered_objects
+    end
+
+
+    class << self
+
+
+      private
+
+
+      # Recursively gathers all objects of the given class found in the passed object (including itself).
+      def collect_all_in(targeted_class, current_object, accumulated_objects)
+        accumulated_objects << current_object if current_object.is_a?(targeted_class)
+
+        if current_object.respond_to?(:contains)
+          current_object.contains.each do |child_object|
+            collect_all_in(targeted_class, child_object, accumulated_objects)
           end
-
         end
       end
 
-      results
     end
 
   end

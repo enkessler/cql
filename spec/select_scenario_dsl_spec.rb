@@ -3,6 +3,30 @@ require 'spec_helper'
 describe "select" do
   describe 'from scenarios' do
 
+
+    it 'combo thing should return tags from scenarios (COMBO)' do
+
+      skip ("combo queries?")
+
+      gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/tags2")
+
+      result = gs.query do
+        select tags
+        from scenarios
+      end
+
+      expect(result).to match_array([{"tags" => [{"name" => "@two", "line" => 3}]},
+                                     {"tags" => [{"name" => "@one", "line" => 11}]},
+                                     {"tags" => []},
+                                     {"tags" => [{"name" => "@two", "line" => 18}]},
+                                     {"tags" => [{"name" => "@one", "line" => 22}]},
+                                     {"tags" => [{"name" => "@two", "line" => 3}, {"name" => "@four", "line" => 3}]},
+                                     {"tags" => [{"name" => "@one", "line" => 11}, {"name" => "@five", "line" => 11}]},
+                                     {"tags" => []},
+                                     {"tags" => [{"name" => "@two", "line" => 18}]},
+                                     {"tags" => [{"name" => "@one", "line" => 22}]}])
+    end
+
     it 'should return tags from scenarios' do
       gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/tags2")
 
@@ -11,38 +35,38 @@ describe "select" do
         from scenarios
       end
 
-      expect(result).to eq([{"tags" => [{"name" => "@two", "line" => 3}]},
-                            {"tags" => [{"name" => "@one", "line" => 11}]},
-                            {"tags" => nil},
-                            {"tags" => [{"name" => "@two", "line" => 18}]},
-                            {"tags" => [{"name" => "@one", "line" => 22}]},
-                            {"tags" => [{"name" => "@two", "line" => 3}, {"name" => "@four", "line" => 3}]},
-                            {"tags" => [{"name" => "@one", "line" => 11}, {"name" => "@five", "line" => 11}]},
-                            {"tags" => nil},
-                            {"tags" => [{"name" => "@two", "line" => 18}]},
-                            {"tags" => [{"name" => "@one", "line" => 22}]}])
+      expect(result).to match_array([{"tags" => ["@two"]},
+                                     {"tags" => ["@one"]},
+                                     {"tags" => []},
+                                     {"tags" => ["@two"]},
+                                     {"tags" => ["@one"]},
+                                     {"tags" => ["@two", "@four"]},
+                                     {"tags" => ["@one", "@five"]},
+                                     {"tags" => []},
+                                     {"tags" => ["@two"]},
+                                     {"tags" => ["@one"]}])
     end
 
     it 'should return descriptions from scenarios' do
       gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/table")
 
       result = gs.query do
-        select description
+        select description_text
         from scenarios
       end
 
-      expect(result).to eq([{"description" => "Scenario description."}])
+      expect(result).to eq([{"description_text" => "Scenario description."}])
     end
 
     it 'should return lines from scenarios' do
       gr = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/simple2")
 
       result = gr.query do
-        select line
+        select source_line
         from scenarios
       end
 
-      expect(result).to eq([{"line" => 6}, {"line" => 11}, {"line" => 16}, {"line" => 21}])
+      expect(result).to eq([{"source_line" => 6}, {"source_line" => 11}, {"source_line" => 16}, {"source_line" => 21}])
     end
 
     it 'should return names from scenarios' do
@@ -61,7 +85,9 @@ describe "select" do
       gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/simple2")
 
       result = gs.query do
-        select type
+        select raw_element
+        as type
+        transform 'raw_element' => lambda { |element| element['type'] }
         from scenarios
       end
 
@@ -73,7 +99,9 @@ describe "select" do
       gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/simple2")
 
       result = gs.query do
-        select step_lines
+        select raw_element
+        as step_lines
+        transform 'raw_element' => lambda { |element| element['steps'].collect { |step| step['keyword'] + step['name'] } }
         from scenarios
       end
 
@@ -87,7 +115,9 @@ describe "select" do
       gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/simple2")
 
       result = gs.query do
-        select id
+        select raw_element
+        as id
+        transform 'raw_element' => lambda { |element| element['id'] }
         from scenarios
       end
 
@@ -101,7 +131,9 @@ describe "select" do
       gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/simple2")
 
       result = gs.query do
-        select steps
+        select raw_element
+        as steps
+        transform 'raw_element' => lambda { |element| element['steps'] }
         from scenarios
       end
 
@@ -119,10 +151,10 @@ describe "select" do
         from scenarios
       end
 
-      expect(result).to eq([{"name" => "Testing the slurping", "tags" => [{"name" => "@one", "line" => 5}]},
-                            {"name" => "Testing again", "tags" => [{"name" => "@two", "line" => 10}]},
-                            {"name" => "Testing yet again", "tags" => [{"name" => "@one", "line" => 15}]},
-                            {"name" => "Testing yet again part 2", "tags" => [{"name" => "@one", "line" => 20}, {"name" => "@two", "line" => 20}]}])
+      expect(result).to eq([{"name" => "Testing the slurping", "tags" => ["@one"]},
+                            {"name" => "Testing again", "tags" => ["@two"]},
+                            {"name" => "Testing yet again", "tags" => ["@one"]},
+                            {"name" => "Testing yet again part 2", "tags" => ["@one", "@two"]}])
     end
 
     it 'should return things from multiple feature files' do
@@ -142,15 +174,17 @@ describe "select" do
     it 'should get multiple scenarios as a list of maps' do
       gr = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/simple2")
       result = gr.query do
-        select line, name
+        select source_line, name
         from scenarios
       end
 
-      expect(result).to eq([{'line' => 6, 'name' => "Testing the slurping"}, {'line' => 11, 'name' => "Testing again"},
-                            {'line' => 16, 'name' => "Testing yet again"}, {'line' => 21, 'name' => "Testing yet again part 2"}])
+      expect(result).to eq([{'source_line' => 6, 'name' => "Testing the slurping"}, {'source_line' => 11, 'name' => "Testing again"},
+                            {'source_line' => 16, 'name' => "Testing yet again"}, {'source_line' => 21, 'name' => "Testing yet again part 2"}])
     end
 
     it "should return all, complete, everything from scenarios" do
+      skip("Probably going to get rid of these predefined methods since a simple query can get the same information")
+
       gr = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/table")
 
       expected = [{"all" => {"keyword" => "Scenario",

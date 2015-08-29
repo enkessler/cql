@@ -7,21 +7,17 @@ describe "cql" do
 
       repo = CQL::Repository.new("#{@feature_fixtures_directory}/got")
 
-      result = repo.query do
+      before_dump = Marshal.dump(repo)
+
+      repo.query do
         select name
         from scenarios
-        with tags '@Lannister'
       end
 
+      after_dump = Marshal.dump(repo)
 
-      result = repo.query do
-        select name
-        from scenarios
-        with line /child/
-      end
 
-      expect(result).to eq([{"name" => "Strange relations"},
-                            {"name" => "Bastard Child"}])
+      expect(before_dump).to eq(after_dump)
     end
   end
 end

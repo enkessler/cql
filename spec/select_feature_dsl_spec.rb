@@ -19,26 +19,26 @@ describe "select" do
       gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/simple2")
 
       result = gs.query do
-        select description
+        select description_text
         from features
       end
 
-      expect(result).to eq([{"description" => "The cat in the hat"}])
+      expect(result).to eq([{"description_text" => "The cat in the hat"}])
     end
 
-    it 'should return uris from features' do
+    it 'should return paths from from feature files' do
       repo_path = "#{@feature_fixtures_directory}/scenario/simple"
       gs = CQL::Repository.new(repo_path)
 
       result = gs.query do
-        select uri
-        from features
+        select path
+        from feature_files
       end
 
-      expect(result[0]['uri']).to eq("#{repo_path}/simple.feature")
-      expect(result[1]['uri']).to eq("#{repo_path}/test.feature")
-      expect(result[2]['uri']).to eq("#{repo_path}/test2.feature")
-      expect(result[3]['uri']).to eq("#{repo_path}/test_full.feature")
+      expect(result[0]['path']).to eq("#{repo_path}/simple.feature")
+      expect(result[1]['path']).to eq("#{repo_path}/test.feature")
+      expect(result[2]['path']).to eq("#{repo_path}/test2.feature")
+      expect(result[3]['path']).to eq("#{repo_path}/test_full.feature")
     end
 
     it 'should return tags from features' do
@@ -49,10 +49,10 @@ describe "select" do
         from features
       end
 
-      expect(result).to eq([{"tags" => nil},
-                            {"tags" => [{"name" => "@one", "line" => 1}]},
-                            {"tags" => [{"name" => "@two", "line" => 1}]},
-                            {"tags" => [{"name" => "@one", "line" => 1}, {"name" => "@two", "line" => 1}]}])
+      expect(result).to eq([{"tags" => []},
+                            {"tags" => ["@one"]},
+                            {"tags" => ["@two"]},
+                            {"tags" => ["@one", "@two"]}])
     end
 
 
@@ -64,10 +64,10 @@ describe "select" do
         from features
       end
 
-      expect(result).to eq([{"name" => "Simple", "tags" => nil},
-                            {"name" => "Test Feature", "tags" => [{"name" => "@one", "line" => 1}]},
-                            {"name" => "Test2 Feature", "tags" => [{"name" => "@two", "line" => 1}]},
-                            {"name" => "Test3 Feature", "tags" => [{"name" => "@one", "line" => 1}, {"name" => "@two", "line" => 1}]}])
+      expect(result).to eq([{"name" => "Simple", "tags" => []},
+                            {"name" => "Test Feature", "tags" => ["@one"]},
+                            {"name" => "Test2 Feature", "tags" => ["@two"]},
+                            {"name" => "Test3 Feature", "tags" => ["@one", "@two"]}])
     end
 
     it 'should return things from multiple feature files' do
@@ -100,7 +100,9 @@ describe "select" do
       gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/simple2")
 
       result = gs.query do
-        select id
+        select raw_element
+        as id
+        transform 'raw_element' => lambda { |element| element['id'] }
         from features
       end
 
@@ -108,6 +110,8 @@ describe "select" do
     end
 
     it "should return all, complete, everything from features" do
+      skip("Probably going to get rid of these predefined methods since a simple query can get the same information")
+
       gr = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/simple2")
 
       expected = [{"all" => {"keyword" => "Feature",

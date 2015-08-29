@@ -4,6 +4,8 @@ describe "cql" do
 
   describe "file parsing" do
     it 'should find the physical files' do
+      skip("This is possibly no longer be needed")
+
       gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/simple")
       result = CQL::MapReduce.uri(gs.parsed_feature_files)
 
