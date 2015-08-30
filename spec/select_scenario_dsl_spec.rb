@@ -3,30 +3,6 @@ require 'spec_helper'
 describe "select" do
   describe 'from scenarios' do
 
-
-    it 'combo thing should return tags from scenarios (COMBO)' do
-
-      skip ("combo queries?")
-
-      gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/tags2")
-
-      result = gs.query do
-        select tags
-        from scenarios
-      end
-
-      expect(result).to match_array([{"tags" => [{"name" => "@two", "line" => 3}]},
-                                     {"tags" => [{"name" => "@one", "line" => 11}]},
-                                     {"tags" => []},
-                                     {"tags" => [{"name" => "@two", "line" => 18}]},
-                                     {"tags" => [{"name" => "@one", "line" => 22}]},
-                                     {"tags" => [{"name" => "@two", "line" => 3}, {"name" => "@four", "line" => 3}]},
-                                     {"tags" => [{"name" => "@one", "line" => 11}, {"name" => "@five", "line" => 11}]},
-                                     {"tags" => []},
-                                     {"tags" => [{"name" => "@two", "line" => 18}]},
-                                     {"tags" => [{"name" => "@one", "line" => 22}]}])
-    end
-
     it 'should return tags from scenarios' do
       gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/tags2")
 
@@ -180,51 +156,6 @@ describe "select" do
 
       expect(result).to eq([{'source_line' => 6, 'name' => "Testing the slurping"}, {'source_line' => 11, 'name' => "Testing again"},
                             {'source_line' => 16, 'name' => "Testing yet again"}, {'source_line' => 21, 'name' => "Testing yet again part 2"}])
-    end
-
-    it "should return all, complete, everything from scenarios" do
-      skip("Probably going to get rid of these predefined methods since a simple query can get the same information")
-
-      gr = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/table")
-
-      expected = [{"all" => {"keyword" => "Scenario",
-                             "name" => "Has a table",
-                             "line" => 4,
-                             "description" => "Scenario description.",
-                             "tags" => [{"name" => "@scenario_tag",
-                                         "line" => 3}],
-                             "id" => "simple;has-a-table",
-                             "type" => "scenario",
-                             "steps" => [{"keyword" => "Given ",
-                                          "name" => "Something",
-                                          "line" => 7,
-                                          "rows" => [{"cells" => ["a", "a"],
-                                                      "line" => 8},
-                                                     {"cells" => ["s", "a"],
-                                                      "line" => 9},
-                                                     {"cells" => ["s", "s"],
-                                                      "line" => 10}]},
-                                         {"keyword" => "Then ",
-                                          "name" => "something else",
-                                          "line" => 11}]}}]
-
-      result = gr.query do
-        select all
-        from scenarios
-      end
-      expect(result).to eq(expected)
-
-      result = gr.query do
-        select complete
-        from scenarios
-      end
-      expect(result).to eq(expected)
-
-      result = gr.query do
-        select everything
-        from scenarios
-      end
-      expect(result).to eq(expected)
     end
 
   end
