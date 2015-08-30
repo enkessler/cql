@@ -37,8 +37,6 @@ shared_examples_for 'a tag filterable target set' do |target_type, test_data|
     end
 
     it "should filter based on 'tc lt'" do
-      skip("Not sure if I want to keep these predefined methods")
-
       gs = CQL::Repository.new(test_data[:tc_lt][:fixture_location])
 
       expected_results = test_data[:tc_lt][:expected_results]
@@ -55,8 +53,6 @@ shared_examples_for 'a tag filterable target set' do |target_type, test_data|
     end
 
     it "should filter features by 'tc lte'" do
-      skip("Not sure if I want to keep these predefined methods")
-
       gs = CQL::Repository.new(test_data[:tc_lte][:fixture_location])
 
       expected_results = test_data[:tc_lte][:expected_results]
@@ -74,8 +70,6 @@ shared_examples_for 'a tag filterable target set' do |target_type, test_data|
 
 
     it "should filter features by 'tc gt'" do
-      skip("Not sure if I want to keep these predefined methods")
-
       gs = CQL::Repository.new(test_data[:tc_gt][:fixture_location])
 
       expected_results = test_data[:tc_gt][:expected_results]
@@ -93,8 +87,6 @@ shared_examples_for 'a tag filterable target set' do |target_type, test_data|
 
 
     it "should filter features by 'tc gte'" do
-      skip("Not sure if I want to keep these predefined methods")
-
       gs = CQL::Repository.new(test_data[:tc_gte][:fixture_location])
 
       expected_results = test_data[:tc_gte][:expected_results]

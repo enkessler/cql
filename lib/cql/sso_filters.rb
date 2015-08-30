@@ -2,15 +2,9 @@ module CQL
 
   class SsoTagCountFilter < Filter
     def execute input
-      input.each_with_index do |feature, index|
-        filtered_elements= feature.tests.find_all do |sso|
-          sso.tags.size.send(comparison.operator, comparison.amount)
-        end
-
-        input[index].tests = filtered_elements
+      input.find_all do |sso|
+        sso.tags.size.send(comparison.operator, comparison.amount)
       end
-
-      input
     end
   end
 
@@ -24,15 +18,9 @@ module CQL
 
   class SsoLineCountFilter < Filter
     def execute input
-      input.each_with_index do |feature, index|
-        filtered_elements = feature.tests.find_all do |sso|
-          sso.steps.size.send(comparison.operator, comparison.amount)
-        end
-
-        input[index].tests = filtered_elements
+      input.find_all do |sso|
+        sso.steps.size.send(comparison.operator, comparison.amount)
       end
-
-      input
     end
   end
 

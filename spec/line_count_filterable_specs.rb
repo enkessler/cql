@@ -6,8 +6,6 @@ shared_examples_for 'a line count filterable target set' do |target_type, test_d
 
 
     it "should filter based on 'lc lt'" do
-      skip("Not sure if I want to keep these predefined methods")
-
       gs = CQL::Repository.new(test_data[:lc_lt][:fixture_location])
 
       expected_results = test_data[:lc_lt][:expected_results]
@@ -24,8 +22,6 @@ shared_examples_for 'a line count filterable target set' do |target_type, test_d
     end
 
     it "should filter based on 'lc_lte'" do
-      skip("Not sure if I want to keep these predefined methods")
-
       gs = CQL::Repository.new(test_data[:lc_lte][:fixture_location])
 
       expected_results = test_data[:lc_lte][:expected_results]
@@ -42,8 +38,6 @@ shared_examples_for 'a line count filterable target set' do |target_type, test_d
     end
 
     it "should filter based on 'lc_gt'" do
-      skip("Not sure if I want to keep these predefined methods")
-
       gs = CQL::Repository.new(test_data[:lc_gt][:fixture_location])
 
       expected_results = test_data[:lc_gt][:expected_results]
@@ -60,8 +54,6 @@ shared_examples_for 'a line count filterable target set' do |target_type, test_d
     end
 
     it "should filter based on 'lc_gte'" do
-      skip("Not sure if I want to keep these predefined methods")
-
       gs = CQL::Repository.new(test_data[:lc_gte][:fixture_location])
 
       expected_results = test_data[:lc_gte][:expected_results]

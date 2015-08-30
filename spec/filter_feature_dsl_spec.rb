@@ -3,8 +3,6 @@ require 'spec_helper'
 describe "feature filters (with)" do
   describe 'scenario outline and scenario count functions (ssoc)' do
     it 'should filter based on ssoc_gt' do
-      skip("Not sure if I want to keep these predefined methods")
-
       gs = CQL::Repository.new("#{@feature_fixtures_directory}/combined/a")
 
       expected_results = {5 => [{"name" => "f1_4_scenarios_5_so"}, {"name" => "f2_7_scenarios_2_so"}]}
@@ -21,8 +19,6 @@ describe "feature filters (with)" do
     end
 
     it 'should filter based on ssoc_gte' do
-      skip("Not sure if I want to keep these predefined methods")
-
       gs = CQL::Repository.new("#{@feature_fixtures_directory}/combined/a")
 
       expected_results = {1 => [{"name" => "f1_4_scenarios_5_so"}, {"name" => "f2_7_scenarios_2_so"}, {"name" => "f3_2_scenarios_3_so"}],
@@ -42,8 +38,6 @@ describe "feature filters (with)" do
     end
 
     it 'should filter based on ssoc_lt' do
-      skip("Not sure if I want to keep these predefined methods")
-
       gs = CQL::Repository.new("#{@feature_fixtures_directory}/combined/a")
 
       expected_results = {10 => [{"name" => "f1_4_scenarios_5_so"}, {"name" => "f2_7_scenarios_2_so"}, {"name" => "f3_2_scenarios_3_so"}],
@@ -62,8 +56,6 @@ describe "feature filters (with)" do
     end
 
     it 'should filter based on ssoc_lte' do
-      skip("Not sure if I want to keep these predefined methods")
-
       gs = CQL::Repository.new("#{@feature_fixtures_directory}/combined/a")
 
       expected_results = {10 => [{"name" => "f1_4_scenarios_5_so"}, {"name" => "f2_7_scenarios_2_so"}, {"name" => "f3_2_scenarios_3_so"}],
@@ -87,8 +79,6 @@ describe "feature filters (with)" do
 
   describe 'scenario count functions (sc)' do
     it 'should filter based on sc_gt' do
-      skip("Not sure if I want to keep these predefined methods")
-
       gs = CQL::Repository.new("#{@feature_fixtures_directory}/combined/a")
 
       expected_results = {2 => [{"name" => "f1_4_scenarios_5_so"}, {"name" => "f2_7_scenarios_2_so"}]}
@@ -105,8 +95,6 @@ describe "feature filters (with)" do
     end
 
     it 'should filter based on sc_gte' do
-      skip("Not sure if I want to keep these predefined methods")
-
       gs = CQL::Repository.new("#{@feature_fixtures_directory}/combined/a")
 
       expected_results = {2 => [{"name" => "f1_4_scenarios_5_so"}, {"name" => "f2_7_scenarios_2_so"}, {"name" => "f3_2_scenarios_3_so"}],
@@ -126,8 +114,6 @@ describe "feature filters (with)" do
     end
 
     it 'should filter based on sc_lt' do
-      skip("Not sure if I want to keep these predefined methods")
-
       gs = CQL::Repository.new("#{@feature_fixtures_directory}/combined/a")
 
       expected_results = {
@@ -147,8 +133,6 @@ describe "feature filters (with)" do
     end
 
     it 'should filter based on sc_lte' do
-      skip("Not sure if I want to keep these predefined methods")
-
       gs = CQL::Repository.new("#{@feature_fixtures_directory}/combined/a")
 
       expected_results = {7 => [{"name" => "f1_4_scenarios_5_so"}, {"name" => "f2_7_scenarios_2_so"}, {"name" => "f3_2_scenarios_3_so"}],
@@ -202,8 +186,6 @@ describe "feature filters (with)" do
 
   describe 'scenario outline count functions (soc)' do
     it 'should filter based on soc_gt' do
-      skip("Not sure if I want to keep these predefined methods")
-
       gs = CQL::Repository.new("#{@feature_fixtures_directory}/combined/a")
 
       expected_results = {2 => [{"name" => "f1_4_scenarios_5_so"}, {"name" => "f3_2_scenarios_3_so"}],
@@ -221,8 +203,6 @@ describe "feature filters (with)" do
     end
 
     it 'should filter based on soc_gte' do
-      skip("Not sure if I want to keep these predefined methods")
-
       gs = CQL::Repository.new("#{@feature_fixtures_directory}/combined/a")
 
       expected_results = {2 => [{"name" => "f1_4_scenarios_5_so"}, {"name" => "f2_7_scenarios_2_so"}, {"name" => "f3_2_scenarios_3_so"}],
@@ -242,8 +222,6 @@ describe "feature filters (with)" do
     end
 
     it 'should filter based on soc_lt' do
-      skip("Not sure if I want to keep these predefined methods")
-
       gs = CQL::Repository.new("#{@feature_fixtures_directory}/combined/a")
 
       expected_results = {7 => [{"name" => "f1_4_scenarios_5_so"}, {"name" => "f2_7_scenarios_2_so"}, {"name" => "f3_2_scenarios_3_so"}],
@@ -263,8 +241,6 @@ describe "feature filters (with)" do
     end
 
     it 'should filter based on soc_lte' do
-      skip("Not sure if I want to keep these predefined methods")
-
       gs = CQL::Repository.new("#{@feature_fixtures_directory}/combined/a")
 
       expected_results = {7 => [{"name" => "f1_4_scenarios_5_so"}, {"name" => "f2_7_scenarios_2_so"}, {"name" => "f3_2_scenarios_3_so"}],
