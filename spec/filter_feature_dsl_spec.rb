@@ -293,8 +293,6 @@ describe "feature filters (with)" do
 
 
   it 'should filter by multiple filters' do
-    skip("Not sure if I want to keep these predefined methods")
-
     gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/tagged_features")
 
     result = gs.query do

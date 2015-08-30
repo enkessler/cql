@@ -110,13 +110,15 @@ module CQL
     end
 
     #with clause
-    def with(&block)
+    def with(matcher, &block)
+      # puts "matcher received: #{matcher}"
       # puts "block received: #{block}"
-      @filter_blocks ||= []
+      @filters ||= []
 
-      @filter_blocks << block
+      @filters << block if block
+      @filters << matcher if matcher
 
-      # puts "final filter: #{@filter_block}"
+      # puts "final filters: #{@filters}"
     end
 
     class Comparison
@@ -175,7 +177,7 @@ module CQL
 
     def tags *tags
       return "tags" if tags.size == 0
-      if @from == 'features'
+      if @from == CukeModeler::Feature
         FeatureTagFilter.new tags
       else
         CQL::SsoTagFilter.new tags

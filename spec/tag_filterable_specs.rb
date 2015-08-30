@@ -5,8 +5,6 @@ shared_examples_for 'a tag filterable target set' do |target_type, test_data|
   describe 'tag filters' do
 
     it 'should filter by a single tag' do
-      skip("Not sure if I want to keep these predefined methods")
-
       gs = CQL::Repository.new(test_data[:single_tag][:fixture_location])
 
       expected_results = test_data[:single_tag][:expected_results]
@@ -23,8 +21,6 @@ shared_examples_for 'a tag filterable target set' do |target_type, test_data|
     end
 
     it 'should filter by a multiple tags' do
-      skip("Not sure if I want to keep these predefined methods")
-
       gs = CQL::Repository.new(test_data[:multiple_tags][:fixture_location])
 
       expected_results = test_data[:multiple_tags][:expected_results]

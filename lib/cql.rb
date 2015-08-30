@@ -71,7 +71,7 @@ module CQL
       self.instance_eval(&block)
 
       # Gather relevant objects from root object and filters
-      @data= CQL::MapReduce.gather_objects(@data, @from, @filter_blocks)
+      @data= CQL::MapReduce.gather_objects(@data, @from, @filters)
 
       # Extract properties from gathered objects
       @data= format_output(@data)

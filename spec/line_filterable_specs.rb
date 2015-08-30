@@ -5,8 +5,6 @@ shared_examples_for 'a line filterable target set' do |target_type, test_data|
   describe 'line match filters' do
 
     it 'should filter by exact line' do
-      skip("Not sure if I want to keep these predefined methods")
-
       gs = CQL::Repository.new(test_data[:exact_line][:fixture_location])
 
       expected_results = test_data[:exact_line][:expected_results]
@@ -23,8 +21,6 @@ shared_examples_for 'a line filterable target set' do |target_type, test_data|
     end
 
     it 'should filter by regexp' do
-      skip("Not sure if I want to keep these predefined methods")
-
       gs = CQL::Repository.new(test_data[:regexp][:fixture_location])
 
       expected_results = test_data[:regexp][:expected_results]

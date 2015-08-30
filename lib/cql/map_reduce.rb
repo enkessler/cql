@@ -87,8 +87,14 @@ module CQL
       gathered_objects = Array.new.tap { |gathered_objects| collect_all_in(target_classes, current_object, gathered_objects) }
 
       if filters
-        # puts "Filter (#{filters.class}): #{filters}"
-        filters.each { |filter| gathered_objects.select!(&filter) }
+        # puts "Filters (#{filters.class}): #{filters}"
+        filters.each do |filter|
+          if filter.is_a?(Proc)
+            gathered_objects.select!(&filter)
+          else
+            gathered_objects = filter.execute(gathered_objects)
+          end
+        end
       end
 
       gathered_objects
