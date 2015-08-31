@@ -1,7 +1,10 @@
 = CQL (Cucumber Query Language)
 
-CQL is a domain specific language used for querying a Cucumber test suite. It is written in ruby. The
-goal of CQL is to enable to create summarized data on the collection of feature files. Some uses for example are:
+CQL is a domain specific language used for querying a Cucumber test suite. It is written in ruby and powered by
+the {cuke_modeler}[https://github.com/enkessler/cuke_modeler] gem. The goal of CQL is to increase the ease with
+which useful information can be extraced from a modeled test suite and turned into summarized data or reports.
+
+Some uses for example are:
 
 * Build systems
 * Reporting
@@ -35,12 +38,12 @@ This will return a list of all of the feature names in the form of a list of has
 == CQL DSL
 === The 'from' clause
 
-The *from* clause specifies what type of things that *select* will gather its values from. The following
-values are supported for the *from* clause:
+The *from* clause specifies what type of things that *select* will gather its values from. The *from* clause can take
+class objects defined in CukeModeler as well as shorthand versions thereof. The following are some example values:
 
-* scenario_outlines
-* scenarios
-* features
+* CukeModeler::Outline  (exact class)
+* outline               (singular)
+* outlines              (pluralized)
 
 Sample usage:
 
@@ -51,51 +54,28 @@ Sample usage:
 
 === The 'select' clause
 
-The *select* clause specifies what values will be retrieved from the things specified by *from*. Multiple
-values can be given and they are deliminated by a comma.
+The *select* clause specifies what values will be retrieved from the things specified by *from*. Multiple values can
+be given and they are deliminated by a comma. The *select* clause can take any method that the objects specified by
+*from* know how to respond to.
 
 Sample usage:
     cql_repo.query do
-        select name, uri, tags, description
+        # Note: '' around names are optional
+        select name, 'tags', description_text
         from features
     end
-
-The following selection values are supported for all values of the *from* clause:
-
-* name
-* id
-* description
-* tags
-* all
-* complete (alias for 'all')
-* everything (alias for 'all')
-
-The following additional selection values are supported when the *from* clause is set as 'features':
-
-* uri
-
-The following additional selection values are supported when the *from* clause is set as 'scenarios' or 'scenario_outlines':
-
-* line
-* type
-* step_lines
-* steps
-
-The following additional selection values are supported when the *from* clause is set as 'scenario_outlines':
-
-* examples
-
 
 === The 'with' clause
 
 The *with* specifies filter conditions that will reduce the number of things targeted by the by *from*. Multiple
-*with* clauses can be used in a query.
+*with* clauses can be used in a query. The *with* clause can take a block that will filter out any object for which
+the block does not evaluate to true. The *with* clause can also take predefined filters (detailed below).
 
 Sample usage:
     cql_repo.query do
-        select name, uri, tags, description
+        select name, tags, description_text
         from features
-        with tc gt 1
+        with { |feature| feature.name =~ /foo/ }
         with tc lt 3
     end
 
