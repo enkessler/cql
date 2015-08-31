@@ -1,6 +1,8 @@
 Then(/^the following values are returned":$/) do |values|
   expected_results = values.hashes
   expected_results.each { |result| result['source_line'] = result['source_line'].to_i if result['source_line'] }
+  expected_results.each { |result| result['tags'] = eval(result['tags']) if result['tags'] }
+  expected_results.each { |result| result['scenario_tags'] = eval(result['scenario_tags']) if result['scenario_tags'] }
 
   expected_results.each do |result|
     result.each_pair { |key, value| result[key] = value.sub('path/to', @default_file_directory) if value =~ /path\/to/ }

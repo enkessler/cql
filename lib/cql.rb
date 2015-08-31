@@ -28,7 +28,10 @@ module CQL
                   when @name_transforms.is_a?(Array)
                     key = @name_transforms[index]
                   when @name_transforms.is_a?(Hash)
-                    key = @name_transforms[attribute].shift if @name_transforms[attribute]
+                    if @name_transforms[attribute]
+                      key = @name_transforms[attribute].first
+                      @name_transforms[attribute].rotate!
+                    end
                   else
                     # todo - add error message
                 end
@@ -38,7 +41,7 @@ module CQL
 
                 case
                   when @value_transforms.is_a?(Array)
-                    # key = @name_transforms[index]
+                    key = @name_transforms[index]
                   when @value_transforms.is_a?(Hash)
                     if @value_transforms[attribute]
                       value = @value_transforms[attribute].first.call(value)

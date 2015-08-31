@@ -110,7 +110,7 @@ module CQL
     end
 
     #with clause
-    def with(matcher, &block)
+    def with(matcher = nil, &block)
       # puts "matcher received: #{matcher}"
       # puts "block received: #{block}"
       @filters ||= []
