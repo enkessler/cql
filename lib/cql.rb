@@ -87,10 +87,10 @@ module CQL
     def format_output(data)
       output = format_to_ary_of_hsh(data)
 
-      if @type == 'objects'
-        output.collect! { |result| result.values }
-        output.flatten!
-      end
+      # if @type == 'objects'
+      #   output.collect! { |result| result.values }
+      #   output.flatten!
+      # end
 
       output
     end
@@ -113,25 +113,6 @@ module CQL
 
       # puts "Query result: #{final_output}"
       final_output
-    end
-
-
-    private
-
-
-    def collect_feature_models(directory_model)
-      Array.new.tap { |accumulated_features| collect_all_in(:features, directory_model, accumulated_features) }
-    end
-
-    # Recursively gathers all things of the given type found in the passed container.
-    def collect_all_in(type_of_thing, container, accumulated_things)
-      accumulated_things.concat container.send(type_of_thing) if container.respond_to?(type_of_thing)
-
-      if container.respond_to?(:contains)
-        container.contains.each do |child_container|
-          collect_all_in(type_of_thing, child_container, accumulated_things)
-        end
-      end
     end
 
   end

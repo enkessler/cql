@@ -52,16 +52,6 @@ module CQL
       @what = what
     end
 
-    (CQL::QUERY_VALUES + %w(all step_lines examples)).each do |method_name|
-      define_method(method_name) { |*args|
-        return method_name if args.size == 0
-        {method_name=>args}
-      }
-    end
-
-    alias :everything :all
-    alias :complete :all
-
     def name *args
       return 'name' if args.size == 0
       CQL::NameFilter.new args[0]
@@ -102,12 +92,6 @@ module CQL
       # puts "@from: #{@from}"
     end
 
-    %w(features scenario_outlines scenarios).each do |method_name|
-      define_method(method_name) { |*args|
-        return method_name if args.size == 0
-        {method_name=>args}
-      }
-    end
 
     #with clause
     def with(matcher = nil, &block)
