@@ -94,7 +94,6 @@ module CQL
 
 
   class Repository
-    attr_reader :parsed_feature_files
 
     def initialize features_home_dir
       @target_directory = CukeModeler::Directory.new(features_home_dir)
