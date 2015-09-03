@@ -52,6 +52,28 @@ Feature: DSL
       | Test 1 | 3           |
       | Test 2 | 7           |
 
+  Scenario: Selection of no traits (i.e. selection of the model in its entirety)
+    When the following query is executed:
+      """
+      select
+      from CukeModeler::Scenario
+      """
+    Then the models for the following items are returned":
+      | Test 1 |
+      | Test 2 |
+
+  Scenario: Repetitive selection
+    When the following query is executed:
+      """
+      select 'name'
+      select 'source_line'
+      from CukeModeler::Scenario
+      """
+    Then the following values are returned":
+      | name   | source_line |
+      | Test 1 | 3           |
+      | Test 2 | 7           |
+
   Scenario: Using 'from' to specify what kind of objects from which to return attributes
     When the following query is executed:
       """
@@ -69,6 +91,23 @@ Feature: DSL
       """
     Then the following values are returned":
       | name   |
+      | Test 3 |
+
+  Scenario: Using 'from' multiple times
+  Note: Selecting from different types of model should be done with care since problems can occur if
+  the attributes specified by the 'select' clause do not exist on all of the models specified by the
+  'from' clause
+
+    When the following query is executed:
+      """
+      select 'name'
+      from CukeModeler::Scenario
+      from CukeModeler::Outline
+      """
+    Then the following values are returned":
+      | name   |
+      | Test 1 |
+      | Test 2 |
       | Test 3 |
 
   Scenario: Using shorthand version of a class
@@ -126,7 +165,6 @@ Feature: DSL
       | Test 2 | ['@special_tag'] |
       | Test 3 | []               |
 
-  @wip
   Scenario: Using 'transform' to change values after they are gathered
     When the following query is executed:
       """
@@ -145,15 +183,14 @@ Feature: DSL
     When the following query is executed:
       """
       select 'name', 'tags'
-      transform name => lambda{ |name| name.upcase },
-                tags => lambda{ |tags| 9 }
+      transform tags => lambda{ |tags| 9 }
       from test_elements
       """
     Then the following values are returned":
       | name   | tags |
-      | TEST 1 | 9    |
-      | TEST 2 | 9    |
-      | TEST 3 | 9    |
+      | Test 1 | 9    |
+      | Test 2 | 9    |
+      | Test 3 | 9    |
 
 
   @wip

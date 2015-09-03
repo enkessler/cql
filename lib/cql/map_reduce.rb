@@ -36,13 +36,13 @@ module CQL
       private
 
 
-      # Recursively gathers all objects of the given class found in the passed object (including itself).
-      def collect_all_in(targeted_class, current_object, accumulated_objects)
-        accumulated_objects << current_object if current_object.is_a?(targeted_class)
+      # Recursively gathers all objects of the given class(es) found in the passed object (including itself).
+      def collect_all_in(targeted_classes, current_object, accumulated_objects)
+        accumulated_objects << current_object if targeted_classes.any? { |targeted_class| current_object.is_a?(targeted_class) }
 
         if current_object.respond_to?(:contains)
           current_object.contains.each do |child_object|
-            collect_all_in(targeted_class, child_object, accumulated_objects)
+            collect_all_in(targeted_classes, child_object, accumulated_objects)
           end
         end
       end

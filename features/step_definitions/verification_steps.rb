@@ -20,3 +20,11 @@ end
 #   end
 #
 # end
+
+
+Then(/^the models for the following items are returned":$/) do |item_names|
+  expected_results = item_names.raw.flatten
+
+  expect(@query_results.all? { |result| result.is_a?(CukeModeler::FeatureElement) }).to eq(true)
+  expect(@query_results.collect { |result| result.name }).to match_array(expected_results)
+end

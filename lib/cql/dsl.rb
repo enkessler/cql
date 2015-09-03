@@ -49,7 +49,8 @@ module CQL
 
     #Select clause
     def select *what
-      @what = what
+      @what ||= []
+      @what.concat(what)
     end
 
     def name *args
@@ -66,6 +67,8 @@ module CQL
     def from where
       # puts "'from' (#{where.class}): #{where}"
 
+      @from ||= []
+
       if where.is_a?(String)
         # Translate shorthand Strings to final class
 
@@ -75,19 +78,21 @@ module CQL
         where = where.join
         # puts "converted where: #{where}"
 
-        # Check for pluralization of class match (i.e. remove the final 's')
-        if CukeModeler.const_defined?(where.chop)
-          @from = CukeModeler.const_get(where.chop)
+        # Check for exact class match first because it should take precedence
+        if CukeModeler.const_defined?(where)
+          @from << CukeModeler.const_get(where)
+          return
         end
 
-        # Check for exact class match
-        if CukeModeler.const_defined?(where)
-          @from = CukeModeler.const_get(where)
+        # Check for pluralization of class match (i.e. remove the final 's')
+        if CukeModeler.const_defined?(where.chop)
+          @from << CukeModeler.const_get(where.chop)
+          return
         end
       end
 
-      # Assume that either the string has been converted to a class or that the starting argument was already a class
-      @from ||= where
+      # Assume starting argument was already a class
+      @from << where
 
       # puts "@from: #{@from}"
     end
