@@ -1,6 +1,7 @@
 = CQL (Cucumber Query Language)
 
 {<img src="https://badge.fury.io/rb/cql.svg" alt="Gem Version" />}[http://badge.fury.io/rb/cql]
+{<img src="https://travis-ci.org/enkessler/cql.svg" alt="Build Status" />}[https://travis-ci.org/enkessler/cql]
 
 CQL is a domain specific language used for querying a Cucumber test suite. It is written in ruby and powered by
 the {cuke_modeler}[https://github.com/enkessler/cuke_modeler] gem. The goal of CQL is to increase the ease with
