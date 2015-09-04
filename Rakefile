@@ -15,6 +15,10 @@ namespace 'cql' do
 
   # Redefining the task from 'racatt' in order to clear the code coverage results
   task :test_everything, [:command_options] => :clear_coverage
+
+
+  # The task that CI will use
+  task :ci_build => [:test_everything]
 end
 
 
