@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe "feature filters (with)" do
   describe 'scenario outline and scenario count functions (ssoc)' do
+
     it 'should filter based on ssoc_gt' do
       gs = CQL::Repository.new("#{@feature_fixtures_directory}/combined/a")
 
@@ -14,7 +15,7 @@ describe "feature filters (with)" do
           with ssoc gt number
         end
 
-        expect(result).to eq(expected)
+        expect(result).to match_array(expected)
       end
     end
 
@@ -33,7 +34,7 @@ describe "feature filters (with)" do
           with ssoc gte number
         end
 
-        expect(result).to eq(expected)
+        expect(result).to match_array(expected)
       end
     end
 
@@ -51,7 +52,7 @@ describe "feature filters (with)" do
           with ssoc lt number
         end
 
-        expect(result).to eq(expected)
+        expect(result).to match_array(expected)
       end
     end
 
@@ -70,7 +71,7 @@ describe "feature filters (with)" do
           with ssoc lte number
         end
 
-        expect(result).to eq(expected)
+        expect(result).to match_array(expected)
       end
     end
 
@@ -90,7 +91,7 @@ describe "feature filters (with)" do
           with sc gt number
         end
 
-        expect(result).to eq(expected)
+        expect(result).to match_array(expected)
       end
     end
 
@@ -109,7 +110,7 @@ describe "feature filters (with)" do
           with sc gte number
         end
 
-        expect(result).to eq(expected)
+        expect(result).to match_array(expected)
       end
     end
 
@@ -128,7 +129,7 @@ describe "feature filters (with)" do
           with sc lt number
         end
 
-        expect(result).to eq(expected)
+        expect(result).to match_array(expected)
       end
     end
 
@@ -146,7 +147,7 @@ describe "feature filters (with)" do
           with sc lte number
         end
 
-        expect(result).to eq(expected)
+        expect(result).to match_array(expected)
       end
     end
   end
@@ -198,7 +199,7 @@ describe "feature filters (with)" do
           with soc gt number
         end
 
-        expect(result).to eq(expected)
+        expect(result).to match_array(expected)
       end
     end
 
@@ -217,7 +218,7 @@ describe "feature filters (with)" do
           with soc gte number
         end
 
-        expect(result).to eq(expected)
+        expect(result).to match_array(expected)
       end
     end
 
@@ -236,7 +237,7 @@ describe "feature filters (with)" do
           with soc lt number
         end
 
-        expect(result).to eq(expected)
+        expect(result).to match_array(expected)
       end
     end
 
@@ -255,7 +256,7 @@ describe "feature filters (with)" do
           with soc lte number
         end
 
-        expect(result).to eq(expected)
+        expect(result).to match_array(expected)
       end
     end
   end

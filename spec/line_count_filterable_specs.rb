@@ -17,7 +17,7 @@ shared_examples_for 'a line count filterable target set' do |target_type, test_d
           with lc lt number
         end
 
-        expect(result).to eq(expected)
+        expect(result).to match_array(expected)
       end
     end
 
@@ -33,7 +33,7 @@ shared_examples_for 'a line count filterable target set' do |target_type, test_d
           with lc lte number
         end
 
-        expect(result).to eq(expected)
+        expect(result).to match_array(expected)
       end
     end
 
@@ -49,7 +49,7 @@ shared_examples_for 'a line count filterable target set' do |target_type, test_d
           with lc gt number
         end
 
-        expect(result).to eq(expected)
+        expect(result).to match_array(expected)
       end
     end
 
@@ -65,7 +65,7 @@ shared_examples_for 'a line count filterable target set' do |target_type, test_d
           with lc gte number
         end
 
-        expect(result).to eq(expected)
+        expect(result).to match_array(expected)
       end
     end
 

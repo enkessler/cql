@@ -11,16 +11,16 @@ describe "select" do
         from outlines
       end
 
-      expect(result).to eq([{"tags" => ["@two"]},
-                            {"tags" => ["@one"]},
-                            {"tags" => []},
-                            {"tags" => ["@two"]},
-                            {"tags" => ["@one"]},
-                            {"tags" => ["@two", "@four"]},
-                            {"tags" => ["@one", "@five"]},
-                            {"tags" => []},
-                            {"tags" => ["@two"]},
-                            {"tags" => ["@one"]}])
+      expect(result).to match_array([{"tags" => ["@two"]},
+                                     {"tags" => ["@one"]},
+                                     {"tags" => []},
+                                     {"tags" => ["@two"]},
+                                     {"tags" => ["@one"]},
+                                     {"tags" => ["@two", "@four"]},
+                                     {"tags" => ["@one", "@five"]},
+                                     {"tags" => []},
+                                     {"tags" => ["@two"]},
+                                     {"tags" => ["@one"]}])
     end
 
     it 'should return descriptions from scenario outlines' do
@@ -129,16 +129,16 @@ describe "select" do
         from outlines
       end
 
-      expect(result).to eq([{"name" => "Has a table"},
-                            {"name" => "Next"},
-                            {"name" => "Another"},
-                            {"name" => "Blah"},
-                            {"name" => "Another"},
-                            {"name" => "Has a table hmmm"},
-                            {"name" => "Next"},
-                            {"name" => "Another"},
-                            {"name" => "Blah blah"},
-                            {"name" => "Another"}])
+      expect(result).to match_array([{"name" => "Has a table"},
+                                     {"name" => "Next"},
+                                     {"name" => "Another"},
+                                     {"name" => "Blah"},
+                                     {"name" => "Another"},
+                                     {"name" => "Has a table hmmm"},
+                                     {"name" => "Next"},
+                                     {"name" => "Another"},
+                                     {"name" => "Blah blah"},
+                                     {"name" => "Another"}])
     end
 
     it 'should return multiple scenario outlines as a list of maps' do

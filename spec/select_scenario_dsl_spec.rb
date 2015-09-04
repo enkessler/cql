@@ -141,10 +141,10 @@ describe "select" do
         from scenarios
       end
 
-      expect(result).to eq([{"name" => "Has a table"}, {"name" => "Testing the slurping 1"},
-                            {"name" => "Testing the slurping not to be found"}, {"name" => "Testing the slurping 2"},
-                            {"name" => "Testing the slurping 3"}, {"name" => "Testing again"},
-                            {"name" => "Testing yet again"}, {"name" => "Testing yet again part 2"}])
+      expect(result).to match_array([{"name" => "Has a table"}, {"name" => "Testing the slurping 1"},
+                                     {"name" => "Testing the slurping not to be found"}, {"name" => "Testing the slurping 2"},
+                                     {"name" => "Testing the slurping 3"}, {"name" => "Testing again"},
+                                     {"name" => "Testing yet again"}, {"name" => "Testing yet again part 2"}])
     end
 
     it 'should get multiple scenarios as a list of maps' do

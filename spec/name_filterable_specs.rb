@@ -32,7 +32,7 @@ shared_examples_for 'a name filterable target set' do |target_type, test_data|
           with name matched_name
         end
 
-        expect(result).to eq(expected)
+        expect(result).to match_array(expected)
       end
     end
 

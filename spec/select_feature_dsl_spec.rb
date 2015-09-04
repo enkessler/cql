@@ -11,8 +11,8 @@ describe "select" do
         from features
       end
 
-      expect(result).to eq([{"name" => "Simple"}, {"name" => "Test Feature"},
-                            {"name" => "Test2 Feature"}, {"name" => "Test3 Feature"}])
+      expect(result).to match_array([{"name" => "Simple"}, {"name" => "Test Feature"},
+                                     {"name" => "Test2 Feature"}, {"name" => "Test3 Feature"}])
     end
 
     it 'should return descriptions from features' do
@@ -35,10 +35,10 @@ describe "select" do
         from feature_files
       end
 
-      expect(result[0]['path']).to eq("#{repo_path}/simple.feature")
-      expect(result[1]['path']).to eq("#{repo_path}/test.feature")
-      expect(result[2]['path']).to eq("#{repo_path}/test2.feature")
-      expect(result[3]['path']).to eq("#{repo_path}/test_full.feature")
+      expect(result).to match_array([{'path' => "#{repo_path}/simple.feature"},
+                                     {'path' => "#{repo_path}/test.feature"},
+                                     {'path' => "#{repo_path}/test2.feature"},
+                                     {'path' => "#{repo_path}/test_full.feature"}])
     end
 
     it 'should return tags from features' do
@@ -49,10 +49,10 @@ describe "select" do
         from features
       end
 
-      expect(result).to eq([{"tags" => []},
-                            {"tags" => ["@one"]},
-                            {"tags" => ["@two"]},
-                            {"tags" => ["@one", "@two"]}])
+      expect(result).to match_array([{"tags" => []},
+                                     {"tags" => ["@one"]},
+                                     {"tags" => ["@two"]},
+                                     {"tags" => ["@one", "@two"]}])
     end
 
 
@@ -64,10 +64,10 @@ describe "select" do
         from features
       end
 
-      expect(result).to eq([{"name" => "Simple", "tags" => []},
-                            {"name" => "Test Feature", "tags" => ["@one"]},
-                            {"name" => "Test2 Feature", "tags" => ["@two"]},
-                            {"name" => "Test3 Feature", "tags" => ["@one", "@two"]}])
+      expect(result).to match_array([{"name" => "Simple", "tags" => []},
+                                     {"name" => "Test Feature", "tags" => ["@one"]},
+                                     {"name" => "Test2 Feature", "tags" => ["@two"]},
+                                     {"name" => "Test3 Feature", "tags" => ["@one", "@two"]}])
     end
 
     it 'should return things from multiple feature files' do
@@ -78,9 +78,9 @@ describe "select" do
         from features
       end
 
-      expect(result).to eq([{"name" => "f1_1_tag"},
-                            {"name" => "f2_2_tags"},
-                            {"name" => "f3_3_tags"}])
+      expect(result).to match_array([{"name" => "f1_1_tag"},
+                                     {"name" => "f2_2_tags"},
+                                     {"name" => "f3_3_tags"}])
     end
 
     it 'should return multiple features as a list of maps' do
@@ -91,9 +91,9 @@ describe "select" do
         from features
       end
 
-      expect(result).to eq([{"name" => "f1_1_tag"},
-                            {"name" => "f2_2_tags"},
-                            {"name" => "f3_3_tags"}])
+      expect(result).to match_array([{"name" => "f1_1_tag"},
+                                     {"name" => "f2_2_tags"},
+                                     {"name" => "f3_3_tags"}])
     end
 
     it 'should return ids from features' do
