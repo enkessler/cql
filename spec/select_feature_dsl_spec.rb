@@ -101,7 +101,7 @@ describe "select" do
 
       result = gs.query do
         select raw_element
-        as id
+        as 'id'
         transform 'raw_element' => lambda { |element| element['id'] }
         from features
       end

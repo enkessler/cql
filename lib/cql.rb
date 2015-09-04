@@ -1,3 +1,7 @@
+if RUBY_VERSION < '1.9.2'
+  require 'backports/1.9.2/array/rotate'
+end
+
 require 'cuke_modeler'
 require 'cql/dsl'
 
