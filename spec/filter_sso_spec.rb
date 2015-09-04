@@ -49,7 +49,7 @@ describe "scenario and outline filters (with)" do
                                                                                                  5 => []}}
   }
 
-  it_behaves_like 'a tag filterable target set', 'scenario_outlines', {:single_tag => {:fixture_location => "#{CQL_FEATURE_FIXTURES_DIRECTORY}/scen_outlines/filters/tags",
+  it_behaves_like 'a tag filterable target set', 'outlines', {:single_tag => {:fixture_location => "#{CQL_FEATURE_FIXTURES_DIRECTORY}/scen_outlines/filters/tags",
                                                                                        :expected_results => {'@one' => [{'name' => 'Next'}, {'name' => 'Another'}]}},
 
                                                                        :multiple_tags => {:fixture_location => "#{CQL_FEATURE_FIXTURES_DIRECTORY}/scen_outlines/filters/tags2",
@@ -143,7 +143,7 @@ describe "scenario and outline filters (with)" do
 
     result = gs.query do
       select name
-      from scenario_outlines
+      from outlines
       with tc gt 1
       with tc lt 3
     end

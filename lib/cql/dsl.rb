@@ -2,20 +2,56 @@ require 'cql/map_reduce'
 
 module CQL
   module Dsl
+
+    def method_missing(method_name)
+      method_name.to_s
+    end
+
+    def transform(*attribute_transforms)
+      # todo - accept either array or a hash
+      # puts "transform args: #{attribute_transforms}"
+      if attribute_transforms.first.is_a?(Hash)
+        additional_transforms = attribute_transforms.first
+
+        @value_transforms ||= {}
+        additional_transforms.each do |key, value|
+          if @value_transforms.has_key?(key)
+            @value_transforms[key] << value
+          else
+            @value_transforms[key] = [value]
+          end
+        end
+      else
+
+        @value_transforms = attribute_transforms
+      end
+    end
+
+    def as(*name_transforms)
+      # todo - accept either array or a hash
+      # puts "as args: #{name_transforms}"
+      if name_transforms.first.is_a?(Hash)
+        additional_transforms = name_transforms.first
+
+        @name_transforms ||= {}
+        additional_transforms.each do |key, value|
+          if @name_transforms.has_key?(key)
+            @name_transforms[key] << value
+          else
+            @name_transforms[key] = [value]
+          end
+        end
+      else
+
+        @name_transforms = name_transforms
+      end
+    end
+
     #Select clause
     def select *what
-      @what = what
+      @what ||= []
+      @what.concat(what)
     end
-
-    (CQL::QUERY_VALUES + %w(all step_lines examples)).each do |method_name|
-      define_method(method_name) { |*args|
-        return method_name if args.size == 0
-        {method_name=>args}
-      }
-    end
-
-    alias :everything :all
-    alias :complete :all
 
     def name *args
       return 'name' if args.size == 0
@@ -29,20 +65,49 @@ module CQL
 
     #from clause
     def from where
-      @from = where
-      @data
+      # puts "'from' (#{where.class}): #{where}"
+
+      @from ||= []
+
+      if where.is_a?(String)
+        # Translate shorthand Strings to final class
+
+        where = where.to_s
+        where = where.split('_')
+        where = where.map(&:capitalize)
+        where = where.join
+        # puts "converted where: #{where}"
+
+        # Check for exact class match first because it should take precedence
+        if CukeModeler.const_defined?(where)
+          @from << CukeModeler.const_get(where)
+          return
+        end
+
+        # Check for pluralization of class match (i.e. remove the final 's')
+        if CukeModeler.const_defined?(where.chop)
+          @from << CukeModeler.const_get(where.chop)
+          return
+        end
+      end
+
+      # Assume starting argument was already a class
+      @from << where
+
+      # puts "@from: #{@from}"
     end
 
-    %w(features scenario_outlines scenarios).each do |method_name|
-      define_method(method_name) { |*args|
-        return method_name if args.size == 0
-        {method_name=>args}
-      }
-    end
 
     #with clause
-    def with filter
-      @data = filter.execute(@data)
+    def with(matcher = nil, &block)
+      # puts "matcher received: #{matcher}"
+      # puts "block received: #{block}"
+      @filters ||= []
+
+      @filters << block if block
+      @filters << matcher if matcher
+
+      # puts "final filters: #{@filters}"
     end
 
     class Comparison
@@ -60,7 +125,7 @@ module CQL
     end
 
     def tc comparison
-      if @from == 'features'
+      if @from == CukeModeler::Feature
         FeatureTagCountFilter.new('tc', comparison)
       else
         SsoTagCountFilter.new 'tc', comparison
@@ -101,7 +166,7 @@ module CQL
 
     def tags *tags
       return "tags" if tags.size == 0
-      if @from == 'features'
+      if @from == CukeModeler::Feature
         FeatureTagFilter.new tags
       else
         CQL::SsoTagFilter.new tags
