@@ -4,6 +4,7 @@
 {<img src="https://travis-ci.org/enkessler/cql.svg" alt="Build Status" />}[https://travis-ci.org/enkessler/cql]
 {<img src="https://coveralls.io/repos/enkessler/cql/badge.svg" alt="Coverage Status" />}[https://coveralls.io/github/enkessler/cql]
 {<img src="https://codeclimate.com/github/enkessler/cql/badges/gpa.svg" alt="Code Quality" />}[https://codeclimate.com/github/enkessler/cql]
+{<img src="https://gemnasium.com/enkessler/cql.svg" alt="Dependency Status" />}[https://gemnasium.com/enkessler/cql]
 
 CQL is a domain specific language used for querying a Cucumber test suite. It is written in ruby and powered by
 the {cuke_modeler}[https://github.com/enkessler/cuke_modeler] gem. The goal of CQL is to increase the ease with
