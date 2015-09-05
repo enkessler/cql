@@ -9,3 +9,6 @@ if RUBY_VERSION =~ /^1\.8/
 elsif RUBY_VERSION =~ /^1\./
   gem 'cucumber', '<2.0.0'
 end
+
+
+gem 'coveralls', :require => false, :group => :development

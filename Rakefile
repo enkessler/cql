@@ -1,4 +1,6 @@
 require "bundler/gem_tasks"
+require 'coveralls/rake/task'
+
 require 'racatt'
 
 
@@ -18,7 +20,8 @@ namespace 'cql' do
 
 
   # The task that CI will use
-  task :ci_build => [:test_everything]
+  Coveralls::RakeTask.new
+  task :ci_build => [:test_everything, 'coveralls:push']
 end
 
 
