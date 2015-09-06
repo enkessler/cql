@@ -1,27 +1,22 @@
+require 'cql/filters'
+
+
 module CQL
 
-  class SsoTagCountFilter < Filter
-    def execute input
-      input.find_all do |sso|
-        sso.tags.size.send(comparison.operator, comparison.amount)
-      end
+  class SsoTagCountFilter < TypeCountFilter
+
+    def type_count(test)
+      test.tags.size
     end
+
   end
 
-  class SsoTagFilter < TagFilter
-    def execute input
-      input.find_all do |sso|
-        has_tags(sso.raw_element['tags'], tags)
-      end
-    end
-  end
+  class SsoLineCountFilter < TypeCountFilter
 
-  class SsoLineCountFilter < Filter
-    def execute input
-      input.find_all do |sso|
-        sso.steps.size.send(comparison.operator, comparison.amount)
-      end
+    def type_count(test)
+      test.steps.size
     end
+
   end
 
   class LineFilter

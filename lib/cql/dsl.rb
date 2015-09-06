@@ -111,15 +111,11 @@ module CQL
     end
 
     class Comparison
-      attr_accessor :op, :amount
+      attr_accessor :operator, :amount
 
-      def initialize op, amount
-        @op = op
+      def initialize operator, amount
+        @operator = operator
         @amount = amount
-      end
-
-      def operator
-        {"lt"=>'<', 'lte'=>'<=', 'gt'=>'>', 'gte'=>'>='}[@op]
       end
 
     end
@@ -137,40 +133,37 @@ module CQL
     end
 
     def ssoc comparison
-      Filter.new('ssoc', comparison)
+      TestCountFilter.new([CukeModeler::Scenario, CukeModeler::Outline], comparison)
     end
 
     def sc comparison
-      Filter.new('sc', comparison)
+      TestCountFilter.new([CukeModeler::Scenario], comparison)
     end
 
     def soc comparison
-      Filter.new('soc', comparison)
+      TestCountFilter.new([CukeModeler::Outline], comparison)
     end
 
     def gt amount
-      Comparison.new 'gt', amount
+      Comparison.new '>', amount
     end
 
     def gte amount
-      Comparison.new 'gte', amount
+      Comparison.new '>=', amount
     end
 
     def lt amount
-      Comparison.new 'lt', amount
+      Comparison.new '<', amount
     end
 
     def lte amount
-      Comparison.new 'lte', amount
+      Comparison.new '<=', amount
     end
 
     def tags *tags
       return "tags" if tags.size == 0
-      if @from == CukeModeler::Feature
-        FeatureTagFilter.new tags
-      else
-        CQL::SsoTagFilter.new tags
-      end
+
+      TagFilter.new tags
     end
 
   end
