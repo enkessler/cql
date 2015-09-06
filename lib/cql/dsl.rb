@@ -39,39 +39,13 @@ module CQL
     end
 
     #from clause
-    def from where
-      # puts "'from' (#{where.class}): #{where}"
-
+    def from(where)
       @from ||= []
 
-      if where.is_a?(String)
-        # Translate shorthand Strings to final class
+      where = determine_class(where) if where.is_a?(String)
 
-        where = where.to_s
-        where = where.split('_')
-        where = where.map(&:capitalize)
-        where = where.join
-        # puts "converted where: #{where}"
-
-        # Check for exact class match first because it should take precedence
-        if CukeModeler.const_defined?(where)
-          @from << CukeModeler.const_get(where)
-          return
-        end
-
-        # Check for pluralization of class match (i.e. remove the final 's')
-        if CukeModeler.const_defined?(where.chop)
-          @from << CukeModeler.const_get(where.chop)
-          return
-        end
-      end
-
-      # Assume starting argument was already a class
       @from << where
-
-      # puts "@from: #{@from}"
     end
-
 
     #with clause
     def with(matcher = nil, &block)
@@ -141,6 +115,10 @@ module CQL
       TagFilter.new tags
     end
 
+    def translate_shorthand(where)
+      where.split('_').map(&:capitalize).join
+    end
+
     def prep_variable(var_name, transforms)
       starting_value = transforms.first.is_a?(Hash) ? {} : []
       instance_variable_set("@#{var_name}".to_sym, starting_value)
@@ -162,6 +140,17 @@ module CQL
 
         transform_set.replace(new_transforms)
       end
+    end
+
+    def determine_class(where)
+      # Translate shorthand Strings to final class
+      where = translate_shorthand(where)
+
+      # Check for exact class match first because it should take precedence
+      return CukeModeler.const_get(where) if CukeModeler.const_defined?(where)
+
+      # Check for pluralization of class match (i.e. remove the final 's')
+      return CukeModeler.const_get(where.chop) if CukeModeler.const_defined?(where.chop)
     end
 
   end
