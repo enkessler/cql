@@ -32,24 +32,15 @@ module CQL
         result = nil
 
         if line.class == String
-          result = raw_step_lines.include? line
+          result = raw_step_lines.any? { |step| step == line }
         elsif line.class == Regexp
-          result = filter_by_regexp(raw_step_lines)
+          result = raw_step_lines.any? { |step| step =~ line }
         end
 
         result
       end
     end
 
-    def filter_by_regexp(raw_step_lines)
-      result = raw_step_lines.find { |l| l =~line }
-      if result.class == String
-        result = result.size > 0
-      else
-        result = false
-      end
-      result
-    end
   end
 
 end

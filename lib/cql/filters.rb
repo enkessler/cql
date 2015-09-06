@@ -7,15 +7,12 @@ module CQL
       @tags = tags
     end
 
-    def has_tags given, search
-      return false if given == nil
-      search.count do |tag_for_search|
-        given.map { |t| t["name"] }.include?(tag_for_search)
-      end ==search.size
+    def has_tags?(object, tags)
+      tags.all? { |tag| object.tags.include?(tag) }
     end
 
     def execute objects
-      objects.find_all { |object| has_tags object.raw_element['tags'], tags }
+      objects.find_all { |object| has_tags?(object, tags) }
     end
 
   end
