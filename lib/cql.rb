@@ -12,57 +12,14 @@ module CQL
     attr_reader :data, :what
 
     def format_data data
-      # puts "@whats: #{@what}"
-      # puts "from data: #{data.collect { |datum| datum.class.to_s =~ /CukeModeler/ ? datum.class : datum }}"
-
-      # puts "name transforms (#{@name_transforms.class}): #{@name_transforms}"
-      # puts "value transforms (#{@value_transforms.class}): #{@value_transforms}"
-
       return data if @what.empty?
 
       Array.new.tap do |result_array|
         data.each do |element|
           result_array << Hash.new.tap do |result|
             @what.each_with_index do |attribute, index|
-              # puts "attribute (#{attribute.class}): #{attribute}"
-              # puts "index (#{index.class}): #{index}"
-
-              value = element.send(attribute)
-
-              if @name_transforms
-                case
-                  when @name_transforms.is_a?(Array)
-                    key = @name_transforms[index]
-                  when @name_transforms.is_a?(Hash)
-                    if @name_transforms[attribute]
-                      key = @name_transforms[attribute].first
-                      @name_transforms[attribute].rotate!
-                    end
-                  else
-                    # todo - add error message
-                end
-              end
-
-              if @value_transforms
-
-                case
-                  when @value_transforms.is_a?(Array)
-                    value = @value_transforms[index].call(value)
-                  when @value_transforms.is_a?(Hash)
-                    if @value_transforms[attribute]
-                      value = @value_transforms[attribute].first.call(value)
-                      @value_transforms[attribute].rotate!
-                    end
-                  else
-                    # todo - add error message
-                end
-
-              end
-
-              key ||= attribute
-
-              # puts "key: #{key}"
-              # puts "value: #{value}"
+              key = determine_key(attribute, index)
+              value = determine_value(element, attribute, index)
 
               result[key] = value
             end
@@ -92,6 +49,39 @@ module CQL
 
     def format_output(data)
       format_data(data)
+    end
+
+    def determine_key(attribute, index)
+      key = transform_stuff(@name_transforms, attribute, index) if @name_transforms
+
+      key || attribute
+    end
+
+    def determine_value(element, attribute, index)
+      original_value = element.send(attribute)
+
+      if @value_transforms
+        value = transform_stuff(@value_transforms, attribute, index)
+        value = value.call(original_value) if value.is_a?(Proc)
+      end
+
+      value || original_value
+    end
+
+    def transform_stuff(transforms, attribute, location)
+      case
+        when transforms.is_a?(Array)
+          value = transforms[location]
+        when transforms.is_a?(Hash)
+          if transforms[attribute]
+            value = transforms[attribute].first
+            transforms[attribute].rotate!
+          end
+        else
+          # todo - add error message
+      end
+
+      value
     end
 
   end
