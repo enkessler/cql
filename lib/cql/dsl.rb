@@ -8,43 +8,18 @@ module CQL
     end
 
     def transform(*attribute_transforms)
-      # todo - accept either array or a hash
-      # puts "transform args: #{attribute_transforms}"
-      if attribute_transforms.first.is_a?(Hash)
-        additional_transforms = attribute_transforms.first
+      # todo - Still feels like some as/transform code duplication but I think that it would get too meta if I
+      # reduced it any further. Perhaps change how the transforms are handled so that there doesn't have to be
+      # an array/hash difference in the first place?
+      prep_variable('value_transforms', attribute_transforms) unless @value_transforms
 
-        @value_transforms ||= {}
-        additional_transforms.each do |key, value|
-          if @value_transforms.has_key?(key)
-            @value_transforms[key] << value
-          else
-            @value_transforms[key] = [value]
-          end
-        end
-      else
-
-        @value_transforms = attribute_transforms
-      end
+      add_transforms(attribute_transforms, @value_transforms)
     end
 
     def as(*name_transforms)
-      # todo - accept either array or a hash
-      # puts "as args: #{name_transforms}"
-      if name_transforms.first.is_a?(Hash)
-        additional_transforms = name_transforms.first
+      prep_variable('name_transforms', name_transforms) unless @name_transforms
 
-        @name_transforms ||= {}
-        additional_transforms.each do |key, value|
-          if @name_transforms.has_key?(key)
-            @name_transforms[key] << value
-          else
-            @name_transforms[key] = [value]
-          end
-        end
-      else
-
-        @name_transforms = name_transforms
-      end
+      add_transforms(name_transforms, @name_transforms)
     end
 
     #Select clause
@@ -164,6 +139,29 @@ module CQL
       return "tags" if tags.size == 0
 
       TagFilter.new tags
+    end
+
+    def prep_variable(var_name, transforms)
+      starting_value = transforms.first.is_a?(Hash) ? {} : []
+      instance_variable_set("@#{var_name}".to_sym, starting_value)
+    end
+
+    def add_transforms(new_transforms, transform_set)
+      # todo - accept either array or a hash
+      if new_transforms.first.is_a?(Hash)
+        additional_transforms = new_transforms.first
+
+        additional_transforms.each do |key, value|
+          if transform_set.has_key?(key)
+            transform_set[key] << value
+          else
+            transform_set[key] = [value]
+          end
+        end
+      else
+
+        transform_set.replace(new_transforms)
+      end
     end
 
   end
