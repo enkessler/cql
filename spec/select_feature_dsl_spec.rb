@@ -109,19 +109,5 @@ describe "select" do
       expect(result).to eq([{"id" => "test3-feature"}])
     end
 
-#    it 'should return simplified tags' do
-#      skip
-#
-#      gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/tagged_features")
-#      result = gs.query do
-#        select name, basic_tag
-#        from features
-#      end
-#
-#      expect(result).to eq([{"tags" => nil},
-#                            {"tags" => "@one"},
-#                            {"tags" => "@two"},
-#                            "tags" => "@two"])
-#    end
   end
 end

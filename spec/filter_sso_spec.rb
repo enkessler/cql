@@ -3,13 +3,12 @@ require 'spec_helper'
 describe "scenario and outline filters (with)" do
 
 
-  # todo - seems like this kind of filtering should be available at the scenario level as well as the feature level
-  #it_behaves_like 'a name filterable target set', 'scenarios', {:exact_name => {:fixture_location => "#{CQL_FEATURE_FIXTURES_DIRECTORY}/scenario/name_filter",
-  #                                                                             :expected_results => {'name1' => [{"name" => "name1"}]}},
-  #                                                             :regexp => {:fixture_location => "#{CQL_FEATURE_FIXTURES_DIRECTORY}/scenario/name_filter",
-  #                                                                         :expected_results => {/name/ => [{"name" => "name1"},{"name" => "name2"},{"name" => "name3"}],
-  #                                                                                               /name1/ => [{"name" => "name1"}]}}
-  #}
+  it_behaves_like 'a name filterable target set', 'scenarios', {:exact_name => {:fixture_location => "#{CQL_FEATURE_FIXTURES_DIRECTORY}/scenario/name_filter",
+                                                                                :expected_results => {'name1' => [{"name" => "name1"}]}},
+                                                                :regexp => {:fixture_location => "#{CQL_FEATURE_FIXTURES_DIRECTORY}/scenario/name_filter",
+                                                                            :expected_results => {/name/ => [{"name" => "name1"}, {"name" => "name2"}, {"name" => "name3"}],
+                                                                                                  /name1/ => [{"name" => "name1"}]}}
+                                                }
 
   it_behaves_like 'a tag filterable target set', 'scenarios', {:single_tag => {:fixture_location => "#{CQL_FEATURE_FIXTURES_DIRECTORY}/scenario/tags",
                                                                                :expected_results => {'@one' => [{'name' => 'Next'}, {'name' => 'Another'}]}},
