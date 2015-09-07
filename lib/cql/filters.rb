@@ -63,4 +63,12 @@ module CQL
 
   end
 
+  class TagCountFilter < TypeCountFilter
+
+    def type_count(test)
+      test.tags.size
+    end
+
+  end
+
 end

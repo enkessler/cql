@@ -3,14 +3,6 @@ require 'cql/filters'
 
 module CQL
 
-  class SsoTagCountFilter < TypeCountFilter
-
-    def type_count(test)
-      test.tags.size
-    end
-
-  end
-
   class SsoLineCountFilter < TypeCountFilter
 
     def type_count(test)

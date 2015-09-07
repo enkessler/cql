@@ -70,11 +70,7 @@ module CQL
     end
 
     def tc comparison
-      if @from == CukeModeler::Feature
-        FeatureTagCountFilter.new('tc', comparison)
-      else
-        SsoTagCountFilter.new 'tc', comparison
-      end
+      TagCountFilter.new 'tc', comparison
     end
 
     def lc comparison

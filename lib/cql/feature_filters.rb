@@ -11,12 +11,4 @@ module CQL
 
   end
 
-  class FeatureTagCountFilter < TypeCountFilter
-
-    def type_count(feature)
-      feature.tags.size
-    end
-
-  end
-
 end
