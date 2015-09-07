@@ -19,25 +19,13 @@ module CQL
 
   end
 
-  class LineFilter
-    attr_reader :line
+  class LineFilter < ContentMatchFilter
 
-    def initialize line
-      @line = line
-    end
+    def execute(input)
+      input.find_all do |tests|
+        raw_step_lines = tests.steps.map { |step| step.base }
 
-    def execute input
-      input.find_all do |sso|
-        raw_step_lines = sso.steps.map { |sl| sl.base }
-        result = nil
-
-        if line.class == String
-          result = raw_step_lines.any? { |step| step == line }
-        elsif line.class == Regexp
-          result = raw_step_lines.any? { |step| step =~ line }
-        end
-
-        result
+        content_match?(raw_step_lines)
       end
     end
 

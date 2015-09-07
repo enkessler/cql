@@ -17,22 +17,24 @@ module CQL
 
   end
 
-  class NameFilter
-    attr_reader :name
+  class ContentMatchFilter
+    attr_reader :pattern
 
-    def initialize name
-      @name = name
+    def initialize(pattern)
+      @pattern = pattern
     end
 
-    def execute input
-      if name.class == String
-        filtered_objects = input.find_all { |feature| feature.name == name }
-      elsif name.class == Regexp
-        filtered_objects = input.find_all { |feature| feature.name =~ name }
+    def content_match?(content)
+      if pattern.is_a?(String)
+        content.any? { |thing| thing == pattern }
+      elsif pattern.is_a?(Regexp)
+        content.any? { |thing| thing =~ pattern }
+      else
+        # todo - Raise exception?
+        false
       end
-
-      filtered_objects
     end
+
   end
 
   class TypeCountFilter
@@ -46,6 +48,16 @@ module CQL
     def execute input
       input.find_all do |object|
         type_count(object).send(comparison.operator, comparison.amount)
+      end
+    end
+
+  end
+
+  class NameFilter < ContentMatchFilter
+
+    def execute(input)
+      input.find_all do |object|
+        content_match?([object.name])
       end
     end
 
