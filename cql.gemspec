@@ -1,9 +1,11 @@
 # -*- encoding: utf-8 -*-
 $LOAD_PATH.unshift File.expand_path('../lib', __FILE__)
+require 'cql/version'
+
 
 Gem::Specification.new do |s|
   s.name        = 'cql'
-  s.version     = '0.3.0'
+  s.version     = CQL::VERSION
   s.authors     = ['Jarrod Folino', 'Eric Kessler']
   s.description = 'Cucumber Query Language'
   s.summary     = "A gem providing functionality to query a Cucumber test suite."
