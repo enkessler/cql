@@ -6,7 +6,7 @@ describe 'dsl' do
     describe "multiple selections" do
 
       it 'should handle an empty selection' do
-        skip('What should happen in this case?')
+        skip("It may be useful to be able to return both the underlying object and various attributes on it (which is the probably the intent of this query [assuming that it's not just a typo]) but I can't think of a clean way to do it. Behavior undefined for now.")
 
         gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/simple")
 
@@ -16,7 +16,6 @@ describe 'dsl' do
           from features
         end
 
-        pending
       end
 
     end
@@ -26,18 +25,17 @@ describe 'dsl' do
 
     describe "multiple targets" do
 
-      it 'should handle non-existent attributes' do
-        skip('What should happen in this case?')
-
+      it 'raises an exception for inapplicable attributes' do
         gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/simple")
 
-        result = gs.query do
-          select name, steps
-          from features
-          from scenarios
-        end
+        expect {
+          gs.query do
+            select name, steps
+            from features
+            from scenarios
+          end
+        }.to raise_error
 
-        pending
       end
 
     end
@@ -46,7 +44,7 @@ describe 'dsl' do
   describe 'shorthand' do
 
     it 'should consider an exact match over a pluralization' do
-      skip('Write me')
+      skip('Not sure how to test this without actually have two classes that are so similarly named. It is a required behavior, but not one worth the hassle of testing until it actually comes up.')
     end
 
   end
