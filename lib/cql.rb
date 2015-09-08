@@ -97,10 +97,7 @@ module CQL
       # A quick 'deep clone'
       new_repo = Marshal::load(Marshal.dump(@target_directory))
 
-      final_output = Query.new(new_repo, &block).data
-
-      # puts "Query result: #{final_output}"
-      final_output
+      Query.new(new_repo, &block).data
     end
 
   end
