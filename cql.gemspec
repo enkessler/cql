@@ -34,8 +34,8 @@ Thank you for installing cql (Cucumber Query Language)
 
 
   s.rubygems_version = '>= 1.6.1'
-  s.files            = Dir.glob('lib/*').reject {|path| path =~ /\.gitignore$/ }
-  s.test_files       = Dir.glob('spec/*')
+  s.files            = Dir.glob('lib/**/*').reject {|path| path =~ /\.gitignore$/ }
+  s.test_files       = Dir.glob('spec/**/*')
   s.rdoc_options     = ['--charset=UTF-8']
   s.require_path     = 'lib'
 end
