@@ -7,12 +7,14 @@ module CQL
       method_name.to_s
     end
 
-    def transform(*attribute_transforms)
+    def transform(*attribute_transforms, &block)
       # todo - Still feels like some as/transform code duplication but I think that it would get too meta if I
       # reduced it any further. Perhaps change how the transforms are handled so that there doesn't have to be
       # an array/hash difference in the first place?
       prep_variable('value_transforms', attribute_transforms) unless @value_transforms
 
+      # todo - what if they pass in a hash transform and a block?
+      attribute_transforms << block if block
       add_transforms(attribute_transforms, @value_transforms)
     end
 
@@ -39,24 +41,21 @@ module CQL
     end
 
     #from clause
-    def from(where)
+    def from(*targets)
       @from ||= []
 
-      where = determine_class(where) if where.is_a?(String)
+      # todo - todo test the intermixing of shorthand and full classes as arguments
+      targets.map! { |target| target.is_a?(String) ? determine_class(target) : target }
 
-      @from << where
+      @from.concat(targets)
     end
 
     #with clause
-    def with(matcher = nil, &block)
-      # puts "matcher received: #{matcher}"
-      # puts "block received: #{block}"
+    def with(*conditions, &block)
       @filters ||= []
 
       @filters << block if block
-      @filters << matcher if matcher
-
-      # puts "final filters: #{@filters}"
+      @filters.concat(conditions)
     end
 
     class Comparison
@@ -134,7 +133,7 @@ module CQL
         end
       else
 
-        transform_set.replace(new_transforms)
+        transform_set.concat(new_transforms)
       end
     end
 

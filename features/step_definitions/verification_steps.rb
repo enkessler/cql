@@ -1,4 +1,4 @@
-Then(/^the following values are returned":$/) do |values|
+Then(/^the following values are returned:$/) do |values|
   expected_results = values.hashes
   expected_results.each { |result| result['source_line'] = result['source_line'].to_i if result['source_line'] }
   expected_results.each { |result| result['tags'] = eval(result['tags']) if result['tags'] }
@@ -21,10 +21,19 @@ end
 #
 # end
 
-
-Then(/^the models for the following items are returned":$/) do |item_names|
+Then(/^the models for the following items are returned:$/) do |item_names|
   expected_results = item_names.raw.flatten
 
   expect(@query_results.all? { |result| result.is_a?(CukeModeler::FeatureElement) }).to eq(true)
   expect(@query_results.collect { |result| result.name }).to match_array(expected_results)
+end
+
+Then(/^the result is the same as the result of the following query:$/) do |query_text|
+  command = "@repository.query do
+               #{query_text}
+             end"
+
+  baseline_results = eval(command)
+
+  expect(@query_results).to eq(baseline_results)
 end
