@@ -12,8 +12,6 @@ module CQL
     attr_reader :data, :what
 
     def format_data data
-      return data if @what.empty?
-
       Array.new.tap do |result_array|
         data.each do |element|
           result_array << Hash.new.tap do |result|
@@ -58,7 +56,7 @@ module CQL
     end
 
     def determine_value(element, attribute, index)
-      original_value = element.send(attribute)
+      original_value = attribute.is_a?(Symbol) ? special_value(element, attribute) : element.send(attribute)
 
       if @value_transforms
         value = transform_stuff(@value_transforms, attribute, index)
@@ -66,6 +64,18 @@ module CQL
       end
 
       value || original_value
+    end
+
+    def special_value(element, attribute)
+      # todo - Not sure what other special values to have but this could be expanded upon later.
+      case attribute
+        when :self
+          val = element
+        else
+          # todo - error message?
+      end
+
+      val
     end
 
     def transform_stuff(transforms, attribute, location)

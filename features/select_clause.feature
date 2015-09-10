@@ -1,6 +1,6 @@
 Feature: 'select' clause
 
-  The *select* clause specifies what attributes will be retrieved from the models specified by the *from* clause. Multiple values can be given and they are delimited by a comma. The *select* clause can take any method to which the objects specified by *from* know how to respond. The clause can also be left empty in order to return the underlying models themselves instead of their attributes.
+  The *select* clause specifies what attributes will be retrieved from the models specified by the *from* clause. Multiple values can be given and they are delimited by a comma. The *select* clause can take any method to which the objects specified by *from* know how to respond. The clause can also be given a special identifier in order to return the underlying models themselves instead of their attributes.
 
     Sample usage:
       cql_repo.query do
@@ -72,7 +72,7 @@ Feature: 'select' clause
   Scenario: Selection of the underlying models
     When the following query is executed:
       """
-      select
+      select :self
       from scenarios
       """
     Then the models for the following items are returned:
