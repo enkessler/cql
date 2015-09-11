@@ -1,18 +1,30 @@
 unless RUBY_VERSION.to_s < '1.9.0'
   require 'simplecov'
-  SimpleCov.command_name('cucumber_tests')
+  SimpleCov.command_name('cql-cucumber')
 end
 
+if RUBY_VERSION < '1.9.3'
+  require 'backports/1.9.3/io/write'
+end
 
-require File.dirname(__FILE__) + '/../../lib/cql'
+if RUBY_VERSION < '1.9.2'
+  require 'backports/1.9.2/array/select'
+end
+
+require 'cql'
 
 
 Before do
-  # Nothing yet
+  @default_file_directory = "#{File.dirname(__FILE__)}/../temp_files"
+
+  FileUtils.mkdir(@default_file_directory)
 end
 
 After do
-  # Nothing yet
+  FileUtils.remove_dir(@default_file_directory, true)
 end
 
 
+def process_path(path)
+  path.sub('path/to', @default_file_directory)
+end

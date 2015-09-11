@@ -16,7 +16,7 @@ shared_examples_for 'a tag filterable target set' do |target_type, test_data|
           with tags tag
         end
 
-        expect(result).to eq(expected)
+        expect(result).to match_array(expected)
       end
     end
 
@@ -48,7 +48,7 @@ shared_examples_for 'a tag filterable target set' do |target_type, test_data|
           with tc lt number
         end
 
-        expect(result).to eq(expected)
+        expect(result).to match_array(expected)
       end
     end
 
@@ -64,7 +64,7 @@ shared_examples_for 'a tag filterable target set' do |target_type, test_data|
           with tc lte number
         end
 
-        expect(result).to eq(expected)
+        expect(result).to match_array(expected)
       end
     end
 
@@ -81,7 +81,7 @@ shared_examples_for 'a tag filterable target set' do |target_type, test_data|
           with tc gt number
         end
 
-        expect(result).to eq(expected)
+        expect(result).to match_array(expected)
       end
     end
 
@@ -98,7 +98,7 @@ shared_examples_for 'a tag filterable target set' do |target_type, test_data|
           with tc gte number
         end
 
-        expect(result).to eq(expected)
+        expect(result).to match_array(expected)
       end
     end
   end

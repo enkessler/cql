@@ -2,17 +2,19 @@ require 'spec_helper'
 
 describe "cql" do
 
-  describe "file parsing" do
-    it 'should find the physical files' do
-      gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/simple")
-      result = CQL::MapReduce.uri(gs.parsed_feature_files)
-
-      expect(result[0]).to match(/simple\.feature/)
-      expect(result[1]).to match(/test\.feature/)
-      expect(result[2]).to match(/test2\.feature/)
-      expect(result[3]).to match(/test_full\.feature/)
-    end
-  end
+  # describe "file parsing" do
+  #   it 'should find the physical files' do
+  #     skip("This is possibly no longer be needed")
+  #
+  #     gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/simple")
+  #     result = CQL::MapReduce.uri(gs.parsed_feature_files)
+  #
+  #     expect(result[0]).to match(/simple\.feature/)
+  #     expect(result[1]).to match(/test\.feature/)
+  #     expect(result[2]).to match(/test2\.feature/)
+  #     expect(result[3]).to match(/test_full\.feature/)
+  #   end
+  # end
 
   #it 'should filter by count functions' do
   #  input = [{"keyword"=>"Feature", "name"=>"f1_4_scenarios_5_so", "line"=>1, "description"=>"", "id"=>"f1-4-scenarios-5-so", "uri"=>"C:/Users/jarrod/dev/gql/spec/../fixtures/features/combined/a/f1_4_scenarios_5_so.feature", "elements"=>[{"keyword"=>"Scenario", "name"=>"f1_scen1", "line"=>3, "description"=>"", "id"=>"f1-4-scenarios-5-so;f1-scen1", "type"=>"scenario", "steps"=>[{"keyword"=>"Given ", "name"=>"Something", "line"=>4}, {"keyword"=>"Then ", "name"=>"something else", "line"=>5}]}, {"keyword"=>"Scenario", "name"=>"f1_scen2", "line"=>7, "description"=>"", "id"=>"f1-4-scenarios-5-so;f1-scen2", "type"=>"scenario", "steps"=>[{"keyword"=>"Given ", "name"=>"Something", "line"=>8}, {"keyword"=>"Then ", "name"=>"something else", "line"=>9}]}, {"keyword"=>"Scenario", "name"=>"f1_scen3", "line"=>11, "description"=>"", "id"=>"f1-4-scenarios-5-so;f1-scen3", "type"=>"scenario", "steps"=>[{"keyword"=>"Given ", "name"=>"Something", "line"=>12}, {"keyword"=>"Then ", "name"=>"something else", "line"=>13}]}, {"keyword"=>"Scenario", "name"=>"f1_scen4", "line"=>15, "description"=>"", "id"=>"f1-4-scenarios-5-so;f1-scen4", "type"=>"scenario", "steps"=>[{"keyword"=>"Given ", "name"=>"Something", "line"=>16}, {"keyword"=>"Then ", "name"=>"something else", "line"=>17}]}, {"keyword"=>"Scenario Outline", "name"=>"f1_so1", "line"=>19, "description"=>"", "id"=>"f1-4-scenarios-5-so;f1-so1", "type"=>"scenario_outline", "steps"=>[{"keyword"=>"Given ", "name"=>"blah <e>", "line"=>20}], "examples"=>[{"keyword"=>"Examples", "name"=>"", "line"=>22, "description"=>"", "id"=>"f1-4-scenarios-5-so;f1-so1;", "rows"=>[{"cells"=>["e"], "line"=>23, "id"=>"f1-4-scenarios-5-so;f1-so1;;1"}, {"cells"=>["r"], "line"=>24, "id"=>"f1-4-scenarios-5-so;f1-so1;;2"}]}]}, {"keyword"=>"Scenario Outline", "name"=>"f1_so2", "line"=>26, "description"=>"", "id"=>"f1-4-scenarios-5-so;f1-so2", "type"=>"scenario_outline", "steps"=>[{"keyword"=>"Given ", "name"=>"blah <e>", "line"=>27}], "examples"=>[{"keyword"=>"Examples", "name"=>"", "line"=>29, "description"=>"", "id"=>"f1-4-scenarios-5-so;f1-so2;", "rows"=>[{"cells"=>["e"], "line"=>30, "id"=>"f1-4-scenarios-5-so;f1-so2;;1"}, {"cells"=>["r"], "line"=>31, "id"=>"f1-4-scenarios-5-so;f1-so2;;2"}]}]}, {"keyword"=>"Scenario Outline", "name"=>"f1_so3", "line"=>33, "description"=>"", "id"=>"f1-4-scenarios-5-so;f1-so3", "type"=>"scenario_outline", "steps"=>[{"keyword"=>"Given ", "name"=>"blah <e>", "line"=>34}], "examples"=>[{"keyword"=>"Examples", "name"=>"", "line"=>36, "description"=>"", "id"=>"f1-4-scenarios-5-so;f1-so3;", "rows"=>[{"cells"=>["e"], "line"=>37, "id"=>"f1-4-scenarios-5-so;f1-so3;;1"}, {"cells"=>["r"], "line"=>38, "id"=>"f1-4-scenarios-5-so;f1-so3;;2"}]}]}, {"keyword"=>"Scenario Outline", "name"=>"f1_so4", "line"=>40, "description"=>"", "id"=>"f1-4-scenarios-5-so;f1-so4", "type"=>"scenario_outline", "steps"=>[{"keyword"=>"Given ", "name"=>"blah <e>", "line"=>41}], "examples"=>[{"keyword"=>"Examples", "name"=>"", "line"=>43, "description"=>"", "id"=>"f1-4-scenarios-5-so;f1-so4;", "rows"=>[{"cells"=>["e"], "line"=>44, "id"=>"f1-4-scenarios-5-so;f1-so4;;1"}, {"cells"=>["r"], "line"=>45, "id"=>"f1-4-scenarios-5-so;f1-so4;;2"}]}]}, {"keyword"=>"Scenario Outline", "name"=>"f1_so5", "line"=>47, "description"=>"", "id"=>"f1-4-scenarios-5-so;f1-so5", "type"=>"scenario_outline", "steps"=>[{"keyword"=>"Given ", "name"=>"blah <e>", "line"=>48}], "examples"=>[{"keyword"=>"Examples", "name"=>"", "line"=>50, "description"=>"", "id"=>"f1-4-scenarios-5-so;f1-so5;", "rows"=>[{"cells"=>["e"], "line"=>51, "id"=>"f1-4-scenarios-5-so;f1-so5;;1"}, {"cells"=>["r"], "line"=>52, "id"=>"f1-4-scenarios-5-so;f1-so5;;2"}]}]}]},

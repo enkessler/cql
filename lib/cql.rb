@@ -1,5 +1,9 @@
+if RUBY_VERSION < '1.9.2'
+  require 'backports/1.9.2/array/rotate'
+end
+
 require 'cuke_modeler'
-require File.dirname(__FILE__) + "/dsl"
+require 'cql/dsl'
 
 module CQL
 
@@ -7,64 +11,112 @@ module CQL
     include Dsl
     attr_reader :data, :what
 
-    def format_to_ary_of_hsh data
-      result = Array.new(data.size).map { |e| {} }
+    def format_data data
+      Array.new.tap do |result_array|
+        data.each do |element|
+          result_array << Hash.new.tap do |result|
+            @what.each_with_index do |attribute, index|
+              key = determine_key(attribute, index)
+              value = determine_value(element, attribute, index)
 
-      @what.each do |w|
-        CQL::MapReduce.send(w, data).each_with_index do |e, i|
-          if e.class.to_s =~ /CukeModeler/
-            result[i][w]=e.raw_element
-          else
-            result[i][w]=e
+              result[key] = value
+            end
           end
         end
       end
 
-      result
     end
 
-    def initialize features, &block
-      @data = features
-      @data = self.instance_eval(&block)
+    def initialize(directory, &block)
+      # Set root object
+      @data = directory
 
-      #getting the children of features
-      @data= CQL::MapReduce.feature_children(@data, 'what'=>@from[0, @from.size-1]) if @from != "features"
+      # Populate configurables from DSL block
+      self.instance_eval(&block)
 
-      @data= format_to_ary_of_hsh(@data)
-    end
-  end
+      # Gather relevant objects from root object and filters
+      @data= CQL::MapReduce.gather_objects(@data, @from, @filters)
 
-
-  class Repository
-    attr_reader :parsed_feature_files
-
-    def initialize features_home_dir
-      @parsed_feature_files = collect_feature_models(CukeModeler::Directory.new(features_home_dir))
-    end
-
-    def query &block
-      new_repo = Marshal::load(Marshal.dump(parsed_feature_files))
-
-      Query.new(new_repo, &block).data
+      # Extract properties from gathered objects
+      @data= format_output(@data)
     end
 
 
     private
 
 
-    def collect_feature_models(directory_model)
-      Array.new.tap { |accumulated_features| collect_all_in(:features, directory_model, accumulated_features) }
+    def format_output(data)
+      format_data(data)
     end
 
-    # Recursively gathers all things of the given type found in the passed container.
-    def collect_all_in(type_of_thing, container, accumulated_things)
-      accumulated_things.concat container.send(type_of_thing) if container.respond_to?(type_of_thing)
+    def determine_key(attribute, index)
+      key = transform_stuff(@name_transforms, attribute, index) if @name_transforms
 
-      if container.respond_to?(:contains)
-        container.contains.each do |child_container|
-          collect_all_in(type_of_thing, child_container, accumulated_things)
-        end
+      key || attribute
+    end
+
+    def determine_value(element, attribute, index)
+      original_value = attribute.is_a?(Symbol) ? special_value(element, attribute) : element.send(attribute)
+
+      if @value_transforms
+        value = transform_stuff(@value_transforms, attribute, index)
+        value = value.call(original_value) if value.is_a?(Proc)
       end
+
+      value || original_value
+    end
+
+    def special_value(element, attribute)
+      # todo - Not sure what other special values to have but this could be expanded upon later.
+      case attribute
+        when :self
+          val = element
+        else
+          # todo - error message?
+      end
+
+      val
+    end
+
+    def transform_stuff(transforms, attribute, location)
+      case
+        when transforms.is_a?(Array)
+          value = transforms[location]
+        when transforms.is_a?(Hash)
+          if transforms[attribute]
+            value = transforms[attribute].first
+            transforms[attribute].rotate!
+          end
+        else
+          # todo - add error message
+      end
+
+      value
+    end
+
+  end
+
+
+  class Repository
+
+    def initialize(repository_root)
+      case
+        when repository_root.is_a?(String)
+          @target_directory = CukeModeler::Directory.new(repository_root)
+        when repository_root.is_a?(Class)
+          # todo - stop assuming
+          # Assume valid CukeModeler class for now
+          @target_directory = repository_root
+        else
+          # todo - raise error?
+      end
+    end
+
+    def query &block
+      # A quick 'deep clone'
+      new_repo = Marshal::load(Marshal.dump(@target_directory))
+
+      Query.new(new_repo, &block).data
     end
 
   end
