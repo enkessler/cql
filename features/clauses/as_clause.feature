@@ -1,6 +1,6 @@
 Feature: 'as' clause'
 
-  The *as* clause allows you to change the keys under which the model attributes specified by the *select* clause will be gathered.
+  The *as* clause allows you to change the keys under which the model attributes specified by the *select* clause will be gathered. Key renaming can be done as a list of new names that are applied in order or as a mapping of specific keys to their new names.
 
     Sample usage:
       cql_repo.query do
@@ -11,7 +11,7 @@ Feature: 'as' clause'
 
   This will return a list of all of the feature names but under the key of 'title' instead of 'name'.
 
-  # todo - add good /multiple clause use description
+  This clause can be repeated multiple times. When using lists of names, the arguments for successive clauses are simply added to the previous arguments. When using mapped names, the mappings are likewise combined. If the same key is mapped more than once, the mappings are tracked separately such that they can be applied to different instances of attribute retrieval (see examples below).
 
 
   Background: A sample Cucumber suite

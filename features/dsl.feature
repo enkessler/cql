@@ -1,12 +1,18 @@
 Feature: DSL
 
-  The cql gem uses a DSL to specify queries on a repository object that models a Cucumber test suite. The DSL can
-  query for any attribute that is available on the underlying models that represent the test suite.
+  The cql gem uses a DSL to specify queries on a repository object that holds the models which represent a Cucumber test suite. The DSL can query for any attribute that is available on the underlying models.
 
+    Sample usage:
+      cql_repo.query do
+        select name, source_line
+        from features
+      end
 
-  [<instance of CukeModeler::Feature>,
-  <instance of CukeModeler::Feature>,
-  <instance of CukeModeler::Feature>]
+  Query results are returned as a list of attribute mappings for all of the models found in the repository. The sample query above might return:
+
+    [{'name' => 'Feature 1', 'source_line' => 1},
+    {'name' => 'Feature 2', 'source_line' => 3},
+    {'name' => 'Feature 3', 'source_line' => 10}]
 
 
   Background: A sample Cucumber suite
@@ -33,8 +39,20 @@ Feature: DSL
       """
     And a repository is made from "test_directory"
 
-  @wip
-  Scenario: '' are optional for names of things
+  Scenario: Automatic string conversion
+
+  Although most times it is unnecessary, using full strings in a query can remove syntactical ambiguity.
+
+    When the following query is executed:
+      """
+      select name
+      from scenarios
+      """
+    Then the result is the same as the result of the following query:
+      """
+      select 'name'
+      from 'scenarios'
+      """
 
 
 # Commented out so that they aren't picked up by Relish

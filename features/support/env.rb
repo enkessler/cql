@@ -25,3 +25,6 @@ After do
 end
 
 
+def process_path(path)
+  path.sub('path/to', @default_file_directory)
+end

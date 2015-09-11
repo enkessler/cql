@@ -1,5 +1,5 @@
 Given(/^a directory "([^"]*)"$/) do |partial_directory_path|
-  directory_path = "#{@default_file_directory}/#{partial_directory_path}"
+  directory_path = partial_directory_path.include?('path/to') ? process_path(partial_directory_path) : "#{@default_file_directory}/#{partial_directory_path}"
 
   FileUtils.mkpath(directory_path) unless File.exists?(directory_path)
 end
