@@ -6,11 +6,12 @@ require 'cql/version'
 Gem::Specification.new do |s|
   s.name        = 'cql'
   s.version     = CQL::VERSION
-  s.authors     = ['Jarrod Folino', 'Eric Kessler']
+  s.authors     = ['Eric Kessler', 'Jarrod Folino']
   s.description = 'Cucumber Query Language'
   s.summary     = "A gem providing functionality to query a Cucumber test suite."
   s.email       = 'morrow748@gmail.com'
   s.license     = 'MIT'
+  s.homepage    = 'https://github.com/enkessler/cql'
 
   s.platform    = Gem::Platform::RUBY
   s.post_install_message = %{
