@@ -39,12 +39,24 @@ describe 'dsl' do
       end
 
     end
-  end
 
-  describe 'shorthand' do
+    describe 'shorthand' do
 
-    it 'should consider an exact match over a pluralization' do
-      skip('Not sure how to test this without actually have two classes that are so similarly named. It is a required behavior, but not one worth the hassle of testing until it actually comes up.')
+      it 'should consider an exact match over a pluralization' do
+        skip('Not sure how to test this without actually have two classes that are so similarly named. It is a required behavior, but not one worth the hassle of testing until it actually comes up.')
+      end
+
+      it 'raises an exception if the shorthand form of a class cannot be mapped to a real class' do
+        gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/simple")
+
+        expect {
+          gs.query do
+            select name
+            from not_a_real_class
+          end
+        }.to raise_error(ArgumentError, "Class 'CukeModeler::NotARealClass' does not exist")
+
+      end
     end
 
   end

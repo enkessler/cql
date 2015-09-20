@@ -146,6 +146,9 @@ module CQL
 
       # Check for pluralization of class match (i.e. remove the final 's')
       return CukeModeler.const_get(where.chop) if CukeModeler.const_defined?(where.chop)
+
+      # Then the class must not be a CukeModeler class
+      raise(ArgumentError, "Class 'CukeModeler::#{where}' does not exist")
     end
 
   end
