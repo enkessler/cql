@@ -21,17 +21,16 @@ module CQL
     attr_reader :pattern
 
     def initialize(pattern)
+      raise(ArgumentError, "Can only match a String or Regexp. Got #{pattern.class}.") unless pattern.is_a?(String) || pattern.is_a?(Regexp)
+
       @pattern = pattern
     end
 
     def content_match?(content)
       if pattern.is_a?(String)
         content.any? { |thing| thing == pattern }
-      elsif pattern.is_a?(Regexp)
-        content.any? { |thing| thing =~ pattern }
       else
-        # todo - Raise exception?
-        false
+        content.any? { |thing| thing =~ pattern }
       end
     end
 

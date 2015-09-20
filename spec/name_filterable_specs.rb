@@ -36,5 +36,16 @@ shared_examples_for 'a name filterable target set' do |target_type, test_data|
       end
     end
 
+    it 'can only handle a string or regular expression' do
+      gs = CQL::Repository.new(@feature_fixtures_directory)
+
+      expect { gs.query do
+        select name
+        from scenarios
+        with name 7
+      end }.to raise_error(ArgumentError, "Can only match a String or Regexp. Got Fixnum.")
+
+    end
+
   end
 end

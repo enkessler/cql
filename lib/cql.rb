@@ -103,12 +103,10 @@ module CQL
       case
         when repository_root.is_a?(String)
           @target_directory = CukeModeler::Directory.new(repository_root)
-        when repository_root.is_a?(Class)
-          # todo - stop assuming
-          # Assume valid CukeModeler class for now
+        when repository_root.class.to_s =~ /CukeModeler/
           @target_directory = repository_root
         else
-          # todo - raise error?
+          raise(ArgumentError, "Don't know how to make a repository from a #{repository_root.class}")
       end
     end
 
