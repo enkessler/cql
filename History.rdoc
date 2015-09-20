@@ -1,3 +1,8 @@
+=== Version 1.0.1 / 2015-09-20
+
+* Bug fix: Repository instantiation using models now works correctly.
+* Better error feedback.
+
 === Version 1.0.0 / 2015-09-11
 
 * Several new clauses have been added to the DSL
