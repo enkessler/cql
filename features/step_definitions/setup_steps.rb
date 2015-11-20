@@ -5,7 +5,7 @@ Given(/^a directory "([^"]*)"$/) do |partial_directory_path|
 end
 
 And(/^a file "([^"]*)":$/) do |partial_file_path, file_text|
-  File.write("#{@default_file_directory}/#{partial_file_path}", file_text)
+  File.open("#{@default_file_directory}/#{partial_file_path}", 'w') { |file| file.write file_text }
 end
 
 And(/^a repository is made from "([^"]*)"$/) do |partial_path|

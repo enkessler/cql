@@ -13,7 +13,7 @@ module CQL
       if filters
         filters.each do |filter|
           if filter.is_a?(Proc)
-            gathered_objects.select!(&filter)
+            gathered_objects = gathered_objects.select(&filter)
           else
             gathered_objects = filter.execute(gathered_objects)
           end

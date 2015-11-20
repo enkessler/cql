@@ -1,7 +1,3 @@
-if RUBY_VERSION < '1.9.2'
-  require 'backports/1.9.2/array/rotate'
-end
-
 require 'cuke_modeler'
 require 'cql/dsl'
 
@@ -85,13 +81,21 @@ module CQL
         when transforms.is_a?(Hash)
           if transforms[attribute]
             value = transforms[attribute].first
-            transforms[attribute].rotate!
+            rotate_array(transforms[attribute])
           end
         else
           # todo - add error message
       end
 
       value
+    end
+
+    def rotate_array(array)
+      return if array.empty?
+
+      first = array.shift
+
+      array << first
     end
 
   end
