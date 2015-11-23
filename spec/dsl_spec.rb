@@ -1,6 +1,35 @@
 require 'spec_helper'
 
 describe 'dsl' do
+
+
+  describe 'clause ordering' do
+
+    it 'handles intermixed clauses' do
+      # Clause ordering doesn't matter as long as any given type of clause is ordered correctly with respect to its multiple uses
+
+      gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/simple")
+
+      results = gs.query do
+        #todo - add this clause once targeted filtering is added
+        with { |thing| thing.name =~ /Has/ }
+        as thing1
+        transform :self => lambda { |thing1| 1 }
+        select :self
+        as thing2
+        from scenarios
+        select :self
+        transform :self => lambda { |thing2| 2 }
+        select name
+      end
+
+
+      expect(results.first).to eq('thing1' => 1, 'thing2' => 2, 'name' => 'Has a table')
+    end
+
+  end
+
+
   describe "select" do
 
     describe "multiple selections" do
@@ -60,4 +89,29 @@ describe 'dsl' do
     end
 
   end
+
+  describe "transform" do
+
+    describe "multiple targets" do
+
+      it 'does not apply more transforms than have been declared' do
+        gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/simple")
+
+        results = gs.query do
+          select :self, :self, :self
+          as thing1, thing2, thing3
+          from scenarios
+          transform :self => lambda { |thing1| 1 }
+          transform :self => lambda { |thing2| 2 }
+        end
+
+        expect(results.first).to include('thing1' => 1, 'thing2' => 2)
+        expect(results.first).to_not include('thing3' => 1)
+        expect(results.first).to_not include('thing3' => 2)
+      end
+
+    end
+
+  end
+
 end

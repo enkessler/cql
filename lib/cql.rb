@@ -8,6 +8,8 @@ module CQL
     attr_reader :data, :what
 
     def format_data data
+      space_data
+
       Array.new.tap do |result_array|
         data.each do |element|
           result_array << Hash.new.tap do |result|
@@ -46,7 +48,7 @@ module CQL
     end
 
     def determine_key(attribute, index)
-      key = transform_stuff(@name_transforms, attribute, index) if @name_transforms
+      key = mapped_attribute(@name_transforms, attribute, index) if @name_transforms
 
       key || attribute
     end
@@ -55,7 +57,7 @@ module CQL
       original_value = attribute.is_a?(Symbol) ? special_value(element, attribute) : element.send(attribute)
 
       if @value_transforms
-        value = transform_stuff(@value_transforms, attribute, index)
+        value = mapped_attribute(@value_transforms, attribute, index)
         value = value.call(original_value) if value.is_a?(Proc)
       end
 
@@ -74,14 +76,13 @@ module CQL
       val
     end
 
-    def transform_stuff(transforms, attribute, location)
+    def mapped_attribute(mappings, attribute, location)
       case
-        when transforms.is_a?(Array)
-          value = transforms[location]
-        when transforms.is_a?(Hash)
-          if transforms[attribute]
-            value = transforms[attribute].first
-            rotate_array(transforms[attribute])
+        when mappings.is_a?(Array)
+          value = mappings[location]
+        when mappings.is_a?(Hash)
+          if mappings[attribute]
+            value = mappings[attribute][location]
           end
         else
           # todo - add error message
@@ -96,6 +97,51 @@ module CQL
       first = array.shift
 
       array << first
+    end
+
+    def space_data
+      space_renamings
+      space_transforms
+    end
+
+    def space_renamings
+      if @name_transforms.is_a?(Hash)
+        new_names = {}
+
+        @name_transforms.each_pair do |key, value|
+          new_names[key] = []
+
+          @what.each do |attribute|
+            if attribute == key
+              new_names[key] << value.shift
+            else
+              new_names[key] << nil
+            end
+          end
+        end
+
+        @name_transforms = new_names
+      end
+    end
+
+    def space_transforms
+      if @value_transforms.is_a?(Hash)
+        new_values = {}
+
+        @value_transforms.each_pair do |key, value|
+          new_values[key] = []
+
+          @what.each do |attribute|
+            if attribute == key
+              new_values[key] << value.shift
+            else
+              new_values[key] << nil
+            end
+          end
+        end
+
+        @value_transforms = new_values
+      end
     end
 
   end
