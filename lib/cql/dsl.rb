@@ -1,5 +1,3 @@
-require 'cql/map_reduce'
-
 module CQL
   module Dsl
 

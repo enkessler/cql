@@ -1,5 +1,5 @@
 require 'cuke_modeler'
-require 'cql/dsl'
+require 'cql/map_reduce'
 
 module CQL
 

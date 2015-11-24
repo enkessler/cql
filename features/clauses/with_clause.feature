@@ -1,7 +1,7 @@
 # todo - Rewrite the scenarios such that they use their own test specific feature files instead of setting up a large suite in the background
 Feature: 'with' clause
 
-  The *with* clause specifies filter conditions that will reduce the number of things targeted by the *from* clause. The *with* clause can take one or more blocks that will filter out any object for which the block does not evaluate to true. The *with* clause can also take predefined filters (detailed below).
+  The *with* clause specifies filter conditions that will reduce the number of things targeted by the *from* clause. The *with* clause can take one or more blocks that will filter out any object for which the block does not evaluate to true. Alternatively, mappings of specific *from* targets to their respective filtering blocks can be provided. The *with* clause can also take predefined filters (detailed below).
 
     Sample usage:
       cql_repo.query do
@@ -16,7 +16,7 @@ Feature: 'with' clause
 
   The following filters are supported for models that have tags:
 
-  * tags - Fitlers out models that do not have the exact set of tags provided.
+  * tags - Filters out models that do not have the exact set of tags provided.
   * tc   - (tag count) Filters out models based on the number of tags that they have.
 
   The following filters are supported for models that have names:
@@ -155,6 +155,21 @@ Feature: 'with' clause
       | name            |
       | Second examples |
 
+  Scenario: Selectively filtering models
+    When the following query is executed:
+      """
+      select name
+      from features, scenarios
+      with scenarios => tags('@tag_1','@tag_2')
+      """
+    Then the following values are returned:
+      | name                             |
+      | A test feature                   |
+      | A feature with lots of scenarios |
+      | A feature with lots of outlines  |
+      | A feature with a mix of tests    |
+      | Test 1                           |
+
   Scenario: Using the 'with' clause multiple times
     When the following query is executed:
       """
@@ -170,6 +185,36 @@ Feature: 'with' clause
       with lambda { |element| element.is_a?(CukeModeler::Example) },
            lambda { |element| element.name =~ /Second/ }
       """
+    When the following query is executed:
+      """
+      select name
+      from features, scenarios
+      with scenarios => lambda { |scenario| scenario.tags.include?('@tag_1') }
+      with scenarios => lambda { |scenario| scenario.tags.include?('@tag_2') }
+      """
+    Then the result is the same as the result of the following query:
+      """
+      select name
+      from features, scenarios
+      with({ scenarios => lambda { |scenario| scenario.tags.include?('@tag_1') }},
+           { scenarios => lambda { |scenario| scenario.tags.include?('@tag_2') }})
+      """
+
+  Scenario: Mixing targeted and blanket filters
+    When the following query is executed:
+      """
+      select name
+      from examples, features
+      with { |element| element.name != '' }
+      with features => lambda { |feature| feature.name =~ /lots/ }
+      """
+    Then the following values are returned:
+      | name                             |
+      | First examples                   |
+      | Second examples                  |
+      | A feature with lots of scenarios |
+      | A feature with lots of outlines  |
+
 # todo - break out the predefined filters into another feature file?
   Scenario: Filtering by tags
     When the following query is executed:
