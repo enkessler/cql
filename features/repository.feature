@@ -6,9 +6,9 @@ Feature: Repository
   Scenario: Using a file path to create a repository
     Given a directory "path/to/test_directory"
     Then the following code executes without error:
-    """
-    CQL::Repository.new("path/to/test_directory")
-    """
+      """
+      CQL::Repository.new("path/to/test_directory")
+      """
 
   Scenario: Using a model to create a repository
 
@@ -16,8 +16,8 @@ Feature: Repository
 
     Given a directory "path/to/test_directory"
     Then the following code executes without error:
-    """
-    directory_model = CukeModeler::Directory.new("path/to/test_directory")
+      """
+      directory_model = CukeModeler::Directory.new("path/to/test_directory")
 
-    CQL::Repository.new(directory_model)
-    """
+      CQL::Repository.new(directory_model)
+      """
