@@ -3,6 +3,32 @@ require 'spec_helper'
 describe 'dsl' do
 
 
+  describe 'invalid query structure' do
+
+    it "will complain if no 'from' clause is specified" do
+      gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/simple")
+
+      expect {
+        gs.query do
+          select
+          features
+        end
+      }.to raise_error(ArgumentError, "A query must specify a 'from' clause")
+    end
+
+    it "will complain if no 'select' clause is specified" do
+      gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/simple")
+
+      expect {
+        gs.query do
+          from features
+        end
+      }.to raise_error(ArgumentError, "A query must specify a 'select' clause")
+    end
+
+  end
+
+
   describe 'clause ordering' do
 
     it 'handles intermixed clauses' do
