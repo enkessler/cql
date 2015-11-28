@@ -91,14 +91,6 @@ module CQL
       value
     end
 
-    def rotate_array(array)
-      return if array.empty?
-
-      first = array.shift
-
-      array << first
-    end
-
     def space_data
       space_renamings
       space_transforms
