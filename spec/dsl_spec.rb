@@ -98,6 +98,17 @@ describe 'dsl' do
 
   describe "from" do
 
+    it "can handle an empty 'from' clause" do
+      gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/simple")
+
+      result = gs.query do
+        select name
+        from
+      end
+
+      expect(result).to eq([])
+    end
+
     describe "multiple targets" do
 
       it 'raises an exception for inapplicable attributes' do
@@ -110,7 +121,6 @@ describe 'dsl' do
             from scenarios
           end
         }.to raise_error
-
       end
 
     end
