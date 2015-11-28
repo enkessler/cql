@@ -32,11 +32,16 @@ module CQL
       # Populate configurables from DSL block
       self.instance_eval(&block)
 
+
+      raise(ArgumentError, "A query must specify a 'select' clause") unless @what
+      raise(ArgumentError, "A query must specify a 'from' clause") unless @from
+
+
       # Gather relevant objects from root object and filters
-      @data= CQL::MapReduce.gather_objects(@data, @from, @filters)
+      @data = CQL::MapReduce.gather_objects(@data, @from, @filters)
 
       # Extract properties from gathered objects
-      @data= format_output(@data)
+      @data = format_output(@data)
     end
 
 
