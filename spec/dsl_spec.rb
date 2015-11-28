@@ -31,6 +31,19 @@ describe 'dsl' do
 
   describe "select" do
 
+
+    it 'complains if an unknown special attribute is queried' do
+      gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/simple")
+
+      expect {
+        gs.query do
+          select :foo
+          from scenarios
+        end
+      }.to raise_error(ArgumentError, ":foo is not a valid attribute for selection.")
+    end
+
+
     describe "multiple selections" do
 
       it 'can freely mix empty selections and attribute selections' do

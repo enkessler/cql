@@ -70,7 +70,7 @@ module CQL
         when :self
           val = element
         else
-          # todo - error message?
+          raise(ArgumentError, ":#{attribute} is not a valid attribute for selection.")
       end
 
       val
