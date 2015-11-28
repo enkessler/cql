@@ -85,6 +85,33 @@ describe 'dsl' do
         }.to raise_error(ArgumentError, "Class 'CukeModeler::NotARealClass' does not exist")
 
       end
+
+      it 'can freely mix shorthand and long-form names' do
+        gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/simple")
+
+        # All long-form
+        base_result = gs.query do
+          select name
+          from CukeModeler::Scenario, CukeModeler::Feature
+        end
+
+        # All shorthand
+        expect(
+            gs.query do
+              select name
+              from scenarios, features
+            end
+        ).to eq(base_result)
+
+        # A mix of both
+        expect(
+            gs.query do
+              select name
+              from CukeModeler::Scenario, features
+            end
+        ).to eq(base_result)
+      end
+
     end
 
   end

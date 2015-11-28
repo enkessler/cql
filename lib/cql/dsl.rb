@@ -42,7 +42,6 @@ module CQL
     def from(*targets)
       @from ||= []
 
-      # todo - todo test the intermixing of shorthand and full classes as arguments
       targets.map! { |target| target.is_a?(String) ? determine_class(target) : target }
 
       @from.concat(targets)
