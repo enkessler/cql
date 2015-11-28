@@ -1,8 +1,10 @@
-=== Version 1.1.0 / 2015-11-27
+=== Version 1.1.0 / 2015-11-28
 
 * Bug fix: Fixed a bug that could cause a targeted transform to be applied to a target other than the intended one.
 * Targeting added for the 'with' clause.
+* Alternate syntax for model selection added.
 * Dropping usage of the 'backports' gem in order to not introduce unneeded gem dependencies into user applications.
+* Better error feedback.
 
 === Version 1.0.1 / 2015-09-20
 
