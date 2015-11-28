@@ -33,17 +33,25 @@ describe 'dsl' do
 
     describe "multiple selections" do
 
-      it 'should handle an empty selection' do
-        skip("It may be useful to be able to return both the underlying object and various attributes on it (which is the probably the intent of this query [assuming that it's not just a typo]) but I can't think of a clean way to do it. Behavior undefined for now.")
-
+      it 'can freely mix empty selections and attribute selections' do
         gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/simple")
 
-        result = gs.query do
-          select
+        base_result = gs.query do
+          select :self
           select name
-          from features
+          select :self
+          from scenarios
         end
 
+
+        expect(
+            gs.query do
+              select
+              select name
+              select
+              from scenarios
+            end
+        ).to eq(base_result)
       end
 
     end

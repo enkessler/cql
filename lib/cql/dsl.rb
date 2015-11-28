@@ -24,6 +24,8 @@ module CQL
 
     #Select clause
     def select *what
+      what = [:self] if what.empty?
+
       @what ||= []
       @what.concat(what)
     end
