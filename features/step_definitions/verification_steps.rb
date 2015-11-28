@@ -8,7 +8,7 @@ Then(/^the following values are returned:$/) do |values|
     result.each_pair { |key, value| result[key] = value.sub('path/to', @default_file_directory) if value =~ /path\/to/ }
   end
 
-  expect(@query_results).to eq(expected_results)
+  expect(@query_results).to match_array(expected_results)
 end
 
 # Then(/^all of them can be queried for additional information$/) do

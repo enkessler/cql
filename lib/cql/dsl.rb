@@ -1,5 +1,3 @@
-require 'cql/map_reduce'
-
 module CQL
   module Dsl
 
@@ -26,6 +24,8 @@ module CQL
 
     #Select clause
     def select *what
+      what = [:self] if what.empty?
+
       @what ||= []
       @what.concat(what)
     end
@@ -44,7 +44,6 @@ module CQL
     def from(*targets)
       @from ||= []
 
-      # todo - todo test the intermixing of shorthand and full classes as arguments
       targets.map! { |target| target.is_a?(String) ? determine_class(target) : target }
 
       @from.concat(targets)

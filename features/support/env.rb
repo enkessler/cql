@@ -3,13 +3,6 @@ unless RUBY_VERSION.to_s < '1.9.0'
   SimpleCov.command_name('cql-cucumber')
 end
 
-if RUBY_VERSION < '1.9.3'
-  require 'backports/1.9.3/io/write'
-end
-
-if RUBY_VERSION < '1.9.2'
-  require 'backports/1.9.2/array/select'
-end
 
 require 'cql'
 
