@@ -31,6 +31,7 @@ Thank you for installing cql (Cucumber Query Language)
   s.add_development_dependency 'simplecov'
   s.add_development_dependency 'racatt'
   s.add_development_dependency 'coveralls'
+  s.add_development_dependency 'relish'
 
 
   s.rubygems_version = '>= 1.6.1'
