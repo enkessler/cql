@@ -7,8 +7,12 @@ module CQL
       @tags = tags
     end
 
-    def has_tags?(object, tags)
-      tags.all? { |tag| object.tags.include?(tag) }
+    def has_tags?(object, target_tags)
+      target_tags.all? { |target_tag|
+        tags = object.tags
+        tags = tags.collect { |tag| tag.name } unless Gem.loaded_specs['cuke_modeler'].version.version[/^0/]
+        tags.include?(target_tag)
+      }
     end
 
     def execute objects

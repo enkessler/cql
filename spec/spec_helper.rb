@@ -5,6 +5,7 @@ end
 
 
 require "#{File.dirname(__FILE__)}/../lib/cql"
+require "#{File.dirname(__FILE__)}/../testing/cql_test_model"
 require "#{File.dirname(__FILE__)}/tag_filterable_specs"
 require "#{File.dirname(__FILE__)}/name_filterable_specs"
 require "#{File.dirname(__FILE__)}/line_count_filterable_specs"

@@ -63,8 +63,10 @@ module CQL
       def collect_all_in(targeted_classes, current_object, accumulated_objects)
         accumulated_objects << current_object if targeted_classes.any? { |targeted_class| current_object.is_a?(targeted_class) }
 
-        if current_object.respond_to?(:contains)
-          current_object.contains.each do |child_object|
+        method_for_children = Gem.loaded_specs['cuke_modeler'].version.version[/^0/] ? :contains : :children
+
+        if current_object.respond_to?(method_for_children)
+          current_object.send(method_for_children).each do |child_object|
             collect_all_in(targeted_classes, child_object, accumulated_objects)
           end
         end

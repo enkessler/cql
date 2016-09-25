@@ -123,7 +123,7 @@ Feature: 'with' clause
       """
       select name
       from scenarios
-      with lambda { |scenario| scenario.tags.include?('@special_tag') }
+      with lambda { |scenario| scenario.source_line == 8 }
       """
     Then the following values are returned:
       | name   |
@@ -147,7 +147,7 @@ Feature: 'with' clause
     When the following query is executed:
       """
       select name
-      from feature_elements
+      from scenarios, outlines, examples
       with lambda { |element| element.is_a?(CukeModeler::Example) },
            lambda { |element| element.name =~ /Second/ }
       """
@@ -174,14 +174,14 @@ Feature: 'with' clause
     When the following query is executed:
       """
       select name
-      from feature_elements
+      from scenarios, outlines, examples
       with { |element| element.is_a?(CukeModeler::Example) }
       with { |element| element.name =~ /Second/ }
       """
     Then the result is the same as the result of the following query:
       """
       select name
-      from feature_elements
+      from scenarios, outlines, examples
       with lambda { |element| element.is_a?(CukeModeler::Example) },
            lambda { |element| element.name =~ /Second/ }
       """
@@ -231,7 +231,7 @@ Feature: 'with' clause
     When the following query is executed:
       """
       select name
-      from test_elements
+      from scenarios, outlines
       with tc gt 2
       """
     Then the following values are returned:
@@ -242,7 +242,7 @@ Feature: 'with' clause
     When the following query is executed:
       """
       select name
-      from test_elements
+      from scenarios, outlines
       with name 'Test 3'
       """
     Then the following values are returned:
@@ -251,7 +251,7 @@ Feature: 'with' clause
     When the following query is executed:
       """
       select name
-      from test_elements
+      from scenarios, outlines
       with name /Test [12]/
       """
     Then the following values are returned:
@@ -263,7 +263,7 @@ Feature: 'with' clause
     When the following query is executed:
       """
       select name
-      from test_elements
+      from scenarios, outlines
       with line 'some steps'
       """
     Then the following values are returned:
@@ -273,7 +273,7 @@ Feature: 'with' clause
     When the following query is executed:
       """
       select name
-      from test_elements
+      from scenarios, outlines
       with line /other/
       """
     Then the following values are returned:
@@ -284,7 +284,7 @@ Feature: 'with' clause
     When the following query is executed:
       """
       select name
-      from test_elements
+      from scenarios, outlines
       with lc gt 1
       """
     Then the following values are returned:

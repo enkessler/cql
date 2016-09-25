@@ -37,7 +37,7 @@ describe 'dsl' do
       gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/simple")
 
       results = gs.query do
-        with { |thing| thing.tags.include?('@one') }
+        with { |scenario| scenario.name =~ /slurping/ }
         as thing1
         transform :self => lambda { |thing1| 1 }
         select :self
@@ -57,6 +57,37 @@ describe 'dsl' do
 
   describe "select" do
 
+    it 'correctly selects a single attribute from a model' do
+      model = CukeModeler::CqlTestModel.new
+      model.attribute_1 = 'foo'
+
+      repo = CQL::Repository.new(model)
+
+      result = repo.query do
+        select attribute_1
+        from cql_test_models
+      end
+
+
+      expect(result).to eq([{'attribute_1' => 'foo'}])
+    end
+
+    it 'correctly selects multiple attributes from a model' do
+      model = CukeModeler::CqlTestModel.new
+      model.attribute_1 = 'foo'
+      model.attribute_2 = 'bar'
+
+      repo = CQL::Repository.new(model)
+
+      result = repo.query do
+        select attribute_1, attribute_2
+        from cql_test_models
+      end
+
+
+      expect(result).to eq([{'attribute_1' => 'foo',
+                             'attribute_2' => 'bar'}])
+    end
 
     it 'complains if an unknown special attribute is queried' do
       gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/simple")

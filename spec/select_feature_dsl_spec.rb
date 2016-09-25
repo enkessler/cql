@@ -15,16 +15,16 @@ describe "select" do
                                      {"name" => "Test2 Feature"}, {"name" => "Test3 Feature"}])
     end
 
-    it 'should return descriptions from features' do
-      gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/simple2")
-
-      result = gs.query do
-        select description_text
-        from features
-      end
-
-      expect(result).to eq([{"description_text" => "The cat in the hat"}])
-    end
+    # it 'should return descriptions from features' do
+    #   gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/simple2")
+    #
+    #   result = gs.query do
+    #     select description_text
+    #     from features
+    #   end
+    #
+    #   expect(result).to eq([{"description_text" => "The cat in the hat"}])
+    # end
 
     it 'should return paths from from feature files' do
       repo_path = "#{@feature_fixtures_directory}/scenario/simple"
@@ -41,34 +41,34 @@ describe "select" do
                                      {'path' => "#{repo_path}/test_full.feature"}])
     end
 
-    it 'should return tags from features' do
-      gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/tagged_features")
-
-      result = gs.query do
-        select tags
-        from features
-      end
-
-      expect(result).to match_array([{"tags" => []},
-                                     {"tags" => ["@one"]},
-                                     {"tags" => ["@two"]},
-                                     {"tags" => ["@one", "@two"]}])
-    end
-
-
-    it 'should return multiple things from features' do
-      gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/tagged_features")
-
-      result = gs.query do
-        select name, tags
-        from features
-      end
-
-      expect(result).to match_array([{"name" => "Simple", "tags" => []},
-                                     {"name" => "Test Feature", "tags" => ["@one"]},
-                                     {"name" => "Test2 Feature", "tags" => ["@two"]},
-                                     {"name" => "Test3 Feature", "tags" => ["@one", "@two"]}])
-    end
+    # it 'should return tags from features' do
+    #   gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/tagged_features")
+    #
+    #   result = gs.query do
+    #     select tags
+    #     from features
+    #   end
+    #
+    #   expect(result).to match_array([{"tags" => []},
+    #                                  {"tags" => ["@one"]},
+    #                                  {"tags" => ["@two"]},
+    #                                  {"tags" => ["@one", "@two"]}])
+    # end
+    #
+    #
+    # it 'should return multiple things from features' do
+    #   gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/tagged_features")
+    #
+    #   result = gs.query do
+    #     select name, tags
+    #     from features
+    #   end
+    #
+    #   expect(result).to match_array([{"name" => "Simple", "tags" => []},
+    #                                  {"name" => "Test Feature", "tags" => ["@one"]},
+    #                                  {"name" => "Test2 Feature", "tags" => ["@two"]},
+    #                                  {"name" => "Test3 Feature", "tags" => ["@one", "@two"]}])
+    # end
 
     it 'should return things from multiple feature files' do
       gr = CQL::Repository.new("#{@feature_fixtures_directory}/combined/b")
@@ -96,18 +96,18 @@ describe "select" do
                                      {"name" => "f3_3_tags"}])
     end
 
-    it 'should return ids from features' do
-      gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/simple2")
-
-      result = gs.query do
-        select raw_element
-        as 'id'
-        transform 'raw_element' => lambda { |element| element['id'] }
-        from features
-      end
-
-      expect(result).to eq([{"id" => "test3-feature"}])
-    end
+    # it 'should return ids from features' do
+    #   gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/simple2")
+    #
+    #   result = gs.query do
+    #     select raw_element
+    #     as 'id'
+    #     transform 'raw_element' => lambda { |element| element['id'] }
+    #     from features
+    #   end
+    #
+    #   expect(result).to eq([{"id" => "test3-feature"}])
+    # end
 
   end
 end

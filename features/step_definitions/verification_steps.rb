@@ -1,6 +1,7 @@
 Then(/^the following values are returned:$/) do |values|
   expected_results = values.hashes
   expected_results.each { |result| result['source_line'] = result['source_line'].to_i if result['source_line'] }
+  expected_results.each { |result| result['scenario_line'] = result['scenario_line'].to_i if result['scenario_line'] }
   expected_results.each { |result| result['tags'] = eval(result['tags']) if result['tags'] }
   expected_results.each { |result| result['scenario_tags'] = eval(result['scenario_tags']) if result['scenario_tags'] }
 
