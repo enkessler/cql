@@ -1,3 +1,7 @@
+=== Version 1.2.0 / 2016-09-26
+
+* Added support for the 1.x series of the 'cuke_modeler' gem.
+
 === Version 1.1.0 / 2015-11-28
 
 * Bug fix: Fixed a bug that could cause a targeted transform to be applied to a target other than the intended one.

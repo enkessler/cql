@@ -43,7 +43,7 @@ Feature: 'transform' clause
       """
       select name
       transform lambda { |name| name.upcase }
-      from test_elements
+      from scenarios, outlines
       """
     Then the following values are returned:
       | name   |
@@ -56,13 +56,13 @@ Feature: 'transform' clause
       """
       select name
       transform { |name| name.upcase }
-      from test_elements
+      from scenarios, outlines
       """
     Then the result is the same as the result of the following query:
       """
       select name
       transform lambda { |name| name.upcase }
-      from test_elements
+      from scenarios, outlines
       """
 
   Scenario: Transformation of multiple values
@@ -71,7 +71,7 @@ Feature: 'transform' clause
       select name, tags
       transform lambda{ |name| name.upcase },
                 lambda{ |tags| 9 }
-      from test_elements
+      from scenarios, outlines
       """
     Then the following values are returned:
       | name   | tags |
@@ -84,7 +84,7 @@ Feature: 'transform' clause
       """
       select name, tags
       transform tags => lambda{ |tags| 9 }
-      from test_elements
+      from scenarios, outlines
       """
     Then the following values are returned:
       | name   | tags |
@@ -98,28 +98,28 @@ Feature: 'transform' clause
       select name, tags
       transform { |name| name.upcase }
       transform { |tags| 9 }
-      from test_elements
+      from scenarios, outlines
       """
     Then the result is the same as the result of the following query:
       """
       select name, tags
       transform lambda { |name| name.upcase },
                 lambda { |tags| 9 }
-      from test_elements
+      from scenarios, outlines
       """
     When the following query is executed:
       """
       select name, tags
       transform name => lambda { |name| name.upcase }
       transform tags => lambda { |tags| 9 }
-      from test_elements
+      from scenarios, outlines
       """
     Then the result is the same as the result of the following query:
       """
       select name, tags
       transform name => lambda { |name| name.upcase },
                 tags => lambda { |tags| 9 }
-      from test_elements
+      from scenarios, outlines
       """
 
   Scenario: Transforming duplicate attributes
@@ -132,7 +132,7 @@ Feature: 'transform' clause
       transform lambda { |name| name.upcase },
                 lambda { |tags| 9 },
                 lambda { |name| name.downcase }
-      from test_elements
+      from scenarios, outlines
       """
     Then the following values are returned:
       | name   | tags | name   |
@@ -141,13 +141,13 @@ Feature: 'transform' clause
       | TEST 3 | 9    | test 3 |
     When the following query is executed:
       """
-      select name, tags, name
+      select name, source_line, name
       transform name => lambda { |name| name.upcase }
       transform name => lambda { |name| name.downcase }
-      from test_elements
+      from scenarios, outlines
       """
     Then the following values are returned:
-      | name   | tags             | name   |
-      | TEST 1 | []               | test 1 |
-      | TEST 2 | ['@special_tag'] | test 2 |
-      | TEST 3 | []               | test 3 |
+      | name   | source_line | name   |
+      | TEST 1 | 3           | test 1 |
+      | TEST 2 | 7           | test 2 |
+      | TEST 3 | 10          | test 3 |

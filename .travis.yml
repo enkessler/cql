@@ -2,8 +2,14 @@ language: ruby
 rvm:
   - 1.8.7
   - 1.9.3
-  - 2.0.0
-  - 2.1.6
   - 2.2.2
+
+gemfile:
+  - testing/gemfiles/cuke_modeler0.gemfile
+  - testing/gemfiles/cuke_modeler1.gemfile
+
+# todo - Remove this once TravisCI fixes their bundler issue (https://github.com/alphagov/govuk_template/pull/186)
+before_install:
+  - gem install bundler -v 1.9.10
 
 script: bundle exec rake cql:ci_build

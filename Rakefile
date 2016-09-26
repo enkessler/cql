@@ -22,6 +22,15 @@ namespace 'cql' do
   # The task that CI will use
   Coveralls::RakeTask.new
   task :ci_build => [:test_everything, 'coveralls:push']
+
+
+  # The task used to publish the current feature file documentation to Relish
+  desc 'Publish feature files to Relish'
+  task :publish_features do
+    output = `relish push enkessler/cql`
+    puts output
+  end
+
 end
 
 
