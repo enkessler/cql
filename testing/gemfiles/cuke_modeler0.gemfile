@@ -1,6 +1,7 @@
-source "http://rubygems.org"
+source 'https://rubygems.org'
 
-gemspec
+gemspec :path => "../../"
+
 
 # cql can play with pretty much any version of these but they all play differently with Ruby
 if RUBY_VERSION =~ /^1\.8/
@@ -20,6 +21,9 @@ if RUBY_VERSION =~ /^1\./
   gem 'json', '< 2.0' # The 'json' gem drops pre-Ruby 2.x support on/after this version
 end
 
-gem 'coveralls', :require => false, :group => :development
+if RUBY_VERSION =~ /^2\.[23456789]/
+  gem 'test-unit'
+end
 
-gem 'cuke_modeler', '~> 1.0'
+
+gem 'cuke_modeler', '~> 0.0'
