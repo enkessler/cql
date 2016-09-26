@@ -8,5 +8,8 @@ gemfile:
   - testing/gemfiles/cuke_modeler0.gemfile
   - testing/gemfiles/cuke_modeler1.gemfile
 
+# todo - Remove this once TravisCI fixes their bundler issue (https://github.com/alphagov/govuk_template/pull/186)
+before_install:
+  - gem install bundler -v 1.9.10
 
 script: bundle exec rake cql:ci_build
