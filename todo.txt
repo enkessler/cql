@@ -1,0 +1,5 @@
+todo - Create models directly instead of messing with a file system during testing, reading from a file system properly is the cuke_modeler gem's problem
+todo - organize feature files for better presentation on Relish
+todo - see if using erb files for dynamic readme files (for the badge links) is possible
+todo - Add more documentation to code itself (i.e. rdoc documentation)
+todo - make README a .md file
