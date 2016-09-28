@@ -25,13 +25,14 @@ Thank you for installing cql (Cucumber Query Language)
 
   s.add_runtime_dependency 'cuke_modeler', '< 2.0'
 
-  s.add_development_dependency 'rake', '>= 0.9'
-  s.add_development_dependency 'rspec', '~> 2.7'
-  s.add_development_dependency 'cucumber'
-  s.add_development_dependency 'simplecov'
-  s.add_development_dependency 'racatt'
-  s.add_development_dependency 'coveralls'
-  s.add_development_dependency 'relish'
+  s.add_development_dependency 'rake', '< 12.0.0'
+  s.add_development_dependency 'rspec', '~> 3.0'
+  s.add_development_dependency 'cucumber', '< 3.0.0'
+  s.add_development_dependency 'simplecov', '< 1.0.0'
+  s.add_development_dependency 'racatt', '~> 1.0'
+  s.add_development_dependency 'coveralls', '< 1.0.0'
+  s.add_development_dependency 'relish', '~> 0.0'
+  s.add_development_dependency "bundler", "~> 1.5"
 
 
   s.rubygems_version = '>= 1.6.1'
