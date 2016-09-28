@@ -1,4 +1,5 @@
-require 'spec_helper'
+require "#{File.dirname(__FILE__)}/spec_helper"
+
 
 describe "feature filters (with)" do
   describe 'scenario outline and scenario count functions (ssoc)' do

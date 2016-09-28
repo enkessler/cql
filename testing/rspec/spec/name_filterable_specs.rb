@@ -1,19 +1,20 @@
-require 'spec_helper'
+require "#{File.dirname(__FILE__)}/spec_helper"
 
-shared_examples_for 'a line filterable target set' do |target_type, test_data|
 
-  describe 'line match filters' do
+shared_examples_for 'a name filterable target set' do |target_type, test_data|
 
-    it 'should filter by exact line' do
-      gs = CQL::Repository.new(test_data[:exact_line][:fixture_location])
+  describe 'name filters' do
 
-      expected_results = test_data[:exact_line][:expected_results]
+    it 'should filter by exact name' do
+      gs = CQL::Repository.new(test_data[:exact_name][:fixture_location])
 
-      expected_results.each do |matched_line, expected|
+      expected_results = test_data[:exact_name][:expected_results]
+
+      expected_results.each do |matched_name, expected|
         result = gs.query do
           select name
           from target_type
-          with line matched_line
+          with name matched_name
         end
 
         expect(result).to eq(expected)
@@ -25,14 +26,14 @@ shared_examples_for 'a line filterable target set' do |target_type, test_data|
 
       expected_results = test_data[:regexp][:expected_results]
 
-      expected_results.each do |matched_line, expected|
+      expected_results.each do |matched_name, expected|
         result = gs.query do
           select name
           from target_type
-          with line matched_line
+          with name matched_name
         end
 
-        expect(result).to eq(expected)
+        expect(result).to match_array(expected)
       end
     end
 
@@ -42,7 +43,7 @@ shared_examples_for 'a line filterable target set' do |target_type, test_data|
       expect { gs.query do
         select name
         from scenarios
-        with line 7
+        with name 7
       end }.to raise_error(ArgumentError, "Can only match a String or Regexp. Got Fixnum.")
 
     end
