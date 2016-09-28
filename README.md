@@ -1,10 +1,12 @@
-= CQL (Cucumber Query Language)
+[![Gem Version](https://badge.fury.io/rb/cql.svg)](https://rubygems.org/gems/cql)
+[![Build Status](https://travis-ci.org/enkessler/cql.svg?branch=dev)](https://travis-ci.org/enkessler/cql)
+[![Coverage Status](https://coveralls.io/repos/enkessler/cql/badge.svg)](https://coveralls.io/github/enkessler/cql)
+[![Code Quality](https://codeclimate.com/github/enkessler/cql/badges/gpa.svg)](https://codeclimate.com/github/enkessler/cql)
+[![Dependency Status](https://gemnasium.com/enkessler/cql.svg)](https://gemnasium.com/enkessler/cql)
 
-{<img src="https://badge.fury.io/rb/cql.svg" alt="Gem Version" />}[http://badge.fury.io/rb/cql]
-{<img src="https://travis-ci.org/enkessler/cql.svg" alt="Build Status" />}[https://travis-ci.org/enkessler/cql]
-{<img src="https://coveralls.io/repos/enkessler/cql/badge.svg" alt="Coverage Status" />}[https://coveralls.io/github/enkessler/cql]
-{<img src="https://codeclimate.com/github/enkessler/cql/badges/gpa.svg" alt="Code Quality" />}[https://codeclimate.com/github/enkessler/cql]
-{<img src="https://gemnasium.com/enkessler/cql.svg" alt="Dependency Status" />}[https://gemnasium.com/enkessler/cql]
+
+
+# CQL (Cucumber Query Language)
 
 CQL is a domain specific language used for querying a Cucumber test suite. It is written in ruby and powered by
 the {cuke_modeler}[https://github.com/enkessler/cuke_modeler] gem. The goal of CQL is to increase the ease with
@@ -15,7 +17,7 @@ Some uses for example are:
 * Build systems
 * Reporting
 
-== Quick Start
+## Quick Start
 
 * Install the gem
 
@@ -29,15 +31,15 @@ Alternatively you can add it to your Gemfile if you are using bundler.
 
 * The first thing that needs to be done is to create a CQL Repository. This can be done with the following line:
 
-    require 'cql'
-    cql_repo = CQL::Repository.new "/path-to/my/feature-files"
+        require 'cql'
+        cql_repo = CQL::Repository.new "/path-to/my/feature-files"
 
 * Now that you have a repository you can write a query. A simple example is given below
 
-    cql_repo.query do
-        select name, source_line
-        from features
-    end
+        cql_repo.query do
+            select name, source_line
+            from features
+        end
 
 This will return a list of all of the feature names in the form of a list of hashes.
 
@@ -46,4 +48,4 @@ This will return a list of all of the feature names in the form of a list of has
      {'name' => 'Feature 3', 'source_line' => 10}]
 
 
-For more information on the query options, see the {documentation}[http://www.relishapp.com/enkessler/cql/docs].
+For more information on the query options, see the [documentation](https://www.relishapp.com/enkessler/cql/docs).
