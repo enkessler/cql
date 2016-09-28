@@ -1,4 +1,5 @@
-require 'spec_helper'
+require "#{File.dirname(__FILE__)}/spec_helper"
+
 
 shared_examples_for 'a tag filterable target set' do |target_type, test_data|
 
