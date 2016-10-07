@@ -291,12 +291,9 @@ describe 'dsl' do
           from :all
         end
 
-        # Nil's produced by a bug in 'cuke_modeler' because the step models don't have block models
         expect(result).to match_array([{:model => model_1},
                                        {:model => model_2},
-                                       {:model => nil},
-                                       {:model => model_3},
-                                       {:model => nil}])
+                                       {:model => model_3}])
       end
 
     end
