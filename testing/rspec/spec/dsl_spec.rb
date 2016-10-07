@@ -150,6 +150,18 @@ describe 'dsl' do
     end
 
 
+    it 'complains if an unknown normal attribute is queried' do
+      gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/simple")
+
+      expect {
+        gs.query do
+          select steps
+          from features
+        end
+      }.to raise_error(ArgumentError, "'steps' is not a valid attribute for selection from a 'CukeModeler::Feature'.")
+    end
+
+
     describe "multiple selections" do
 
       it 'can freely mix empty selections and attribute selections' do

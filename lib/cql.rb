@@ -59,7 +59,7 @@ module CQL
     end
 
     def determine_value(element, attribute, index)
-      original_value = attribute.is_a?(Symbol) ? special_value(element, attribute) : element.send(attribute)
+      original_value = attribute.is_a?(Symbol) ? determine_special_value(element, attribute) : determine_normal_value(element, attribute)
 
       if @value_transforms
         value = mapped_attribute(@value_transforms, attribute, index)
@@ -69,7 +69,7 @@ module CQL
       value || original_value
     end
 
-    def special_value(element, attribute)
+    def determine_special_value(element, attribute)
       # todo - Not sure what other special values to have but this could be expanded upon later.
       case attribute
         when :self, :model
@@ -79,6 +79,14 @@ module CQL
       end
 
       val
+    end
+
+    def determine_normal_value(element, attribute)
+      if element.respond_to?(attribute)
+        element.send(attribute)
+      else
+        raise(ArgumentError, "'#{attribute}' is not a valid attribute for selection from a '#{element.class}'.")
+      end
     end
 
     def mapped_attribute(mappings, attribute, location)
