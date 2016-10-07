@@ -149,19 +149,16 @@ module CQL
     def initialize(repository_root)
       case
         when repository_root.is_a?(String)
-          @target_directory = CukeModeler::Directory.new(repository_root)
+          @root = CukeModeler::Directory.new(repository_root)
         when repository_root.class.to_s =~ /CukeModeler/
-          @target_directory = repository_root
+          @root = repository_root
         else
           raise(ArgumentError, "Don't know how to make a repository from a #{repository_root.class}")
       end
     end
 
     def query &block
-      # A quick 'deep clone'
-      new_repo = Marshal::load(Marshal.dump(@target_directory))
-
-      Query.new(new_repo, &block).data
+      Query.new(@root, &block).data
     end
 
   end
