@@ -23,6 +23,10 @@ namespace 'cql' do
     rspec_args = '--tag ~@wip --pattern testing/rspec/spec/**/*_spec.rb'
     cucumber_args = 'testing/cucumber/features -r testing/cucumber/support -r testing/cucumber/step_definitions -f progress -t ~@wip'
 
+    if Gem.loaded_specs['cuke_modeler'].version.version[/^0/]
+      cucumber_args += ' -t ~@cuke_modeler_1x'
+    end
+
     Rake::Task['cql:test_everything'].invoke(rspec_args, cucumber_args)
   end
 
