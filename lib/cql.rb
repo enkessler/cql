@@ -72,7 +72,7 @@ module CQL
     def special_value(element, attribute)
       # todo - Not sure what other special values to have but this could be expanded upon later.
       case attribute
-        when :self
+        when :self, :model
           val = element
         else
           raise(ArgumentError, ":#{attribute} is not a valid attribute for selection.")

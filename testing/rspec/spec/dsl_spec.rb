@@ -90,15 +90,63 @@ describe 'dsl' do
                              'attribute_2' => 'bar'}])
     end
 
-    it 'complains if an unknown special attribute is queried' do
-      gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/simple")
 
-      expect {
-        gs.query do
-          select :foo
-          from scenarios
+    describe 'special attributes' do
+
+      it 'understands the :model attribute' do
+        gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/simple")
+
+        expect { gs.query do
+          select :model
+          from features
         end
-      }.to raise_error(ArgumentError, ":foo is not a valid attribute for selection.")
+        }.to_not raise_error
+      end
+
+      it 'interprets :model in the same manner that it interprets :self' do
+        gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/simple")
+
+        self_result = gs.query do
+          select :self
+          from features
+        end
+
+        model_result = gs.query do
+          select :model
+          from features
+        end
+
+        # Only checking the values of the results because they will have different :model/:self keys
+        expect(model_result.collect { |result| result.values }).to eq(self_result.collect { |result| result.values })
+      end
+
+      it 'complains if an unknown special attribute is queried' do
+        gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/simple")
+
+        expect {
+          gs.query do
+            select :foo
+            from scenarios
+          end
+        }.to raise_error(ArgumentError, ":foo is not a valid attribute for selection.")
+      end
+
+      it 'uses the :self attribute by default' do
+        gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/simple")
+
+        default_result = gs.query do
+          select
+          from features
+        end
+
+        self_result = gs.query do
+          select :self
+          from features
+        end
+
+        expect(self_result).to eq(default_result)
+      end
+
     end
 
 
