@@ -263,6 +263,44 @@ describe 'dsl' do
 
     end
 
+
+    describe 'special scopes' do
+
+      it 'understands the :all scope' do
+        gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/simple")
+
+        expect { gs.query do
+          select :model
+          from :all
+        end
+        }.to_not raise_error
+      end
+
+      it 'queries from all models when scoped to :all' do
+        model_1 = CukeModeler::Scenario.new
+        model_2 = CukeModeler::Step.new
+        model_3 = CukeModeler::Step.new
+
+        model_1.steps << model_2
+        model_1.steps << model_3
+
+        repo = CQL::Repository.new(model_1)
+
+        result = repo.query do
+          select :model
+          from :all
+        end
+
+        # Nil's produced by a bug in 'cuke_modeler' because the step models don't have block models
+        expect(result).to match_array([{:model => model_1},
+                                       {:model => model_2},
+                                       {:model => nil},
+                                       {:model => model_3},
+                                       {:model => nil}])
+      end
+
+    end
+
   end
 
   describe "transform" do

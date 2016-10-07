@@ -61,7 +61,7 @@ module CQL
 
       # Recursively gathers all objects of the given class(es) found in the passed object (including itself).
       def collect_all_in(targeted_classes, current_object, accumulated_objects)
-        accumulated_objects << current_object if targeted_classes.any? { |targeted_class| current_object.is_a?(targeted_class) }
+        accumulated_objects << current_object if targeted_classes.any? { |targeted_class| (targeted_class == :all) || current_object.is_a?(targeted_class) }
 
         method_for_children = Gem.loaded_specs['cuke_modeler'].version.version[/^0/] ? :contains : :children
 

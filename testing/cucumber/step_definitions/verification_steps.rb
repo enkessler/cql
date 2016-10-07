@@ -44,6 +44,17 @@ Then(/^the following code executes without error:$/) do |code_text|
   expect { eval(code_text) }.to_not raise_error
 end
 
+Then(/^all models are queried from$/) do
+  # Just making sure that multiple model results are returned
+  expect(@query_results.count).to be > 1
+
+  @query_results.each do |result|
+    class_name = result[:model].class.name.split('::').last
+
+    expect(CukeModeler.const_defined?(class_name)).to be true
+  end
+end
+
 And(/^equivalent results are returned for the following query:$/) do |query_text|
   command = "@repository.query do
                #{query_text}
