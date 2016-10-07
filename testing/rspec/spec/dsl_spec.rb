@@ -212,7 +212,7 @@ describe 'dsl' do
             from features
             from scenarios
           end
-        }.to raise_error
+        }.to raise_error(ArgumentError)
       end
 
     end
