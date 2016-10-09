@@ -66,7 +66,7 @@ describe 'dsl' do
 
       result = repo.query do
         select attribute_1
-        from cql_test_models
+        from cql_test_model
       end
 
 
@@ -82,7 +82,7 @@ describe 'dsl' do
 
       result = repo.query do
         select attribute_1, attribute_2
-        from cql_test_models
+        from cql_test_model
       end
 
 
@@ -220,7 +220,21 @@ describe 'dsl' do
     describe 'shorthand' do
 
       it 'should consider an exact match over a pluralization' do
-        skip('Not sure how to test this without actually have two classes that are so similarly named. It is a required behavior, but not one worth the hassle of testing until it actually comes up.')
+        plural_class_model = CukeModeler::CqlTestModels.new
+        singular_class_model = CukeModeler::CqlTestModel.new
+
+        plural_class_model.attribute_1 = 'plural'
+        singular_class_model.attribute_1 = 'singular'
+        plural_class_model.children << singular_class_model
+
+        repo = CQL::Repository.new(plural_class_model)
+
+        result = repo.query do
+          select attribute_1
+          from cql_test_model
+        end
+
+        expect(result.first['attribute_1']).to eq('singular')
       end
 
       it 'raises an exception if the shorthand form of a class cannot be mapped to a real class' do
