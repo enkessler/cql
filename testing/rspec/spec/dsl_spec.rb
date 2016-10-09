@@ -291,12 +291,12 @@ describe 'dsl' do
       end
 
       it 'queries from all models when scoped to :all' do
-        model_1 = CukeModeler::Scenario.new
-        model_2 = CukeModeler::Step.new
-        model_3 = CukeModeler::Step.new
+        model_1 = CukeModeler::CqlTestModel.new
+        model_2 = CukeModeler::CqlTestModel.new
+        model_3 = CukeModeler::CqlTestModel.new
 
-        model_1.steps << model_2
-        model_1.steps << model_3
+        model_1.children << model_2
+        model_1.children << model_3
 
         repo = CQL::Repository.new(model_1)
 
