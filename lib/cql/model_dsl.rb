@@ -1,9 +1,15 @@
 module CukeModeler
   class Model
 
-    # todo - this is common code that needs to be extracted out into a mix-in module or else it will get out of sync. Go do this now!
-    def query(&block)
-      CQL::Query.new(self, &block).data
+    include CQL::Queriable
+
+    alias_method :original_initialize, :initialize
+
+
+    def initialize(source_text = nil)
+      original_initialize(source_text)
+
+      @query_root = self
     end
 
   end

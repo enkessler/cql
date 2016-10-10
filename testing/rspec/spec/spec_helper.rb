@@ -15,6 +15,7 @@ require "#{this_dir}/tag_filterable_specs"
 require "#{this_dir}/name_filterable_specs"
 require "#{this_dir}/line_count_filterable_specs"
 require "#{this_dir}/line_filterable_specs"
+require "#{this_dir}/queriable_specs"
 
 CQL_FEATURE_FIXTURES_DIRECTORY = "#{this_dir}/../../fixtures/features"
 

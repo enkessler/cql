@@ -1,5 +1,6 @@
 require 'cuke_modeler'
 require 'cql/map_reduce'
+require 'cql/queriable'
 
 module CQL
 
@@ -154,19 +155,20 @@ module CQL
 
   class Repository
 
+    include Queriable
+
+
     def initialize(repository_root)
       case
         when repository_root.is_a?(String)
-          @root = CukeModeler::Directory.new(repository_root)
+          root = CukeModeler::Directory.new(repository_root)
         when repository_root.class.to_s =~ /CukeModeler/
-          @root = repository_root
+          root = repository_root
         else
           raise(ArgumentError, "Don't know how to make a repository from a #{repository_root.class}")
       end
-    end
 
-    def query &block
-      Query.new(@root, &block).data
+      @query_root = root
     end
 
   end

@@ -3,7 +3,16 @@ require "#{File.dirname(__FILE__)}/spec_helper"
 
 describe 'CQL::Repository' do
 
-  clazz = CQL::Repository
+  let(:clazz) { CQL::Repository }
+  let(:seed_arguments) { @feature_fixtures_directory }
+
+
+  describe 'common behavior' do
+
+    it_should_behave_like 'a queriable object'
+
+  end
+
 
   it 'can be made from a file path' do
     expect { clazz.new(@feature_fixtures_directory) }.to_not raise_error
