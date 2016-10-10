@@ -1,7 +1,11 @@
 require "#{File.dirname(__FILE__)}/spec_helper"
 
 
-describe 'dsl' do
+describe 'an object that uses the DSL' do
+
+
+  let(:nodule) { CQL::Dsl }
+  let(:dsl_enabled_object) { Object.new.extend(nodule) }
 
 
   describe 'invalid query structure' do
@@ -57,6 +61,14 @@ describe 'dsl' do
 
 
   describe "select" do
+
+    it 'knows how to select attributes' do
+      expect(dsl_enabled_object).to respond_to(:select)
+    end
+
+    it 'selects one or more attributes' do
+      expect(dsl_enabled_object.method(:select).arity).to eq(-1)
+    end
 
     it 'correctly selects a single attribute from a model' do
       model = CukeModeler::CqlTestModel.new
@@ -189,6 +201,14 @@ describe 'dsl' do
   end
 
   describe "from" do
+
+    it 'knows from what to select attributes' do
+      expect(dsl_enabled_object).to respond_to(:from)
+    end
+
+    it 'selects from one or more things' do
+      expect(dsl_enabled_object.method(:from).arity).to eq(-1)
+    end
 
     it "can handle an empty 'from' clause" do
       gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/simple")

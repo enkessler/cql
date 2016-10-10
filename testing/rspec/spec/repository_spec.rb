@@ -14,11 +14,15 @@ describe 'CQL::Repository' do
   end
 
 
-  it 'can be made from a file path' do
+  it 'must be based on a source' do
+    expect(clazz.instance_method(:initialize).arity).to eq(1)
+  end
+
+  it 'can use a file path as a source' do
     expect { clazz.new(@feature_fixtures_directory) }.to_not raise_error
   end
 
-  it 'can be made from a model' do
+  it 'can use a model as a source' do
     some_model = CukeModeler::Scenario.new
 
     expect { clazz.new(some_model) }.to_not raise_error
