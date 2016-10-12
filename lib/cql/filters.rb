@@ -15,8 +15,10 @@ module CQL
       }
     end
 
-    def execute objects
-      objects.find_all { |object| has_tags?(object, tags) }
+    def execute(objects, negate)
+      method = negate ? :reject : :select
+
+      objects.send(method) { |object| has_tags?(object, tags) }
     end
 
   end
@@ -48,8 +50,10 @@ module CQL
       @comparison = comparison
     end
 
-    def execute input
-      input.find_all do |object|
+    def execute(input, negate)
+      method = negate ? :reject : :select
+
+      input.send(method) do |object|
         type_count(object).send(comparison.operator, comparison.amount)
       end
     end
@@ -58,8 +62,10 @@ module CQL
 
   class NameFilter < ContentMatchFilter
 
-    def execute(input)
-      input.find_all do |object|
+    def execute(input, negate)
+      method = negate ? :reject : :select
+
+      input.send(method) do |object|
         content_match?([object.name])
       end
     end

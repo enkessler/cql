@@ -1,7 +1,7 @@
 # todo - Rewrite the scenarios such that they use their own test specific feature files instead of setting up a large suite in the background
 Feature: 'with' clause
 
-  The *with* clause specifies filter conditions that will reduce the number of things targeted by the *from* clause. The *with* clause can take one or more blocks that will filter out any object for which the block does not evaluate to true. Alternatively, mappings of specific *from* targets to their respective filtering blocks can be provided. The *with* clause can also take predefined filters (detailed below).
+  The *with* clause specifies filter conditions that will reduce the number of things targeted by the *from* clause. The *with* clause can take one or more blocks that will filter out any object for which the block does not evaluate to true (using 'without' instead of 'with' will have the opposite effect). Alternatively, mappings of specific *from* targets to their respective filtering blocks can be provided. The *with* clause can also take predefined filters (detailed below).
 
     Sample usage:
       cql_repo.query do
@@ -335,3 +335,29 @@ Feature: 'with' clause
 
   @wip
   Scenario: Using the 'gte' count filter
+
+  Scenario: Using 'without' for negation
+    When the following query is executed:
+      """
+      select name
+      from scenarios
+      without { |scenario| scenario.source_line == 8 }
+      """
+    Then the result is the same as the result of the following query:
+      """
+      select name
+      from scenarios
+      with { |scenario| !(scenario.source_line == 8) }
+      """
+    When the following query is executed:
+      """
+      select name
+      from features
+      without ssoc lt 3
+      """
+    Then the result is the same as the result of the following query:
+      """
+      select name
+      from features
+      with ssoc gt 2
+      """

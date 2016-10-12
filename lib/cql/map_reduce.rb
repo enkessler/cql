@@ -15,28 +15,42 @@ module CQL
 
       if filters
         filters.each do |filter|
+          negate = filter[:negate]
+          filter = filter[:filter]
+
+          # Non-targeted filter, will apply to all objects
           if filter.is_a?(Proc)
-            gathered_objects = filter_with_proc(gathered_objects, filter)
+            gathered_objects = filter_with_proc(gathered_objects, filter, negate)
+
+            # Targeted filter, will only apply to certain objects
           elsif filter.is_a?(Hash)
             filter.keys.each do |filtered_class|
               clazz = determine_class(filtered_class)
 
               gathered_objects = gathered_objects.select do |object|
+
+                # A class that is targeted by the filter, so proceed with determination
                 if object.is_a?(clazz)
+
+                  # Block filter
                   if filter[filtered_class].is_a?(Proc)
-                    filter[filtered_class].call(object)
-                  else
+                    filter[filtered_class].call(object) && !negate
+
                     # Must be a predefined filter otherwise
-                    !filter_with_predefined([object], filter[filtered_class]).empty?
+                  else
+                    !filter_with_predefined([object], filter[filtered_class], negate).empty?
                   end
+
+                  # Not a class that is targeted by the filter, so include it
                 else
                   true
                 end
               end
             end
-          else
+
             # Must be a predefined filter otherwise
-            gathered_objects = filter_with_predefined(gathered_objects, filter)
+          else
+            gathered_objects = filter_with_predefined(gathered_objects, filter, negate)
           end
         end
       end
@@ -51,12 +65,16 @@ module CQL
       private
 
 
-      def filter_with_proc(objects, filter)
-        objects.select(&filter)
+      def filter_with_proc(objects, filter, negate)
+        if negate
+          objects.reject(&filter)
+        else
+          objects.select(&filter)
+        end
       end
 
-      def filter_with_predefined(objects, filter)
-        filter.execute(objects)
+      def filter_with_predefined(objects, filter, negate)
+        filter.execute(objects, negate)
       end
 
       # Recursively gathers all objects of the given class(es) found in the passed object (including itself).
