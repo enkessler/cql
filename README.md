@@ -28,19 +28,23 @@ Use the following command:
 
 Alternatively you can add it to your Gemfile if you are using bundler.
 
-* Create a new ruby file
-
-* The first thing that needs to be done is to create a CQL Repository. This can be done with the following line:
+* Create a new ruby file and require the gem
 
         require 'cql'
-        cql_repo = CQL::Repository.new "/path-to/my/feature-files"
 
-* Now that you have a repository you can write a query. A simple example is given below
+* Start querying things!
 
-        cql_repo.query do
-            select name, source_line
-            from features
-        end
+The first thing that needs to be done is to create a CQL Repository. This can be done with the following line:
+
+    require 'cql'
+    cql_repo = CQL::Repository.new "/path-to/my/feature-files"
+
+Now that you have a repository you can write a query. A simple example is given below
+
+    cql_repo.query do
+        select name, source_line
+        from features
+    end
 
 This will return a list of all of the feature names in the form of a list of hashes.
 
@@ -48,5 +52,16 @@ This will return a list of all of the feature names in the form of a list of has
      {'name' => 'Feature 2', 'source_line' => 3},
      {'name' => 'Feature 3', 'source_line' => 10}]
 
+Alternatively, you can activate the extensions to the cuke_modeler gem and query models directly:
+
+    require 'cql'
+    require 'cql/model_dsl'
+    
+    directory = CukeModeler::Directory.new("/path-to/my/feature-files")
+
+    directory.query do
+        select name, source_line
+        from features
+    end
 
 For more information on the query options, see the [documentation](https://www.relishapp.com/enkessler/cql/docs).
