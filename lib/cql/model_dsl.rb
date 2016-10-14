@@ -1,3 +1,5 @@
+# todo - add some sore of error/warning if loading with the 0.x cuke_modeler?
+
 module CukeModeler
   class Model
 
