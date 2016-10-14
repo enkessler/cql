@@ -1,7 +1,11 @@
 require "#{File.dirname(__FILE__)}/spec_helper"
 
 
-describe 'dsl' do
+describe 'an object that uses the DSL' do
+
+
+  let(:nodule) { CQL::Dsl }
+  let(:dsl_enabled_object) { Object.new.extend(nodule) }
 
 
   describe 'invalid query structure' do
@@ -58,6 +62,14 @@ describe 'dsl' do
 
   describe "select" do
 
+    it 'knows how to select attributes' do
+      expect(dsl_enabled_object).to respond_to(:select)
+    end
+
+    it 'selects one or more attributes' do
+      expect(dsl_enabled_object.method(:select).arity).to eq(-1)
+    end
+
     it 'correctly selects a single attribute from a model' do
       model = CukeModeler::CqlTestModel.new
       model.attribute_1 = 'foo'
@@ -66,7 +78,7 @@ describe 'dsl' do
 
       result = repo.query do
         select attribute_1
-        from cql_test_models
+        from cql_test_model
       end
 
 
@@ -82,7 +94,7 @@ describe 'dsl' do
 
       result = repo.query do
         select attribute_1, attribute_2
-        from cql_test_models
+        from cql_test_model
       end
 
 
@@ -90,15 +102,75 @@ describe 'dsl' do
                              'attribute_2' => 'bar'}])
     end
 
-    it 'complains if an unknown special attribute is queried' do
+
+    describe 'special attributes' do
+
+      it 'understands the :model attribute' do
+        gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/simple")
+
+        expect { gs.query do
+          select :model
+          from features
+        end
+        }.to_not raise_error
+      end
+
+      it 'interprets :model in the same manner that it interprets :self' do
+        gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/simple")
+
+        self_result = gs.query do
+          select :self
+          from features
+        end
+
+        model_result = gs.query do
+          select :model
+          from features
+        end
+
+        # Only checking the values of the results because they will have different :model/:self keys
+        expect(model_result.collect { |result| result.values }).to eq(self_result.collect { |result| result.values })
+      end
+
+      it 'complains if an unknown special attribute is queried' do
+        gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/simple")
+
+        expect {
+          gs.query do
+            select :foo
+            from scenarios
+          end
+        }.to raise_error(ArgumentError, ":foo is not a valid attribute for selection.")
+      end
+
+      it 'uses the :self attribute by default' do
+        gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/simple")
+
+        default_result = gs.query do
+          select
+          from features
+        end
+
+        self_result = gs.query do
+          select :self
+          from features
+        end
+
+        expect(self_result).to eq(default_result)
+      end
+
+    end
+
+
+    it 'complains if an unknown normal attribute is queried' do
       gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/simple")
 
       expect {
         gs.query do
-          select :foo
-          from scenarios
+          select steps
+          from features
         end
-      }.to raise_error(ArgumentError, ":foo is not a valid attribute for selection.")
+      }.to raise_error(ArgumentError, "'steps' is not a valid attribute for selection from a 'CukeModeler::Feature'.")
     end
 
 
@@ -130,6 +202,14 @@ describe 'dsl' do
 
   describe "from" do
 
+    it 'knows from what to select attributes' do
+      expect(dsl_enabled_object).to respond_to(:from)
+    end
+
+    it 'selects from one or more things' do
+      expect(dsl_enabled_object.method(:from).arity).to eq(-1)
+    end
+
     it "can handle an empty 'from' clause" do
       gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/simple")
 
@@ -152,7 +232,7 @@ describe 'dsl' do
             from features
             from scenarios
           end
-        }.to raise_error
+        }.to raise_error(ArgumentError)
       end
 
     end
@@ -160,7 +240,21 @@ describe 'dsl' do
     describe 'shorthand' do
 
       it 'should consider an exact match over a pluralization' do
-        skip('Not sure how to test this without actually have two classes that are so similarly named. It is a required behavior, but not one worth the hassle of testing until it actually comes up.')
+        plural_class_model = CukeModeler::CqlTestModels.new
+        singular_class_model = CukeModeler::CqlTestModel.new
+
+        plural_class_model.attribute_1 = 'plural'
+        singular_class_model.attribute_1 = 'singular'
+        plural_class_model.children << singular_class_model
+
+        repo = CQL::Repository.new(plural_class_model)
+
+        result = repo.query do
+          select attribute_1
+          from cql_test_model
+        end
+
+        expect(result.first['attribute_1']).to eq('singular')
       end
 
       it 'raises an exception if the shorthand form of a class cannot be mapped to a real class' do
@@ -203,6 +297,41 @@ describe 'dsl' do
 
     end
 
+
+    describe 'special scopes' do
+
+      it 'understands the :all scope' do
+        gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/simple")
+
+        expect { gs.query do
+          select :model
+          from :all
+        end
+        }.to_not raise_error
+      end
+
+      it 'queries from all models when scoped to :all' do
+        model_1 = CukeModeler::CqlTestModel.new
+        model_2 = CukeModeler::CqlTestModel.new
+        model_3 = CukeModeler::CqlTestModel.new
+
+        model_1.children << model_2
+        model_1.children << model_3
+
+        repo = CQL::Repository.new(model_1)
+
+        result = repo.query do
+          select :model
+          from :all
+        end
+
+        expect(result).to match_array([{:model => model_1},
+                                       {:model => model_2},
+                                       {:model => model_3}])
+      end
+
+    end
+
   end
 
   describe "transform" do
@@ -232,6 +361,11 @@ describe 'dsl' do
 
   describe 'with' do
 
+    it 'knows how to filter selections with certain qualities' do
+      expect(dsl_enabled_object).to respond_to(:with)
+    end
+
+
     describe 'targeted' do
 
       it 'can handle predefined filters' do
@@ -256,6 +390,18 @@ describe 'dsl' do
             with scenarios => lambda { |scenario| true }
           end
         }.to_not raise_error
+      end
+
+      it 'correctly filters with a targeted block' do
+        gs = CQL::Repository.new(@feature_fixtures_directory)
+
+        result = gs.query do
+          select name
+          from scenarios
+          with scenarios => lambda { |scenario| scenario.name =~ /king of/ }
+        end
+
+        expect(result).to eq([{'name' => 'The king of kings'}])
       end
 
       it 'can handle shorthand targets' do
@@ -283,6 +429,170 @@ describe 'dsl' do
         }.to_not raise_error
       end
 
+    end
+
+  end
+
+
+  describe 'without' do
+
+    it 'knows how to filter selections without certain qualities' do
+      expect(dsl_enabled_object).to respond_to(:without)
+    end
+
+    it 'correctly negates a block filter' do
+      gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/simple")
+
+      negated_result = gs.query do
+        select name
+        from scenarios
+        with { |scenario| !(scenario.source_line == 3) }
+      end
+
+      without_result = gs.query do
+        select name
+        from scenarios
+        without { |scenario| scenario.source_line == 3 }
+      end
+
+      expect(without_result).to eq(negated_result)
+    end
+
+    it 'correctly negates a targeted filter' do
+      gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/simple")
+
+      negated_result = gs.query do
+        select :model
+        from features, scenarios
+        with scenarios => lambda { |scenario| false }
+      end
+
+      without_result = gs.query do
+        select :model
+        from features, scenarios
+        without scenarios => lambda { |scenario| true }
+      end
+
+      # puts "1: #{negated_result}"
+
+
+      expect(without_result).to eq(negated_result)
+    end
+
+
+    describe 'negating predefined filters' do
+
+      it 'correctly negates a tag count filter' do
+        gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/tags2")
+
+        negated_result = gs.query do
+          select :model
+          from scenarios
+          with tc lt 2
+        end
+
+        without_result = gs.query do
+          select :model
+          from scenarios
+          without tc gt 1
+        end
+
+        expect(without_result).to eq(negated_result)
+      end
+
+      it 'correctly negates a name filter' do
+        gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/name_filter")
+
+        negated_result = gs.query do
+          select :model
+          from scenarios
+          with name /name[^1]/
+        end
+
+        without_result = gs.query do
+          select :model
+          from scenarios
+          without name /name1/
+        end
+
+        expect(without_result).to eq(negated_result)
+      end
+
+      it 'correctly negates a line filter' do
+        gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/line_filter")
+
+        negated_result = gs.query do
+          select name
+          from scenarios
+          with line 'green eggs and ham'
+        end
+
+        without_result = gs.query do
+          select name
+          from scenarios
+          without line 'some other phrase'
+        end
+
+      end
+
+      it 'correctly negates a tag filter' do
+        gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/tags3")
+
+        negated_result = gs.query do
+          select :model
+          from scenarios
+          with tags '@one'
+        end
+
+        without_result = gs.query do
+          select :model
+          from scenarios
+          without tags '@two'
+        end
+
+        expect(without_result).to eq(negated_result)
+      end
+
+    end
+
+    it 'correctly negates a targeted, predefined filter' do
+      gs = CQL::Repository.new(@feature_fixtures_directory)
+
+      negated_result = gs.query do
+        select :model
+        from :all
+        with scenarios => name(/(?!test)/)
+      end
+
+      without_result = gs.query do
+        select :model
+        from :all
+        without scenarios => name(/test/)
+      end
+
+      expect(without_result).to eq(negated_result)
+    end
+
+    it 'correctly negates multiple filters' do
+      gs = CQL::Repository.new(@feature_fixtures_directory)
+
+      negated_result = gs.query do
+        select :model
+        from :all
+        with scenarios => lambda { |scenario| false },
+             outlines => lambda { |outline| false }
+        with { |model| !model.is_a?(CukeModeler::Example) }
+      end
+
+      without_result = gs.query do
+        select :model
+        from :all
+        without scenarios => lambda { |scenario| true },
+                outlines => lambda { |outline| true }
+        without { |model| model.is_a?(CukeModeler::Example) }
+      end
+
+      expect(without_result).to eq(negated_result)
     end
 
   end

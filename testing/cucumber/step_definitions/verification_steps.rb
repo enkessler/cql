@@ -43,3 +43,36 @@ Then(/^the following code executes without error:$/) do |code_text|
 
   expect { eval(code_text) }.to_not raise_error
 end
+
+Then(/^all of them can be queried$/) do |code_text|
+  @available_model_classes.each do |clazz|
+    code_text.gsub!('<model_class>', clazz.to_s)
+
+    expect(clazz.new).to respond_to(:query)
+
+    # Make sure that the example code is valid
+    expect { eval(code_text) }.to_not raise_error
+  end
+end
+
+Then(/^all models are queried from$/) do
+  # Just making sure that multiple model results are returned
+  expect(@query_results.count).to be > 1
+
+  @query_results.each do |result|
+    class_name = result[:model].class.name.split('::').last
+
+    expect(CukeModeler.const_defined?(class_name)).to be true
+  end
+end
+
+And(/^equivalent results are returned for the following query:$/) do |query_text|
+  command = "@repository.query do
+               #{query_text}
+             end"
+
+  alternate_results = eval(command)
+
+  # Only checking the values of the results because they will have different :model/:self keys
+  expect(alternate_results.collect { |result| result.values }).to eq(@query_results.collect { |result| result.values })
+end

@@ -53,8 +53,20 @@ module CQL
     def with(*conditions, &block)
       @filters ||= []
 
-      @filters << block if block
-      @filters.concat(conditions)
+      @filters << {:negate => false, :filter => block} if block
+      conditions.each do |condition|
+        @filters << {:negate => false, :filter => condition}
+      end
+    end
+
+    #without clause
+    def without(*conditions, &block)
+      @filters ||= []
+
+      @filters << {:negate => true, :filter => block} if block
+      conditions.each do |condition|
+        @filters << {:negate => true, :filter => condition}
+      end
     end
 
     class Comparison

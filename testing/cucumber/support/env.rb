@@ -5,6 +5,7 @@ end
 
 
 require 'cql'
+require 'cql/model_dsl'
 
 
 Before do

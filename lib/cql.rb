@@ -1,5 +1,6 @@
 require 'cuke_modeler'
 require 'cql/map_reduce'
+require 'cql/queriable'
 
 module CQL
 
@@ -59,7 +60,7 @@ module CQL
     end
 
     def determine_value(element, attribute, index)
-      original_value = attribute.is_a?(Symbol) ? special_value(element, attribute) : element.send(attribute)
+      original_value = attribute.is_a?(Symbol) ? determine_special_value(element, attribute) : determine_normal_value(element, attribute)
 
       if @value_transforms
         value = mapped_attribute(@value_transforms, attribute, index)
@@ -69,16 +70,24 @@ module CQL
       value || original_value
     end
 
-    def special_value(element, attribute)
+    def determine_special_value(element, attribute)
       # todo - Not sure what other special values to have but this could be expanded upon later.
       case attribute
-        when :self
+        when :self, :model
           val = element
         else
           raise(ArgumentError, ":#{attribute} is not a valid attribute for selection.")
       end
 
       val
+    end
+
+    def determine_normal_value(element, attribute)
+      if element.respond_to?(attribute)
+        element.send(attribute)
+      else
+        raise(ArgumentError, "'#{attribute}' is not a valid attribute for selection from a '#{element.class}'.")
+      end
     end
 
     def mapped_attribute(mappings, attribute, location)
@@ -146,22 +155,20 @@ module CQL
 
   class Repository
 
+    include Queriable
+
+
     def initialize(repository_root)
       case
         when repository_root.is_a?(String)
-          @target_directory = CukeModeler::Directory.new(repository_root)
+          root = CukeModeler::Directory.new(repository_root)
         when repository_root.class.to_s =~ /CukeModeler/
-          @target_directory = repository_root
+          root = repository_root
         else
           raise(ArgumentError, "Don't know how to make a repository from a #{repository_root.class}")
       end
-    end
 
-    def query &block
-      # A quick 'deep clone'
-      new_repo = Marshal::load(Marshal.dump(@target_directory))
-
-      Query.new(new_repo, &block).data
+      @query_root = root
     end
 
   end

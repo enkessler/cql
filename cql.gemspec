@@ -7,8 +7,8 @@ Gem::Specification.new do |s|
   s.name        = 'cql'
   s.version     = CQL::VERSION
   s.authors     = ['Eric Kessler', 'Jarrod Folino']
-  s.description = 'Cucumber Query Language'
   s.summary     = "A gem providing functionality to query a Cucumber test suite."
+  s.description = 'CQL is a domain specific language used for querying a Cucumber (other Gherkin based) test suite. The goal of CQL is to increase the ease with which useful information can be extracted from a modeled test suite and turned into summarized data or reports.'
   s.email       = 'morrow748@gmail.com'
   s.license     = 'MIT'
   s.homepage    = 'https://github.com/enkessler/cql'
@@ -36,8 +36,8 @@ Thank you for installing cql (Cucumber Query Language)
 
 
   s.rubygems_version = '>= 1.6.1'
-  s.files            = Dir.glob('lib/**/*').reject {|path| path =~ /\.gitignore$/ }
-  s.test_files       = Dir.glob('spec/**/*')
+  s.files            = Dir.glob('lib/**/*').reject { |path| path =~ /\.gitignore$/ }
+  s.test_files       = Dir.glob('testing/**/*')
   s.rdoc_options     = ['--charset=UTF-8']
   s.require_path     = 'lib'
 end

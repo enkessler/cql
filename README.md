@@ -8,9 +8,10 @@
 
 # CQL (Cucumber Query Language)
 
-CQL is a domain specific language used for querying a Cucumber test suite. It is written in ruby and powered by
-the {cuke_modeler}[https://github.com/enkessler/cuke_modeler] gem. The goal of CQL is to increase the ease with
-which useful information can be extraced from a modeled test suite and turned into summarized data or reports.
+CQL is a domain specific language used for querying a Cucumber (or other Gherkin based) test suite. It is written 
+in Ruby and powered by the [cuke_modeler](https://github.com/enkessler/cuke_modeler) gem. The goal of CQL is to increase the ease with which 
+useful information can be extracted from a modeled test suite and turned into summarized data or reports.
+
 
 Some uses for example are:
 

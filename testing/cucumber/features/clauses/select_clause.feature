@@ -70,6 +70,9 @@ Feature: 'select' clause
       | Test 2 | Test 2 |
 
   Scenario: Selection of the underlying models
+
+  Note: There is no difference between the two different special identifiers. They are merely aliases for each other.
+
     When the following query is executed:
       """
       select :self
@@ -78,9 +81,9 @@ Feature: 'select' clause
     Then the models for the following items are returned:
       | Test 1 |
       | Test 2 |
-    And the result is the same as the result of the following query:
+    And equivalent results are returned for the following query:
       """
-      select
+      select :model
       from scenarios
       """
 
@@ -94,6 +97,18 @@ Feature: 'select' clause
     Then the result is the same as the result of the following query:
       """
       select name, source_line
+      from scenarios
+      """
+
+  Scenario: Default selection
+    When the following query is executed:
+      """
+      select
+      from scenarios
+      """
+    Then the result is the same as the result of the following query:
+      """
+      select :self
       from scenarios
       """
 

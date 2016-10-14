@@ -1,6 +1,8 @@
 Feature: 'from' clause
 
-  The *from* clause specifies what type of models from which the *select* clause will gather its values. The *from* clause can take class objects defined in CukeModeler as well as shorthand versions thereof. The following are some example values:
+  The *from* clause specifies what type of models from which the *select* clause will gather its values. The *from* clause can take class objects defined in CukeModeler as well as shorthand versions thereof. The clause can also be given a special identifier in order to gather values from all models instead of specific model types.
+
+  The following are some example values:
 
   CukeModeler::Outline  (exact class)
   outline               (singular)
@@ -89,6 +91,7 @@ Feature: 'from' clause
       """
 
   Scenario: Using the 'from' clause multiple times
+
   Note: Selecting from different types of model should be done with care since problems can occur if the attributes specified by the 'select' clause do not exist on all of the models specified by the 'from' clause
 
     When the following query is executed:
@@ -102,6 +105,18 @@ Feature: 'from' clause
       select name
       from scenarios, outlines
       """
+
+  Scenario: Gathering from everything
+
+  Note: Very few selections will be applicable for all models
+
+    When the following query is executed:
+      """
+      select :model
+      from :all
+      """
+    Then all models are queried from
+
 
 # Commented out so that they aren't picked up by Relish
 #  @wip

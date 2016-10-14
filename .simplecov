@@ -1,8 +1,7 @@
 SimpleCov.start do
   root File.dirname(__FILE__)
 
-  add_filter '/features/'
-  add_filter '/spec/'
+  add_filter '/testing/'
 
   merge_timeout 300
 end
