@@ -1,3 +1,17 @@
+### Version 1.3.0 / 2016-10-14
+
+* A new 'without' clause has been added. This clause has the opposite effect of the 'with' clause.
+* An optional extension to the 'cuke_modeler' gem has been added. This extension allows models to be directly 
+  queried in the same manner that a repository could be queried (without needing the extra step of having to create 
+  a repository out of the model first). This extension does not work with the 0.x versions of 'cuke_modeler'.
+* A special scoping identifier, :all, has been added that allows all types of model to be included with the 'from' 
+  clause without having to explicitly list each model type.
+* A special selection identifier, :model, has been added that is a more meaningful alias for the :self identifier.
+* The same model instances that are being queried will be returned in the results of a query. Previously, due to 
+  efforts to avoid accidentally modifying the repository during the internal query process, copies of the models 
+  were returned instead of the original instances. This was unintentional and has been fixed.
+* More useful error messages.
+
 ### Version 1.2.1 / 2016-09-28
 
 * The gem now declares version limits on all of its dependencies.
