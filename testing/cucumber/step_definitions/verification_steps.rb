@@ -45,8 +45,10 @@ Then(/^the following code executes without error:$/) do |code_text|
 end
 
 Then(/^all of them can be queried$/) do |code_text|
+  original_text = code_text
+
   @available_model_classes.each do |clazz|
-    code_text.gsub!('<model_class>', clazz.to_s)
+    code_text = original_text.gsub('<model_class>', clazz.to_s)
 
     expect(clazz.new).to respond_to(:query)
 
