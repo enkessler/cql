@@ -1,15 +1,14 @@
 Then(/^the following values are returned:$/) do |values|
-  expected_results = values.hashes
-  expected_results.each { |result| result['source_line'] = result['source_line'].to_i if result['source_line'] }
-  expected_results.each { |result| result['scenario_line'] = result['scenario_line'].to_i if result['scenario_line'] }
-  expected_results.each { |result| result['tags'] = eval(result['tags']) if result['tags'] }
-  expected_results.each { |result| result['scenario_tags'] = eval(result['scenario_tags']) if result['scenario_tags'] }
+  expected_keys = values.raw.first
+  expected_values = values.rows
 
-  expected_results.each do |result|
-    result.each_pair { |key, value| result[key] = value.sub('path/to', @default_file_directory) if value =~ /path\/to/ }
+  expected_values.each { |result| result.collect! { |value| value =~ /^\d+$/ ? value.to_i : value } }
+
+  @query_results.each_with_index do |result, index|
+    expect(result.keys).to eq(expected_keys)
+    expect(result.values).to eq(expected_values[index])
   end
 
-  expect(@query_results).to match_array(expected_results)
 end
 
 # Then(/^all of them can be queried for additional information$/) do

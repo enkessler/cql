@@ -165,10 +165,10 @@ Feature: 'with' clause
     Then the following values are returned:
       | name                             |
       | A test feature                   |
+      | Test 1                           |
       | A feature with lots of scenarios |
       | A feature with lots of outlines  |
       | A feature with a mix of tests    |
-      | Test 1                           |
 
   Scenario: Using the 'with' clause multiple times
     When the following query is executed:

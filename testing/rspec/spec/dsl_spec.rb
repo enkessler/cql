@@ -198,6 +198,38 @@ describe 'an object that uses the DSL' do
       end
 
     end
+
+
+    describe 'duplicate selections' do
+
+      let(:warning_message) { "Multiple selections made without using an 'as' clause\n" }
+
+      it "warns if the same attribute is selected more than once without an 'as' clause being used" do
+        gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/simple")
+
+        expect {
+          gs.query do
+            select :model, :model, :model
+            from :all
+          end
+        }.to output(warning_message).to_stderr
+      end
+
+      it "does not warn if the same attribute is selected more than once and an 'as' clause is used" do
+        gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/simple")
+
+        expect {
+          gs.query do
+            select :model, :model, :model
+            # Usage of the clause is sufficient. Not going to try and count the mappings or anything like that.
+            as foo
+            from :all
+          end
+        }.to_not output(warning_message).to_stderr
+      end
+
+    end
+
   end
 
   describe "from" do
