@@ -31,6 +31,13 @@ end
 
 And(/^the following feature has been modeled in the repository:$/) do |text|
   file_model = CukeModeler::FeatureFile.new
-  file_model.feature = CukeModeler::Feature.new(text)
+
+  # CukeModeler::FeatureFile had a different interface in 0.x
+  if file_model.respond_to?(:feature=)
+    file_model.feature = CukeModeler::Feature.new(text)
+  else
+    file_model.features << CukeModeler::Feature.new(text)
+  end
+
   @root_directory_model.feature_files << file_model
 end
