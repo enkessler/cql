@@ -23,3 +23,14 @@ Given(/^the models provided by CukeModeler$/) do
     end
   end
 end
+
+Given(/^a repository to query$/) do
+  @root_directory_model = CukeModeler::Directory.new
+  @repository = CQL::Repository.new(@root_directory_model)
+end
+
+And(/^the following feature has been modeled in the repository:$/) do |text|
+  file_model = CukeModeler::FeatureFile.new
+  file_model.feature = CukeModeler::Feature.new(text)
+  @root_directory_model.feature_files << file_model
+end

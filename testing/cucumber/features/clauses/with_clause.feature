@@ -43,8 +43,8 @@ Feature: 'with' clause
 
 
   Background: A sample Cucumber suite
-    Given a directory "test_directory"
-    And a file "test_directory/test_file_1.feature":
+    Given a repository to query
+    And the following feature has been modeled in the repository:
       """
       Feature: A test feature
 
@@ -67,7 +67,7 @@ Feature: 'with' clause
           | param |
           | value |
       """
-    And a file "test_directory/test_file_2.feature":
+    And the following feature has been modeled in the repository:
       """
       Feature: A feature with lots of scenarios
 
@@ -80,7 +80,7 @@ Feature: 'with' clause
         Scenario: 3
           * different steps
       """
-    And a file "test_directory/test_file_3.feature":
+    And the following feature has been modeled in the repository:
       """
       Feature: A feature with lots of outlines
 
@@ -102,7 +102,7 @@ Feature: 'with' clause
           | param |
           | value |
       """
-    And a file "test_directory/test_file_4.feature":
+    And the following feature has been modeled in the repository:
       """
       Feature: A feature with a mix of tests
 
@@ -115,7 +115,6 @@ Feature: 'with' clause
           | param |
           | value |
       """
-    And a repository is made from "test_directory"
 
 
   Scenario: Using 'with' to limit the objects from which to return attributes
