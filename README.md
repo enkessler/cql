@@ -39,6 +39,11 @@ The first thing that needs to be done is to create a CQL Repository. This can be
     require 'cql'
     cql_repo = CQL::Repository.new "/path-to/my/feature-files"
 
+Repositories can also be created from an existing model:
+
+    directory = CukeModeler::Directory.new("/path-to/my/feature-files")
+    cql_repo = CQL::Repository.new(directory)
+
 Now that you have a repository you can write a query. A simple example is given below
 
     cql_repo.query do
@@ -46,7 +51,7 @@ Now that you have a repository you can write a query. A simple example is given 
         from features
     end
 
-This will return a list of all of the feature names in the form of a list of hashes.
+This will return a list of all of the feature names and source lines in the form of a list of hashes.
 
     [{'name' => 'Feature 1', 'source_line' => 1},
      {'name' => 'Feature 2', 'source_line' => 3},
