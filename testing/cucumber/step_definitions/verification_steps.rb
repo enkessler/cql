@@ -1,15 +1,17 @@
 Then(/^the following values are returned:$/) do |values|
   expected_keys = values.raw.first
-  expected_values = values.rows
+  expected_results = values.hashes
 
-  expected_values.each { |result| result.collect! { |value| value =~ /^\d+$/ ? value.to_i : value } }
+  expected_results.each do |result|
+    result.each_pair { |key, value| result[key] = value.to_i if value =~ /^\d+$/ }
+  end
+
 
   @query_results.each_with_index do |result, index|
     # Key order doesn't matter and Ruby 1.8.7 does not retain hash key ordering, so sorting them for consistency
     expect(result.keys.sort).to eq(expected_keys.sort)
-    expect(result.values).to eq(expected_values[index])
+    expect(result).to eq(expected_results[index])
   end
-
 end
 
 # Then(/^all of them can be queried for additional information$/) do
