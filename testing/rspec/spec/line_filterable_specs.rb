@@ -44,7 +44,7 @@ shared_examples_for 'a line filterable target set' do |target_type, test_data|
         select name
         from scenarios
         with line 7
-      end }.to raise_error(ArgumentError, "Can only match a String or Regexp. Got Fixnum.")
+      end }.to raise_error(ArgumentError, /^Can only match a String or Regexp. Got (?:Fixnum|Integer)\.$/)
 
     end
 
