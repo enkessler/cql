@@ -183,6 +183,7 @@ describe 'an object that uses the DSL' do
           select :self
           select name
           select :self
+          as 'foo', 'bar', 'baz'
           from scenarios
         end
 
@@ -192,6 +193,7 @@ describe 'an object that uses the DSL' do
               select
               select name
               select
+              as 'foo', 'bar', 'baz'
               from scenarios
             end
         ).to eq(base_result)
