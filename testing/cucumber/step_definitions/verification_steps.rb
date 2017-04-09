@@ -5,7 +5,8 @@ Then(/^the following values are returned:$/) do |values|
   expected_values.each { |result| result.collect! { |value| value =~ /^\d+$/ ? value.to_i : value } }
 
   @query_results.each_with_index do |result, index|
-    expect(result.keys).to eq(expected_keys)
+    # Key order doesn't matter and Ruby 1.8.7 does not retain hash key ordering, so sorting them for consistency
+    expect(result.keys.sort).to eq(expected_keys.sort)
     expect(result.values).to eq(expected_values[index])
   end
 
