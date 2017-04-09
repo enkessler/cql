@@ -9,6 +9,13 @@ rvm:
   - 2.2.2
   - 2.4.0
 
+matrix:
+  exclude:
+    # Travis does not provide 1.8.7 on OSX
+  - rvm: 1.8.7
+    os: osx
+
+
 gemfile:
   - testing/gemfiles/cuke_modeler0.gemfile
   - testing/gemfiles/cuke_modeler1.gemfile
