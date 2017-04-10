@@ -124,30 +124,34 @@ Feature: 'transform' clause
 
   Scenario: Transforming duplicate attributes
 
+  Reminder: Duplicate attribute selection should be used in conjunction with the 'as' clause.
+
   Sometimes you may want to select the same attribute multiple times and perform multiple different transformations on it. This can be done with both set transforming and selective transforming.
 
     When the following query is executed:
       """
       select name, tags, name
+      as name1, tags, name2
       transform lambda { |name| name.upcase },
                 lambda { |tags| 9 },
                 lambda { |name| name.downcase }
       from scenarios, outlines
       """
     Then the following values are returned:
-      | name   | tags | name   |
+      | name1  | tags | name2  |
       | TEST 1 | 9    | test 1 |
       | TEST 2 | 9    | test 2 |
       | TEST 3 | 9    | test 3 |
     When the following query is executed:
       """
       select name, source_line, name
+      as name1, source_line, name2
       transform name => lambda { |name| name.upcase }
       transform name => lambda { |name| name.downcase }
       from scenarios, outlines
       """
     Then the following values are returned:
-      | name   | source_line | name   |
+      | name1  | source_line | name2  |
       | TEST 1 | 3           | test 1 |
       | TEST 2 | 7           | test 2 |
       | TEST 3 | 10          | test 3 |

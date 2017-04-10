@@ -1,15 +1,17 @@
 Then(/^the following values are returned:$/) do |values|
+  expected_keys = values.raw.first
   expected_results = values.hashes
-  expected_results.each { |result| result['source_line'] = result['source_line'].to_i if result['source_line'] }
-  expected_results.each { |result| result['scenario_line'] = result['scenario_line'].to_i if result['scenario_line'] }
-  expected_results.each { |result| result['tags'] = eval(result['tags']) if result['tags'] }
-  expected_results.each { |result| result['scenario_tags'] = eval(result['scenario_tags']) if result['scenario_tags'] }
 
   expected_results.each do |result|
-    result.each_pair { |key, value| result[key] = value.sub('path/to', @default_file_directory) if value =~ /path\/to/ }
+    result.each_pair { |key, value| result[key] = value.to_i if value =~ /^\d+$/ }
   end
 
-  expect(@query_results).to match_array(expected_results)
+
+  @query_results.each_with_index do |result, index|
+    # Key order doesn't matter and Ruby 1.8.7 does not retain hash key ordering, so sorting them for consistency
+    expect(result.keys.sort).to eq(expected_keys.sort)
+    expect(result).to eq(expected_results[index])
+  end
 end
 
 # Then(/^all of them can be queried for additional information$/) do
@@ -45,8 +47,10 @@ Then(/^the following code executes without error:$/) do |code_text|
 end
 
 Then(/^all of them can be queried$/) do |code_text|
+  original_text = code_text
+
   @available_model_classes.each do |clazz|
-    code_text.gsub!('<model_class>', clazz.to_s)
+    code_text = original_text.gsub('<model_class>', clazz.to_s)
 
     expect(clazz.new).to respond_to(:query)
 

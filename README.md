@@ -1,5 +1,6 @@
 [![Gem Version](https://badge.fury.io/rb/cql.svg)](https://rubygems.org/gems/cql)
 [![Build Status](https://travis-ci.org/enkessler/cql.svg?branch=dev)](https://travis-ci.org/enkessler/cql)
+[![Build status](https://ci.appveyor.com/api/projects/status/ia3t0tkyj4tuobq8/branch/dev?svg=true)](https://ci.appveyor.com/project/enkessler/cql/branch/dev)
 [![Coverage Status](https://coveralls.io/repos/enkessler/cql/badge.svg)](https://coveralls.io/github/enkessler/cql)
 [![Code Quality](https://codeclimate.com/github/enkessler/cql/badges/gpa.svg)](https://codeclimate.com/github/enkessler/cql)
 [![Dependency Status](https://gemnasium.com/enkessler/cql.svg)](https://gemnasium.com/enkessler/cql)
@@ -39,6 +40,11 @@ The first thing that needs to be done is to create a CQL Repository. This can be
     require 'cql'
     cql_repo = CQL::Repository.new "/path-to/my/feature-files"
 
+Repositories can also be created from an existing model:
+
+    directory = CukeModeler::Directory.new("/path-to/my/feature-files")
+    cql_repo = CQL::Repository.new(directory)
+
 Now that you have a repository you can write a query. A simple example is given below
 
     cql_repo.query do
@@ -46,7 +52,7 @@ Now that you have a repository you can write a query. A simple example is given 
         from features
     end
 
-This will return a list of all of the feature names in the form of a list of hashes.
+This will return a list of all of the feature names and source lines in the form of a list of hashes.
 
     [{'name' => 'Feature 1', 'source_line' => 1},
      {'name' => 'Feature 2', 'source_line' => 3},

@@ -59,13 +59,17 @@ Feature: 'select' clause
       | Test 2 | 7           |
 
   Scenario: Selection of the same attribute multiple times
+
+  Note: Duplicate attribute selection should be combined with an 'as' clause in order to ensure that later attribute selections do not override earlier selections of the same attribute.
+
     When the following query is executed:
       """
       select name, name
+      as name1, name2
       from scenarios
       """
     Then the following values are returned:
-      | name   | name   |
+      | name1  | name2  |
       | Test 1 | Test 1 |
       | Test 2 | Test 2 |
 

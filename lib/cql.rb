@@ -37,6 +37,7 @@ module CQL
       raise(ArgumentError, "A query must specify a 'select' clause") unless @what
       raise(ArgumentError, "A query must specify a 'from' clause") unless @from
 
+      warn("Multiple selections made without using an 'as' clause") unless @name_transforms || (@what.count == @what.uniq.count)
 
       # Gather relevant objects from root object and filters
       @data = CQL::MapReduce.gather_objects(@data, @from, @filters)
