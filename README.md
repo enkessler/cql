@@ -1,5 +1,6 @@
 [![Gem Version](https://badge.fury.io/rb/cql.svg)](https://rubygems.org/gems/cql)
 [![Build Status](https://travis-ci.org/enkessler/cql.svg?branch=dev)](https://travis-ci.org/enkessler/cql)
+[![Build status](https://ci.appveyor.com/api/projects/status/ia3t0tkyj4tuobq8/branch/dev?svg=true)](https://ci.appveyor.com/project/enkessler/cql/branch/dev)
 [![Coverage Status](https://coveralls.io/repos/enkessler/cql/badge.svg)](https://coveralls.io/github/enkessler/cql)
 [![Code Quality](https://codeclimate.com/github/enkessler/cql/badges/gpa.svg)](https://codeclimate.com/github/enkessler/cql)
 [![Dependency Status](https://gemnasium.com/enkessler/cql.svg)](https://gemnasium.com/enkessler/cql)
