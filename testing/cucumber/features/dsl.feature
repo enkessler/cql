@@ -19,7 +19,8 @@ Feature: DSL
   ````
 
   Background: A sample Cucumber suite
-    Given a model for the following feature:
+    Given a repository to query
+    And the following feature has been modeled in the repository:
       """
       Feature: A test feature
 
@@ -39,7 +40,6 @@ Feature: DSL
           | param |
           | value |
       """
-    And a repository that contains that model
 
 
   Scenario: Automatic string conversion

@@ -17,7 +17,8 @@ Feature: 'as' clause'
 
 
   Background: A sample Cucumber suite
-    Given a model for the following feature:
+    Given a repository to query
+    And the following feature has been modeled in the repository:
       """
       Feature: A test feature
 
@@ -37,7 +38,6 @@ Feature: 'as' clause'
           | param |
           | value |
       """
-    And a repository that contains that model
 
 
   Scenario: Using 'as' to change the name under which values are returned

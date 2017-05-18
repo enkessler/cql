@@ -14,7 +14,8 @@ Feature: 'select' clause
 
 
   Background: Repository with models
-    Given a model for the following feature:
+    Given a repository to query
+    And the following feature has been modeled in the repository:
       """
       Feature: A test feature
 
@@ -34,7 +35,6 @@ Feature: 'select' clause
           | param |
           | value |
       """
-    And a repository that contains that model
 
 
   Scenario: Using 'select' to specify which attributes of an object to return

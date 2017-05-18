@@ -22,7 +22,8 @@ Feature: 'from' clause
 
 
   Background: A sample Cucumber suite
-    Given a model for the following feature:
+    Given a repository to query
+    And the following feature has been modeled in the repository:
       """
       Feature: A test feature
 
@@ -42,7 +43,6 @@ Feature: 'from' clause
           | param |
           | value |
       """
-    And a repository that contains that model
 
 
   Scenario: Using 'from' to specify what kind of objects from which to return attributes
