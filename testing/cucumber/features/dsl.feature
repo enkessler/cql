@@ -2,18 +2,21 @@ Feature: DSL
 
   The cql gem uses a DSL to specify queries on a repository object that holds the models which represent a Cucumber test suite. The DSL can query for any attribute that is available on the underlying models.
 
-    Sample usage:
-      cql_repo.query do
-        select name, source_line
-        from features
-      end
+  Sample usage:
+  ````
+  cql_repo.query do
+    select name, source_line
+    from features
+  end
+  ````
 
   Query results are returned as a list of attribute mappings for all of the models found in the repository. The sample query above might return:
 
-    [{'name' => 'Feature 1', 'source_line' => 1},
-    {'name' => 'Feature 2', 'source_line' => 3},
-    {'name' => 'Feature 3', 'source_line' => 10}]
-
+  ````
+  [{'name' => 'Feature 1', 'source_line' => 1},
+  {'name' => 'Feature 2', 'source_line' => 3},
+  {'name' => 'Feature 3', 'source_line' => 10}]
+  ````
 
   Background: A sample Cucumber suite
     Given a model for the following feature:

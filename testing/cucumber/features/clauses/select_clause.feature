@@ -2,11 +2,13 @@ Feature: 'select' clause
 
   The *select* clause specifies what attributes will be retrieved from the models specified by the *from* clause. Multiple values can be given and they are delimited by a comma. The *select* clause can take any method to which the objects specified by *from* know how to respond. The clause can also be given a special identifier in order to return the underlying models themselves instead of their attributes. If no attributes are specified then the underlying model will be returned instead, just as if the special identifier had been used (it is simply an alternate syntax and may look nicer in some queries).
 
-    Sample usage:
-      cql_repo.query do
-        select name, tags, description_text
-        from features
-      end
+  Sample usage:
+  ````
+  cql_repo.query do
+    select name, tags, description_text
+    from features
+  end
+  ````
 
   This clause can be repeated multiple times. The arguments for successive clauses are simply added to the previous arguments.
 

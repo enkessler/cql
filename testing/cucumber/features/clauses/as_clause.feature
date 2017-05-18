@@ -2,12 +2,14 @@ Feature: 'as' clause'
 
   The *as* clause allows you to change the keys under which the model attributes specified by the *select* clause will be gathered. Key renaming can be done as a list of new names that are applied in order or as a mapping of specific keys to their new names.
 
-    Sample usage:
-      cql_repo.query do
-        select name
-        as title
-        from features
-      end
+  Sample usage:
+  ````
+  cql_repo.query do
+    select name
+    as title
+    from features
+  end
+  ````
 
   This will return a list of all of the feature names but under the key of 'title' instead of 'name'.
 

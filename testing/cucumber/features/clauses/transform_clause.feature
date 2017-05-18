@@ -2,12 +2,14 @@ Feature: 'transform' clause
 
   The *transform* clause allows you to change the values of the attributes specified by the *select* clause after they are gathered. Value transforming can be done as a list of transformation blocks that are applied in order or as a mapping of specific keys and their transformations.
 
-    Sample usage:
-      cql_repo.query do
-        select name
-        transform { |name| name.upcase }
-        from features
-      end
+  Sample usage:
+  ````
+  cql_repo.query do
+    select name
+    transform { |name| name.upcase }
+    from features
+  end
+  ````
 
   This will return a list of all of the feature names but with all of their names upcased.
 

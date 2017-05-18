@@ -4,15 +4,19 @@ Feature: 'from' clause
 
   The following are some example values:
 
-  CukeModeler::Outline  (exact class)
-  outline               (singular)
-  outlines              (pluralized)
+  ````
+  CukeModeler::Outline  # exact class
+  outline               # singular
+  outlines              # pluralized
+  ````
 
-    Sample usage:
-      cql_repo.query do
-        select name
-        from scenarios
-      end
+  Sample usage:
+  ````
+  cql_repo.query do
+    select name
+    from scenarios
+  end
+  ````
 
   This clause can be repeated multiple times. The arguments for successive clauses are simply added to the previous arguments.
 
