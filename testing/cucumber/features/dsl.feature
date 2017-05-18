@@ -16,8 +16,7 @@ Feature: DSL
 
 
   Background: A sample Cucumber suite
-    Given a directory "test_directory"
-    And a file "test_directory/test_file_1.feature":
+    Given a model for the following feature:
       """
       Feature: A test feature
 
@@ -37,7 +36,8 @@ Feature: DSL
           | param |
           | value |
       """
-    And a repository is made from "test_directory"
+    And a repository that contains that model
+
 
   Scenario: Automatic string conversion
 

@@ -14,8 +14,7 @@ Feature: 'transform' clause
   This clause can be repeated multiple times. When using lists of transforms, the arguments for successive clauses are simply added to the previous arguments. When using mapped transforms, the mappings are likewise combined. If the same key is mapped more than once, the mappings are tracked separately such that they can be applied to different instances of attribute retrieval (see examples below).
 
   Background: A sample Cucumber suite
-    Given a directory "test_directory"
-    And a file "test_directory/test_file_1.feature":
+    Given a model for the following feature:
       """
       Feature: A test feature
 
@@ -35,7 +34,7 @@ Feature: 'transform' clause
           | param |
           | value |
       """
-    And a repository is made from "test_directory"
+    And a repository that contains that model
 
 
   Scenario: Using 'transform' to change values after they are gathered

@@ -41,7 +41,7 @@ Then(/^the result is the same as the result of the following query:$/) do |query
 end
 
 Then(/^the following code executes without error:$/) do |code_text|
-  code_text = process_path(code_text)
+  code_text.sub!('path/to', @temp_dir)
 
   expect { eval(code_text) }.to_not raise_error
 end

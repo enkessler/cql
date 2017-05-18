@@ -1,17 +1,5 @@
 Given(/^a directory "([^"]*)"$/) do |partial_directory_path|
-  directory_path = partial_directory_path.include?('path/to') ? process_path(partial_directory_path) : "#{@default_file_directory}/#{partial_directory_path}"
-
-  FileUtils.mkpath(directory_path) unless File.exists?(directory_path)
-end
-
-And(/^a file "([^"]*)":$/) do |partial_file_path, file_text|
-  File.open("#{@default_file_directory}/#{partial_file_path}", 'w') { |file| file.write file_text }
-end
-
-And(/^a repository is made from "([^"]*)"$/) do |partial_path|
-  repo_path = "#{@default_file_directory}/#{partial_path}"
-
-  @repository = CQL::Repository.new(repo_path)
+  create_path(partial_directory_path)
 end
 
 Given(/^the models provided by CukeModeler$/) do
@@ -40,4 +28,36 @@ And(/^the following feature has been modeled in the repository:$/) do |text|
   end
 
   @root_directory_model.feature_files << file_model
+end
+
+Given(/^a model for the following feature:$/) do |gherkin_text|
+  @models ||= []
+  @models << CukeModeler::Feature.new(gherkin_text)
+end
+
+Given(/^a model for the following scenario:$/) do |gherkin_text|
+  @models ||= []
+  @models << CukeModeler::Scenario.new(gherkin_text)
+end
+
+And(/^a model for the following outline:$/) do |gherkin_text|
+  @models ||= []
+  @models << CukeModeler::Outline.new(gherkin_text)
+end
+
+And(/^a repository that contains that model$/) do
+  @root_directory_model = CukeModeler::Directory.new
+
+  @models.each do |model|
+    case
+      when model.is_a?(CukeModeler::Feature)
+        parent_model = CukeModeler::FeatureFile.new
+        parent_model.feature = model
+        @root_directory_model.feature_files << parent_model
+      else
+        raise(ArgumentError, "Don't know how to handle a #{model.class}")
+    end
+  end
+
+  @repository = CQL::Repository.new(@root_directory_model)
 end

@@ -18,8 +18,7 @@ Feature: 'from' clause
 
 
   Background: A sample Cucumber suite
-    Given a directory "test_directory"
-    And a file "test_directory/test_file_1.feature":
+    Given a model for the following feature:
       """
       Feature: A test feature
 
@@ -39,7 +38,7 @@ Feature: 'from' clause
           | param |
           | value |
       """
-    And a repository is made from "test_directory"
+    And a repository that contains that model
 
 
   Scenario: Using 'from' to specify what kind of objects from which to return attributes
