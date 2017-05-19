@@ -1,4 +1,3 @@
-todo - Create models directly instead of messing with a file system during testing, reading from a file system properly is the cuke_modeler gem's problem
 todo - organize feature files for better presentation on Relish
 todo - Add more documentation to code itself (i.e. rdoc documentation)
 todo - Change clauses to target based on final attribute names (i.e. after 'as' clause) instead of original attribute name (which may contain duplicate selections resulting in ambiguity)
