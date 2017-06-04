@@ -4,6 +4,7 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/ia3t0tkyj4tuobq8/branch/dev?svg=true)](https://ci.appveyor.com/project/enkessler/cql/branch/dev)
 [![Coverage Status](https://coveralls.io/repos/enkessler/cql/badge.svg?branch=dev)](https://coveralls.io/github/enkessler/cql?branch=dev)
 [![Code Quality](https://codeclimate.com/github/enkessler/cql/badges/gpa.svg)](https://codeclimate.com/github/enkessler/cql)
+[![Inline docs](http://inch-ci.org/github/enkessler/cql.svg?branch=dev)](https://inch-ci.org/github/enkessler/cql?branch=dev)
 [![Project License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/enkessler/cql/blob/master/LICENSE.txt)
 
 
