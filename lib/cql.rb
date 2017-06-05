@@ -14,24 +14,6 @@ module CQL
 
     attr_reader :data, :what
 
-    # todo - make this private
-    def format_data data
-      space_data
-
-      Array.new.tap do |result_array|
-        data.each do |element|
-          result_array << Hash.new.tap do |result|
-            @what.each_with_index do |attribute, index|
-              key = determine_key(attribute, index)
-              value = determine_value(element, attribute, index)
-
-              result[key] = value
-            end
-          end
-        end
-      end
-
-    end
 
     def initialize(directory, &block)
       # Set root object
@@ -59,6 +41,23 @@ module CQL
 
     def format_output(data)
       format_data(data)
+    end
+
+    def format_data data
+      space_data
+
+      Array.new.tap do |result_array|
+        data.each do |element|
+          result_array << Hash.new.tap do |result|
+            @what.each_with_index do |attribute, index|
+              key = determine_key(attribute, index)
+              value = determine_value(element, attribute, index)
+
+              result[key] = value
+            end
+          end
+        end
+      end
     end
 
     def determine_key(attribute, index)

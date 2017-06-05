@@ -141,18 +141,19 @@ module CQL
       TagFilter.new tags
     end
 
-    # todo - make this private
+
+    private
+
+
     def translate_shorthand(where)
       where.split('_').map(&:capitalize).join
     end
 
-    # todo - make this private
     def prep_variable(var_name, transforms)
       starting_value = transforms.first.is_a?(Hash) ? {} : []
       instance_variable_set("@#{var_name}".to_sym, starting_value)
     end
 
-    # todo - make this private
     def add_transforms(new_transforms, transform_set)
       # todo - accept either array or a hash
       if new_transforms.first.is_a?(Hash)
@@ -171,7 +172,6 @@ module CQL
       end
     end
 
-    # todo - make this private
     def determine_class(where)
       # Translate shorthand Strings to final class
       where = translate_shorthand(where)
