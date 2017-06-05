@@ -2,12 +2,19 @@ require 'cuke_modeler'
 require 'cql/map_reduce'
 require 'cql/queriable'
 
+
+# The top level namespace for CQL related code.
+
 module CQL
 
+  # Not a part of the public API. Subject to change at any time.
   class Query
+
     include Dsl
+
     attr_reader :data, :what
 
+    # todo - make this private
     def format_data data
       space_data
 
@@ -153,6 +160,8 @@ module CQL
 
   end
 
+
+  # A repository is a group of models. See the corresponding Cucumber documentation for details.
 
   class Repository
 

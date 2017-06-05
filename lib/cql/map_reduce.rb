@@ -6,6 +6,7 @@ require 'cql/dsl'
 
 module CQL
 
+  # Not a part of the public API. Subject to change at any time.
   class MapReduce
 
     extend Dsl

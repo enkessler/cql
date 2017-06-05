@@ -1,5 +1,6 @@
 module CQL
 
+  # Not a part of the public API. Subject to change at any time.
   class TagFilter
     attr_reader :tags
 
@@ -23,6 +24,7 @@ module CQL
 
   end
 
+  # Not a part of the public API. Subject to change at any time.
   class ContentMatchFilter
     attr_reader :pattern
 
@@ -42,6 +44,7 @@ module CQL
 
   end
 
+  # Not a part of the public API. Subject to change at any time.
   class TypeCountFilter
     attr_reader :types, :comparison
 
@@ -50,6 +53,7 @@ module CQL
       @comparison = comparison
     end
 
+    # Not a part of the public API. Subject to change at any time.
     def execute(input, negate)
       method = negate ? :reject : :select
 
@@ -60,6 +64,7 @@ module CQL
 
   end
 
+  # Not a part of the public API. Subject to change at any time.
   class NameFilter < ContentMatchFilter
 
     def execute(input, negate)
@@ -72,6 +77,8 @@ module CQL
 
   end
 
+
+  # Not a part of the public API. Subject to change at any time.
   class TagCountFilter < TypeCountFilter
 
     def type_count(test)

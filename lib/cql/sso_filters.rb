@@ -3,6 +3,7 @@ require 'cql/filters'
 
 module CQL
 
+  # Not a part of the public API. Subject to change at any time.
   class SsoLineCountFilter < TypeCountFilter
 
     def type_count(test)
@@ -11,6 +12,7 @@ module CQL
 
   end
 
+  # Not a part of the public API. Subject to change at any time.
   class LineFilter < ContentMatchFilter
 
     def execute(input, negate)
