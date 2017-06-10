@@ -99,7 +99,7 @@ module CQL
             value = mappings[attribute][location]
           end
         else
-          # todo - add error message
+          raise(ArgumentError, "Unknown mapping type '#{mappings.class}'")
       end
 
       value
