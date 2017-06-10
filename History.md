@@ -1,3 +1,8 @@
+### Version 1.4.1 / 2017-06-10
+
+* Improved the documentation of the project.
+
+
 ### Version 1.4.0 / 2017-04-08
 
 * Bug fix: The documented use case of selecting the same attribute multiple times is not, in fact, possible due to 
