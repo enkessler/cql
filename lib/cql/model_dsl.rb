@@ -13,6 +13,7 @@ module CukeModeler
     alias_method :original_initialize, :initialize
 
 
+    # Sets itself as the model's *query_root*. Otherwise, as per the un-patched method.
     def initialize(source_text = nil)
       original_initialize(source_text)
 

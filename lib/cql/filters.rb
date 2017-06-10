@@ -16,6 +16,7 @@ module CQL
       }
     end
 
+    # Filters the input models so that only the desired ones are returned
     def execute(objects, negate)
       method = negate ? :reject : :select
 
@@ -54,6 +55,7 @@ module CQL
     end
 
     # Not a part of the public API. Subject to change at any time.
+    # Filters the input models so that only the desired ones are returned
     def execute(input, negate)
       method = negate ? :reject : :select
 
@@ -67,6 +69,7 @@ module CQL
   # Not a part of the public API. Subject to change at any time.
   class NameFilter < ContentMatchFilter
 
+    # Filters the input models so that only the desired ones are returned
     def execute(input, negate)
       method = negate ? :reject : :select
 
@@ -81,6 +84,7 @@ module CQL
   # Not a part of the public API. Subject to change at any time.
   class TagCountFilter < TypeCountFilter
 
+    # Counts the numbers of tags on a test
     def type_count(test)
       test.tags.size
     end

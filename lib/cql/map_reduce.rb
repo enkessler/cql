@@ -11,6 +11,8 @@ module CQL
 
     extend Dsl
 
+
+    # Recursively gathers all models that match the given targets and filters
     def self.gather_objects(current_object, target_classes, filters)
       gathered_objects = Array.new.tap { |gathered_objects| collect_all_in(target_classes, current_object, gathered_objects) }
 
