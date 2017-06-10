@@ -2,20 +2,22 @@ Feature: 'transform' clause
 
   The *transform* clause allows you to change the values of the attributes specified by the *select* clause after they are gathered. Value transforming can be done as a list of transformation blocks that are applied in order or as a mapping of specific keys and their transformations.
 
-    Sample usage:
-      cql_repo.query do
-        select name
-        transform { |name| name.upcase }
-        from features
-      end
+  Sample usage:
+  ````
+  cql_repo.query do
+    select name
+    transform { |name| name.upcase }
+    from features
+  end
+  ````
 
   This will return a list of all of the feature names but with all of their names upcased.
 
   This clause can be repeated multiple times. When using lists of transforms, the arguments for successive clauses are simply added to the previous arguments. When using mapped transforms, the mappings are likewise combined. If the same key is mapped more than once, the mappings are tracked separately such that they can be applied to different instances of attribute retrieval (see examples below).
 
   Background: A sample Cucumber suite
-    Given a directory "test_directory"
-    And a file "test_directory/test_file_1.feature":
+    Given a repository to query
+    And the following feature has been modeled in the repository:
       """
       Feature: A test feature
 
@@ -35,7 +37,6 @@ Feature: 'transform' clause
           | param |
           | value |
       """
-    And a repository is made from "test_directory"
 
 
   Scenario: Using 'transform' to change values after they are gathered

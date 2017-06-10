@@ -2,12 +2,14 @@ Feature: 'as' clause'
 
   The *as* clause allows you to change the keys under which the model attributes specified by the *select* clause will be gathered. Key renaming can be done as a list of new names that are applied in order or as a mapping of specific keys to their new names.
 
-    Sample usage:
-      cql_repo.query do
-        select name
-        as title
-        from features
-      end
+  Sample usage:
+  ````
+  cql_repo.query do
+    select name
+    as title
+    from features
+  end
+  ````
 
   This will return a list of all of the feature names but under the key of 'title' instead of 'name'.
 
@@ -15,8 +17,8 @@ Feature: 'as' clause'
 
 
   Background: A sample Cucumber suite
-    Given a directory "test_directory"
-    And a file "test_directory/test_file_1.feature":
+    Given a repository to query
+    And the following feature has been modeled in the repository:
       """
       Feature: A test feature
 
@@ -36,7 +38,6 @@ Feature: 'as' clause'
           | param |
           | value |
       """
-    And a repository is made from "test_directory"
 
 
   Scenario: Using 'as' to change the name under which values are returned

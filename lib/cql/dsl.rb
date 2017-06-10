@@ -1,10 +1,16 @@
 module CQL
+
+  # The Domain Specific Language used for performing queries.
+
   module Dsl
 
+
+    # Any undefined method is assumed to mean its String equivalent, thus allowing a more convenient query syntax.
     def method_missing(method_name)
       method_name.to_s
     end
 
+    # Adds a *transform* clause to the query. See the corresponding Cucumber documentation for details.
     def transform(*attribute_transforms, &block)
       # todo - Still feels like some as/transform code duplication but I think that it would get too meta if I
       # reduced it any further. Perhaps change how the transforms are handled so that there doesn't have to be
@@ -16,13 +22,14 @@ module CQL
       add_transforms(attribute_transforms, @value_transforms)
     end
 
+    # Adds an *as* clause to the query. See the corresponding Cucumber documentation for details.
     def as(*name_transforms)
       prep_variable('name_transforms', name_transforms) unless @name_transforms
 
       add_transforms(name_transforms, @name_transforms)
     end
 
-    #Select clause
+    # Adds a *select* clause to the query. See the corresponding Cucumber documentation for details.
     def select *what
       what = [:self] if what.empty?
 
@@ -30,17 +37,19 @@ module CQL
       @what.concat(what)
     end
 
+    # Adds a *name* filter to the query. See the corresponding Cucumber documentation for details.
     def name *args
       return 'name' if args.size == 0
       CQL::NameFilter.new args[0]
     end
 
+    # Adds a *line* filter to the query. See the corresponding Cucumber documentation for details.
     def line *args
       return 'line' if args.size == 0
       CQL::LineFilter.new args.first
     end
 
-    #from clause
+    # Adds a *from* clause to the query. See the corresponding Cucumber documentation for details.
     def from(*targets)
       @from ||= []
 
@@ -49,7 +58,7 @@ module CQL
       @from.concat(targets)
     end
 
-    #with clause
+    # Adds a *with* clause to the query. See the corresponding Cucumber documentation for details.
     def with(*conditions, &block)
       @filters ||= []
 
@@ -59,7 +68,7 @@ module CQL
       end
     end
 
-    #without clause
+    # Adds a *without* clause to the query. See the corresponding Cucumber documentation for details.
     def without(*conditions, &block)
       @filters ||= []
 
@@ -69,6 +78,7 @@ module CQL
       end
     end
 
+    # Not a part of the public API. Subject to change at any time.
     class Comparison
       attr_accessor :operator, :amount
 
@@ -79,47 +89,61 @@ module CQL
 
     end
 
+    # Adds a *tc* filter to the query. See the corresponding Cucumber documentation for details.
     def tc comparison
       TagCountFilter.new 'tc', comparison
     end
 
+    # Adds a *lc* filter to the query. See the corresponding Cucumber documentation for details.
     def lc comparison
       CQL::SsoLineCountFilter.new('lc', comparison)
     end
 
+    # Adds an *ssoc* filter to the query. See the corresponding Cucumber documentation for details.
     def ssoc comparison
       TestCountFilter.new([CukeModeler::Scenario, CukeModeler::Outline], comparison)
     end
 
+    # Adds an *sc* filter to the query. See the corresponding Cucumber documentation for details.
     def sc comparison
       TestCountFilter.new([CukeModeler::Scenario], comparison)
     end
 
+    # Adds an *soc* filter to the query. See the corresponding Cucumber documentation for details.
     def soc comparison
       TestCountFilter.new([CukeModeler::Outline], comparison)
     end
 
+    # Adds a *gt* filter operator to the query. See the corresponding Cucumber documentation for details.
     def gt amount
       Comparison.new '>', amount
     end
 
+    # Adds a *gte* filter operator to the query. See the corresponding Cucumber documentation for details.
     def gte amount
       Comparison.new '>=', amount
     end
 
+    # Adds an *lt* filter operator to the query. See the corresponding Cucumber documentation for details.
     def lt amount
       Comparison.new '<', amount
     end
 
+    # Adds an *lte* filter operator to the query. See the corresponding Cucumber documentation for details.
     def lte amount
       Comparison.new '<=', amount
     end
 
+    # Adds a *tags* filter to the query. See the corresponding Cucumber documentation for details.
     def tags *tags
       return "tags" if tags.size == 0
 
       TagFilter.new tags
     end
+
+
+    private
+
 
     def translate_shorthand(where)
       where.split('_').map(&:capitalize).join

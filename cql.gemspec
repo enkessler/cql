@@ -25,7 +25,7 @@ Thank you for installing cql (Cucumber Query Language)
 
   s.add_runtime_dependency 'cuke_modeler', '< 2.0'
 
-  s.add_development_dependency 'rake', '< 12.0.0'
+  s.add_development_dependency 'rake', '< 13.0.0'
   s.add_development_dependency 'rspec', '~> 3.0'
   s.add_development_dependency 'cucumber', '< 3.0.0'
   s.add_development_dependency 'simplecov', '< 1.0.0'

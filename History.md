@@ -1,6 +1,11 @@
+### Version 1.4.1 / 2017-06-10
+
+* Improved the documentation of the project.
+
+
 ### Version 1.4.0 / 2017-04-08
 
-* Bug fix: The documented use use case of selecting the same attribute multiple times is not, in fact, possible due to 
+* Bug fix: The documented use case of selecting the same attribute multiple times is not, in fact, possible due to 
   the fact that results are a map type object (thus, they cannot have the same key more than once). This results in the 
   duplicate selections of an attribute overwriting the earlier selections. This data loss can be avoided by using the 
   'as' clause to rename the selections such that they all have unique key values. A warning has been added that is 

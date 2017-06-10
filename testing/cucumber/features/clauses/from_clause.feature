@@ -4,22 +4,26 @@ Feature: 'from' clause
 
   The following are some example values:
 
-  CukeModeler::Outline  (exact class)
-  outline               (singular)
-  outlines              (pluralized)
+  ````
+  CukeModeler::Outline  # exact class
+  outline               # singular
+  outlines              # pluralized
+  ````
 
-    Sample usage:
-      cql_repo.query do
-        select name
-        from scenarios
-      end
+  Sample usage:
+  ````
+  cql_repo.query do
+    select name
+    from scenarios
+  end
+  ````
 
   This clause can be repeated multiple times. The arguments for successive clauses are simply added to the previous arguments.
 
 
   Background: A sample Cucumber suite
-    Given a directory "test_directory"
-    And a file "test_directory/test_file_1.feature":
+    Given a repository to query
+    And the following feature has been modeled in the repository:
       """
       Feature: A test feature
 
@@ -39,7 +43,6 @@ Feature: 'from' clause
           | param |
           | value |
       """
-    And a repository is made from "test_directory"
 
 
   Scenario: Using 'from' to specify what kind of objects from which to return attributes

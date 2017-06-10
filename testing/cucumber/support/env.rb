@@ -3,22 +3,22 @@ unless RUBY_VERSION.to_s < '1.9.0'
   SimpleCov.command_name('cql-cucumber')
 end
 
+require 'tmpdir'
 
 require 'cql'
 require 'cql/model_dsl'
 
 
-Before do
-  @default_file_directory = "#{File.dirname(__FILE__)}/../temp_files"
-
-  FileUtils.mkdir(@default_file_directory)
-end
-
 After do
-  FileUtils.remove_dir(@default_file_directory, true)
+  FileUtils.remove_dir(@temp_dir, true) if @temp_dir
 end
 
 
-def process_path(path)
-  path.sub('path/to', @default_file_directory)
+def create_path(path)
+  @temp_dir ||= Dir.mktmpdir
+  path = path.sub('path/to/', "#{@temp_dir}/")
+
+  Dir.mkdir(path)
+
+  path
 end
