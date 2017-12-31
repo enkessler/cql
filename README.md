@@ -72,4 +72,4 @@ Alternatively, you can activate the extensions to the cuke_modeler gem and query
         from features
     end
 
-For more information on the query options, see the [documentation](https://www.relishapp.com/enkessler/cql/docs).
+For more information on the query options, see the documentation [here](https://www.relishapp.com/enkessler/cql/docs) (current home) or [here](https://app.cucumber.pro/projects/cql/documents/branch/master) (future home).
