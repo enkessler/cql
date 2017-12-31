@@ -63,7 +63,7 @@ namespace 'cql' do
   end
 
   # Publishes the current feature file documentation to all places
-  desc 'Publish feature files to Relish'
+  desc 'Publish feature files to all documentation services'
   task :publish_features => [:publish_to_relish, :publish_to_cucumberpro]
 
 end
