@@ -1,3 +1,8 @@
+### Version 1.4.2 / 2018-01-01
+
+* New documentation locations added.
+
+
 ### Version 1.4.1 / 2017-06-10
 
 * Improved the documentation of the project.
