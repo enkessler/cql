@@ -126,7 +126,7 @@ describe "scenario and outline filters (with)" do
                                                                                                   /will not be found/ => []}}}
 
   it 'should filter by multiple filters' do
-    gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/tag_count")
+    gs = CQL::Repository.new("#{CQL_FEATURE_FIXTURES_DIRECTORY}/scenario/tag_count")
 
     result = gs.query do
       select name
@@ -139,7 +139,7 @@ describe "scenario and outline filters (with)" do
   end
 
   it 'should filter by multiple filters' do
-    gs = CQL::Repository.new("#{@feature_fixtures_directory}/scen_outlines/filters/tag_count")
+    gs = CQL::Repository.new("#{CQL_FEATURE_FIXTURES_DIRECTORY}/scen_outlines/filters/tag_count")
 
     result = gs.query do
       select name

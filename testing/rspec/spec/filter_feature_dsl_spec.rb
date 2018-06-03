@@ -5,7 +5,7 @@ describe "feature filters (with)" do
   describe 'scenario outline and scenario count functions (ssoc)' do
 
     it 'should filter based on ssoc_gt' do
-      gs = CQL::Repository.new("#{@feature_fixtures_directory}/combined/a")
+      gs = CQL::Repository.new("#{CQL_FEATURE_FIXTURES_DIRECTORY}/combined/a")
 
       expected_results = {5 => [{"name" => "f1_4_scenarios_5_so"}, {"name" => "f2_7_scenarios_2_so"}]}
 
@@ -21,7 +21,7 @@ describe "feature filters (with)" do
     end
 
     it 'should filter based on ssoc_gte' do
-      gs = CQL::Repository.new("#{@feature_fixtures_directory}/combined/a")
+      gs = CQL::Repository.new("#{CQL_FEATURE_FIXTURES_DIRECTORY}/combined/a")
 
       expected_results = {1 => [{"name" => "f1_4_scenarios_5_so"}, {"name" => "f2_7_scenarios_2_so"}, {"name" => "f3_2_scenarios_3_so"}],
                           5 => [{"name" => "f1_4_scenarios_5_so"}, {"name" => "f2_7_scenarios_2_so"}, {"name" => "f3_2_scenarios_3_so"}],
@@ -40,7 +40,7 @@ describe "feature filters (with)" do
     end
 
     it 'should filter based on ssoc_lt' do
-      gs = CQL::Repository.new("#{@feature_fixtures_directory}/combined/a")
+      gs = CQL::Repository.new("#{CQL_FEATURE_FIXTURES_DIRECTORY}/combined/a")
 
       expected_results = {10 => [{"name" => "f1_4_scenarios_5_so"}, {"name" => "f2_7_scenarios_2_so"}, {"name" => "f3_2_scenarios_3_so"}],
                           9 => [{"name" => "f3_2_scenarios_3_so"}],
@@ -58,7 +58,7 @@ describe "feature filters (with)" do
     end
 
     it 'should filter based on ssoc_lte' do
-      gs = CQL::Repository.new("#{@feature_fixtures_directory}/combined/a")
+      gs = CQL::Repository.new("#{CQL_FEATURE_FIXTURES_DIRECTORY}/combined/a")
 
       expected_results = {10 => [{"name" => "f1_4_scenarios_5_so"}, {"name" => "f2_7_scenarios_2_so"}, {"name" => "f3_2_scenarios_3_so"}],
                           9 => [{"name" => "f1_4_scenarios_5_so"}, {"name" => "f2_7_scenarios_2_so"}, {"name" => "f3_2_scenarios_3_so"}],
@@ -81,7 +81,7 @@ describe "feature filters (with)" do
 
   describe 'scenario count functions (sc)' do
     it 'should filter based on sc_gt' do
-      gs = CQL::Repository.new("#{@feature_fixtures_directory}/combined/a")
+      gs = CQL::Repository.new("#{CQL_FEATURE_FIXTURES_DIRECTORY}/combined/a")
 
       expected_results = {2 => [{"name" => "f1_4_scenarios_5_so"}, {"name" => "f2_7_scenarios_2_so"}]}
 
@@ -97,7 +97,7 @@ describe "feature filters (with)" do
     end
 
     it 'should filter based on sc_gte' do
-      gs = CQL::Repository.new("#{@feature_fixtures_directory}/combined/a")
+      gs = CQL::Repository.new("#{CQL_FEATURE_FIXTURES_DIRECTORY}/combined/a")
 
       expected_results = {2 => [{"name" => "f1_4_scenarios_5_so"}, {"name" => "f2_7_scenarios_2_so"}, {"name" => "f3_2_scenarios_3_so"}],
                           4 => [{"name" => "f1_4_scenarios_5_so"}, {"name" => "f2_7_scenarios_2_so"}],
@@ -116,7 +116,7 @@ describe "feature filters (with)" do
     end
 
     it 'should filter based on sc_lt' do
-      gs = CQL::Repository.new("#{@feature_fixtures_directory}/combined/a")
+      gs = CQL::Repository.new("#{CQL_FEATURE_FIXTURES_DIRECTORY}/combined/a")
 
       expected_results = {
           7 => [{"name" => "f1_4_scenarios_5_so"}, {"name" => "f3_2_scenarios_3_so"}],
@@ -135,7 +135,7 @@ describe "feature filters (with)" do
     end
 
     it 'should filter based on sc_lte' do
-      gs = CQL::Repository.new("#{@feature_fixtures_directory}/combined/a")
+      gs = CQL::Repository.new("#{CQL_FEATURE_FIXTURES_DIRECTORY}/combined/a")
 
       expected_results = {7 => [{"name" => "f1_4_scenarios_5_so"}, {"name" => "f2_7_scenarios_2_so"}, {"name" => "f3_2_scenarios_3_so"}],
                           5 => [{"name" => "f1_4_scenarios_5_so"}, {"name" => "f3_2_scenarios_3_so"}],
@@ -188,7 +188,7 @@ describe "feature filters (with)" do
 
   describe 'scenario outline count functions (soc)' do
     it 'should filter based on soc_gt' do
-      gs = CQL::Repository.new("#{@feature_fixtures_directory}/combined/a")
+      gs = CQL::Repository.new("#{CQL_FEATURE_FIXTURES_DIRECTORY}/combined/a")
 
       expected_results = {2 => [{"name" => "f1_4_scenarios_5_so"}, {"name" => "f3_2_scenarios_3_so"}],
                           5 => []}
@@ -205,7 +205,7 @@ describe "feature filters (with)" do
     end
 
     it 'should filter based on soc_gte' do
-      gs = CQL::Repository.new("#{@feature_fixtures_directory}/combined/a")
+      gs = CQL::Repository.new("#{CQL_FEATURE_FIXTURES_DIRECTORY}/combined/a")
 
       expected_results = {2 => [{"name" => "f1_4_scenarios_5_so"}, {"name" => "f2_7_scenarios_2_so"}, {"name" => "f3_2_scenarios_3_so"}],
                           3 => [{"name" => "f1_4_scenarios_5_so"}, {"name" => "f3_2_scenarios_3_so"}],
@@ -224,7 +224,7 @@ describe "feature filters (with)" do
     end
 
     it 'should filter based on soc_lt' do
-      gs = CQL::Repository.new("#{@feature_fixtures_directory}/combined/a")
+      gs = CQL::Repository.new("#{CQL_FEATURE_FIXTURES_DIRECTORY}/combined/a")
 
       expected_results = {7 => [{"name" => "f1_4_scenarios_5_so"}, {"name" => "f2_7_scenarios_2_so"}, {"name" => "f3_2_scenarios_3_so"}],
                           5 => [{"name" => "f2_7_scenarios_2_so"}, {"name" => "f3_2_scenarios_3_so"}],
@@ -243,7 +243,7 @@ describe "feature filters (with)" do
     end
 
     it 'should filter based on soc_lte' do
-      gs = CQL::Repository.new("#{@feature_fixtures_directory}/combined/a")
+      gs = CQL::Repository.new("#{CQL_FEATURE_FIXTURES_DIRECTORY}/combined/a")
 
       expected_results = {7 => [{"name" => "f1_4_scenarios_5_so"}, {"name" => "f2_7_scenarios_2_so"}, {"name" => "f3_2_scenarios_3_so"}],
                           5 => [{"name" => "f1_4_scenarios_5_so"}, {"name" => "f2_7_scenarios_2_so"}, {"name" => "f3_2_scenarios_3_so"}],
@@ -271,7 +271,7 @@ describe "feature filters (with)" do
 
 
   it 'should filter by multiple filters' do
-    gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/tagged_features")
+    gs = CQL::Repository.new("#{CQL_FEATURE_FIXTURES_DIRECTORY}/scenario/tagged_features")
 
     result = gs.query do
       select name

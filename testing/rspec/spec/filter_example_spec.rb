@@ -50,7 +50,7 @@ describe "example filters (with)" do
                                                }
 
   it 'should filter by multiple filters' do
-    gs = CQL::Repository.new("#{@feature_fixtures_directory}/examples/filters/tag_count")
+    gs = CQL::Repository.new("#{CQL_FEATURE_FIXTURES_DIRECTORY}/examples/filters/tag_count")
 
     result = gs.query do
       select name

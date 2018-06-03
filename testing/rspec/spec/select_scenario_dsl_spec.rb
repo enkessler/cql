@@ -5,7 +5,7 @@ describe "select" do
   describe 'from scenarios' do
 
     it 'should return lines from scenarios' do
-      gr = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/simple2")
+      gr = CQL::Repository.new("#{CQL_FEATURE_FIXTURES_DIRECTORY}/scenario/simple2")
 
       result = gr.query do
         select source_line
@@ -16,7 +16,7 @@ describe "select" do
     end
 
     it 'should return names from scenarios' do
-      gr = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/simple2")
+      gr = CQL::Repository.new("#{CQL_FEATURE_FIXTURES_DIRECTORY}/scenario/simple2")
 
       result = gr.query do
         select name
@@ -28,7 +28,7 @@ describe "select" do
     end
 
     # it 'should return types from scenarios' do
-    #   gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/simple2")
+    #   gs = CQL::Repository.new("#{CQL_FEATURE_FIXTURES_DIRECTORY}/scenario/simple2")
     #
     #   result = gs.query do
     #     select raw_element
@@ -42,7 +42,7 @@ describe "select" do
     # end
     #
     # it 'should return step lines from scenarios' do
-    #   gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/simple2")
+    #   gs = CQL::Repository.new("#{CQL_FEATURE_FIXTURES_DIRECTORY}/scenario/simple2")
     #
     #   result = gs.query do
     #     select raw_element
@@ -58,7 +58,7 @@ describe "select" do
     # end
     #
     # it 'should return ids from scenarios' do
-    #   gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/simple2")
+    #   gs = CQL::Repository.new("#{CQL_FEATURE_FIXTURES_DIRECTORY}/scenario/simple2")
     #
     #   result = gs.query do
     #     select raw_element
@@ -74,7 +74,7 @@ describe "select" do
     # end
     #
     # it 'should return steps from scenarios' do
-    #   gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/simple2")
+    #   gs = CQL::Repository.new("#{CQL_FEATURE_FIXTURES_DIRECTORY}/scenario/simple2")
     #
     #   result = gs.query do
     #     select raw_element
@@ -90,7 +90,7 @@ describe "select" do
     # end
 
     it 'should return multiple things from scenarios' do
-      gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/simple2")
+      gs = CQL::Repository.new("#{CQL_FEATURE_FIXTURES_DIRECTORY}/scenario/simple2")
 
       result = gs.query do
         select name, source_line
@@ -104,7 +104,7 @@ describe "select" do
     end
 
     it 'should return things from multiple feature files' do
-      gr = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/simple")
+      gr = CQL::Repository.new("#{CQL_FEATURE_FIXTURES_DIRECTORY}/scenario/simple")
 
       result = gr.query do
         select name
@@ -118,7 +118,7 @@ describe "select" do
     end
 
     it 'should get multiple scenarios as a list of maps' do
-      gr = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/simple2")
+      gr = CQL::Repository.new("#{CQL_FEATURE_FIXTURES_DIRECTORY}/scenario/simple2")
       result = gr.query do
         select source_line, name
         from scenarios

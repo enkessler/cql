@@ -26,17 +26,4 @@ RSpec.configure do |config|
     config.filter_run_excluding :cuke_modeler_1x => true
   end
 
-  config.before(:all) do
-    @feature_fixtures_directory = CQL_FEATURE_FIXTURES_DIRECTORY
-  end
-
-  config.before(:each) do
-    # Nothing yet
-  end
-
-  config.after(:each) do
-    # Nothing yet
-  end
 end
-
-

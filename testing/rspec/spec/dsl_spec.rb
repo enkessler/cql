@@ -11,7 +11,7 @@ describe 'an object that uses the DSL' do
   describe 'invalid query structure' do
 
     it "will complain if no 'from' clause is specified" do
-      gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/simple")
+      gs = CQL::Repository.new("#{CQL_FEATURE_FIXTURES_DIRECTORY}/scenario/simple")
 
       expect {
         gs.query do
@@ -22,7 +22,7 @@ describe 'an object that uses the DSL' do
     end
 
     it "will complain if no 'select' clause is specified" do
-      gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/simple")
+      gs = CQL::Repository.new("#{CQL_FEATURE_FIXTURES_DIRECTORY}/scenario/simple")
 
       expect {
         gs.query do
@@ -39,7 +39,7 @@ describe 'an object that uses the DSL' do
     it 'handles intermixed clauses' do
       # Clause ordering doesn't matter as long as any given type of clause is ordered correctly with respect to its multiple uses
 
-      gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/simple")
+      gs = CQL::Repository.new("#{CQL_FEATURE_FIXTURES_DIRECTORY}/scenario/simple")
 
       results = gs.query do
         with { |scenario| scenario.name =~ /slurping/ }
@@ -106,7 +106,7 @@ describe 'an object that uses the DSL' do
     describe 'special attributes' do
 
       it 'understands the :model attribute' do
-        gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/simple")
+        gs = CQL::Repository.new("#{CQL_FEATURE_FIXTURES_DIRECTORY}/scenario/simple")
 
         expect { gs.query do
           select :model
@@ -116,7 +116,7 @@ describe 'an object that uses the DSL' do
       end
 
       it 'interprets :model in the same manner that it interprets :self' do
-        gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/simple")
+        gs = CQL::Repository.new("#{CQL_FEATURE_FIXTURES_DIRECTORY}/scenario/simple")
 
         self_result = gs.query do
           select :self
@@ -133,7 +133,7 @@ describe 'an object that uses the DSL' do
       end
 
       it 'complains if an unknown special attribute is queried' do
-        gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/simple")
+        gs = CQL::Repository.new("#{CQL_FEATURE_FIXTURES_DIRECTORY}/scenario/simple")
 
         expect {
           gs.query do
@@ -144,7 +144,7 @@ describe 'an object that uses the DSL' do
       end
 
       it 'uses the :self attribute by default' do
-        gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/simple")
+        gs = CQL::Repository.new("#{CQL_FEATURE_FIXTURES_DIRECTORY}/scenario/simple")
 
         default_result = gs.query do
           select
@@ -163,7 +163,7 @@ describe 'an object that uses the DSL' do
 
 
     it 'complains if an unknown normal attribute is queried' do
-      gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/simple")
+      gs = CQL::Repository.new("#{CQL_FEATURE_FIXTURES_DIRECTORY}/scenario/simple")
 
       expect {
         gs.query do
@@ -177,7 +177,7 @@ describe 'an object that uses the DSL' do
     describe "multiple selections" do
 
       it 'can freely mix empty selections and attribute selections' do
-        gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/simple")
+        gs = CQL::Repository.new("#{CQL_FEATURE_FIXTURES_DIRECTORY}/scenario/simple")
 
         base_result = gs.query do
           select :self
@@ -207,7 +207,7 @@ describe 'an object that uses the DSL' do
       let(:warning_message) { "Multiple selections made without using an 'as' clause\n" }
 
       it "warns if the same attribute is selected more than once without an 'as' clause being used" do
-        gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/simple")
+        gs = CQL::Repository.new("#{CQL_FEATURE_FIXTURES_DIRECTORY}/scenario/simple")
 
         expect {
           gs.query do
@@ -218,7 +218,7 @@ describe 'an object that uses the DSL' do
       end
 
       it "does not warn if the same attribute is selected more than once and an 'as' clause is used" do
-        gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/simple")
+        gs = CQL::Repository.new("#{CQL_FEATURE_FIXTURES_DIRECTORY}/scenario/simple")
 
         expect {
           gs.query do
@@ -245,7 +245,7 @@ describe 'an object that uses the DSL' do
     end
 
     it "can handle an empty 'from' clause" do
-      gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/simple")
+      gs = CQL::Repository.new("#{CQL_FEATURE_FIXTURES_DIRECTORY}/scenario/simple")
 
       result = gs.query do
         select name
@@ -258,7 +258,7 @@ describe 'an object that uses the DSL' do
     describe "multiple targets" do
 
       it 'raises an exception for inapplicable attributes' do
-        gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/simple")
+        gs = CQL::Repository.new("#{CQL_FEATURE_FIXTURES_DIRECTORY}/scenario/simple")
 
         expect {
           gs.query do
@@ -292,7 +292,7 @@ describe 'an object that uses the DSL' do
       end
 
       it 'raises an exception if the shorthand form of a class cannot be mapped to a real class' do
-        gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/simple")
+        gs = CQL::Repository.new("#{CQL_FEATURE_FIXTURES_DIRECTORY}/scenario/simple")
 
         expect {
           gs.query do
@@ -304,7 +304,7 @@ describe 'an object that uses the DSL' do
       end
 
       it 'can freely mix shorthand and long-form names' do
-        gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/simple")
+        gs = CQL::Repository.new("#{CQL_FEATURE_FIXTURES_DIRECTORY}/scenario/simple")
 
         # All long-form
         base_result = gs.query do
@@ -335,7 +335,7 @@ describe 'an object that uses the DSL' do
     describe 'special scopes' do
 
       it 'understands the :all scope' do
-        gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/simple")
+        gs = CQL::Repository.new("#{CQL_FEATURE_FIXTURES_DIRECTORY}/scenario/simple")
 
         expect { gs.query do
           select :model
@@ -373,7 +373,7 @@ describe 'an object that uses the DSL' do
     describe "multiple targets" do
 
       it 'does not apply more transforms than have been declared' do
-        gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/simple")
+        gs = CQL::Repository.new("#{CQL_FEATURE_FIXTURES_DIRECTORY}/scenario/simple")
 
         results = gs.query do
           select :self, :self, :self
@@ -403,7 +403,7 @@ describe 'an object that uses the DSL' do
     describe 'targeted' do
 
       it 'can handle predefined filters' do
-        gs = CQL::Repository.new(@feature_fixtures_directory)
+        gs = CQL::Repository.new(CQL_FEATURE_FIXTURES_DIRECTORY)
 
         expect {
           gs.query do
@@ -415,7 +415,7 @@ describe 'an object that uses the DSL' do
       end
 
       it 'can handle a block filter' do
-        gs = CQL::Repository.new(@feature_fixtures_directory)
+        gs = CQL::Repository.new(CQL_FEATURE_FIXTURES_DIRECTORY)
 
         expect {
           gs.query do
@@ -427,7 +427,7 @@ describe 'an object that uses the DSL' do
       end
 
       it 'correctly filters with a targeted block' do
-        gs = CQL::Repository.new(@feature_fixtures_directory)
+        gs = CQL::Repository.new(CQL_FEATURE_FIXTURES_DIRECTORY)
 
         result = gs.query do
           select name
@@ -439,7 +439,7 @@ describe 'an object that uses the DSL' do
       end
 
       it 'can handle shorthand targets' do
-        gs = CQL::Repository.new(@feature_fixtures_directory)
+        gs = CQL::Repository.new(CQL_FEATURE_FIXTURES_DIRECTORY)
 
         expect {
           gs.query do
@@ -451,7 +451,7 @@ describe 'an object that uses the DSL' do
       end
 
       it 'can handle multiple targets' do
-        gs = CQL::Repository.new(@feature_fixtures_directory)
+        gs = CQL::Repository.new(CQL_FEATURE_FIXTURES_DIRECTORY)
 
         expect {
           gs.query do
@@ -475,7 +475,7 @@ describe 'an object that uses the DSL' do
     end
 
     it 'correctly negates a block filter' do
-      gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/simple")
+      gs = CQL::Repository.new("#{CQL_FEATURE_FIXTURES_DIRECTORY}/scenario/simple")
 
       negated_result = gs.query do
         select name
@@ -493,7 +493,7 @@ describe 'an object that uses the DSL' do
     end
 
     it 'correctly negates a targeted filter' do
-      gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/simple")
+      gs = CQL::Repository.new("#{CQL_FEATURE_FIXTURES_DIRECTORY}/scenario/simple")
 
       negated_result = gs.query do
         select :model
@@ -517,7 +517,7 @@ describe 'an object that uses the DSL' do
     describe 'negating predefined filters' do
 
       it 'correctly negates a tag count filter' do
-        gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/tags2")
+        gs = CQL::Repository.new("#{CQL_FEATURE_FIXTURES_DIRECTORY}/scenario/tags2")
 
         negated_result = gs.query do
           select :model
@@ -535,7 +535,7 @@ describe 'an object that uses the DSL' do
       end
 
       it 'correctly negates a name filter' do
-        gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/name_filter")
+        gs = CQL::Repository.new("#{CQL_FEATURE_FIXTURES_DIRECTORY}/scenario/name_filter")
 
         negated_result = gs.query do
           select :model
@@ -553,7 +553,7 @@ describe 'an object that uses the DSL' do
       end
 
       it 'correctly negates a line filter' do
-        gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/line_filter")
+        gs = CQL::Repository.new("#{CQL_FEATURE_FIXTURES_DIRECTORY}/scenario/line_filter")
 
         negated_result = gs.query do
           select name
@@ -570,7 +570,7 @@ describe 'an object that uses the DSL' do
       end
 
       it 'correctly negates a tag filter' do
-        gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/tags3")
+        gs = CQL::Repository.new("#{CQL_FEATURE_FIXTURES_DIRECTORY}/scenario/tags3")
 
         negated_result = gs.query do
           select :model
@@ -590,7 +590,7 @@ describe 'an object that uses the DSL' do
     end
 
     it 'correctly negates a targeted, predefined filter' do
-      gs = CQL::Repository.new(@feature_fixtures_directory)
+      gs = CQL::Repository.new(CQL_FEATURE_FIXTURES_DIRECTORY)
 
       negated_result = gs.query do
         select :model
@@ -608,7 +608,7 @@ describe 'an object that uses the DSL' do
     end
 
     it 'correctly negates multiple filters' do
-      gs = CQL::Repository.new(@feature_fixtures_directory)
+      gs = CQL::Repository.new(CQL_FEATURE_FIXTURES_DIRECTORY)
 
       negated_result = gs.query do
         select :model
