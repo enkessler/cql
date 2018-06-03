@@ -567,6 +567,7 @@ describe 'an object that uses the DSL' do
           without line 'some other phrase'
         end
 
+        expect(without_result).to eq(negated_result)
       end
 
       it 'correctly negates a tag filter' do
