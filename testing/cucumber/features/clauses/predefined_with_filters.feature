@@ -38,8 +38,7 @@ Feature: 'with' clause
   * lte  (Less than or equals)
   * gt   (Greater than)
   * gte  (Greater than or equals)
-
-#TODO -  * eq   (Equals)
+  * eq   (Equals)
 
 
   Background: A sample Cucumber suite
@@ -241,8 +240,16 @@ Feature: 'with' clause
   @wip
   Scenario: Using the 'gte' count filter
 
-  @wip
   Scenario: Using the 'eq' count filter
+    When the following query is executed:
+      """
+      select name
+      from scenarios, outlines
+      with tc eq 3
+      """
+    Then the following values are returned:
+      | name   |
+      | Test 3 |
 
 
   @wip

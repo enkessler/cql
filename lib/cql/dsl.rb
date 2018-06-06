@@ -134,6 +134,11 @@ module CQL
       Comparison.new '<=', amount
     end
 
+    # Adds an *eq* filter operator to the query. See the corresponding Cucumber documentation for details.
+    def eq amount
+      Comparison.new '==', amount
+    end
+
     # Adds a *tags* filter to the query. See the corresponding Cucumber documentation for details.
     def tags *tags
       return "tags" if tags.size == 0
