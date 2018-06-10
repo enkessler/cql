@@ -54,10 +54,14 @@ Feature: 'with' clause
         @special_tag @tag_2
         Scenario: Test 2
           * some other steps
+          * some other steps
+          * some other steps
 
         @a @b @c
         Scenario Outline: Test 3
           * some steps
+          * some more steps
+          * some more steps
           * some more steps
         Examples: First examples
           | param |
@@ -65,6 +69,8 @@ Feature: 'with' clause
         Examples: Second examples
           | param |
           | value |
+
+        Scenario: Test 4
       """
     And the following feature has been modeled in the repository:
       """
@@ -72,11 +78,14 @@ Feature: 'with' clause
 
         Scenario: 1
           * different steps
+          * different steps
 
         Scenario: 2
           * different steps
+          * different steps
 
         Scenario: 3
+          * different steps
           * different steps
       """
     And the following feature has been modeled in the repository:
@@ -85,17 +94,20 @@ Feature: 'with' clause
 
         Scenario Outline: 1
           * different steps
+          * different steps
         Examples:
           | param |
           | value |
 
         Scenario Outline: 2
           * different steps
+          * different steps
         Examples:
           | param |
           | value |
 
         Scenario Outline: 3
+          * different steps
           * different steps
         Examples:
           | param |
@@ -107,8 +119,10 @@ Feature: 'with' clause
 
         Scenario: 4
           * different steps
+          * different steps
 
         Scenario Outline: 4
+          * different steps
           * different steps
         Examples:
           | param |
@@ -189,7 +203,7 @@ Feature: 'with' clause
       """
       select name
       from scenarios, outlines
-      with lc gt 1
+      with lc gt 3
       """
     Then the following values are returned:
       | name   |
@@ -204,6 +218,7 @@ Feature: 'with' clause
       """
     Then the following values are returned:
       | name                             |
+      | A test feature                   |
       | A feature with lots of scenarios |
 
   Scenario: Filtering by outline count
@@ -228,17 +243,51 @@ Feature: 'with' clause
       | name                          |
       | A feature with a mix of tests |
 
-  @wip
   Scenario: Using the 'lt' count filter
+    When the following query is executed:
+      """
+      select name
+      from features
+      with ssoc lt 3
+      """
+    Then the following values are returned:
+      | name                          |
+      | A feature with a mix of tests |
 
-  @wip
   Scenario: Using the 'lte' count filter
+    When the following query is executed:
+      """
+      select name
+      from scenarios, outlines
+      with lc lte 1
+      """
+    Then the following values are returned:
+      | name   |
+      | Test 1 |
+      | Test 4 |
 
-  @wip
   Scenario: Using the 'gt' count filter
+    When the following query is executed:
+      """
+      select name
+      from scenarios, outlines
+      with lc gt 3
+      """
+    Then the following values are returned:
+      | name   |
+      | Test 3 |
 
-  @wip
   Scenario: Using the 'gte' count filter
+    When the following query is executed:
+      """
+      select name
+      from scenarios, outlines
+      with lc gte 3
+      """
+    Then the following values are returned:
+      | name   |
+      | Test 2 |
+      | Test 3 |
 
   Scenario: Using the 'eq' count filter
     When the following query is executed:
