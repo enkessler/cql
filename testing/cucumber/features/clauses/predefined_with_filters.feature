@@ -301,14 +301,66 @@ Feature: 'with' clause
       | Test 3 |
 
 
-  @wip
   Scenario: Using multiple filters
+    When the following query is executed:
+      """
+      select name
+      from scenarios
+      with tc eq 2
+      with lc gt 1
+      """
+    Then the following values are returned:
+      | name   |
+      | Test 2 |
 
-  @wip
-  Scenario: Mixing targeted and blanket filters
+  Scenario: Using the 'with' clause multiple times
 
-  @wip
+  Behavior is the same as combining regular, block style filters but the syntax has to become more explicit.
+
+    When the following query is executed:
+      """
+      select name
+      from scenarios
+      with tc(eq(2)),
+           lc(gt(1))
+      """
+    Then the result is the same as the result of the following query:
+      """
+      select name
+      from scenarios
+      with tc eq 2
+      with lc gt 1
+      """
+
   Scenario: Selectively filtering models
+    When the following query is executed:
+      """
+      select name
+      from scenarios, features
+      with scenarios => lc(eq(1))
+      """
+    Then the following values are returned:
+      | name                             |
+      | Test 1                           |
+      | A test feature                   |
+      | A feature with lots of scenarios |
+      | A feature with lots of outlines  |
+      | A feature with a mix of tests    |
+
+
+  Scenario: Mixing targeted and blanket filters
+    When the following query is executed:
+      """
+      select name
+      from scenarios, features
+      with name /test/i
+      with scenarios => tc(eq(0))
+      """
+    Then the following values are returned:
+      | name                          |
+      | Test 4                        |
+      | A test feature                |
+      | A feature with a mix of tests |
 
   Scenario: Using 'without' for negation
     When the following query is executed:
@@ -324,6 +376,17 @@ Feature: 'with' clause
       with ssoc gt 2
       """
 
-  @wip
   Scenario: Mixing predefined filters and regular filters
+    When the following query is executed:
+      """
+      select name
+      from scenarios, features
+      with { |element| element.name =~ /test/i }
+      with scenarios => tc(eq(0))
+      """
+    Then the following values are returned:
+      | name                          |
+      | Test 4                        |
+      | A test feature                |
+      | A feature with a mix of tests |
 
