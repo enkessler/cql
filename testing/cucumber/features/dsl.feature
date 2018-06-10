@@ -56,9 +56,3 @@ Feature: DSL
       select 'name'
       from 'scenarios'
       """
-
-
-# Commented out so that they aren't picked up by Relish
-#
-#  @wip
-#  Scenario: Use 'order_by' to sort the results
