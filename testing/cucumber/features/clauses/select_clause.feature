@@ -92,7 +92,7 @@ Feature: 'select' clause
       from scenarios
       """
 
-  Scenario: Repetitive selection
+  Scenario: Using the 'select' clause multiple times
     When the following query is executed:
       """
       select name
