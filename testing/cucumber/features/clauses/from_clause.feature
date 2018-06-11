@@ -125,5 +125,3 @@ Feature: 'from' clause
 #  @wip
 #  Scenario: Can 'from' from all type of model
 #
-#  @wip
-#  Scenario: From-ing from a collection
