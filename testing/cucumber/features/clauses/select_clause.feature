@@ -116,7 +116,3 @@ Feature: 'select' clause
       select :self
       from scenarios
       """
-
-# Commented out so that they aren't picked up by Relish
-#  @wip
-#  Scenario: Can select from all types of model

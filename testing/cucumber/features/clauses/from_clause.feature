@@ -119,9 +119,3 @@ Feature: 'from' clause
       from :all
       """
     Then all models are queried from
-
-
-# Commented out so that they aren't picked up by Relish
-#  @wip
-#  Scenario: Can 'from' from all type of model
-#
