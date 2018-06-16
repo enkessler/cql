@@ -58,12 +58,15 @@ describe "predefined 'with' filters" do
 
                        @tag
                        Scenario Outline: Test with 1 tag
+                         * a step
 
                        @tag @tag
                        Scenario Outline: Test with 2 tags
+                         * a step
 
                        @tag @tag @tag
-                       Scenario Outline: Test with 3 tags'
+                       Scenario Outline: Test with 3 tags
+                         * a step'
           gs = CQL::Repository.new(CukeModeler::Feature.new(gherkin))
 
           result = gs.query do
@@ -83,10 +86,13 @@ describe "predefined 'with' filters" do
 
                        @tag
                        Examples: Example with 1 tag
+                         | foo |
                        @tag @tag
                        Examples: Example with 2 tags
+                         | foo |
                        @tag @tag @tag
-                       Examples: Example with 3 tags'
+                       Examples: Example with 3 tags
+                         | foo |'
           gs = CQL::Repository.new(CukeModeler::Feature.new(gherkin))
 
           result = gs.query do
@@ -213,14 +219,20 @@ describe "predefined 'with' filters" do
 
         it 'correctly filters features' do
           feature_1 = CukeModeler::Feature.new('Feature: Feature with 1 outline
-                                                  Scenario Outline:')
+                                                  Scenario Outline:
+                                                    * a step')
           feature_2 = CukeModeler::Feature.new('Feature: Feature with 2 outlines
                                                   Scenario Outline:
-                                                  Scenario Outline:')
+                                                    * a step
+                                                  Scenario Outline:
+                                                    * a step')
           feature_3 = CukeModeler::Feature.new('Feature: Feature with 3 outlines
                                                   Scenario Outline:
+                                                    * a step
                                                   Scenario Outline:
-                                                  Scenario Outline:')
+                                                    * a step
+                                                  Scenario Outline:
+                                                    * a step')
           gs = CQL::Repository.new(directory_with(feature_1, feature_2, feature_3))
 
           result = gs.query do
@@ -245,10 +257,12 @@ describe "predefined 'with' filters" do
                                                   Scenario:')
           feature_2 = CukeModeler::Feature.new('Feature: Feature with 2 tests
                                                   Scenario:
-                                                  Scenario Outline:')
+                                                  Scenario Outline:
+                                                    * a step')
           feature_3 = CukeModeler::Feature.new('Feature: Feature with 3 tests
                                                   Scenario:
                                                   Scenario Outline:
+                                                    * a step
                                                   Scenario:')
           gs = CQL::Repository.new(directory_with(feature_1, feature_2, feature_3))
 
