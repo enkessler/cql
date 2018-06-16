@@ -132,7 +132,7 @@ Feature: 'with' clause
       """
       select name
       from features, scenarios
-      with scenarios => lambda { |element| element.tags.map(&:name) == ['@tag_1','@tag_2'] }
+      with scenarios => lambda { |element| element.name == 'Test 1' }
       """
     Then the following values are returned:
       | name                             |
