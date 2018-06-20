@@ -11,6 +11,7 @@ require "#{this_dir}/../../../lib/cql/model_dsl"
 
 
 require "#{this_dir}/../../cql_test_model"
+require "#{this_dir}/../../model_helper"
 require "#{this_dir}/tag_filterable_specs"
 require "#{this_dir}/name_filterable_specs"
 require "#{this_dir}/line_count_filterable_specs"
@@ -22,21 +23,10 @@ CQL_FEATURE_FIXTURES_DIRECTORY = "#{this_dir}/../../fixtures/features"
 
 RSpec.configure do |config|
 
+  include CQL::ModelHelper
+
   if Gem.loaded_specs['cuke_modeler'].version.version[/^0/]
     config.filter_run_excluding :cuke_modeler_1x => true
   end
 
-  config.before(:all) do
-    @feature_fixtures_directory = CQL_FEATURE_FIXTURES_DIRECTORY
-  end
-
-  config.before(:each) do
-    # Nothing yet
-  end
-
-  config.after(:each) do
-    # Nothing yet
-  end
 end
-
-

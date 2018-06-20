@@ -56,25 +56,3 @@ Feature: DSL
       select 'name'
       from 'scenarios'
       """
-
-
-# Commented out so that they aren't picked up by Relish
-#
-#  @wip
-#  Scenario: Use 'order_by' to sort the results
-#
-#  # 'and' is a keyword. Some other kind of repeater word would be needed
-#  @wip
-#  Scenario: 'And' can be used instead of repeating the previous keyword
-#    When the following query is executed:
-#      """
-#      select 'name'
-#      and    'source_line'
-#      from CukeModeler::Scenario
-#      and  CukeModeler::Outline
-#      """
-#    Then the following values are returned:
-#      | name   | source_line |
-#      | Test 1 | 3           |
-#      | Test 2 | 6           |
-#      | Test 3 | 9           |

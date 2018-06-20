@@ -92,7 +92,7 @@ Feature: 'select' clause
       from scenarios
       """
 
-  Scenario: Repetitive selection
+  Scenario: Using the 'select' clause multiple times
     When the following query is executed:
       """
       select name
@@ -116,7 +116,3 @@ Feature: 'select' clause
       select :self
       from scenarios
       """
-
-# Commented out so that they aren't picked up by Relish
-#  @wip
-#  Scenario: Can select from all types of model

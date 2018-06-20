@@ -4,7 +4,7 @@ require "#{File.dirname(__FILE__)}/spec_helper"
 describe 'CQL::Repository' do
 
   let(:clazz) { CQL::Repository }
-  let(:seed_arguments) { @feature_fixtures_directory }
+  let(:seed_arguments) { CQL_FEATURE_FIXTURES_DIRECTORY }
 
 
   describe 'common behavior' do
@@ -19,7 +19,7 @@ describe 'CQL::Repository' do
   end
 
   it 'can use a file path as a source' do
-    expect { clazz.new(@feature_fixtures_directory) }.to_not raise_error
+    expect { clazz.new(CQL_FEATURE_FIXTURES_DIRECTORY) }.to_not raise_error
   end
 
   it 'can use a model as a source' do
@@ -33,7 +33,7 @@ describe 'CQL::Repository' do
   end
 
   it 'does not modify the repository during a query' do
-    repo = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/simple")
+    repo = CQL::Repository.new("#{CQL_FEATURE_FIXTURES_DIRECTORY}/scenario/simple")
 
     original_state = Marshal.dump(repo)
 

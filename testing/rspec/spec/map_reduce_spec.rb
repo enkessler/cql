@@ -7,7 +7,7 @@ describe "cql" do
   #   it 'should find the physical files' do
   #     skip("This is possibly no longer be needed")
   #
-  #     gs = CQL::Repository.new("#{@feature_fixtures_directory}/scenario/simple")
+  #     gs = CQL::Repository.new("#{CQL_FEATURE_FIXTURES_DIRECTORY}/scenario/simple")
   #     result = CQL::MapReduce.uri(gs.parsed_feature_files)
   #
   #     expect(result[0]).to match(/simple\.feature/)

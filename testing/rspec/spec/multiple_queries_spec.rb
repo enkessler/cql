@@ -6,7 +6,7 @@ describe "cql" do
   describe 'repo' do
     it 'should not change between queries' do
 
-      repo = CQL::Repository.new("#{@feature_fixtures_directory}/got")
+      repo = CQL::Repository.new("#{CQL_FEATURE_FIXTURES_DIRECTORY}/got")
 
       before_dump = Marshal.dump(repo)
 

@@ -38,7 +38,7 @@ shared_examples_for 'a line filterable target set' do |target_type, test_data|
     end
 
     it 'can only handle a string or regular expression' do
-      gs = CQL::Repository.new(@feature_fixtures_directory)
+      gs = CQL::Repository.new(CQL_FEATURE_FIXTURES_DIRECTORY)
 
       expect { gs.query do
         select name

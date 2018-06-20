@@ -2,16 +2,15 @@ Then(/^the following values are returned:$/) do |values|
   expected_keys = values.raw.first
   expected_results = values.hashes
 
+  # Protecting against false positives
+  # Key order doesn't matter and Ruby 1.8.7 does not retain hash key ordering, so sorting them for consistency
+  raise('Invalid result set. Attribute names cannot be repeated.') unless expected_keys.sort == expected_results.first.keys.sort
+
   expected_results.each do |result|
     result.each_pair { |key, value| result[key] = value.to_i if value =~ /^\d+$/ }
   end
 
-
-  @query_results.each_with_index do |result, index|
-    # Key order doesn't matter and Ruby 1.8.7 does not retain hash key ordering, so sorting them for consistency
-    expect(result.keys.sort).to eq(expected_keys.sort)
-    expect(result).to eq(expected_results[index])
-  end
+  expect(@query_results).to match_array(expected_results)
 end
 
 # Then(/^all of them can be queried for additional information$/) do

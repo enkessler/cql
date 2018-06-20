@@ -1,3 +1,11 @@
+### Version 1.5.0 / 2018-06-20
+
+* Added a new predefined 'with' clause filter for checking equality, rather than having to use 'gte' and 'lte' in 
+  conjunction.
+* Reorganized some of the documentation and added more code examples.
+* Fixed a typo in the `.gemspec` description
+
+
 ### Version 1.4.2 / 2018-01-01
 
 * New documentation locations added.
