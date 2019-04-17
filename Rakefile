@@ -35,26 +35,6 @@ namespace 'cql' do
   task :ci_build => [:smart_test, 'coveralls:push']
 
 
-  # Publishes the current feature file documentation to Relish
-  desc 'Publish feature files to Relish'
-  task :publish_to_relish do
-    puts "Publishing features to Relish..."
-
-    # Get existing versions
-    this_dir = File.dirname(__FILE__)
-    output = `relish versions enkessler/cql`
-
-    # Add the current version if it doesn't exist
-    unless output =~ /#{Regexp.escape(CQL::VERSION)}/
-      output = `relish versions:add enkessler/cql:#{CQL::VERSION}`
-      puts output
-    end
-
-    # Publish the features
-    output = `relish push enkessler/cql:#{CQL::VERSION} path #{this_dir}/testing/cucumber`
-    puts output
-  end
-
   # Publishes the current feature file documentation to CucumberPro
   desc 'Publish feature files to CucumberPro'
   task :publish_to_cucumberpro do
@@ -64,7 +44,7 @@ namespace 'cql' do
 
   # Publishes the current feature file documentation to all places
   desc 'Publish feature files to all documentation services'
-  task :publish_features => [:publish_to_relish, :publish_to_cucumberpro]
+  task :publish_features => [:publish_to_cucumberpro]
 
 end
 
