@@ -6,6 +6,7 @@ gemspec
 if RUBY_VERSION =~ /^1\.8/
   gem 'cucumber', '< 1.3.0'
   gem 'gherkin', '< 2.12.0'
+  gem 'rainbow', '< 2.0' # Ruby 1.8.x support dropped after this version
   gem 'rake', '< 11.0' # Rake dropped 1.8.x support after this version
 elsif RUBY_VERSION =~ /^1\./
   gem 'cucumber', '< 2.0.0'
