@@ -32,7 +32,7 @@ Thank you for installing cql (Cucumber Query Language)
   s.add_development_dependency 'racatt', '~> 1.0'
   s.add_development_dependency 'coveralls', '< 1.0.0'
   s.add_development_dependency 'relish', '~> 0.0'
-  s.add_development_dependency "bundler", "~> 1.5"
+  s.add_development_dependency 'bundler', '< 3.0'
 
 
   s.rubygems_version = '>= 1.6.1'

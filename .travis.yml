@@ -26,6 +26,6 @@ gemfile:
 
 # todo - Remove this once TravisCI fixes their bundler issue (https://github.com/alphagov/govuk_template/pull/186)
 before_install:
-  - gem install bundler -v 1.9.10
+  - gem install bundler -v '< 2'
 
 script: bundle exec rake cql:ci_build
