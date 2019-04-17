@@ -1,12 +1,20 @@
+Basic stuff:
 [![Gem Version](https://badge.fury.io/rb/cql.svg)](https://rubygems.org/gems/cql)
-[![Dependency Status](https://gemnasium.com/enkessler/cql.svg)](https://gemnasium.com/enkessler/cql)
+[![Project License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/mit-license.php)
+[![Downloads](https://img.shields.io/gem/dt/cql.svg)](https://rubygems.org/gems/cql)
+
+User stuff:
+[![Cucumber Docs](http://img.shields.io/badge/Documentation-Features-green.svg)](https://app.cucumber.pro/projects/cql)
+[![Yard Docs](http://img.shields.io/badge/Documentation-API-blue.svg)](https://www.rubydoc.info/gems/cql)
+
+Developer stuff:
 [![Build Status](https://travis-ci.org/enkessler/cql.svg?branch=dev)](https://travis-ci.org/enkessler/cql)
 [![Build status](https://ci.appveyor.com/api/projects/status/ia3t0tkyj4tuobq8/branch/dev?svg=true)](https://ci.appveyor.com/project/enkessler/cql/branch/dev)
-[![Coverage Status](https://coveralls.io/repos/enkessler/cql/badge.svg?branch=dev)](https://coveralls.io/github/enkessler/cql?branch=dev)
-[![Code Quality](https://codeclimate.com/github/enkessler/cql/badges/gpa.svg)](https://codeclimate.com/github/enkessler/cql)
-[![Yard Docs](http://img.shields.io/badge/yard-docs-blue.svg)](http://www.rubydoc.info/gems/cql)
+[![Coverage Status](https://coveralls.io/repos/github/enkessler/cql/badge.svg?branch=dev)](https://coveralls.io/github/enkessler/cql?branch=dev)
+[![Maintainability](https://api.codeclimate.com/v1/badges/a469e37db8e67c1c989b/maintainability)](https://codeclimate.com/github/enkessler/cql/maintainability)
 [![Inline docs](http://inch-ci.org/github/enkessler/cql.svg?branch=dev)](https://inch-ci.org/github/enkessler/cql?branch=dev)
-[![Project License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/enkessler/cql/blob/master/LICENSE.txt)
+
+---
 
 
 # CQL (Cucumber Query Language)
