@@ -35,7 +35,6 @@ Thank you for installing cql (Cucumber Query Language)
   s.add_development_dependency 'rainbow', '< 4.0.0'
 
 
-  s.rubygems_version = '>= 1.6.1'
   s.files            = Dir.glob('lib/**/*').reject { |path| path =~ /\.gitignore$/ }
   s.test_files       = Dir.glob('testing/**/*')
   s.rdoc_options     = ['--charset=UTF-8']

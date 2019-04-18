@@ -18,6 +18,8 @@ require "#{this_dir}/line_count_filterable_specs"
 require "#{this_dir}/line_filterable_specs"
 require "#{this_dir}/queriable_specs"
 
+require 'rubygems/mock_gem_ui'
+
 CQL_FEATURE_FIXTURES_DIRECTORY = "#{this_dir}/../../fixtures/features"
 
 
