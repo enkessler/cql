@@ -2,12 +2,16 @@ module CQL
 
   # Not a part of the public API. Subject to change at any time.
   class TagFilter
+
+    # Tags to match
     attr_reader :tags
 
+    # Creates a new filter
     def initialize tags
       @tags = tags
     end
 
+    # Returns whether or not the object has the target tags
     def has_tags?(object, target_tags)
       target_tags.all? { |target_tag|
         tags = object.tags
@@ -27,14 +31,18 @@ module CQL
 
   # Not a part of the public API. Subject to change at any time.
   class ContentMatchFilter
+
+    # Pattern to match
     attr_reader :pattern
 
+    # Creates a new filter
     def initialize(pattern)
       raise(ArgumentError, "Can only match a String or Regexp. Got #{pattern.class}.") unless pattern.is_a?(String) || pattern.is_a?(Regexp)
 
       @pattern = pattern
     end
 
+    # Returns whether or not the content matches the pattern
     def content_match?(content)
       if pattern.is_a?(String)
         content.any? { |thing| thing == pattern }
@@ -47,8 +55,13 @@ module CQL
 
   # Not a part of the public API. Subject to change at any time.
   class TypeCountFilter
-    attr_reader :types, :comparison
 
+                # the types of object that will be filtered against
+    attr_reader :types,
+                # the comparison that will be made between the objects
+                :comparison
+
+    # Creates a new filter
     def initialize types, comparison
       @types = types
       @comparison = comparison

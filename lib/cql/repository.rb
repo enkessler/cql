@@ -7,6 +7,7 @@ module CQL
     include Queriable
 
 
+    # Creates a new repository object based on the passed directory path or model
     def initialize(repository_root)
       case
         when repository_root.is_a?(String)
