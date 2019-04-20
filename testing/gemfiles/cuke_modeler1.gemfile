@@ -12,7 +12,6 @@ if RUBY_VERSION =~ /^1\.8/
 elsif RUBY_VERSION =~ /^1\./
   gem 'cucumber', '< 2.0.0'
   gem 'mime-types', '< 3.0.0' # Requires Ruby 2.x on/after this version
-  gem 'rest-client', '< 2.0.0' # Requires Ruby 2.x on/after this version
   gem 'rake', '< 12.3.0' # Requires Ruby 2.x on/after this version
 end
 
@@ -21,10 +20,6 @@ if RUBY_VERSION =~ /^1\./
   gem 'json', '< 2.0' # The 'json' gem drops pre-Ruby 2.x support on/after this version
   gem 'term-ansicolor', '< 1.4' # The 'term-ansicolor' gem requires Ruby 2.x on/after this version
   gem 'unf_ext', '< 0.0.7.3' # Requires Ruby 2.x on/after this version
-
-  if RbConfig::CONFIG['host_os'].downcase =~ /mswin|msys|mingw32/
-    gem 'ffi', '< 1.9.15' # The 'ffi' gem, for Windows, requires Ruby 2.x on/after this version
-  end
 end
 
 if RUBY_VERSION =~ /^2\.[23456789]/
