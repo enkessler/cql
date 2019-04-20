@@ -5,9 +5,12 @@ module CQL
 
     include Dsl
 
-    attr_reader :data, :what
+                # the root object that will be queried
+    attr_reader :data,
+                # what kinds of objects will be selected
+                :what
 
-
+    # Creates a new query object
     def initialize(directory, &block)
       # Set root object
       @data = directory

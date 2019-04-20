@@ -80,8 +80,13 @@ module CQL
 
     # Not a part of the public API. Subject to change at any time.
     class Comparison
-      attr_accessor :operator, :amount
 
+                    # the operator used for comparison
+      attr_accessor :operator,
+                    # value that will be compared against
+                    :amount
+
+      # Creates a new comparison object
       def initialize operator, amount
         @operator = operator
         @amount = amount

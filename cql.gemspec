@@ -23,6 +23,8 @@ Thank you for installing cql (Cucumber Query Language)
 
 }
 
+  s.required_ruby_version = '>= 1.8.7', '< 3.0'
+
   s.add_runtime_dependency 'cuke_modeler', '< 2.0'
 
   s.add_development_dependency 'rake', '< 13.0.0'
@@ -31,11 +33,10 @@ Thank you for installing cql (Cucumber Query Language)
   s.add_development_dependency 'simplecov', '< 1.0.0'
   s.add_development_dependency 'racatt', '~> 1.0'
   s.add_development_dependency 'coveralls', '< 1.0.0'
-  s.add_development_dependency 'relish', '~> 0.0'
-  s.add_development_dependency "bundler", "~> 1.5"
+  s.add_development_dependency 'bundler', '< 3.0'
+  s.add_development_dependency 'rainbow', '< 4.0.0'
 
 
-  s.rubygems_version = '>= 1.6.1'
   s.files            = Dir.glob('lib/**/*').reject { |path| path =~ /\.gitignore$/ }
   s.test_files       = Dir.glob('testing/**/*')
   s.rdoc_options     = ['--charset=UTF-8']
