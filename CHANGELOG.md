@@ -9,6 +9,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 Nothing yet...
 
 
+## [1.5.1] - 2019-04-19
+
+### Added
+
+ - Add dependency version limits to Ruby which was previously unbound
+
+
 ## [1.5.0] - 2018-06-20
 
 ### Added
@@ -142,6 +149,7 @@ Nothing yet...
 
 
 [Unreleased]: https://github.com/enkessler/cuke_modeler/compare/v1.5.0...HEAD
+[1.5.1]: https://github.com/enkessler/cql/compare/v1.5.0...v1.5.1
 [1.5.0]: https://github.com/enkessler/cql/compare/v1.4.2...v1.5.0
 [1.4.2]: https://github.com/enkessler/cql/compare/v1.4.1...v1.4.2
 [1.4.1]: https://github.com/enkessler/cql/compare/v1.4.0...v1.4.1
