@@ -24,6 +24,9 @@ end
 
 if RUBY_VERSION =~ /^2\.[23456789]/
   gem 'test-unit'
+  # Cucumber 4.x uses the `cucumber-gherkin` gem, which is incompatible with
+  # the `gherkin` gem, upon which the `cuke_modeler` gem depends
+  gem 'cucumber', '< 4.0'
 end
 
 
