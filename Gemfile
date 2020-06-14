@@ -22,4 +22,4 @@ end
 
 gem 'coveralls', :require => false, :group => :development
 
-gem 'cuke_modeler', '~> 2.0'
+gem 'cuke_modeler', '~> 3.0'

@@ -21,12 +21,16 @@ matrix:
     # Travis does not provide 1.9.3 on OSX
   - rvm: 1.9.3
     os: osx
+    # Ruby 2.3.x is currently broken on TravisCI for OSX and is no longer a supported Ruby version, anyway.
+  - rvm: 2.3.8
+    os: osx
 
 
 gemfile:
   - testing/gemfiles/cuke_modeler0.gemfile
   - testing/gemfiles/cuke_modeler1.gemfile
   - testing/gemfiles/cuke_modeler2.gemfile
+  - testing/gemfiles/cuke_modeler3.gemfile
 
 # todo - Remove this once TravisCI fixes their bundler issue (https://github.com/alphagov/govuk_template/pull/186)
 before_install:

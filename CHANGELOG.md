@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
  - Added support for more versions of the 'cuke_modeler' gem.
+   - 3.x
    - 2.x
 
 ## [1.5.1] - 2019-04-19
