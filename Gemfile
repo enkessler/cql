@@ -22,4 +22,19 @@ end
 
 gem 'coveralls', :require => false, :group => :development
 
-gem 'cuke_modeler', '~> 3.0'
+cuke_modeler_major_version = 0
+
+if [0].include?(cuke_modeler_major_version)
+
+  if RUBY_VERSION =~ /^2\./
+    # Cucumber 4.x uses the `cucumber-gherkin` gem, which is incompatible with
+    # the `gherkin` gem, upon which the `cuke_modeler` gem depends
+    gem 'cucumber', '< 4.0'
+  end
+
+  # The oldest versions of the `cuke_modeler` gem did not properly limit their dependencies
+  # and CukeModeler 0.x can not handle a higher Gherkin 5.x+
+  gem 'gherkin', '< 5.0'
+end
+
+gem 'cuke_modeler', '~> 0.0'
