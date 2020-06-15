@@ -22,7 +22,7 @@ end
 
 gem 'coveralls', :require => false, :group => :development
 
-cuke_modeler_major_version = 0
+cuke_modeler_major_version = 3
 
 if [0].include?(cuke_modeler_major_version)
 
@@ -37,4 +37,4 @@ if [0].include?(cuke_modeler_major_version)
   gem 'gherkin', '< 5.0'
 end
 
-gem 'cuke_modeler', '~> 0.0'
+gem 'cuke_modeler', "~> #{cuke_modeler_major_version}.0"
