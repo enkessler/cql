@@ -8,11 +8,11 @@ User stuff:
 [![Yard Docs](http://img.shields.io/badge/Documentation-API-blue.svg)](https://www.rubydoc.info/gems/cql)
 
 Developer stuff:
-[![Build Status](https://travis-ci.org/enkessler/cql.svg?branch=dev)](https://travis-ci.org/enkessler/cql)
-[![Build status](https://ci.appveyor.com/api/projects/status/ia3t0tkyj4tuobq8/branch/dev?svg=true)](https://ci.appveyor.com/project/enkessler/cql/branch/dev)
-[![Coverage Status](https://coveralls.io/repos/github/enkessler/cql/badge.svg?branch=dev)](https://coveralls.io/github/enkessler/cql?branch=dev)
+[![Build Status](https://travis-ci.org/enkessler/cql.svg)](https://travis-ci.org/enkessler/cql)
+[![Build status](https://ci.appveyor.com/api/projects/status/ia3t0tkyj4tuobq8?svg=true)](https://ci.appveyor.com/project/enkessler/cql)
+[![Coverage Status](https://coveralls.io/repos/github/enkessler/cql/badge.svg)](https://coveralls.io/github/enkessler/cql)
 [![Maintainability](https://api.codeclimate.com/v1/badges/a469e37db8e67c1c989b/maintainability)](https://codeclimate.com/github/enkessler/cql/maintainability)
-[![Inline docs](http://inch-ci.org/github/enkessler/cql.svg?branch=dev)](https://inch-ci.org/github/enkessler/cql?branch=dev)
+[![Inline docs](http://inch-ci.org/github/enkessler/cql.svg)](https://inch-ci.org/github/enkessler/cql)
 
 ---
 
