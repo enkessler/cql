@@ -1,6 +1,7 @@
-source "http://rubygems.org"
+source 'https://rubygems.org'
 
-gemspec
+gemspec :path => "../../"
+
 
 # cql can play with pretty much any version of these but they all play differently with Ruby
 if RUBY_VERSION =~ /^1\.8/
@@ -11,6 +12,7 @@ if RUBY_VERSION =~ /^1\.8/
 elsif RUBY_VERSION =~ /^1\./
   gem 'cucumber', '< 2.0.0'
   gem 'mime-types', '< 3.0.0' # Requires Ruby 2.x on/after this version
+  gem 'rake', '< 12.3.0' # Requires Ruby 2.x on/after this version
 end
 
 if RUBY_VERSION =~ /^1\./
@@ -20,21 +22,12 @@ if RUBY_VERSION =~ /^1\./
   gem 'unf_ext', '< 0.0.7.3' # Requires Ruby 2.x on/after this version
 end
 
-gem 'coveralls', :require => false, :group => :development
-
-cuke_modeler_major_version = 0
-
-if [0].include?(cuke_modeler_major_version)
-
-  if RUBY_VERSION =~ /^2\./
-    # Cucumber 4.x uses the `cucumber-gherkin` gem, which is incompatible with
-    # the `gherkin` gem, upon which the `cuke_modeler` gem depends
-    gem 'cucumber', '< 4.0'
-  end
-
-  # The oldest versions of the `cuke_modeler` gem did not properly limit their dependencies
-  # and CukeModeler 0.x can not handle a higher Gherkin 5.x+
-  gem 'gherkin', '< 5.0'
+if RUBY_VERSION =~ /^2\.[23456789]/
+  gem 'test-unit'
+  # Cucumber 4.x uses the `cucumber-gherkin` gem, which is incompatible with
+  # the `gherkin` gem, upon which the `cuke_modeler` gem depends
+  gem 'cucumber', '< 4.0'
 end
 
-gem 'cuke_modeler', '~> 0.0'
+
+gem 'cuke_modeler', '~> 2.0'

@@ -9,7 +9,7 @@ module CQL
           when model.is_a?(CukeModeler::Feature)
             file_model = CukeModeler::FeatureFile.new
 
-            if Gem.loaded_specs['cuke_modeler'].version.version[/^0/]
+            if cuke_modeler?(0)
               file_model.features = [model]
             else
               file_model.feature = model

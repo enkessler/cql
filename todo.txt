@@ -1,3 +1,5 @@
+# TODO - Include fewer files in the gem (i.e. dont include the tests). See other projects for examples.
+# TODO - Change to 'master' as primary development branch
 todo - organize feature files for better presentation on Jam
 todo - Change clauses to target based on final attribute names (i.e. after 'as' clause) instead of original attribute name (which may contain duplicate selections resulting in ambiguity)
 todo - Possible new feature: 'order_by' clause. Would allow ordering of the results set based on an attribute (i.e. select target) and could take a block for sorting (probably passed right on to Ruby's Array sorting method). No real need for it yet but could be a useful exercise for teaching someone.
