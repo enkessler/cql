@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+Nothing yet...
+
+
+## [1.7.0] - 2021-01-09
+
 ### Added
 
  - Added support for Ruby 3.x
@@ -158,7 +163,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * The Great Before Times...
 
 
-[Unreleased]: https://github.com/enkessler/cuke_modeler/compare/v1.6.0...HEAD
+[Unreleased]: https://github.com/enkessler/cql/compare/v1.7.0...HEAD
+[1.7.0]: https://github.com/enkessler/cql/compare/v1.6.0...v1.7.0
 [1.6.0]: https://github.com/enkessler/cql/compare/v1.5.1...v1.6.0
 [1.5.1]: https://github.com/enkessler/cql/compare/v1.5.0...v1.5.1
 [1.5.0]: https://github.com/enkessler/cql/compare/v1.4.2...v1.5.0
