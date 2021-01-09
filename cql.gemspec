@@ -23,7 +23,7 @@ Thank you for installing cql (Cucumber Query Language)
 
 }
 
-  s.required_ruby_version = '>= 1.8.7', '< 4.0'
+  s.required_ruby_version = '>= 2.0', '< 4.0'
 
   s.add_runtime_dependency 'cuke_modeler', '< 4.0'
 

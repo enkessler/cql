@@ -6,8 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-Nothing yet...
-
+### Removed
+ - Removed support for Ruby 1.x. This gem only officially supports Ruby 2.0 and higher.
 
 ## [1.7.0] - 2021-01-09
 

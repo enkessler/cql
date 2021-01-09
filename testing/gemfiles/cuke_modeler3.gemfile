@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 gemspec :path => "../../"
 
-# Cueumber 4.x doesn't work on all JRubies and this is the only earlier version
+# Cucumber 4.x doesn't work on all JRubies and this is the only earlier version
 # that is compatible with the `cucumber-gherkin` gem, upon which CukeModler 3.x depends
 gem 'cucumber', '2.2.0'
 
