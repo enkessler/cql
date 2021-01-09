@@ -14,7 +14,7 @@ describe 'the gem' do
   end
 
   it 'has a current license' do
-    license_text = File.read("#{File.dirname(__FILE__)}/../../../LICENSE.TXT")
+    license_text = File.read("#{File.dirname(__FILE__)}/../../../LICENSE.txt")
 
     expect(license_text).to match(/Copyright.*2014-#{Time.now.year}/)
   end
