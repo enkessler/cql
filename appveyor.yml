@@ -2,24 +2,41 @@ version: '1.0.{build}'
 
 environment:
   matrix:
-    - RUBY_VERSION: 23
+
+    - RUBY_VERSION: 24
       BUNDLE_GEMFILE: testing/gemfiles/cuke_modeler0.gemfile
-    - RUBY_VERSION: 23-x64
+    - RUBY_VERSION: 24-x64
+      BUNDLE_GEMFILE: testing/gemfiles/cuke_modeler0.gemfile
+    - RUBY_VERSION: 25
+      BUNDLE_GEMFILE: testing/gemfiles/cuke_modeler0.gemfile
+    - RUBY_VERSION: 25-x64
       BUNDLE_GEMFILE: testing/gemfiles/cuke_modeler0.gemfile
 
-    - RUBY_VERSION: 23
+    - RUBY_VERSION: 24
       BUNDLE_GEMFILE: testing/gemfiles/cuke_modeler1.gemfile
-    - RUBY_VERSION: 23-x64
+    - RUBY_VERSION: 24-x64
+      BUNDLE_GEMFILE: testing/gemfiles/cuke_modeler1.gemfile
+    - RUBY_VERSION: 25
+      BUNDLE_GEMFILE: testing/gemfiles/cuke_modeler1.gemfile
+    - RUBY_VERSION: 25-x64
       BUNDLE_GEMFILE: testing/gemfiles/cuke_modeler1.gemfile
 
-    - RUBY_VERSION: 23
+    - RUBY_VERSION: 24
       BUNDLE_GEMFILE: testing/gemfiles/cuke_modeler2.gemfile
-    - RUBY_VERSION: 23-x64
+    - RUBY_VERSION: 24-x64
+      BUNDLE_GEMFILE: testing/gemfiles/cuke_modeler2.gemfile
+    - RUBY_VERSION: 25
+      BUNDLE_GEMFILE: testing/gemfiles/cuke_modeler2.gemfile
+    - RUBY_VERSION: 25-x64
       BUNDLE_GEMFILE: testing/gemfiles/cuke_modeler2.gemfile
 
-    - RUBY_VERSION: 23
+    - RUBY_VERSION: 24
       BUNDLE_GEMFILE: testing/gemfiles/cuke_modeler3.gemfile
-    - RUBY_VERSION: 23-x64
+    - RUBY_VERSION: 24-x64
+      BUNDLE_GEMFILE: testing/gemfiles/cuke_modeler3.gemfile
+    - RUBY_VERSION: 25
+      BUNDLE_GEMFILE: testing/gemfiles/cuke_modeler3.gemfile
+    - RUBY_VERSION: 25-x64
       BUNDLE_GEMFILE: testing/gemfiles/cuke_modeler3.gemfile
 
 
