@@ -13,6 +13,12 @@ describe 'the gem' do
     expect(mock_ui.error).to_not match(/warn/i)
   end
 
+  it 'has a current license' do
+    license_text = File.read("#{File.dirname(__FILE__)}/../../../LICENSE.TXT")
+
+    expect(license_text).to match(/Copyright.*2014-#{Time.now.year}/)
+  end
+
 end
 
 
