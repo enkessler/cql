@@ -37,8 +37,14 @@ Thank you for installing cql (Cucumber Query Language)
   s.add_development_dependency 'rainbow', '< 4.0.0'
 
 
-  s.files            = Dir.glob('lib/**/*').reject { |path| path =~ /\.gitignore$/ }
-  s.test_files       = Dir.glob('testing/**/*')
+  # Specify which files should be added to the gem when it is released.
+  # The `git ls-files -z` loads the files in the RubyGem that have been added into git.
+  s.files = Dir.chdir(File.expand_path('', __dir__)) do
+    source_controlled_files = `git ls-files -z`.split("\x0")
+    source_controlled_files.keep_if { |file| file =~ %r{^(lib|testing/cucumber/features)} }
+    source_controlled_files + ['README.md', 'LICENSE.txt', 'CHANGELOG.md', 'cql.gemspec']
+  end
+
   s.rdoc_options     = ['--charset=UTF-8']
   s.require_path     = 'lib'
 end
