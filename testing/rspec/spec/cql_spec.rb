@@ -23,6 +23,31 @@ describe 'the gem' do
   end
 
 
+  describe 'metadata' do
+
+    it 'links to the changelog' do
+      expect(gemspec.metadata['changelog_uri']).to eq('https://github.com/enkessler/cql/blob/master/CHANGELOG.md')
+    end
+
+    it 'links to the known issues/bugs' do
+      expect(gemspec.metadata['bug_tracker_uri']).to eq('https://github.com/enkessler/cql/issues')
+    end
+
+    it 'links to the source code' do
+      expect(gemspec.metadata['source_code_uri']).to eq('https://github.com/enkessler/cql')
+    end
+
+    it 'links to the home page of the project' do
+      expect(gemspec.metadata['homepage_uri']).to eq('https://github.com/enkessler/cql')
+    end
+
+    it 'links to the gem documentation' do
+      expect(gemspec.metadata['documentation_uri']).to eq('https://www.rubydoc.info/gems/cql')
+    end
+
+  end
+
+
   describe 'included files' do
 
     it 'does not include files that are not source controlled' do

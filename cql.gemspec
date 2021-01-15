@@ -23,6 +23,14 @@ Thank you for installing cql (Cucumber Query Language)
 
 }
 
+  s.metadata = {
+    'bug_tracker_uri'   => 'https://github.com/enkessler/cql/issues',
+    'changelog_uri'     => 'https://github.com/enkessler/cql/blob/master/CHANGELOG.md',
+    'documentation_uri' => 'https://www.rubydoc.info/gems/cql',
+    'homepage_uri'      => 'https://github.com/enkessler/cql',
+    'source_code_uri'   => 'https://github.com/enkessler/cql'
+  }
+
   s.required_ruby_version = '>= 2.0', '< 4.0'
 
   s.add_runtime_dependency 'cuke_modeler', '< 4.0'
