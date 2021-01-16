@@ -1,5 +1,5 @@
 # todo - Rewrite the scenarios such that they use their own test specific feature files instead of setting up a large suite in the background
-Feature: 'with' clause
+Feature: 'with' clause predefined filters
 
   There are several predefined filters that can be used with the *with* clause. Like regular 'block style' conditions, they can be negated using *without*, used in a targeted fashion, etc.
 
