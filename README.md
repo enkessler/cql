@@ -4,7 +4,7 @@ Basic stuff:
 [![Downloads](https://img.shields.io/gem/dt/cql.svg)](https://rubygems.org/gems/cql)
 
 User stuff:
-[![Cucumber Docs](http://img.shields.io/badge/Documentation-Features-green.svg)](https://app.cucumber.pro/projects/cql)
+[![Cucumber Docs](http://img.shields.io/badge/Documentation-Features-green.svg)](https://github.com/enkessler/cql/tree/master/testing/cucumber/features)
 [![Yard Docs](http://img.shields.io/badge/Documentation-API-blue.svg)](https://www.rubydoc.info/gems/cql)
 
 Developer stuff:
@@ -80,4 +80,4 @@ Alternatively, you can activate the extensions to the cuke_modeler gem and query
         from features
     end
 
-For more information on the query options, see the documentation [here](https://app.cucumber.pro/projects/cql).
+For more information on the query options, see the documentation [here](https://github.com/enkessler/cql/tree/master/testing/cucumber/features).

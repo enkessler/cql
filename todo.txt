@@ -1,4 +1,5 @@
-todo - organize feature files for better presentation on Jam
+TODO - Find a place to host the feature files as documentation
+     - and then organize them better for said hosting/presentation
 todo - Change clauses to target based on final attribute names (i.e. after 'as' clause) instead of original attribute name (which may contain duplicate selections resulting in ambiguity)
 todo - Possible new feature: 'order_by' clause. Would allow ordering of the results set based on an attribute (i.e. select target) and could take a block for sorting (probably passed right on to Ruby's Array sorting method). No real need for it yet but could be a useful exercise for teaching someone.
 todo - Possible new feature: 'from'-ing an arbitrary collection of models instead of a model tree. Maybe the user already built a mode lset wit ha previous query and wants to perform queries on that instead of making a single, complex query? Query chaining?
