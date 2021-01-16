@@ -21,9 +21,9 @@ namespace 'cql' do
     FileUtils.remove_dir(code_coverage_directory, true)
   end
 
-  desc 'Check documentation with RDoc'
+  desc 'Check documentation with YARD'
   task :check_documentation do
-    output = `rdoc lib -C`
+    output = `yardoc`
     puts output
 
     if output =~ /100.00% documented/

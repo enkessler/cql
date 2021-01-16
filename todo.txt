@@ -1,3 +1,4 @@
+TODO - Rewrite inline method/class/etc documentation so that it is more YARD-style and useful (e.g. listed method parameters)
 TODO - Find a place to host the feature files as documentation
      - and then organize them better for said hosting/presentation
 todo - Change clauses to target based on final attribute names (i.e. after 'as' clause) instead of original attribute name (which may contain duplicate selections resulting in ambiguity)
