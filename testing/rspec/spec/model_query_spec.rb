@@ -1,7 +1,7 @@
 require "#{File.dirname(__FILE__)}/spec_helper"
 
 
-describe 'a query enhanced model', :unless => cuke_modeler?(0) do
+describe 'a query enhanced model' do
 
   let(:clazz) { CukeModeler::Model }
   let(:model) { clazz.new }

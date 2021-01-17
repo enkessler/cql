@@ -8,12 +8,7 @@ module CQL
         case
           when model.is_a?(CukeModeler::Feature)
             file_model = CukeModeler::FeatureFile.new
-
-            if cuke_modeler?(0)
-              file_model.features = [model]
-            else
-              file_model.feature = model
-            end
+            file_model.feature = model
 
             directory_model.feature_files << file_model
           else

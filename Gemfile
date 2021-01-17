@@ -11,7 +11,7 @@ if RUBY_VERSION =~ /^2\.0/
   gem 'cucumber', '< 3.0.1' # Requires Ruby 2.1+ after this point
 elsif RUBY_VERSION =~ /^2\.1/
   gem 'cucumber', '< 3.0.2' # Requires Ruby 2.2+ after this point
-elsif [0, 1, 2].include?(cuke_modeler_major_version)
+elsif [1, 2].include?(cuke_modeler_major_version)
   # Cucumber 4.x+ uses the `cucumber-gherkin` gem, which is incompatible with
   # the `gherkin` gem, upon which this version of the `cuke_modeler` gem depends
   gem 'cucumber', '< 4.0'
@@ -25,10 +25,5 @@ if RUBY_VERSION =~ /^2\.[0123]/
   gem 'simplecov-html', '< 0.11' # Requires Ruby 2.4+ after this point
 end
 
-if [0].include?(cuke_modeler_major_version)
-  # The oldest versions of the `cuke_modeler` gem did not properly limit their dependencies
-  # and CukeModeler 0.x can not handle a higher Gherkin 5.x+
-  gem 'gherkin', '< 5.0'
-end
 
 gem 'cuke_modeler', "~> #{cuke_modeler_major_version}.0"

@@ -20,7 +20,6 @@ matrix:
 
 
 gemfile:
-  - testing/gemfiles/cuke_modeler0.gemfile
   - testing/gemfiles/cuke_modeler1.gemfile
   - testing/gemfiles/cuke_modeler2.gemfile
   - testing/gemfiles/cuke_modeler3.gemfile

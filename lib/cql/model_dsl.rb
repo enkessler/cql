@@ -1,5 +1,3 @@
-# todo - add some sort of error/warning if loading with the 0.x cuke_modeler?
-
 module CukeModeler
 
   # A monkey patch that allows models to be queried directly by having them use this gem's query module.

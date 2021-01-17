@@ -11,10 +11,6 @@ module CukeModeler
       @children
     end
 
-
-    # For cuke_modeler 0.x compatibility
-    alias_method :contains, :children
-
   end
 
 end
@@ -32,10 +28,6 @@ module CukeModeler
 
       @children
     end
-
-
-    # For cuke_modeler 0.x compatibility
-    alias_method :contains, :children
 
   end
 

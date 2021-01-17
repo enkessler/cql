@@ -7,11 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Removed
- - Removed support for Ruby 1.x. This gem only officially supports Ruby 2.0 and higher.
+ - Removed support for Ruby 1.x. This gem only supports Ruby 2.0 and higher.
+ - Removed support for `cuke_modeler` 0.x. This gem only supports `cuke_modeler` 1.x and higher.
 
 ### Changed
  - No longer including every file in the Git repository as part of the gem. Only the files needed for using the gem (and
    the informative ones like the README) will be packaged into the released gem.
+
 ## [1.7.0] - 2021-01-09
 
 ### Added
@@ -80,9 +82,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
  - A new 'without' clause has been added. This clause has the opposite effect of the 'with' clause.
- - An optional extension to the 'cuke_modeler' gem has been added. This extension allows models to be directly 
+ - An optional extension to the `cuke_modeler` gem has been added. This extension allows models to be directly 
    queried in the same manner that a repository could be queried (without needing the extra step of having to create 
-   a repository out of the model first). This extension does not work with the 0.x versions of 'cuke_modeler'.
+   a repository out of the model first). This extension does not work with the 0.x versions of `cuke_modeler`.
  - A special scoping identifier, :all, has been added that allows all types of model to be included with the 'from' 
    clause without having to explicitly list each model type.
  - A special selection identifier, :model, has been added that is a more meaningful alias for the :self identifier.
@@ -109,7 +111,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
- - Added support for the 1.x series of the 'cuke_modeler' gem.
+ - Added support for the 1.x series of the `cuke_modeler` gem.
 
 
 ## [1.1.0] - 2015-11-28
@@ -158,8 +160,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
- - Swapped out the back end of the gem so that it is powered by the 'cuke_modeler'
-   gem instead of using the 'gherkin' gem directly
+ - Swapped out the back end of the gem so that it is powered by the `cuke_modeler`
+   gem instead of using the `gherkin` gem directly
 
 ## 0.2.1 - 2013-07-18
 
