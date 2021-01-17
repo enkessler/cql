@@ -1,5 +1,5 @@
-# -*- encoding: utf-8 -*-
-$LOAD_PATH.unshift File.expand_path('../lib', __FILE__)
+lib = File.expand_path('lib', __dir__)
+$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'cql/version'
 
 
@@ -54,5 +54,5 @@ Thank you for installing cql (Cucumber Query Language)
     source_controlled_files + ['README.md', 'LICENSE.txt', 'CHANGELOG.md', 'cql.gemspec']
   end
 
-  s.require_path     = 'lib'
+  s.require_paths     = ['lib']
 end
