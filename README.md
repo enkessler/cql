@@ -29,15 +29,24 @@ Some uses for example are:
 * Build systems
 * Reporting
 
-## Quick Start
 
-* Install the gem
+## Installation
 
-Use the following command:
+Add this line to your application's Gemfile:
 
-    gem install cql
+```ruby
+gem 'cql'
+```
 
-Alternatively you can add it to your Gemfile if you are using bundler.
+And then execute:
+
+    $ bundle
+
+Or install it yourself as:
+
+    $ gem install cql
+
+## Usage
 
 * Create a new ruby file and require the gem
 
@@ -68,7 +77,7 @@ This will return a list of all of the feature names and source lines in the form
      {'name' => 'Feature 2', 'source_line' => 3},
      {'name' => 'Feature 3', 'source_line' => 10}]
 
-Alternatively, you can activate the extensions to the cuke_modeler gem and query models directly:
+Alternatively, you can activate the extensions to the `cuke_modeler` gem and query models directly:
 
     require 'cql'
     require 'cql/model_dsl'
@@ -81,3 +90,13 @@ Alternatively, you can activate the extensions to the cuke_modeler gem and query
     end
 
 For more information on the query options, see the documentation [here](https://github.com/enkessler/cql/tree/master/testing/cucumber/features).
+
+## Development and Contributing
+
+See [CONTRIBUTING.md](https://github.com/enkessler/cql/blob/master/CONTRIBUTING.md)
+
+## License
+
+The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
+
+
