@@ -43,7 +43,7 @@ Thank you for installing cql (Cucumber Query Language)
   s.add_development_dependency 'bundler', '< 3.0'
   s.add_development_dependency 'rainbow', '< 4.0.0'
   s.add_development_dependency 'yard', '< 1.0'
-  s.add_development_dependency 'rubocop', '< 2.0.0'
+  s.add_development_dependency 'rubocop', '<= 0.50.0' # RuboCop can not lint against Ruby 2.0 after this version
 
 
   # Specify which files should be added to the gem when it is released.
