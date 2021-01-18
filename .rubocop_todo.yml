@@ -90,13 +90,6 @@ Layout/EmptyLinesAroundModuleBody:
     - 'testing/helper_methods.rb'
     - 'testing/model_helper.rb'
 
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: AllowForAlignment, ForceEqualSignAlignment.
-Layout/ExtraSpacing:
-  Exclude:
-    - 'cql.gemspec'
-
 # Offense count: 3
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles, IndentationWidth.
@@ -148,13 +141,6 @@ Layout/MultilineHashBraceLayout:
 Layout/MultilineMethodCallIndentation:
   Exclude:
     - 'testing/rspec/spec/cql_spec.rb'
-
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: AllowForAlignment.
-Layout/SpaceAroundOperators:
-  Exclude:
-    - 'cql.gemspec'
 
 # Offense count: 1135
 # Cop supports --auto-correct.
@@ -469,8 +455,6 @@ Style/RedundantSelf:
 # SupportedStyles: single_quotes, double_quotes
 Style/StringLiterals:
   Exclude:
-    - 'Gemfile'
-    - 'cql.gemspec'
     - 'lib/cql/dsl.rb'
     - 'testing/rspec/spec/clauses/from_clause_spec.rb'
     - 'testing/rspec/spec/clauses/select_clause_spec.rb'
