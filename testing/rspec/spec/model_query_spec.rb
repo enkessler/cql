@@ -1,7 +1,7 @@
-require "#{File.dirname(__FILE__)}/spec_helper"
+require_relative '../../../environments/rspec_env'
 
 
-describe 'a query enhanced model' do
+RSpec.describe 'a query enhanced model' do
 
   let(:clazz) { CukeModeler::Model }
   let(:model) { clazz.new }

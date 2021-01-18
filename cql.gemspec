@@ -39,7 +39,6 @@ Thank you for installing cql (Cucumber Query Language)
   s.add_development_dependency 'rspec', '~> 3.0'
   s.add_development_dependency 'cucumber', '< 5.0.0'
   s.add_development_dependency 'simplecov', '< 1.0.0'
-  s.add_development_dependency 'racatt', '~> 1.0'
   s.add_development_dependency 'coveralls', '< 1.0.0'
   s.add_development_dependency 'bundler', '< 3.0'
   s.add_development_dependency 'rainbow', '< 4.0.0'

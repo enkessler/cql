@@ -1,15 +1,12 @@
 require 'bundler/gem_tasks'
 require 'rake'
-require 'racatt'
 require 'coveralls/rake/task'
+require 'cucumber/rake/task'
+require 'rspec/core/rake_task'
 require 'rainbow'
 
 
 Rainbow.enabled = true
-
-namespace 'racatt' do
-  Racatt.create_tasks
-end
 
 
 namespace 'cql' do
@@ -33,27 +30,33 @@ namespace 'cql' do
     end
   end
 
-  desc 'Run all of the tests'
-  task :test_everything => [:clear_coverage] do
-    rspec_args = '--tag ~@wip --pattern "testing/rspec/spec/**/*_spec.rb" --force-color'
-
-    cucumber_version = Gem.loaded_specs['cucumber'].version.version
-    cucumber_major_version = cucumber_version.match(/^(\d+)\./)[1].to_i
-
-    cucumber_args = 'testing/cucumber/features'
-    cucumber_args += ' -r testing/cucumber/support -r testing/cucumber/step_definitions'
-    cucumber_args += ' -f progress --color'
-    cucumber_args += if cucumber_major_version < 4
-                       ' -t ~@wip'
-                     else
-                       " -t 'not @wip'"
-                     end
-    cucumber_args += ' --publish-quiet' if cucumber_major_version >= 5
-
-    Rake::Task['racatt:test_everything'].invoke(rspec_args, cucumber_args)
+  desc 'Run all of the RSpec tests'
+  task :run_rspec_tests => [:clear_coverage]
+  RSpec::Core::RakeTask.new(:run_rspec_tests, :command_options) do |t, args|
+    t.rspec_opts = args[:command_options] || '--tag ~@wip --pattern "testing/rspec/spec/**/*_spec.rb" --force-color'
   end
 
-  # creates coveralls:push task
+  desc 'Run all of the Cucumber tests'
+  task :run_cucumber_tests => [:clear_coverage]
+  task :run_cucumber_tests, [:command_options] do |_t, args|
+    ENV['CUCUMBER_OPTS'] = args[:command_options] if args[:command_options]
+  end
+  Cucumber::Rake::Task.new(:run_cucumber_tests)
+
+  desc 'Run all of the tests'
+  task :test_everything => [:clear_coverage] do
+    puts Rainbow('Running RSpec tests...').cyan
+    Rake::Task['cql:run_rspec_tests'].invoke
+    puts Rainbow('All RSpec tests passing.').green
+
+    puts Rainbow('Running Cucumber tests...').cyan
+    Rake::Task['cql:run_cucumber_tests'].invoke
+    puts Rainbow('All Cucumber tests passing.').green
+
+    puts Rainbow('All tests passing! :)').green
+  end
+
+  # Creates coveralls:push task
   Coveralls::RakeTask.new
 
   desc 'The task that CI will run. Do not run locally.'

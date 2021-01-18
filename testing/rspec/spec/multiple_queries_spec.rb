@@ -1,7 +1,7 @@
-require "#{File.dirname(__FILE__)}/spec_helper"
+require_relative '../../../environments/rspec_env'
 
 
-describe "cql" do
+RSpec.describe "cql" do
 
   describe 'repo' do
     it 'should not change between queries' do

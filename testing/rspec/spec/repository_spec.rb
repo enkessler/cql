@@ -1,7 +1,7 @@
-require "#{File.dirname(__FILE__)}/spec_helper"
+require_relative '../../../environments/rspec_env'
 
 
-describe 'CQL::Repository' do
+RSpec.describe 'CQL::Repository' do
 
   let(:clazz) { CQL::Repository }
   let(:seed_arguments) { CQL_FEATURE_FIXTURES_DIRECTORY }

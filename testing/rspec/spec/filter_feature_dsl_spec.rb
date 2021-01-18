@@ -1,7 +1,7 @@
-require "#{File.dirname(__FILE__)}/spec_helper"
+require_relative '../../../environments/rspec_env'
 
 
-describe "feature filters (with)" do
+RSpec.describe "feature filters (with)" do
   describe 'scenario outline and scenario count functions (ssoc)' do
 
     it 'should filter based on ssoc_gt' do

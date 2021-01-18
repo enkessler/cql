@@ -1,7 +1,7 @@
-require "#{File.dirname(__FILE__)}/spec_helper"
+require_relative '../../../environments/rspec_env'
 
 
-describe 'the gem' do
+RSpec.describe 'the gem' do
 
   let(:root_dir) { "#{__dir__}/../../.." }
   let(:lib_folder) { "#{root_dir}/lib" }
@@ -173,7 +173,7 @@ describe 'the gem' do
 end
 
 
-describe CQL do
+RSpec.describe CQL do
 
   it "has a version number" do
     expect(CQL::VERSION).not_to be nil

@@ -1,7 +1,7 @@
-require "#{File.dirname(__FILE__)}/spec_helper"
+require_relative '../../../environments/rspec_env'
 
 
-describe "select" do
+RSpec.describe "select" do
   describe "from features" do
 
     it 'should return names from features' do

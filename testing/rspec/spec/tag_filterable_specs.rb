@@ -1,4 +1,4 @@
-require "#{File.dirname(__FILE__)}/spec_helper"
+require_relative '../../../environments/rspec_env'
 
 
 shared_examples_for 'a tag filterable target set' do |target_type, test_data|

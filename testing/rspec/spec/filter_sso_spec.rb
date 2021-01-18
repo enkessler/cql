@@ -1,7 +1,7 @@
-require "#{File.dirname(__FILE__)}/spec_helper"
+require_relative '../../../environments/rspec_env'
 
 
-describe "scenario and outline filters (with)" do
+RSpec.describe "scenario and outline filters (with)" do
 
 
   it_behaves_like 'a name filterable target set', 'scenarios', {:exact_name => {:fixture_location => "#{CQL_FEATURE_FIXTURES_DIRECTORY}/scenario/name_filter",

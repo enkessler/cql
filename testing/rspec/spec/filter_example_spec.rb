@@ -1,7 +1,7 @@
-require "#{File.dirname(__FILE__)}/spec_helper"
+require_relative '../../../environments/rspec_env'
 
 
-describe "example filters (with)" do
+RSpec.describe "example filters (with)" do
 
 
   it_behaves_like 'a name filterable target set', 'examples', {:exact_name => {:fixture_location => "#{CQL_FEATURE_FIXTURES_DIRECTORY}/examples/name_filter",

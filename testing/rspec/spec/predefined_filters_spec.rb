@@ -1,7 +1,7 @@
-require "#{File.dirname(__FILE__)}/spec_helper"
+require_relative '../../../environments/rspec_env'
 
 
-describe "predefined 'with' filters" do
+RSpec.describe "predefined 'with' filters" do
 
   let(:nodule) { CQL::Dsl }
   let(:dsl_enabled_object) { Object.new.extend(nodule) }
