@@ -2,7 +2,7 @@ namespace 'cql' do
 
   desc 'Check documentation with YARD'
   task :check_documentation do
-    output = `yardoc`
+    output = `yard stats --list-undoc`
     puts output
 
     if output =~ /100.00% documented/

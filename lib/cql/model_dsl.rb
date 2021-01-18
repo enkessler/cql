@@ -1,3 +1,4 @@
+# The top level namespace for the `cuke_modeler` gem
 module CukeModeler
 
   # A monkey patch that allows models to be queried directly by having them use this gem's query module.
