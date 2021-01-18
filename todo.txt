@@ -1,3 +1,4 @@
+TODO - Fix RuboCop violations
 TODO - Rewrite inline method/class/etc documentation so that it is more YARD-style and useful (e.g. listed method parameters)
 TODO - Find a place to host the feature files as documentation
      - and then organize them better for said hosting/presentation

@@ -5,6 +5,7 @@ namespace 'cql' do
     begin
       Rake::Task['cql:test_everything'].invoke
       Rake::Task['cql:check_documentation'].invoke
+      Rake::Task['cql:rubocop'].invoke
     rescue => e
       puts Rainbow("Something isn't right!").red
       raise e
