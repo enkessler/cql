@@ -17,3 +17,8 @@ Layout/EmptyLinesAroundClassBody:
 # paths because it is a `case` statement rather than having to parse `if/else` logic
 Style/EmptyCaseCondition:
   Enabled: false
+
+# The test code is safe to evaluate
+Security/Eval:
+  Exclude:
+    - 'testing/**/*'

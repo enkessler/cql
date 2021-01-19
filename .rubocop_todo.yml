@@ -224,14 +224,6 @@ Naming/VariableNumber:
     - 'testing/rspec/spec/repository_spec.rb'
 
 
-# Offense count: 6
-Security/Eval:
-  Exclude:
-    - 'testing/cucumber/step_definitions/query_steps.rb'
-    - 'testing/cucumber/step_definitions/verification_steps.rb'
-    - 'testing/rspec/spec/cql_spec.rb'
-
-
 # Offense count: 19
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles, ProceduralMethods, FunctionalMethods, IgnoredMethods.
@@ -277,11 +269,6 @@ Style/Documentation:
     - 'testing/helper_methods.rb'
     - 'testing/model_helper.rb'
 
-# Offense count: 4
-# Cop supports --auto-correct.
-Style/EmptyLiteral:
-  Exclude:
-    - 'testing/cucumber/step_definitions/setup_steps.rb'
 
 # Offense count: 5
 # Configuration parameters: MinBodyLength.
@@ -370,7 +357,6 @@ Style/StringLiterals:
 # IgnoredMethods: respond_to, define_method
 Style/SymbolProc:
   Exclude:
-    - 'testing/cucumber/step_definitions/verification_steps.rb'
     - 'testing/rspec/spec/clauses/select_clause_spec.rb'
 
 # Offense count: 1

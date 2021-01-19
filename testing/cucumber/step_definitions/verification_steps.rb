@@ -77,5 +77,5 @@ And(/^equivalent results are returned for the following query:$/) do |query_text
   alternate_results = eval(command)
 
   # Only checking the values of the results because they will have different :model/:self keys
-  expect(alternate_results.collect { |result| result.values }).to eq(@query_results.collect { |result| result.values })
+  expect(alternate_results.collect(&:values)).to eq(@query_results.collect(&:values))
 end
