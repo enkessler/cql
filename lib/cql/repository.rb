@@ -1,7 +1,6 @@
 module CQL
 
-# A repository is a group of models. See the corresponding Cucumber documentation for details.
-
+  # A repository is a group of models. See the corresponding Cucumber documentation for details.
   class Repository
 
     include Queriable

@@ -6,6 +6,5 @@ require 'cql/repository'
 
 
 # The top level namespace for CQL related code.
-
 module CQL
 end

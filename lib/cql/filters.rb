@@ -7,24 +7,23 @@ module CQL
     attr_reader :tags
 
     # Creates a new filter
-    def initialize tags
+    def initialize(tags)
       @tags = tags
     end
 
     # Returns whether or not the object has the target tags
-    def has_tags?(object, target_tags)
-      target_tags.all? { |target_tag|
-        tags = object.tags
-        tags = tags.collect { |tag| tag.name } unless Gem.loaded_specs['cuke_modeler'].version.version[/^0/]
+    def tags?(object, target_tags)
+      target_tags.all? do |target_tag|
+        tags = object.tags.map(&:name)
         tags.include?(target_tag)
-      }
+      end
     end
 
     # Filters the input models so that only the desired ones are returned
     def execute(objects, negate)
       method = negate ? :reject : :select
 
-      objects.send(method) { |object| has_tags?(object, tags) }
+      objects.send(method) { |object| tags?(object, tags) }
     end
 
   end
@@ -56,13 +55,12 @@ module CQL
   # Not a part of the public API. Subject to change at any time.
   class TypeCountFilter
 
-                # the types of object that will be filtered against
-    attr_reader :types,
-                # the comparison that will be made between the objects
-                :comparison
+
+    attr_reader :types,     # the types of object that will be filtered against
+                :comparison # the comparison that will be made between the objects
 
     # Creates a new filter
-    def initialize types, comparison
+    def initialize(types, comparison)
       @types = types
       @comparison = comparison
     end

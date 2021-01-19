@@ -5,10 +5,9 @@ module CQL
 
     include Dsl
 
-                # the root object that will be queried
-    attr_reader :data,
-                # what kinds of objects will be selected
-                :what
+
+    attr_reader :data, # the root object that will be queried
+                :what  # what kinds of objects will be selected
 
     # Creates a new query object
     def initialize(directory, &block)
@@ -16,7 +15,7 @@ module CQL
       @data = directory
 
       # Populate configurables from DSL block
-      self.instance_eval(&block)
+      instance_eval(&block)
 
 
       raise(ArgumentError, "A query must specify a 'select' clause") unless @what
@@ -39,12 +38,12 @@ module CQL
       format_data(data)
     end
 
-    def format_data data
+    def format_data(data)
       space_data
 
-      Array.new.tap do |result_array|
+      [].tap do |result_array|
         data.each do |element|
-          result_array << Hash.new.tap do |result|
+          result_array << {}.tap do |result|
             @what.each_with_index do |attribute, index|
               key = determine_key(attribute, index)
               value = determine_value(element, attribute, index)
@@ -74,7 +73,7 @@ module CQL
     end
 
     def determine_special_value(element, attribute)
-      # todo - Not sure what other special values to have but this could be expanded upon later.
+      # TODO: Not sure what other special values to have but this could be expanded upon later.
       case attribute
         when :self, :model
           val = element
@@ -86,11 +85,9 @@ module CQL
     end
 
     def determine_normal_value(element, attribute)
-      if element.respond_to?(attribute)
-        element.send(attribute)
-      else
-        raise(ArgumentError, "'#{attribute}' is not a valid attribute for selection from a '#{element.class}'.")
-      end
+      raise(ArgumentError, "'#{attribute}' is not a valid attribute for selection from a '#{element.class}'.") unless element.respond_to?(attribute)
+
+      element.send(attribute)
     end
 
     def mapped_attribute(mappings, attribute, location)
@@ -98,9 +95,7 @@ module CQL
         when mappings.is_a?(Array)
           value = mappings[location]
         when mappings.is_a?(Hash)
-          if mappings[attribute]
-            value = mappings[attribute][location]
-          end
+          value = mappings[attribute][location] if mappings[attribute]
         else
           raise(ArgumentError, "Unknown mapping type '#{mappings.class}'")
       end
@@ -114,43 +109,35 @@ module CQL
     end
 
     def space_renamings
-      if @name_transforms.is_a?(Hash)
-        new_names = {}
+      return unless @name_transforms.is_a?(Hash)
 
-        @name_transforms.each_pair do |key, value|
-          new_names[key] = []
+      new_names = {}
 
-          @what.each do |attribute|
-            if attribute == key
-              new_names[key] << value.shift
-            else
-              new_names[key] << nil
-            end
-          end
+      @name_transforms.each_pair do |key, value|
+        new_names[key] = []
+
+        @what.each do |attribute|
+          new_names[key] << (attribute == key ? value.shift : nil)
         end
-
-        @name_transforms = new_names
       end
+
+      @name_transforms = new_names
     end
 
     def space_transforms
-      if @value_transforms.is_a?(Hash)
-        new_values = {}
+      return unless @value_transforms.is_a?(Hash)
 
-        @value_transforms.each_pair do |key, value|
-          new_values[key] = []
+      new_values = {}
 
-          @what.each do |attribute|
-            if attribute == key
-              new_values[key] << value.shift
-            else
-              new_values[key] << nil
-            end
-          end
+      @value_transforms.each_pair do |key, value|
+        new_values[key] = []
+
+        @what.each do |attribute|
+          new_values[key] << (attribute == key ? value.shift : nil)
         end
-
-        @value_transforms = new_values
       end
+
+      @value_transforms = new_values
     end
 
   end

@@ -2,3 +2,18 @@ inherit_from: .rubocop_todo.yml
 
 AllCops:
   TargetRubyVersion: 2.0
+
+
+# Cops that are being modified because whitespace helps with readability
+Layout/CaseIndentation:
+  Enabled: false
+Layout/EmptyLinesAroundModuleBody:
+  Enabled: false
+Layout/EmptyLinesAroundClassBody:
+  EnforcedStyle: empty_lines
+
+
+# No, I like immediately knowing that something is a set of mutually exclusive
+# paths because it is a `case` statement rather than having to parse `if/else` logic
+Style/EmptyCaseCondition:
+  Enabled: false

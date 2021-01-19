@@ -1,7 +1,6 @@
 module CQL
 
   # A mix-in module containing methods used by objects that want to be able to run queries against objects (often themselves).
-
   module Queriable
 
     # The object against which the query will be run.

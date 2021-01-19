@@ -30,18 +30,8 @@ Layout/BlockEndNewline:
 # SupportedStyles: case, end
 Layout/CaseIndentation:
   Exclude:
-    - 'lib/cql/query.rb'
-    - 'lib/cql/repository.rb'
     - 'testing/model_helper.rb'
 
-# Offense count: 4
-# Cop supports --auto-correct.
-Layout/CommentIndentation:
-  Exclude:
-    - 'lib/cql/dsl.rb'
-    - 'lib/cql/filters.rb'
-    - 'lib/cql/query.rb'
-    - 'lib/cql/repository.rb'
 
 # Offense count: 96
 # Cop supports --auto-correct.
@@ -61,14 +51,6 @@ Layout/EmptyLinesAroundBlockBody:
 # SupportedStyles: empty_lines, empty_lines_except_namespace, empty_lines_special, no_empty_lines
 Layout/EmptyLinesAroundClassBody:
   Exclude:
-    - 'lib/cql/dsl.rb'
-    - 'lib/cql/feature_filters.rb'
-    - 'lib/cql/filters.rb'
-    - 'lib/cql/map_reduce.rb'
-    - 'lib/cql/model_dsl.rb'
-    - 'lib/cql/query.rb'
-    - 'lib/cql/repository.rb'
-    - 'lib/cql/sso_filters.rb'
     - 'testing/cql_test_model.rb'
 
 # Offense count: 23
@@ -77,15 +59,6 @@ Layout/EmptyLinesAroundClassBody:
 # SupportedStyles: empty_lines, empty_lines_except_namespace, empty_lines_special, no_empty_lines
 Layout/EmptyLinesAroundModuleBody:
   Exclude:
-    - 'lib/cql/dsl.rb'
-    - 'lib/cql/feature_filters.rb'
-    - 'lib/cql/filters.rb'
-    - 'lib/cql/map_reduce.rb'
-    - 'lib/cql/model_dsl.rb'
-    - 'lib/cql/queriable.rb'
-    - 'lib/cql/query.rb'
-    - 'lib/cql/repository.rb'
-    - 'lib/cql/sso_filters.rb'
     - 'testing/cql_test_model.rb'
     - 'testing/helper_methods.rb'
     - 'testing/model_helper.rb'
@@ -149,7 +122,6 @@ Layout/MultilineMethodCallIndentation:
 # SupportedStylesForEmptyBraces: space, no_space
 Layout/SpaceInsideHashLiteralBraces:
   Exclude:
-    - 'lib/cql/dsl.rb'
     - 'testing/rspec/spec/clauses/from_clause_spec.rb'
     - 'testing/rspec/spec/clauses/select_clause_spec.rb'
     - 'testing/rspec/spec/clauses/with_clause_spec.rb'
@@ -177,10 +149,6 @@ Lint/RescueWithoutErrorClass:
   Exclude:
     - 'rakefiles/release_tasks.rb'
 
-# Offense count: 1
-Lint/ShadowingOuterLocalVariable:
-  Exclude:
-    - 'lib/cql/map_reduce.rb'
 
 # Offense count: 15
 # Cop supports --auto-correct.
@@ -244,7 +212,6 @@ Metrics/PerceivedComplexity:
 Naming/PredicateName:
   Exclude:
     - 'spec/**/*'
-    - 'lib/cql/filters.rb'
 
 # Offense count: 23
 # Configuration parameters: EnforcedStyle, SupportedStyles.
@@ -256,12 +223,6 @@ Naming/VariableNumber:
     - 'testing/rspec/spec/predefined_filters_spec.rb'
     - 'testing/rspec/spec/repository_spec.rb'
 
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: AutoCorrect.
-Performance/HashEachMethods:
-  Exclude:
-    - 'lib/cql/map_reduce.rb'
 
 # Offense count: 6
 Security/Eval:
@@ -270,13 +231,6 @@ Security/Eval:
     - 'testing/cucumber/step_definitions/verification_steps.rb'
     - 'testing/rspec/spec/cql_spec.rb'
 
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-# SupportedStyles: prefer_alias, prefer_alias_method
-Style/Alias:
-  Exclude:
-    - 'lib/cql/model_dsl.rb'
 
 # Offense count: 19
 # Cop supports --auto-correct.
@@ -287,7 +241,6 @@ Style/Alias:
 # IgnoredMethods: lambda, proc, it
 Style/BlockDelimiters:
   Exclude:
-    - 'lib/cql/filters.rb'
     - 'testing/rspec/spec/clauses/from_clause_spec.rb'
     - 'testing/rspec/spec/clauses/select_clause_spec.rb'
     - 'testing/rspec/spec/clauses/with_clause_spec.rb'
@@ -313,54 +266,27 @@ Style/BracesAroundHashParameters:
 # Keywords: TODO, FIXME, OPTIMIZE, HACK, REVIEW
 Style/CommentAnnotation:
   Exclude:
-    - 'lib/cql/dsl.rb'
-    - 'lib/cql/query.rb'
     - 'testing/rspec/spec/clauses/as_clause_spec.rb'
-
-# Offense count: 2
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles, SingleLineConditionsOnly, IncludeTernaryExpressions.
-# SupportedStyles: assign_to_condition, assign_inside_condition
-Style/ConditionalAssignment:
-  Exclude:
-    - 'lib/cql/query.rb'
 
 # Offense count: 9
 Style/Documentation:
   Exclude:
     - 'spec/**/*'
     - 'test/**/*'
-    - 'lib/cql.rb'
-    - 'lib/cql/dsl.rb'
-    - 'lib/cql/model_dsl.rb'
-    - 'lib/cql/queriable.rb'
-    - 'lib/cql/repository.rb'
     - 'testing/cql_test_model.rb'
     - 'testing/helper_methods.rb'
-    - 'testing/model_helper.rb'
-
-# Offense count: 3
-# Cop supports --auto-correct.
-Style/EmptyCaseCondition:
-  Exclude:
-    - 'lib/cql/query.rb'
-    - 'lib/cql/repository.rb'
     - 'testing/model_helper.rb'
 
 # Offense count: 4
 # Cop supports --auto-correct.
 Style/EmptyLiteral:
   Exclude:
-    - 'lib/cql/map_reduce.rb'
-    - 'lib/cql/query.rb'
     - 'testing/cucumber/step_definitions/setup_steps.rb'
 
 # Offense count: 5
 # Configuration parameters: MinBodyLength.
 Style/GuardClause:
   Exclude:
-    - 'lib/cql/map_reduce.rb'
-    - 'lib/cql/query.rb'
     - 'rakefiles/documentation_tasks.rb'
 
 # Offense count: 156
@@ -370,12 +296,6 @@ Style/GuardClause:
 Style/HashSyntax:
   EnforcedStyle: hash_rockets
 
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: MaxLineLength.
-Style/IfUnlessModifier:
-  Exclude:
-    - 'lib/cql/query.rb'
 
 # Offense count: 1
 # Cop supports --auto-correct.
@@ -396,15 +316,6 @@ Style/Lambda:
     - 'testing/rspec/spec/dsl_spec.rb'
     - 'testing/rspec/spec/repository_spec.rb'
 
-# Offense count: 18
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-# SupportedStyles: require_parentheses, require_no_parentheses, require_no_parentheses_except_multiline
-Style/MethodDefParentheses:
-  Exclude:
-    - 'lib/cql/dsl.rb'
-    - 'lib/cql/filters.rb'
-    - 'lib/cql/query.rb'
 
 # Offense count: 1
 Style/MethodMissing:
@@ -416,7 +327,6 @@ Style/MethodMissing:
 Style/MutableConstant:
   Exclude:
     - 'environments/rspec_env.rb'
-    - 'lib/cql/version.rb'
 
 # Offense count: 1
 # Cop supports --auto-correct.
@@ -433,21 +343,7 @@ Style/NestedParenthesizedCalls:
 Style/NumericPredicate:
   Exclude:
     - 'spec/**/*'
-    - 'lib/cql/dsl.rb'
 
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-# SupportedStyles: short, verbose
-Style/PreferredHashMethods:
-  Exclude:
-    - 'lib/cql/dsl.rb'
-
-# Offense count: 1
-# Cop supports --auto-correct.
-Style/RedundantSelf:
-  Exclude:
-    - 'lib/cql/query.rb'
 
 # Offense count: 867
 # Cop supports --auto-correct.
@@ -455,7 +351,6 @@ Style/RedundantSelf:
 # SupportedStyles: single_quotes, double_quotes
 Style/StringLiterals:
   Exclude:
-    - 'lib/cql/dsl.rb'
     - 'testing/rspec/spec/clauses/from_clause_spec.rb'
     - 'testing/rspec/spec/clauses/select_clause_spec.rb'
     - 'testing/rspec/spec/clauses/transform_clause_spec.rb'
@@ -475,7 +370,6 @@ Style/StringLiterals:
 # IgnoredMethods: respond_to, define_method
 Style/SymbolProc:
   Exclude:
-    - 'lib/cql/filters.rb'
     - 'testing/cucumber/step_definitions/verification_steps.rb'
     - 'testing/rspec/spec/clauses/select_clause_spec.rb'
 
@@ -486,9 +380,3 @@ Style/SymbolProc:
 Style/TernaryParentheses:
   Exclude:
     - 'testing/rspec/spec/queriable_specs.rb'
-
-# Offense count: 3
-# Cop supports --auto-correct.
-Style/ZeroLengthPredicate:
-  Exclude:
-    - 'lib/cql/dsl.rb'

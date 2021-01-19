@@ -14,7 +14,7 @@ module CQL
 
     # Recursively gathers all models that match the given targets and filters
     def self.gather_objects(current_object, target_classes, filters)
-      gathered_objects = Array.new.tap { |gathered_objects| collect_all_in(target_classes, current_object, gathered_objects) }
+      gathered_objects = [].tap { |objects| collect_all_in(target_classes, current_object, objects) }
 
       if filters
         filters.each do |filter|
@@ -27,7 +27,7 @@ module CQL
 
             # Targeted filter, will only apply to certain objects
           elsif filter.is_a?(Hash)
-            filter.keys.each do |filtered_class|
+            filter.each_key do |filtered_class|
               clazz = determine_class(filtered_class)
 
               gathered_objects = gathered_objects.select do |object|
@@ -86,10 +86,10 @@ module CQL
 
         method_for_children = Gem.loaded_specs['cuke_modeler'].version.version[/^0/] ? :contains : :children
 
-        if current_object.respond_to?(method_for_children)
-          current_object.send(method_for_children).each do |child_object|
-            collect_all_in(targeted_classes, child_object, accumulated_objects)
-          end
+        return unless current_object.respond_to?(method_for_children)
+
+        current_object.send(method_for_children).each do |child_object|
+          collect_all_in(targeted_classes, child_object, accumulated_objects)
         end
       end
 
