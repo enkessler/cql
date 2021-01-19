@@ -6,7 +6,7 @@ namespace 'cql' do
       Rake::Task['cql:test_everything'].invoke
       Rake::Task['cql:check_documentation'].invoke
       Rake::Task['cql:rubocop'].invoke
-    rescue => e
+    rescue => e # rubocop:disable Lint/RescueWithoutErrorClass
       puts Rainbow("Something isn't right!").red
       raise e
     end

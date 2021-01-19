@@ -1,4 +1,6 @@
 module CukeModeler
+
+  # A simple model for testing purposes
   class CqlTestModel
 
     attr_accessor :attribute_1
@@ -15,8 +17,9 @@ module CukeModeler
 
 end
 
-# Just a similarly named class for testing shorthand name matching
 module CukeModeler
+
+  # Just a similarly named class for testing shorthand name matching
   class CqlTestModels
 
     attr_accessor :attribute_1

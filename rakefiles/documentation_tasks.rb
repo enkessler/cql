@@ -5,11 +5,9 @@ namespace 'cql' do
     output = `yard stats --list-undoc`
     puts output
 
-    if output =~ /100.00% documented/
-      puts Rainbow('All code documented').green
-    else
-      raise Rainbow('Parts of the gem are undocumented').red
-    end
+    raise Rainbow('Parts of the gem are undocumented').red unless output =~ /100.00% documented/
+
+    puts Rainbow('All code documented').green
   end
 
   # NOTE: There are currently no places to host the feature files but these tasks could be useful when there

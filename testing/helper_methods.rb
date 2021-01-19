@@ -1,4 +1,6 @@
 module CQL
+
+  # Some methods to help with the test framework
   module HelperMethods
 
     def cuke_modeler?(*versions)

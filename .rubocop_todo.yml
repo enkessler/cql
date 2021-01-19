@@ -24,15 +24,6 @@ Layout/BlockEndNewline:
     - 'testing/rspec/spec/line_filterable_specs.rb'
     - 'testing/rspec/spec/name_filterable_specs.rb'
 
-# Offense count: 6
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles, IndentOneStep, IndentationWidth.
-# SupportedStyles: case, end
-Layout/CaseIndentation:
-  Exclude:
-    - 'testing/model_helper.rb'
-
-
 # Offense count: 96
 # Cop supports --auto-correct.
 Layout/EmptyLines:
@@ -45,23 +36,6 @@ Layout/EmptyLines:
 Layout/EmptyLinesAroundBlockBody:
   Enabled: false
 
-# Offense count: 32
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-# SupportedStyles: empty_lines, empty_lines_except_namespace, empty_lines_special, no_empty_lines
-Layout/EmptyLinesAroundClassBody:
-  Exclude:
-    - 'testing/cql_test_model.rb'
-
-# Offense count: 23
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-# SupportedStyles: empty_lines, empty_lines_except_namespace, empty_lines_special, no_empty_lines
-Layout/EmptyLinesAroundModuleBody:
-  Exclude:
-    - 'testing/cql_test_model.rb'
-    - 'testing/helper_methods.rb'
-    - 'testing/model_helper.rb'
 
 # Offense count: 3
 # Cop supports --auto-correct.
@@ -143,11 +117,6 @@ Lint/AmbiguousOperator:
 Lint/AmbiguousRegexpLiteral:
   Exclude:
     - 'testing/rspec/spec/clauses/without_clause_spec.rb'
-
-# Offense count: 1
-Lint/RescueWithoutErrorClass:
-  Exclude:
-    - 'rakefiles/release_tasks.rb'
 
 
 # Offense count: 15
@@ -265,16 +234,7 @@ Style/Documentation:
   Exclude:
     - 'spec/**/*'
     - 'test/**/*'
-    - 'testing/cql_test_model.rb'
-    - 'testing/helper_methods.rb'
-    - 'testing/model_helper.rb'
 
-
-# Offense count: 5
-# Configuration parameters: MinBodyLength.
-Style/GuardClause:
-  Exclude:
-    - 'rakefiles/documentation_tasks.rb'
 
 # Offense count: 156
 # Cop supports --auto-correct.
@@ -309,11 +269,6 @@ Style/MethodMissing:
   Exclude:
     - 'lib/cql/dsl.rb'
 
-# Offense count: 2
-# Cop supports --auto-correct.
-Style/MutableConstant:
-  Exclude:
-    - 'environments/rspec_env.rb'
 
 # Offense count: 1
 # Cop supports --auto-correct.

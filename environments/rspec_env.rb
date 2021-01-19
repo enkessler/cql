@@ -14,7 +14,7 @@ require_relative '../testing/rspec/spec/line_count_filterable_specs'
 require_relative '../testing/rspec/spec/line_filterable_specs'
 require_relative '../testing/rspec/spec/queriable_specs'
 
-CQL_FEATURE_FIXTURES_DIRECTORY = "#{__dir__}/../testing/fixtures/features"
+CQL_FEATURE_FIXTURES_DIRECTORY = "#{__dir__}/../testing/fixtures/features".freeze
 
 RSpec.configure do |config|
 

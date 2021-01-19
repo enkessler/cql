@@ -1,4 +1,6 @@
 module CQL
+
+  # A helper module for creating model trees used in testing
   module ModelHelper
 
     def directory_with(*models)
