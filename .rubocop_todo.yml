@@ -8,19 +8,6 @@
 
 
 # Offense count: 1
-Lint/AmbiguousOperator:
-  Exclude:
-    - 'testing/rspec/spec/tag_filterable_specs.rb'
-
-
-# Offense count: 15
-# Cop supports --auto-correct.
-# Configuration parameters: IgnoreEmptyBlocks, AllowUnusedKeywordArguments.
-Lint/UnusedBlockArgument:
-  Exclude:
-    - 'testing/rspec/spec/repository_spec.rb'
-
-# Offense count: 1
 Metrics/AbcSize:
   Max: 26
 
@@ -96,17 +83,6 @@ Style/BlockDelimiters:
     - 'testing/rspec/spec/name_filterable_specs.rb'
     - 'testing/rspec/spec/queriable_specs.rb'
 
-# Offense count: 12
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-# SupportedStyles: braces, no_braces, context_dependent
-Style/BracesAroundHashParameters:
-  Exclude:
-    - 'testing/rspec/spec/filter_example_spec.rb'
-    - 'testing/rspec/spec/filter_feature_dsl_spec.rb'
-    - 'testing/rspec/spec/filter_sso_spec.rb'
-
-
 # Offense count: 9
 Style/Documentation:
   Exclude:
@@ -114,36 +90,11 @@ Style/Documentation:
     - 'test/**/*'
 
 
-# Offense count: 156
-# Cop supports --auto-correct.
-# Configuration parameters: SupportedStyles, UseHashRocketsWithSymbolValues, PreferHashRocketsForNonAlnumEndingSymbols.
-# SupportedStyles: ruby19, hash_rockets, no_mixed_keys, ruby19_no_mixed_keys
-Style/HashSyntax:
-  EnforcedStyle: hash_rockets
-
-
-# Offense count: 18
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-# SupportedStyles: line_count_dependent, lambda, literal
-Style/Lambda:
-  Exclude:
-    - 'testing/rspec/spec/repository_spec.rb'
-
-
 # Offense count: 1
 Style/MethodMissing:
   Exclude:
     - 'lib/cql/dsl.rb'
 
-
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: Whitelist.
-# Whitelist: be, be_a, be_an, be_between, be_falsey, be_kind_of, be_instance_of, be_truthy, be_within, eq, eql, end_with, include, match, raise_error, respond_to, start_with
-Style/NestedParenthesizedCalls:
-  Exclude:
-    - 'testing/rspec/spec/cql_spec.rb'
 
 # Offense count: 3
 # Cop supports --auto-correct.
@@ -169,12 +120,3 @@ Style/StringLiterals:
     - 'testing/rspec/spec/select_feature_dsl_spec.rb'
     - 'testing/rspec/spec/select_scen_outline_dsl_spec.rb'
     - 'testing/rspec/spec/select_scenario_dsl_spec.rb'
-
-
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles, AllowSafeAssignment.
-# SupportedStyles: require_parentheses, require_no_parentheses, require_parentheses_when_complex
-Style/TernaryParentheses:
-  Exclude:
-    - 'testing/rspec/spec/queriable_specs.rb'

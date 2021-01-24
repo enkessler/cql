@@ -43,13 +43,13 @@ RSpec.describe 'an object that uses the DSL' do
       results = gs.query do
         with { |scenario| scenario.name =~ /slurping/ }
         as thing1
-        transform :self => ->(_thing_1) { 1 }
+        transform self: ->(_thing_1) { 1 }
         select :self
         as thing2
         with scenarios => ->(scenario) { scenario.name =~ /3/ }
         from scenarios
         select :self
-        transform :self => ->(_thing_2) { 2 }
+        transform self: ->(_thing_2) { 2 }
         select name
       end
 

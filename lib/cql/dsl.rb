@@ -61,9 +61,9 @@ module CQL
     def with(*conditions, &block)
       @filters ||= []
 
-      @filters << { :negate => false, :filter => block } if block
+      @filters << { negate: false, filter: block } if block
       conditions.each do |condition|
-        @filters << { :negate => false, :filter => condition }
+        @filters << { negate: false, filter: condition }
       end
     end
 
@@ -71,9 +71,9 @@ module CQL
     def without(*conditions, &block)
       @filters ||= []
 
-      @filters << { :negate => true, :filter => block } if block
+      @filters << { negate: true, filter: block } if block
       conditions.each do |condition|
-        @filters << { :negate => true, :filter => condition }
+        @filters << { negate: true, filter: condition }
       end
     end
 

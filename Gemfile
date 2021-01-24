@@ -3,7 +3,7 @@ source 'http://rubygems.org'
 gemspec
 
 
-gem 'coveralls', :require => false, :group => :development
+gem 'coveralls', require: false, group: :development
 
 cuke_modeler_major_version = 3
 

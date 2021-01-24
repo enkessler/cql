@@ -1,6 +1,7 @@
 require_relative '../../../environments/rspec_env'
 
 
+# rubocop:disable Style/BracesAroundHashParameters
 RSpec.describe "feature filters (with)" do
   describe 'scenario outline and scenario count functions (ssoc)' do
 
@@ -152,37 +153,37 @@ RSpec.describe "feature filters (with)" do
     end
   end
 
-  it_behaves_like 'a tag filterable target set', 'features', { :single_tag => { :fixture_location => "#{CQL_FEATURE_FIXTURES_DIRECTORY}/scenario/tagged_features",
-                                                                                :expected_results => { '@one' => [{ "name" => "Test Feature" }, { "name" => "Test3 Feature" }],
-                                                                                                       '@two' => [{ "name" => "Test2 Feature" }, { "name" => "Test3 Feature" }] } },
-                                                               :multiple_tags => { :fixture_location => "#{CQL_FEATURE_FIXTURES_DIRECTORY}/scenario/tagged_features",
-                                                                                   :expected_results => { ['@one', '@two'] => [{ "name" => "Test3 Feature" }] } },
-                                                               :tc_lt => { :fixture_location => "#{CQL_FEATURE_FIXTURES_DIRECTORY}/combined/b",
-                                                                           :expected_results => { 0 => [],
-                                                                                                  1 => [],
-                                                                                                  2 => [{ "name" => "f1_1_tag" }],
-                                                                                                  3 => [{ "name" => "f1_1_tag" }, { "name" => "f2_2_tags" }],
-                                                                                                  4 => [{ "name" => "f1_1_tag" }, { "name" => "f2_2_tags" }, { "name" => "f3_3_tags" }],
-                                                                                                  5 => [{ "name" => "f1_1_tag" }, { "name" => "f2_2_tags" }, { "name" => "f3_3_tags" }] } },
-                                                               :tc_lte => { :fixture_location => "#{CQL_FEATURE_FIXTURES_DIRECTORY}/combined/b",
-                                                                            :expected_results => { 0 => [],
-                                                                                                   1 => [{ "name" => "f1_1_tag" }],
-                                                                                                   2 => [{ "name" => "f1_1_tag" }, { "name" => "f2_2_tags" }],
-                                                                                                   3 => [{ "name" => "f1_1_tag" }, { "name" => "f2_2_tags" }, { "name" => "f3_3_tags" }],
-                                                                                                   4 => [{ "name" => "f1_1_tag" }, { "name" => "f2_2_tags" }, { "name" => "f3_3_tags" }] } },
-                                                               :tc_gt => { :fixture_location => "#{CQL_FEATURE_FIXTURES_DIRECTORY}/combined/b",
-                                                                           :expected_results => { 0 => [{ "name" => "f1_1_tag" }, { "name" => "f2_2_tags" }, { "name" => "f3_3_tags" }],
-                                                                                                  1 => [{ "name" => "f2_2_tags" }, { "name" => "f3_3_tags" }],
-                                                                                                  2 => [{ "name" => "f3_3_tags" }],
-                                                                                                  3 => [],
-                                                                                                  4 => [] } },
-                                                               :tc_gte => { :fixture_location => "#{CQL_FEATURE_FIXTURES_DIRECTORY}/combined/b",
-                                                                            :expected_results => { 0 => [{ "name" => "f1_1_tag" }, { "name" => "f2_2_tags" }, { "name" => "f3_3_tags" }],
-                                                                                                   1 => [{ "name" => "f1_1_tag" }, { "name" => "f2_2_tags" }, { "name" => "f3_3_tags" }],
-                                                                                                   2 => [{ "name" => "f2_2_tags" }, { "name" => "f3_3_tags" }],
-                                                                                                   3 => [{ "name" => "f3_3_tags" }],
-                                                                                                   4 => [],
-                                                                                                   5 => [] } } }
+  it_behaves_like 'a tag filterable target set', 'features', { single_tag: { fixture_location: "#{CQL_FEATURE_FIXTURES_DIRECTORY}/scenario/tagged_features",
+                                                                             expected_results: { '@one' => [{ "name" => "Test Feature" }, { "name" => "Test3 Feature" }],
+                                                                                                 '@two' => [{ "name" => "Test2 Feature" }, { "name" => "Test3 Feature" }] } },
+                                                               multiple_tags: { fixture_location: "#{CQL_FEATURE_FIXTURES_DIRECTORY}/scenario/tagged_features",
+                                                                                expected_results: { ['@one', '@two'] => [{ "name" => "Test3 Feature" }] } },
+                                                               tc_lt: { fixture_location: "#{CQL_FEATURE_FIXTURES_DIRECTORY}/combined/b",
+                                                                        expected_results: { 0 => [],
+                                                                                            1 => [],
+                                                                                            2 => [{ "name" => "f1_1_tag" }],
+                                                                                            3 => [{ "name" => "f1_1_tag" }, { "name" => "f2_2_tags" }],
+                                                                                            4 => [{ "name" => "f1_1_tag" }, { "name" => "f2_2_tags" }, { "name" => "f3_3_tags" }],
+                                                                                            5 => [{ "name" => "f1_1_tag" }, { "name" => "f2_2_tags" }, { "name" => "f3_3_tags" }] } },
+                                                               tc_lte: { fixture_location: "#{CQL_FEATURE_FIXTURES_DIRECTORY}/combined/b",
+                                                                         expected_results: { 0 => [],
+                                                                                             1 => [{ "name" => "f1_1_tag" }],
+                                                                                             2 => [{ "name" => "f1_1_tag" }, { "name" => "f2_2_tags" }],
+                                                                                             3 => [{ "name" => "f1_1_tag" }, { "name" => "f2_2_tags" }, { "name" => "f3_3_tags" }],
+                                                                                             4 => [{ "name" => "f1_1_tag" }, { "name" => "f2_2_tags" }, { "name" => "f3_3_tags" }] } },
+                                                               tc_gt: { fixture_location: "#{CQL_FEATURE_FIXTURES_DIRECTORY}/combined/b",
+                                                                        expected_results: { 0 => [{ "name" => "f1_1_tag" }, { "name" => "f2_2_tags" }, { "name" => "f3_3_tags" }],
+                                                                                            1 => [{ "name" => "f2_2_tags" }, { "name" => "f3_3_tags" }],
+                                                                                            2 => [{ "name" => "f3_3_tags" }],
+                                                                                            3 => [],
+                                                                                            4 => [] } },
+                                                               tc_gte: { fixture_location: "#{CQL_FEATURE_FIXTURES_DIRECTORY}/combined/b",
+                                                                         expected_results: { 0 => [{ "name" => "f1_1_tag" }, { "name" => "f2_2_tags" }, { "name" => "f3_3_tags" }],
+                                                                                             1 => [{ "name" => "f1_1_tag" }, { "name" => "f2_2_tags" }, { "name" => "f3_3_tags" }],
+                                                                                             2 => [{ "name" => "f2_2_tags" }, { "name" => "f3_3_tags" }],
+                                                                                             3 => [{ "name" => "f3_3_tags" }],
+                                                                                             4 => [],
+                                                                                             5 => [] } } }
 
   describe 'scenario outline count functions (soc)' do
     it 'should filter based on soc_gt' do
@@ -260,11 +261,11 @@ RSpec.describe "feature filters (with)" do
     end
   end
 
-  it_behaves_like 'a name filterable target set', 'features', { :exact_name => { :fixture_location => "#{CQL_FEATURE_FIXTURES_DIRECTORY}/scenario/tagged_features",
-                                                                                 :expected_results => { 'Test2 Feature' => [{ "name" => "Test2 Feature" }] } },
-                                                                :regexp => { :fixture_location => "#{CQL_FEATURE_FIXTURES_DIRECTORY}/scenario/tagged_features",
-                                                                             :expected_results => { /Test2 Feature/ => [{ "name" => "Test2 Feature" }],
-                                                                                                    /Feature/ => [{ "name" => "Test Feature" }, { "name" => "Test2 Feature" }, { "name" => "Test3 Feature" }] } } }
+  it_behaves_like 'a name filterable target set', 'features', { exact_name: { fixture_location: "#{CQL_FEATURE_FIXTURES_DIRECTORY}/scenario/tagged_features",
+                                                                              expected_results: { 'Test2 Feature' => [{ "name" => "Test2 Feature" }] } },
+                                                                regexp: { fixture_location: "#{CQL_FEATURE_FIXTURES_DIRECTORY}/scenario/tagged_features",
+                                                                          expected_results: { /Test2 Feature/ => [{ "name" => "Test2 Feature" }],
+                                                                                              /Feature/ => [{ "name" => "Test Feature" }, { "name" => "Test2 Feature" }, { "name" => "Test3 Feature" }] } } }
 
 
   it 'should filter by multiple filters' do
@@ -281,3 +282,4 @@ RSpec.describe "feature filters (with)" do
   end
 
 end
+# rubocop:enable Style/BracesAroundHashParameters

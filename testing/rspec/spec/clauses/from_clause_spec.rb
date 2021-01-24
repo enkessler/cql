@@ -134,9 +134,9 @@ RSpec.describe 'an object that uses the DSL' do
           from :all
         end
 
-        expect(result).to match_array([{ :model => model_1 },
-                                       { :model => model_2 },
-                                       { :model => model_3 }])
+        expect(result).to match_array([{ model: model_1 },
+                                       { model: model_2 },
+                                       { model: model_3 }])
       end
 
     end

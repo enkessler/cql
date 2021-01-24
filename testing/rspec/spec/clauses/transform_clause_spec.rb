@@ -19,8 +19,8 @@ RSpec.describe 'an object that uses the DSL' do
           select :self, :self, :self
           as thing1, thing2, thing3
           from scenarios
-          transform :self => ->(_thing_1) { 1 }
-          transform :self => ->(_thing_2) { 2 }
+          transform self: ->(_thing_1) { 1 }
+          transform self: ->(_thing_2) { 2 }
         end
 
         expect(results.first).to include('thing1' => 1, 'thing2' => 2)

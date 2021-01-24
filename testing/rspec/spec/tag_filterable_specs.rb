@@ -30,7 +30,7 @@ shared_examples_for 'a tag filterable target set' do |target_type, test_data|
         result = gs.query do
           select name
           from target_type
-          with tags *filter_tags
+          with tags(*filter_tags)
         end
 
         expect(result).to eq(expected)

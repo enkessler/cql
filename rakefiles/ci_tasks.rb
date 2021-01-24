@@ -6,6 +6,6 @@ namespace 'cql' do
   Coveralls::RakeTask.new
 
   desc 'The task that CI will run. Do not run locally.'
-  task :ci_build => ['cql:test_everything', 'coveralls:push']
+  task :ci_build => ['cql:test_everything', 'coveralls:push'] # rubocop:disable Style/HashSyntax
 
 end

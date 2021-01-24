@@ -11,4 +11,4 @@ require_relative 'rakefiles/release_tasks'
 require_relative 'rakefiles/testing_tasks'
 
 
-task :default => 'cql:test_everything'
+task :default => 'cql:test_everything' # rubocop:disable Style/HashSyntax

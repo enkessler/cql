@@ -5,7 +5,7 @@ shared_examples_for 'a queriable object' do
 
   # clazz and seed_arguments must be defined by the calling file
 
-  let(:object) { (defined? seed_arguments) ? clazz.new(seed_arguments) : clazz.new }
+  let(:object) { defined?(seed_arguments) ? clazz.new(seed_arguments) : clazz.new }
 
 
   it 'has a query root' do

@@ -9,7 +9,7 @@ RSpec.describe 'the gem' do
 
   before(:all) do
     # Doing this as a one time hook instead of using `let` in order to reduce I/O time during testing.
-    @gemspec = eval(File.read "#{File.dirname(__FILE__)}/../../../cql.gemspec")
+    @gemspec = eval(File.read("#{File.dirname(__FILE__)}/../../../cql.gemspec"))
   end
 
   it 'validates cleanly' do
