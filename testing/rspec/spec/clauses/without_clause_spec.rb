@@ -19,7 +19,7 @@ RSpec.describe 'an object that uses the DSL' do
       negated_result = gs.query do
         select name
         from scenarios
-        with { |scenario| !(scenario.source_line == 3) }
+        with { |scenario| scenario.source_line != 3 }
       end
 
       without_result = gs.query do
@@ -37,13 +37,13 @@ RSpec.describe 'an object that uses the DSL' do
       negated_result = gs.query do
         select :model
         from features, scenarios
-        with scenarios => lambda { |scenario| false }
+        with scenarios => ->(_scenario) { false }
       end
 
       without_result = gs.query do
         select :model
         from features, scenarios
-        without scenarios => lambda { |scenario| true }
+        without scenarios => ->(_scenario) { true }
       end
 
       expect(without_result).to eq(negated_result)
@@ -76,13 +76,13 @@ RSpec.describe 'an object that uses the DSL' do
         negated_result = gs.query do
           select :model
           from scenarios
-          with name /name[^1]/
+          with name(/name[^1]/)
         end
 
         without_result = gs.query do
           select :model
           from scenarios
-          without name /name1/
+          without name(/name1/)
         end
 
         expect(without_result).to eq(negated_result)
@@ -150,16 +150,19 @@ RSpec.describe 'an object that uses the DSL' do
       negated_result = gs.query do
         select :model
         from :all
-        with scenarios => lambda { |scenario| false },
-             outlines => lambda { |outline| false }
+        with scenarios => ->(_scenario) { false },
+             outlines => ->(_outline) { false }
         with { |model| !model.is_a?(CukeModeler::Example) }
       end
 
       without_result = gs.query do
         select :model
         from :all
-        without scenarios => lambda { |scenario| true },
-                outlines => lambda { |outline| true }
+        # TODO: make using symbols like this work
+        # without scenarios: ->(_scenario) { true },
+        #         outlines: ->(_outline) { true }
+        without scenarios => ->(_scenario) { true },
+                outlines => ->(_outline) { true }
         without { |model| model.is_a?(CukeModeler::Example) }
       end
 

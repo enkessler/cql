@@ -3,7 +3,6 @@ require_relative '../../../environments/rspec_env'
 
 RSpec.describe 'an object that uses the DSL' do
 
-
   let(:nodule) { CQL::Dsl }
   let(:dsl_enabled_object) { Object.new.extend(nodule) }
 
@@ -13,22 +12,22 @@ RSpec.describe 'an object that uses the DSL' do
     it "will complain if no 'from' clause is specified" do
       gs = CQL::Repository.new("#{CQL_FEATURE_FIXTURES_DIRECTORY}/scenario/simple")
 
-      expect {
+      expect do
         gs.query do
           select
           features
         end
-      }.to raise_error(ArgumentError, "A query must specify a 'from' clause")
+      end.to raise_error(ArgumentError, "A query must specify a 'from' clause")
     end
 
     it "will complain if no 'select' clause is specified" do
       gs = CQL::Repository.new("#{CQL_FEATURE_FIXTURES_DIRECTORY}/scenario/simple")
 
-      expect {
+      expect do
         gs.query do
           from features
         end
-      }.to raise_error(ArgumentError, "A query must specify a 'select' clause")
+      end.to raise_error(ArgumentError, "A query must specify a 'select' clause")
     end
 
   end
@@ -44,13 +43,13 @@ RSpec.describe 'an object that uses the DSL' do
       results = gs.query do
         with { |scenario| scenario.name =~ /slurping/ }
         as thing1
-        transform :self => lambda { |thing1| 1 }
+        transform :self => ->(_thing_1) { 1 }
         select :self
         as thing2
-        with scenarios => lambda { |scenario| scenario.name =~ /3/ }
+        with scenarios => ->(scenario) { scenario.name =~ /3/ }
         from scenarios
         select :self
-        transform :self => lambda { |thing2| 2 }
+        transform :self => ->(_thing_2) { 2 }
         select name
       end
 

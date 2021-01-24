@@ -37,15 +37,6 @@ Layout/EmptyLinesAroundBlockBody:
   Enabled: false
 
 
-# Offense count: 3
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles, IndentationWidth.
-# SupportedStyles: consistent, special_for_inner_method_call, special_for_inner_method_call_in_parentheses
-Layout/FirstParameterIndentation:
-  Exclude:
-    - 'testing/rspec/spec/clauses/from_clause_spec.rb'
-    - 'testing/rspec/spec/clauses/select_clause_spec.rb'
-
 # Offense count: 1
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles, IndentationWidth.
@@ -58,15 +49,12 @@ Layout/IndentHash:
 # Cop supports --auto-correct.
 Layout/LeadingCommentSpace:
   Exclude:
-    - 'testing/rspec/spec/clauses/as_clause_spec.rb'
     - 'testing/rspec/spec/map_reduce_spec.rb'
 
 # Offense count: 5
 # Cop supports --auto-correct.
 Layout/MultilineBlockLayout:
   Exclude:
-    - 'testing/rspec/spec/clauses/from_clause_spec.rb'
-    - 'testing/rspec/spec/clauses/select_clause_spec.rb'
     - 'testing/rspec/spec/cql_spec.rb'
     - 'testing/rspec/spec/line_filterable_specs.rb'
     - 'testing/rspec/spec/name_filterable_specs.rb'
@@ -96,9 +84,6 @@ Layout/MultilineMethodCallIndentation:
 # SupportedStylesForEmptyBraces: space, no_space
 Layout/SpaceInsideHashLiteralBraces:
   Exclude:
-    - 'testing/rspec/spec/clauses/from_clause_spec.rb'
-    - 'testing/rspec/spec/clauses/select_clause_spec.rb'
-    - 'testing/rspec/spec/clauses/with_clause_spec.rb'
     - 'testing/rspec/spec/filter_example_spec.rb'
     - 'testing/rspec/spec/filter_feature_dsl_spec.rb'
     - 'testing/rspec/spec/filter_sso_spec.rb'
@@ -113,21 +98,12 @@ Lint/AmbiguousOperator:
   Exclude:
     - 'testing/rspec/spec/tag_filterable_specs.rb'
 
-# Offense count: 2
-Lint/AmbiguousRegexpLiteral:
-  Exclude:
-    - 'testing/rspec/spec/clauses/without_clause_spec.rb'
-
 
 # Offense count: 15
 # Cop supports --auto-correct.
 # Configuration parameters: IgnoreEmptyBlocks, AllowUnusedKeywordArguments.
 Lint/UnusedBlockArgument:
   Exclude:
-    - 'testing/rspec/spec/clauses/transform_clause_spec.rb'
-    - 'testing/rspec/spec/clauses/with_clause_spec.rb'
-    - 'testing/rspec/spec/clauses/without_clause_spec.rb'
-    - 'testing/rspec/spec/dsl_spec.rb'
     - 'testing/rspec/spec/repository_spec.rb'
 
 # Offense count: 1
@@ -187,7 +163,6 @@ Naming/PredicateName:
 # SupportedStyles: snake_case, normalcase, non_integer
 Naming/VariableNumber:
   Exclude:
-    - 'testing/rspec/spec/clauses/from_clause_spec.rb'
     - 'testing/rspec/spec/cql_spec.rb'
     - 'testing/rspec/spec/predefined_filters_spec.rb'
     - 'testing/rspec/spec/repository_spec.rb'
@@ -202,11 +177,7 @@ Naming/VariableNumber:
 # IgnoredMethods: lambda, proc, it
 Style/BlockDelimiters:
   Exclude:
-    - 'testing/rspec/spec/clauses/from_clause_spec.rb'
-    - 'testing/rspec/spec/clauses/select_clause_spec.rb'
-    - 'testing/rspec/spec/clauses/with_clause_spec.rb'
     - 'testing/rspec/spec/cql_spec.rb'
-    - 'testing/rspec/spec/dsl_spec.rb'
     - 'testing/rspec/spec/line_filterable_specs.rb'
     - 'testing/rspec/spec/name_filterable_specs.rb'
     - 'testing/rspec/spec/queriable_specs.rb'
@@ -221,13 +192,6 @@ Style/BracesAroundHashParameters:
     - 'testing/rspec/spec/filter_feature_dsl_spec.rb'
     - 'testing/rspec/spec/filter_sso_spec.rb'
 
-# Offense count: 5
-# Cop supports --auto-correct.
-# Configuration parameters: Keywords.
-# Keywords: TODO, FIXME, OPTIMIZE, HACK, REVIEW
-Style/CommentAnnotation:
-  Exclude:
-    - 'testing/rspec/spec/clauses/as_clause_spec.rb'
 
 # Offense count: 9
 Style/Documentation:
@@ -244,23 +208,12 @@ Style/HashSyntax:
   EnforcedStyle: hash_rockets
 
 
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: InverseMethods, InverseBlocks.
-Style/InverseMethods:
-  Exclude:
-    - 'testing/rspec/spec/clauses/without_clause_spec.rb'
-
 # Offense count: 18
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles.
 # SupportedStyles: line_count_dependent, lambda, literal
 Style/Lambda:
   Exclude:
-    - 'testing/rspec/spec/clauses/transform_clause_spec.rb'
-    - 'testing/rspec/spec/clauses/with_clause_spec.rb'
-    - 'testing/rspec/spec/clauses/without_clause_spec.rb'
-    - 'testing/rspec/spec/dsl_spec.rb'
     - 'testing/rspec/spec/repository_spec.rb'
 
 
@@ -293,9 +246,6 @@ Style/NumericPredicate:
 # SupportedStyles: single_quotes, double_quotes
 Style/StringLiterals:
   Exclude:
-    - 'testing/rspec/spec/clauses/from_clause_spec.rb'
-    - 'testing/rspec/spec/clauses/select_clause_spec.rb'
-    - 'testing/rspec/spec/clauses/transform_clause_spec.rb'
     - 'testing/rspec/spec/cql_spec.rb'
     - 'testing/rspec/spec/filter_example_spec.rb'
     - 'testing/rspec/spec/filter_feature_dsl_spec.rb'
@@ -306,13 +256,6 @@ Style/StringLiterals:
     - 'testing/rspec/spec/select_scen_outline_dsl_spec.rb'
     - 'testing/rspec/spec/select_scenario_dsl_spec.rb'
 
-# Offense count: 5
-# Cop supports --auto-correct.
-# Configuration parameters: IgnoredMethods.
-# IgnoredMethods: respond_to, define_method
-Style/SymbolProc:
-  Exclude:
-    - 'testing/rspec/spec/clauses/select_clause_spec.rb'
 
 # Offense count: 1
 # Cop supports --auto-correct.

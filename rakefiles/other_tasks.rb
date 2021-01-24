@@ -6,7 +6,7 @@ namespace 'cql' do
   RuboCop::RakeTask.new(:rubocop) do |task|
     task.patterns = ['./']
     task.formatters = ['fuubar', ['html', '--out', 'rubocop.html']]
-    task.options = ['-S']
+    task.options = ['-S', '-D']
   end
 
 end

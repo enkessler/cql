@@ -19,25 +19,25 @@ RSpec.describe 'an object that uses the DSL' do
       it 'can handle predefined filters' do
         gs = CQL::Repository.new(CQL_FEATURE_FIXTURES_DIRECTORY)
 
-        expect {
+        expect do
           gs.query do
             select name
             from features, scenarios, outlines
             with scenarios => name(/test/)
           end
-        }.to_not raise_error
+        end.to_not raise_error
       end
 
       it 'can handle a block filter' do
         gs = CQL::Repository.new(CQL_FEATURE_FIXTURES_DIRECTORY)
 
-        expect {
+        expect do
           gs.query do
             select name
             from features, scenarios, outlines
-            with scenarios => lambda { |scenario| true }
+            with scenarios => ->(_scenario) { true }
           end
-        }.to_not raise_error
+        end.to_not raise_error
       end
 
       it 'correctly filters with a targeted block' do
@@ -46,35 +46,35 @@ RSpec.describe 'an object that uses the DSL' do
         result = gs.query do
           select name
           from scenarios
-          with scenarios => lambda { |scenario| scenario.name =~ /king of/ }
+          with scenarios => ->(scenario) { scenario.name =~ /king of/ }
         end
 
-        expect(result).to eq([{'name' => 'The king of kings'}])
+        expect(result).to eq([{ 'name' => 'The king of kings' }])
       end
 
       it 'can handle shorthand targets' do
         gs = CQL::Repository.new(CQL_FEATURE_FIXTURES_DIRECTORY)
 
-        expect {
+        expect do
           gs.query do
             select name
             from features, scenarios, outlines
             with scenarios => name(/test/)
           end
-        }.to_not raise_error
+        end.to_not raise_error
       end
 
       it 'can handle multiple targets' do
         gs = CQL::Repository.new(CQL_FEATURE_FIXTURES_DIRECTORY)
 
-        expect {
+        expect do
           gs.query do
             select name
             from features, scenarios, outlines
-            with scenarios => lambda { |scenario| true },
-                 outlines => lambda { |outline| true }
+            with scenarios => ->(_scenario) { true },
+                 outlines => ->(_outline) { true }
           end
-        }.to_not raise_error
+        end.to_not raise_error
       end
 
     end

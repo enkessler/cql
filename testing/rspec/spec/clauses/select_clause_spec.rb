@@ -7,7 +7,7 @@ RSpec.describe 'an object that uses the DSL' do
   let(:nodule) { CQL::Dsl }
   let(:dsl_enabled_object) { Object.new.extend(nodule) }
 
-  describe "select" do
+  describe 'select' do
 
     it 'knows how to select attributes' do
       expect(dsl_enabled_object).to respond_to(:select)
@@ -29,7 +29,7 @@ RSpec.describe 'an object that uses the DSL' do
       end
 
 
-      expect(result).to eq([{'attribute_1' => 'foo'}])
+      expect(result).to eq([{ 'attribute_1' => 'foo' }])
     end
 
     it 'correctly selects multiple attributes from a model' do
@@ -45,8 +45,8 @@ RSpec.describe 'an object that uses the DSL' do
       end
 
 
-      expect(result).to eq([{'attribute_1' => 'foo',
-                             'attribute_2' => 'bar'}])
+      expect(result).to eq([{ 'attribute_1' => 'foo',
+                              'attribute_2' => 'bar' }])
     end
 
 
@@ -55,11 +55,12 @@ RSpec.describe 'an object that uses the DSL' do
       it 'understands the :model attribute' do
         gs = CQL::Repository.new("#{CQL_FEATURE_FIXTURES_DIRECTORY}/scenario/simple")
 
-        expect { gs.query do
-          select :model
-          from features
-        end
-        }.to_not raise_error
+        expect do
+          gs.query do
+            select :model
+            from features
+          end
+        end.to_not raise_error
       end
 
       it 'interprets :model in the same manner that it interprets :self' do
@@ -76,18 +77,18 @@ RSpec.describe 'an object that uses the DSL' do
         end
 
         # Only checking the values of the results because they will have different :model/:self keys
-        expect(model_result.collect { |result| result.values }).to eq(self_result.collect { |result| result.values })
+        expect(model_result.collect(&:values)).to eq(self_result.collect(&:values))
       end
 
       it 'complains if an unknown special attribute is queried' do
         gs = CQL::Repository.new("#{CQL_FEATURE_FIXTURES_DIRECTORY}/scenario/simple")
 
-        expect {
+        expect do
           gs.query do
             select :foo
             from scenarios
           end
-        }.to raise_error(ArgumentError, ":foo is not a valid attribute for selection.")
+        end.to raise_error(ArgumentError, ':foo is not a valid attribute for selection.')
       end
 
       it 'uses the :self attribute by default' do
@@ -112,16 +113,16 @@ RSpec.describe 'an object that uses the DSL' do
     it 'complains if an unknown normal attribute is queried' do
       gs = CQL::Repository.new("#{CQL_FEATURE_FIXTURES_DIRECTORY}/scenario/simple")
 
-      expect {
+      expect do
         gs.query do
           select steps
           from features
         end
-      }.to raise_error(ArgumentError, "'steps' is not a valid attribute for selection from a 'CukeModeler::Feature'.")
+      end.to raise_error(ArgumentError, "'steps' is not a valid attribute for selection from a 'CukeModeler::Feature'.")
     end
 
 
-    describe "multiple selections" do
+    describe 'multiple selections' do
 
       it 'can freely mix empty selections and attribute selections' do
         gs = CQL::Repository.new("#{CQL_FEATURE_FIXTURES_DIRECTORY}/scenario/simple")
@@ -136,13 +137,13 @@ RSpec.describe 'an object that uses the DSL' do
 
 
         expect(
-            gs.query do
-              select
-              select name
-              select
-              as 'foo', 'bar', 'baz'
-              from scenarios
-            end
+          gs.query do
+            select
+            select name
+            select
+            as 'foo', 'bar', 'baz'
+            from scenarios
+          end
         ).to eq(base_result)
       end
 
@@ -156,25 +157,25 @@ RSpec.describe 'an object that uses the DSL' do
       it "warns if the same attribute is selected more than once without an 'as' clause being used" do
         gs = CQL::Repository.new("#{CQL_FEATURE_FIXTURES_DIRECTORY}/scenario/simple")
 
-        expect {
+        expect do
           gs.query do
             select :model, :model, :model
             from :all
           end
-        }.to output(warning_message).to_stderr
+        end.to output(warning_message).to_stderr
       end
 
       it "does not warn if the same attribute is selected more than once and an 'as' clause is used" do
         gs = CQL::Repository.new("#{CQL_FEATURE_FIXTURES_DIRECTORY}/scenario/simple")
 
-        expect {
+        expect do
           gs.query do
             select :model, :model, :model
             # Usage of the clause is sufficient. Not going to try and count the mappings or anything like that.
             as foo
             from :all
           end
-        }.to_not output(warning_message).to_stderr
+        end.to_not output(warning_message).to_stderr
       end
 
     end

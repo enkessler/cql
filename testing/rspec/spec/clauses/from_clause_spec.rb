@@ -8,7 +8,7 @@ RSpec.describe 'an object that uses the DSL' do
   let(:dsl_enabled_object) { Object.new.extend(nodule) }
 
 
-  describe "from" do
+  describe 'from' do
 
     it 'knows from what to select attributes' do
       expect(dsl_enabled_object).to respond_to(:from)
@@ -29,18 +29,18 @@ RSpec.describe 'an object that uses the DSL' do
       expect(result).to eq([])
     end
 
-    describe "multiple targets" do
+    describe 'multiple targets' do
 
       it 'raises an exception for inapplicable attributes' do
         gs = CQL::Repository.new("#{CQL_FEATURE_FIXTURES_DIRECTORY}/scenario/simple")
 
-        expect {
+        expect do
           gs.query do
             select name, steps
             from features
             from scenarios
           end
-        }.to raise_error(ArgumentError)
+        end.to raise_error(ArgumentError)
       end
 
     end
@@ -68,12 +68,12 @@ RSpec.describe 'an object that uses the DSL' do
       it 'raises an exception if the shorthand form of a class cannot be mapped to a real class' do
         gs = CQL::Repository.new("#{CQL_FEATURE_FIXTURES_DIRECTORY}/scenario/simple")
 
-        expect {
+        expect do
           gs.query do
             select name
             from not_a_real_class
           end
-        }.to raise_error(ArgumentError, "Class 'CukeModeler::NotARealClass' does not exist")
+        end.to raise_error(ArgumentError, "Class 'CukeModeler::NotARealClass' does not exist")
 
       end
 
@@ -88,18 +88,18 @@ RSpec.describe 'an object that uses the DSL' do
 
         # All shorthand
         expect(
-            gs.query do
-              select name
-              from scenarios, features
-            end
+          gs.query do
+            select name
+            from scenarios, features
+          end
         ).to eq(base_result)
 
         # A mix of both
         expect(
-            gs.query do
-              select name
-              from CukeModeler::Scenario, features
-            end
+          gs.query do
+            select name
+            from CukeModeler::Scenario, features
+          end
         ).to eq(base_result)
       end
 
@@ -111,11 +111,12 @@ RSpec.describe 'an object that uses the DSL' do
       it 'understands the :all scope' do
         gs = CQL::Repository.new("#{CQL_FEATURE_FIXTURES_DIRECTORY}/scenario/simple")
 
-        expect { gs.query do
-          select :model
-          from :all
-        end
-        }.to_not raise_error
+        expect do
+          gs.query do
+            select :model
+            from :all
+          end
+        end.to_not raise_error
       end
 
       it 'queries from all models when scoped to :all' do
@@ -133,14 +134,13 @@ RSpec.describe 'an object that uses the DSL' do
           from :all
         end
 
-        expect(result).to match_array([{:model => model_1},
-                                       {:model => model_2},
-                                       {:model => model_3}])
+        expect(result).to match_array([{ :model => model_1 },
+                                       { :model => model_2 },
+                                       { :model => model_3 }])
       end
 
     end
 
   end
-
 
 end

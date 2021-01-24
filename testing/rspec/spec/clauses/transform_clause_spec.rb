@@ -8,9 +8,9 @@ RSpec.describe 'an object that uses the DSL' do
   let(:dsl_enabled_object) { Object.new.extend(nodule) }
 
 
-  describe "transform" do
+  describe 'transform' do
 
-    describe "multiple targets" do
+    describe 'multiple targets' do
 
       it 'does not apply more transforms than have been declared' do
         gs = CQL::Repository.new("#{CQL_FEATURE_FIXTURES_DIRECTORY}/scenario/simple")
@@ -19,8 +19,8 @@ RSpec.describe 'an object that uses the DSL' do
           select :self, :self, :self
           as thing1, thing2, thing3
           from scenarios
-          transform :self => lambda { |thing1| 1 }
-          transform :self => lambda { |thing2| 2 }
+          transform :self => ->(_thing_1) { 1 }
+          transform :self => ->(_thing_2) { 2 }
         end
 
         expect(results.first).to include('thing1' => 1, 'thing2' => 2)

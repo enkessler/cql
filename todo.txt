@@ -1,3 +1,4 @@
+TODO: Make DSL blocks work more like regular Ruby (e.g. allow symbol keys instead of only string keys in clauses that use hashes)
 TODO - Fix RuboCop violations
 TODO - Rewrite inline method/class/etc documentation so that it is more YARD-style and useful (e.g. listed method parameters)
 TODO - Find a place to host the feature files as documentation

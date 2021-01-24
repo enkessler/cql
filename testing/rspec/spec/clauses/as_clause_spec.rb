@@ -1,1 +1,1 @@
-#TODO - add some specs for the 'as' clause
+# TODO: add some specs for the 'as' clause

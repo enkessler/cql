@@ -12,6 +12,9 @@ Layout/EmptyLinesAroundModuleBody:
 Layout/EmptyLinesAroundClassBody:
   EnforcedStyle: empty_lines
 
+# More readability
+Naming/VariableNumber:
+  EnforcedStyle: snake_case
 
 # No, I like immediately knowing that something is a set of mutually exclusive
 # paths because it is a `case` statement rather than having to parse `if/else` logic
