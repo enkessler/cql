@@ -1,7 +1,7 @@
 require_relative '../../../environments/rspec_env'
 
 
-RSpec.describe "cql" do
+RSpec.describe 'cql' do
 
   describe 'repo' do
     it 'should not change between queries' do

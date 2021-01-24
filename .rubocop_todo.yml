@@ -103,20 +103,3 @@ Style/MethodMissing:
 Style/NumericPredicate:
   Exclude:
     - 'spec/**/*'
-
-
-# Offense count: 867
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles, ConsistentQuotesInMultiline.
-# SupportedStyles: single_quotes, double_quotes
-Style/StringLiterals:
-  Exclude:
-    - 'testing/rspec/spec/cql_spec.rb'
-    - 'testing/rspec/spec/filter_example_spec.rb'
-    - 'testing/rspec/spec/filter_feature_dsl_spec.rb'
-    - 'testing/rspec/spec/filter_sso_spec.rb'
-    - 'testing/rspec/spec/map_reduce_spec.rb'
-    - 'testing/rspec/spec/multiple_queries_spec.rb'
-    - 'testing/rspec/spec/select_feature_dsl_spec.rb'
-    - 'testing/rspec/spec/select_scen_outline_dsl_spec.rb'
-    - 'testing/rspec/spec/select_scenario_dsl_spec.rb'

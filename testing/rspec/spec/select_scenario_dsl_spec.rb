@@ -1,7 +1,7 @@
 require_relative '../../../environments/rspec_env'
 
 
-RSpec.describe "select" do
+RSpec.describe 'select' do
   describe 'from scenarios' do
 
     it 'should return lines from scenarios' do
@@ -12,7 +12,7 @@ RSpec.describe "select" do
         from scenarios
       end
 
-      expect(result).to eq([{ "source_line" => 6 }, { "source_line" => 11 }, { "source_line" => 16 }, { "source_line" => 21 }])
+      expect(result).to eq([{ 'source_line' => 6 }, { 'source_line' => 11 }, { 'source_line' => 16 }, { 'source_line' => 21 }])
     end
 
     it 'should return names from scenarios' do
@@ -23,8 +23,8 @@ RSpec.describe "select" do
         from scenarios
       end
 
-      expect(result).to eq([{ "name" => "Testing the slurping" }, { "name" => "Testing again" },
-                            { "name" => "Testing yet again" }, { "name" => "Testing yet again part 2" }])
+      expect(result).to eq([{ 'name' => 'Testing the slurping' }, { 'name' => 'Testing again' },
+                            { 'name' => 'Testing yet again' }, { 'name' => 'Testing yet again part 2' }])
     end
 
     # it 'should return types from scenarios' do
@@ -97,10 +97,10 @@ RSpec.describe "select" do
         from scenarios
       end
 
-      expect(result).to eq([{ "name" => "Testing the slurping", "source_line" => 6 },
-                            { "name" => "Testing again", "source_line" => 11 },
-                            { "name" => "Testing yet again", "source_line" => 16 },
-                            { "name" => "Testing yet again part 2", "source_line" => 21 }])
+      expect(result).to eq([{ 'name' => 'Testing the slurping', 'source_line' => 6 },
+                            { 'name' => 'Testing again', 'source_line' => 11 },
+                            { 'name' => 'Testing yet again', 'source_line' => 16 },
+                            { 'name' => 'Testing yet again part 2', 'source_line' => 21 }])
     end
 
     it 'should return things from multiple feature files' do
@@ -111,10 +111,10 @@ RSpec.describe "select" do
         from scenarios
       end
 
-      expect(result).to match_array([{ "name" => "Has a table" }, { "name" => "Testing the slurping 1" },
-                                     { "name" => "Testing the slurping not to be found" }, { "name" => "Testing the slurping 2" },
-                                     { "name" => "Testing the slurping 3" }, { "name" => "Testing again" },
-                                     { "name" => "Testing yet again" }, { "name" => "Testing yet again part 2" }])
+      expect(result).to match_array([{ 'name' => 'Has a table' }, { 'name' => 'Testing the slurping 1' },
+                                     { 'name' => 'Testing the slurping not to be found' }, { 'name' => 'Testing the slurping 2' },
+                                     { 'name' => 'Testing the slurping 3' }, { 'name' => 'Testing again' },
+                                     { 'name' => 'Testing yet again' }, { 'name' => 'Testing yet again part 2' }])
     end
 
     it 'should get multiple scenarios as a list of maps' do
@@ -124,8 +124,8 @@ RSpec.describe "select" do
         from scenarios
       end
 
-      expect(result).to eq([{ 'source_line' => 6, 'name' => "Testing the slurping" }, { 'source_line' => 11, 'name' => "Testing again" },
-                            { 'source_line' => 16, 'name' => "Testing yet again" }, { 'source_line' => 21, 'name' => "Testing yet again part 2" }])
+      expect(result).to eq([{ 'source_line' => 6, 'name' => 'Testing the slurping' }, { 'source_line' => 11, 'name' => 'Testing again' },
+                            { 'source_line' => 16, 'name' => 'Testing yet again' }, { 'source_line' => 21, 'name' => 'Testing yet again part 2' }])
     end
 
   end

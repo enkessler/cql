@@ -2,7 +2,7 @@ require_relative '../../../environments/rspec_env'
 
 
 # rubocop:disable Layout/LeadingCommentSpace
-RSpec.describe "cql" do
+RSpec.describe 'cql' do
 
   # describe "file parsing" do
   #   it 'should find the physical files' do

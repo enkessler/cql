@@ -1,7 +1,7 @@
 require_relative '../../../environments/rspec_env'
 
 
-RSpec.describe "select" do
+RSpec.describe 'select' do
   describe 'from scenario_outlines' do
 
     # it 'should return tags from scenario outlines' do
@@ -44,7 +44,7 @@ RSpec.describe "select" do
         from outlines
       end
 
-      expect(result).to eq([{ "source_line" => 3 }])
+      expect(result).to eq([{ 'source_line' => 3 }])
     end
 
     it 'should return names from scenario outlines' do
@@ -55,7 +55,7 @@ RSpec.describe "select" do
         from outlines
       end
 
-      expect(result).to eq([{ "name" => "An Outline" }])
+      expect(result).to eq([{ 'name' => 'An Outline' }])
     end
 
     # it 'should return types from scenario outlines' do
@@ -131,16 +131,16 @@ RSpec.describe "select" do
         from outlines
       end
 
-      expect(result).to match_array([{ "name" => "Has a table" },
-                                     { "name" => "Next" },
-                                     { "name" => "Another" },
-                                     { "name" => "Blah" },
-                                     { "name" => "Another" },
-                                     { "name" => "Has a table hmmm" },
-                                     { "name" => "Next" },
-                                     { "name" => "Another" },
-                                     { "name" => "Blah blah" },
-                                     { "name" => "Another" }])
+      expect(result).to match_array([{ 'name' => 'Has a table' },
+                                     { 'name' => 'Next' },
+                                     { 'name' => 'Another' },
+                                     { 'name' => 'Blah' },
+                                     { 'name' => 'Another' },
+                                     { 'name' => 'Has a table hmmm' },
+                                     { 'name' => 'Next' },
+                                     { 'name' => 'Another' },
+                                     { 'name' => 'Blah blah' },
+                                     { 'name' => 'Another' }])
     end
 
     it 'should return multiple scenario outlines as a list of maps' do

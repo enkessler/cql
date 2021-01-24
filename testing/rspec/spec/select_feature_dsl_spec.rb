@@ -1,8 +1,8 @@
 require_relative '../../../environments/rspec_env'
 
 
-RSpec.describe "select" do
-  describe "from features" do
+RSpec.describe 'select' do
+  describe 'from features' do
 
     it 'should return names from features' do
       gs = CQL::Repository.new("#{CQL_FEATURE_FIXTURES_DIRECTORY}/scenario/simple")
@@ -12,8 +12,8 @@ RSpec.describe "select" do
         from features
       end
 
-      expect(result).to match_array([{ "name" => "Simple" }, { "name" => "Test Feature" },
-                                     { "name" => "Test2 Feature" }, { "name" => "Test3 Feature" }])
+      expect(result).to match_array([{ 'name' => 'Simple' }, { 'name' => 'Test Feature' },
+                                     { 'name' => 'Test2 Feature' }, { 'name' => 'Test3 Feature' }])
     end
 
     # it 'should return descriptions from features' do
@@ -79,9 +79,9 @@ RSpec.describe "select" do
         from features
       end
 
-      expect(result).to match_array([{ "name" => "f1_1_tag" },
-                                     { "name" => "f2_2_tags" },
-                                     { "name" => "f3_3_tags" }])
+      expect(result).to match_array([{ 'name' => 'f1_1_tag' },
+                                     { 'name' => 'f2_2_tags' },
+                                     { 'name' => 'f3_3_tags' }])
     end
 
     it 'should return multiple features as a list of maps' do
@@ -92,9 +92,9 @@ RSpec.describe "select" do
         from features
       end
 
-      expect(result).to match_array([{ "name" => "f1_1_tag" },
-                                     { "name" => "f2_2_tags" },
-                                     { "name" => "f3_3_tags" }])
+      expect(result).to match_array([{ 'name' => 'f1_1_tag' },
+                                     { 'name' => 'f2_2_tags' },
+                                     { 'name' => 'f3_3_tags' }])
     end
 
     # it 'should return ids from features' do
