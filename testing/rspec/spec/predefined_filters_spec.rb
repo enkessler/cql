@@ -28,7 +28,7 @@ RSpec.describe "predefined 'with' filters" do
             with tc eq 2
           end
 
-          expect(result).to eq([{'name' => 'Feature with 2 tags'}])
+          expect(result).to eq([{ 'name' => 'Feature with 2 tags' }])
         end
 
         it 'correctly filters scenarios' do
@@ -50,7 +50,7 @@ RSpec.describe "predefined 'with' filters" do
             with tc eq 2
           end
 
-          expect(result).to eq([{'name' => 'Test with 2 tags'}])
+          expect(result).to eq([{ 'name' => 'Test with 2 tags' }])
         end
 
         it 'correctly filters outlines' do
@@ -75,7 +75,7 @@ RSpec.describe "predefined 'with' filters" do
             with tc eq 2
           end
 
-          expect(result).to eq([{'name' => 'Test with 2 tags'}])
+          expect(result).to eq([{ 'name' => 'Test with 2 tags' }])
         end
 
         it 'correctly filters examples' do
@@ -101,7 +101,7 @@ RSpec.describe "predefined 'with' filters" do
             with tc eq 2
           end
 
-          expect(result).to eq([{'name' => 'Example with 2 tags'}])
+          expect(result).to eq([{ 'name' => 'Example with 2 tags' }])
         end
 
       end
@@ -133,7 +133,7 @@ RSpec.describe "predefined 'with' filters" do
             with lc eq 2
           end
 
-          expect(result).to eq([{'name' => 'Background with 2 steps'}])
+          expect(result).to eq([{ 'name' => 'Background with 2 steps' }])
         end
 
         it 'correctly filters scenarios' do
@@ -155,7 +155,7 @@ RSpec.describe "predefined 'with' filters" do
             with lc eq 2
           end
 
-          expect(result).to eq([{'name' => 'Test with 2 steps'}])
+          expect(result).to eq([{ 'name' => 'Test with 2 steps' }])
         end
 
         it 'correctly filters outlines' do
@@ -177,7 +177,7 @@ RSpec.describe "predefined 'with' filters" do
             with lc eq 2
           end
 
-          expect(result).to eq([{'name' => 'Test with 2 steps'}])
+          expect(result).to eq([{ 'name' => 'Test with 2 steps' }])
         end
 
       end
@@ -206,7 +206,7 @@ RSpec.describe "predefined 'with' filters" do
             with sc eq 2
           end
 
-          expect(result).to eq([{'name' => 'Feature with 2 scenarios'}])
+          expect(result).to eq([{ 'name' => 'Feature with 2 scenarios' }])
         end
 
       end
@@ -241,7 +241,7 @@ RSpec.describe "predefined 'with' filters" do
             with soc eq 2
           end
 
-          expect(result).to eq([{'name' => 'Feature with 2 outlines'}])
+          expect(result).to eq([{ 'name' => 'Feature with 2 outlines' }])
         end
 
       end
@@ -272,7 +272,7 @@ RSpec.describe "predefined 'with' filters" do
             with ssoc eq 2
           end
 
-          expect(result).to eq([{'name' => 'Feature with 2 tests'}])
+          expect(result).to eq([{ 'name' => 'Feature with 2 tests' }])
         end
 
       end

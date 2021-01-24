@@ -26,7 +26,7 @@ RSpec.describe 'a query enhanced model' do
       from models
     end
 
-    expect(result).to eq([{'parent_model' => :foo}])
+    expect(result).to eq([{ 'parent_model' => :foo }])
   end
 
 

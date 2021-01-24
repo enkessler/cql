@@ -11,6 +11,10 @@ Layout/EmptyLinesAroundModuleBody:
   Enabled: false
 Layout/EmptyLinesAroundClassBody:
   EnforcedStyle: empty_lines
+Layout/EmptyLines:
+  Enabled: false
+Layout/EmptyLinesAroundBlockBody:
+  Enabled: false
 
 # More readability
 Naming/VariableNumber:

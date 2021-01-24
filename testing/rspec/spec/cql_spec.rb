@@ -161,9 +161,11 @@ RSpec.describe 'the gem' do
 
     it 'works with CukeModeler 1-3' do
       cuke_modeler_version_limits = @gemspec.dependencies
-                                      .find { |dependency| (dependency.type == :runtime) &&
-                                        (dependency.name == 'cuke_modeler') }
-                                      .requirement.requirements.map(&:join)
+                                            .find do |dependency|
+                                              (dependency.type == :runtime) &&
+                                                (dependency.name == 'cuke_modeler')
+                                            end
+                                            .requirement.requirements.map(&:join)
 
       expect(cuke_modeler_version_limits).to match_array(['>=1.0', '<4.0'])
     end
