@@ -28,14 +28,14 @@ shared_examples_for 'a queriable object' do
   it 'complains if a query is attempted without a query root being set' do
     object.query_root = nil
 
-    expect {
+    expect do
 
       object.query do
         select :model
         from :all
       end
 
-    }.to raise_error(ArgumentError, 'Query cannot be run. No query root has been set.')
+    end.to raise_error(ArgumentError, 'Query cannot be run. No query root has been set.')
   end
 
   it 'starts with a query root' do

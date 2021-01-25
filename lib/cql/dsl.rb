@@ -5,7 +5,7 @@ module CQL
 
 
     # Any undefined method is assumed to mean its String equivalent, thus allowing a more convenient query syntax.
-    def method_missing(method_name)
+    def method_missing(method_name) # rubocop:disable Style/MethodMissing - All it does is make a string. No real risk.
       method_name.to_s
     end
 
