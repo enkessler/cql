@@ -3,6 +3,8 @@ version: '1.0.{build}'
 environment:
   matrix:
 
+    # Note: cuke_modeler 1 and 2 don't support Ruby 3
+
     - RUBY_VERSION: 24
       BUNDLE_GEMFILE: testing/gemfiles/cuke_modeler1.gemfile
     - RUBY_VERSION: 24-x64
@@ -28,6 +30,10 @@ environment:
     - RUBY_VERSION: 25
       BUNDLE_GEMFILE: testing/gemfiles/cuke_modeler3.gemfile
     - RUBY_VERSION: 25-x64
+      BUNDLE_GEMFILE: testing/gemfiles/cuke_modeler3.gemfile
+    - RUBY_VERSION: 30
+      BUNDLE_GEMFILE: testing/gemfiles/cuke_modeler3.gemfile
+    - RUBY_VERSION: 30-x64
       BUNDLE_GEMFILE: testing/gemfiles/cuke_modeler3.gemfile
 
 

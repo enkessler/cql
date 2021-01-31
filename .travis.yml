@@ -10,6 +10,7 @@ rvm:
   - 2.3.3
   - 2.4.0
   - 2.6.0
+  - 3.0.0
   - jruby-9.1.7.0
 
 matrix:
@@ -17,6 +18,12 @@ matrix:
     # Ruby 2.3.x is currently broken on TravisCI for OSX and is no longer a supported Ruby version, anyway.
   - rvm: 2.3.3
     os: osx
+
+    # cuke_modeler 1 and 2 don't support Ruby 3
+  - rvm: 3.0.0
+    gemfile: testing/gemfiles/cuke_modeler1.gemfile
+  - rvm: 3.0.0
+    gemfile: testing/gemfiles/cuke_modeler2.gemfile
 
 
 gemfile:
