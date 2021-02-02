@@ -9,7 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
  - Removed support for Ruby 1.x. This gem only supports Ruby 2.0 and higher.
  - Removed support for `cuke_modeler` 0.x. This gem only supports `cuke_modeler` 1.x and higher.
-
+ - Removed the post-install message because it did not contain any 'useful' information. Thank you for the years of 
+   service.
+ 
 ### Changed
  - No longer including every file in the Git repository as part of the gem. Only the files needed for using the gem (and
    the informative ones like the README) will be packaged into the released gem.

@@ -14,18 +14,8 @@ Gem::Specification.new do |s| # rubocop:disable Metrics/BlockLength - Gemspecs i
   s.email       = ['morrow748@gmail.com']
   s.license     = 'MIT'
   s.homepage    = 'https://github.com/enkessler/cql'
-
   s.platform    = Gem::Platform::RUBY
-  s.post_install_message = %{
-(::) (::) (::) (::) (::) (::) (::) (::) (::) (::) (::) (::) (::) (::) (::)
-
-Thank you for installing cql (Cucumber Query Language)
-
-(::) (::) (::) (::) (::) (::) (::) (::) (::) (::) (::) (::) (::) (::) (::)
-
-}
-
-  s.metadata = {
+  s.metadata    = {
     'bug_tracker_uri'   => 'https://github.com/enkessler/cql/issues',
     'changelog_uri'     => 'https://github.com/enkessler/cql/blob/master/CHANGELOG.md',
     'documentation_uri' => 'https://www.rubydoc.info/gems/cql',
