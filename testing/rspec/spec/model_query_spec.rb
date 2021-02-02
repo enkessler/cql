@@ -41,7 +41,8 @@ RSpec.describe 'a query enhanced model' do
     # Need to make sure that the needed #initialize patching does not break the normal
     # behavior of the class.
     it 'still initializes normally' do
-      expect { clazz.new(:not_a_string) }.to raise_error(ArgumentError, 'Can only create models from Strings but was given a Symbol.')
+      expect { clazz.new(:not_a_string) }
+        .to raise_error(ArgumentError, 'Can only create models from Strings but was given a Symbol.')
     end
 
   end

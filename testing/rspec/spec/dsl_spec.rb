@@ -36,7 +36,8 @@ RSpec.describe 'an object that uses the DSL' do
   describe 'clause ordering' do
 
     it 'handles intermixed clauses' do
-      # Clause ordering doesn't matter as long as any given type of clause is ordered correctly with respect to its multiple uses
+      # Clause ordering doesn't matter as long as any given type of clause is ordered
+      # correctly with respect to its multiple uses
 
       gs = CQL::Repository.new("#{CQL_FEATURE_FIXTURES_DIRECTORY}/scenario/simple")
 

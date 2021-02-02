@@ -2,9 +2,9 @@ Then(/^the following values are returned:$/) do |values|
   expected_keys = values.raw.first
   expected_results = values.hashes
 
-  # Protecting against false positives
-  # Key order doesn't matter and Ruby 1.8.7 does not retain hash key ordering, so sorting them for consistency
-  raise('Invalid result set. Attribute names cannot be repeated.') unless expected_keys.sort == expected_results.first.keys.sort
+  # Protecting against false positives caused by duplicate hash keys in the expectations being ignored
+  expect(expected_keys).to match_array(expected_results.first.keys),
+                           'Invalid result set. Attribute names cannot be repeated.'
 
   expected_results.each do |result|
     result.each_pair { |key, value| result[key] = value.to_i if value =~ /^\d+$/ }

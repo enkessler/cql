@@ -25,7 +25,20 @@ Naming/VariableNumber:
 Style/EmptyCaseCondition:
   Enabled: false
 
+# Most people will be looking at the code in a text editor, not a terminal
+Layout/LineLength:
+  Max: 120
+
 # The test code is safe to evaluate
 Security/Eval:
   Exclude:
     - 'testing/**/*'
+
+Metrics/BlockLength:
+  Exclude:
+    # RSpec suites are inherently a bunch of large, nested blocks
+    - 'testing/rspec/spec/**/*'
+
+# Still within understanding as long as other complexity cops aren't triggering
+Metrics/MethodLength:
+  Max: 15

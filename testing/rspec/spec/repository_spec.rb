@@ -29,7 +29,8 @@ RSpec.describe 'CQL::Repository' do
   end
 
   it "complains if can't be made from what it was given" do
-    expect { clazz.new(:some_other_thing) }.to raise_error(ArgumentError, "Don't know how to make a repository from a Symbol")
+    expect { clazz.new(:some_other_thing) }
+      .to raise_error(ArgumentError, "Don't know how to make a repository from a Symbol")
   end
 
   it 'does not modify the repository during a query' do

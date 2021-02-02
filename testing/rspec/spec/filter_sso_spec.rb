@@ -1,6 +1,5 @@
 require_relative '../../../environments/rspec_env'
 
-# rubocop:disable Style/BracesAroundHashParameters
 RSpec.describe 'scenario and outline filters (with)' do
 
 
@@ -196,4 +195,3 @@ RSpec.describe 'scenario and outline filters (with)' do
 
   #  # Example count
 end
-# rubocop:enable Style/BracesAroundHashParameters

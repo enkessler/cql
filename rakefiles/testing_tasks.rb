@@ -1,7 +1,7 @@
 require 'cucumber/rake/task'
 require 'rspec/core/rake_task'
 
-namespace 'cql' do
+namespace 'cql' do # rubocop:disable Metrics/BlockLength - Namespaces inherently have a lot of lines
 
   desc 'Removes the current code coverage data'
   task :clear_coverage do

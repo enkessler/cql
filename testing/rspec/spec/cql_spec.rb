@@ -39,6 +39,26 @@ RSpec.describe 'the gem' do
     expect(@gemspec.homepage).to eq('https://github.com/enkessler/cql')
   end
 
+  it 'has a summary' do
+    text = <<-TEXT
+      A gem providing functionality to query a Cucumber test suite.
+    TEXT
+           .strip.squeeze(' ').delete("\n")
+
+    expect(@gemspec.summary).to eq(text)
+  end
+
+  it 'has a description' do
+    text = <<-TEXT
+      CQL is a domain specific language used for querying a Cucumber (or other Gherkin based) test suite. The
+      goal of CQL is to increase the ease with which useful information can be extracted from a modeled test
+      suite and turned into summarized data or reports.
+    TEXT
+           .strip.squeeze(' ').delete("\n")
+
+    expect(@gemspec.description).to eq(text)
+  end
+
   describe 'license' do
 
     it 'has a current license' do

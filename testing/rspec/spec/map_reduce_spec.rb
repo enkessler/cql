@@ -1,7 +1,6 @@
 require_relative '../../../environments/rspec_env'
 
 
-# rubocop:disable Layout/LeadingCommentSpace
 RSpec.describe 'cql' do
 
   # describe "file parsing" do
@@ -134,4 +133,3 @@ RSpec.describe 'cql' do
   #end
 
 end
-# rubocop:enable Layout/LeadingCommentSpace
