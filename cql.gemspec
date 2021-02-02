@@ -11,7 +11,7 @@ Gem::Specification.new do |s| # rubocop:disable Metrics/BlockLength - Gemspecs i
   s.description = ['CQL is a domain specific language used for querying a Cucumber (or other Gherkin based) test ',
                    'suite. The goal of CQL is to increase the ease with which useful information can be extracted ',
                    'from a modeled test suite and turned into summarized data or reports.'].join
-  s.email       = 'morrow748@gmail.com'
+  s.email       = ['morrow748@gmail.com']
   s.license     = 'MIT'
   s.homepage    = 'https://github.com/enkessler/cql'
 

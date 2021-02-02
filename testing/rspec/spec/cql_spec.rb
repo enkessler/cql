@@ -31,8 +31,16 @@ RSpec.describe 'the gem' do
     expect(@gemspec.require_paths).to match_array(['lib'])
   end
 
-  it 'has a contact email' do
-    expect(@gemspec.email).to eq('morrow748@gmail.com')
+  it 'has a version' do
+    expect(@gemspec.version.version).to eq(CQL::VERSION)
+  end
+
+  it 'lists major authors' do
+    expect(@gemspec.authors).to match_array(['Eric Kessler', 'Jarrod Folino'])
+  end
+
+  it 'has contact emails for active maintainers' do
+    expect(@gemspec.email).to match_array(['morrow748@gmail.com'])
   end
 
   it 'has a homepage' do
