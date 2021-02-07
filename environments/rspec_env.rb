@@ -5,9 +5,9 @@ require_relative 'common_env'
 
 require 'rubygems/mock_gem_ui'
 
+require_relative '../cql_helper'
 require_relative '../testing/cql_test_model'
 require_relative '../testing/model_helper'
-require_relative '../testing/helper_methods'
 require_relative '../testing/rspec/spec/tag_filterable_specs'
 require_relative '../testing/rspec/spec/name_filterable_specs'
 require_relative '../testing/rspec/spec/line_count_filterable_specs'
@@ -26,5 +26,5 @@ RSpec.configure do |config|
   end
 
   config.include CQL::ModelHelper
-  config.include CQL::HelperMethods
+  config.include CQL::CQLHelper
 end

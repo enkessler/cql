@@ -1,12 +1,39 @@
-require 'rubocop/rake_task'
-
-namespace 'cql' do
+namespace 'cql' do # rubocop:disable Metrics/BlockLength - Namespaces inherently have a lot of lines
 
   desc 'Generate a Rubocop report for the project'
-  RuboCop::RakeTask.new(:rubocop) do |task|
-    task.patterns = ['./']
-    task.formatters = ['fuubar', ['html', '--out', 'rubocop.html']]
-    task.options = ['-S', '-D']
+  task :rubocop do
+    puts Rainbow('Checking for code style violations...').cyan
+
+    completed_process = CQL::CQLHelper.run_command(['bundle', 'exec', 'rubocop',
+                                                    '--format', 'fuubar',
+                                                    '--format', 'html', '--out', "#{ENV['CQL_REPORT_FOLDER']}/rubocop.html", # rubocop:disable Metrics/LineLength
+                                                    '-S', '-D'])
+
+    raise(Rainbow('RuboCop found violations').red) unless completed_process.exit_code.zero?
+
+    puts Rainbow('RuboCop is pleased.').green
+  end
+
+  desc 'Check for outdated dependencies'
+  task :check_dependencies do
+    puts Rainbow('Checking for out of date dependencies...').cyan
+    completed_process = CQL::CQLHelper.run_command(['bundle', 'outdated', 'cuke_modeler', '--filter-major'])
+
+    raise Rainbow('Some dependencies are out of date').red unless completed_process.exit_code.zero?
+
+    puts Rainbow('All dependencies up to date').green
+  end
+
+  desc 'Check pretty much everything'
+  task :full_check do
+    puts Rainbow('Performing full check...').cyan
+
+    Rake::Task['cql:test_everything'].invoke
+    Rake::Task['cql:check_documentation'].invoke
+    Rake::Task['cql:rubocop'].invoke
+    Rake::Task['cql:check_dependencies'].invoke
+
+    puts Rainbow('All is well. :)').green
   end
 
 end

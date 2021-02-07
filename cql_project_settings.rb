@@ -1,0 +1,5 @@
+ENV['CQL_REPORT_FOLDER'] ||= "#{__dir__}/reports"
+ENV['CQL_RSPEC_REPORT_NAME'] ||= 'rspec_report'
+ENV['CQL_RSPEC_REPORT_HTML_FILE'] ||= "#{ENV['CQL_RSPEC_REPORT_NAME']}.html"
+ENV['CQL_CUCUMBER_REPORT_NAME'] ||= 'cucumber_report'
+ENV['CQL_CUCUMBER_REPORT_HTML_FILE'] ||= "#{ENV['CQL_CUCUMBER_REPORT_NAME']}.html"

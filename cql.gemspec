@@ -27,6 +27,7 @@ Gem::Specification.new do |s| # rubocop:disable Metrics/BlockLength - Gemspecs i
 
   s.add_runtime_dependency 'cuke_modeler', '>= 1.0', '< 4.0'
 
+  s.add_development_dependency 'childprocess', '< 5.0'
   s.add_development_dependency 'rake', '< 13.0.0'
   s.add_development_dependency 'rspec', '~> 3.0'
   s.add_development_dependency 'cucumber', '< 5.0.0'

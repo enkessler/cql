@@ -24,4 +24,4 @@ _yardoc
 doc/
 
 Gemfile.lock
-rubocop.html
+reports/*

@@ -1,0 +1,7 @@
+<% require_relative 'cql_project_settings' %>
+
+--tag ~@wip
+--pattern "testing/rspec/spec/**/*_spec.rb"
+--force-color
+--format html --out <%= ENV['CQL_REPORT_FOLDER'] %>/<%= ENV['CQL_RSPEC_REPORT_HTML_FILE'] %>
+--format progress

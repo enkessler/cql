@@ -28,7 +28,7 @@ Metrics/PerceivedComplexity:
   Exclude:
     - 'lib/**/*'
 
-Layout/LineLength:
+Metrics/LineLength:
   Exclude:
     - 'lib/**/*'
     - 'testing/rspec/spec/filter_example_spec.rb'

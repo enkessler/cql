@@ -2,16 +2,11 @@ namespace 'cql' do
 
   desc 'Check that things look good before trying to release'
   task :prerelease_check do
-    begin
-      Rake::Task['cql:test_everything'].invoke
-      Rake::Task['cql:check_documentation'].invoke
-      Rake::Task['cql:rubocop'].invoke
-    rescue => e # rubocop:disable Lint/RescueWithoutErrorClass
-      puts Rainbow("Something isn't right!").red
-      raise e
-    end
+    puts Rainbow('Checking that gem is in a good, releasable state...').cyan
 
-    puts Rainbow('All is well. :)').green
+    Rake::Task['cql:full_check'].invoke
+
+    puts Rainbow("I'd ship it. B)").green
   end
 
 end

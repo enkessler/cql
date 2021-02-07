@@ -9,7 +9,7 @@ interactive prompt that will allow you to experiment. For environments that can'
 `bundle exec rake cql:test_everything` will run all of the tests for the project. To run just the RSpec tests 
 or Cucumber tests specifically:
  - `bundle exec rake cql:run_rspec_tests` or
-   `bundle exec rspec --tag ~@wip --pattern "testing/rspec/spec/**/*_spec.rb" --force-color`
+   `bundle exec rspec`
  - `bundle exec rake cql:run_cucumber_tests` or
    `bundle exec cucumber`
 
