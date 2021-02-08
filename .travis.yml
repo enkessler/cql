@@ -7,15 +7,17 @@ dist: trusty
 
 language: ruby
 rvm:
-  - 2.3.3
-  - 2.4.0
-  - 2.6.0
+  - 2.0
+  - 2.2
+  - 2.3
+  - 2.5
+  - 2.7
   - jruby-9.1.7.0
 
 matrix:
   exclude:
     # Ruby 2.3.x is currently broken on TravisCI for OSX and is no longer a supported Ruby version, anyway.
-  - rvm: 2.3.3
+  - rvm: 2.3
     os: osx
 
 
