@@ -1,4 +1,4 @@
-<% require_relative 'cql_project_settings' %>
+<% require "#{__dir__}/cql_project_settings" %>
 
 --tag ~@wip
 --pattern "testing/rspec/spec/**/*_spec.rb"
