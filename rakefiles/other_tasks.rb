@@ -1,4 +1,4 @@
-namespace 'cql' do # rubocop:disable Metrics/BlockLength - Namespaces inherently have a lot of lines
+namespace 'cql' do
 
   desc 'Generate a Rubocop report for the project'
   task :rubocop do
@@ -31,7 +31,6 @@ namespace 'cql' do # rubocop:disable Metrics/BlockLength - Namespaces inherently
     Rake::Task['cql:test_everything'].invoke
     Rake::Task['cql:check_documentation'].invoke
     Rake::Task['cql:rubocop'].invoke
-    Rake::Task['cql:check_dependencies'].invoke
 
     puts Rainbow('All is well. :)').green
   end
