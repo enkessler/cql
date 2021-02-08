@@ -1,4 +1,5 @@
-  <% require_relative 'cql_project_settings' %>
+  <% # Can't use 'require_relative' because it won't work on JRuby inside of an ERB file %>
+  <% require "#{__dir__}/cql_project_settings" %>
   <% FileUtils.mkdir(ENV['CQL_REPORT_FOLDER']) unless File.exist?(ENV['CQL_REPORT_FOLDER'])%>
   <% cucumber_major_version = Gem.loaded_specs['cucumber'].version.version.match(/^(\d+)\./)[1].to_i %>
 

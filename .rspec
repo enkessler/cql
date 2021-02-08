@@ -1,3 +1,4 @@
+<% # Can't use 'require_relative' because it won't work on JRuby inside of an ERB file %>
 <% require "#{__dir__}/cql_project_settings" %>
 
 --tag ~@wip
