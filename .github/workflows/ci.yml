@@ -43,9 +43,9 @@ jobs:
       - name: Check LCOV file
         run: less ./reports/coverage/lcov/lcov.info
       - name: Check JSON file
-      - run: less ./reports/coverage/.last_run.json
+        run: less ./reports/coverage/.last_run.json
       - name: Check Gemfile file
-      - run: less Gemfile    # Sanity check
+        run: less Gemfile    # Sanity check
       - name: Push code coverage to Coveralls (conditional)
         uses: coverallsapp/github-action@master
         with:
