@@ -46,6 +46,8 @@ jobs:
         run: less ./reports/coverage/.last_run.json
       - name: Check Gemfile file
         run: less Gemfile    # Sanity check
+      - name: Check Gem lockfile
+        run: less Gemfile.lock
       - name: Push code coverage to Coveralls (conditional)
         uses: coverallsapp/github-action@master
         with:
