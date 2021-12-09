@@ -33,7 +33,7 @@ Gem::Specification.new do |s| # rubocop:disable Metrics/BlockLength - Gemspecs i
   s.add_development_dependency 'rspec', '~> 3.0'
   s.add_development_dependency 'cucumber', '< 5.0.0'
   s.add_development_dependency 'simplecov', '< 1.0.0'
-  s.add_development_dependency 'coveralls', '< 1.0.0'
+  s.add_development_dependency 'simplecov-lcov', '< 1.0'
   s.add_development_dependency 'bundler', '< 3.0'
   s.add_development_dependency 'rainbow', '< 4.0.0'
   s.add_development_dependency 'yard', '< 1.0'

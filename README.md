@@ -8,8 +8,7 @@ User stuff:
 [![Yard Docs](http://img.shields.io/badge/Documentation-API-blue.svg)](https://www.rubydoc.info/gems/cql)
 
 Developer stuff:
-[![Build Status](https://travis-ci.org/enkessler/cql.svg?branch=master)](https://travis-ci.org/enkessler/cql)
-[![Build status](https://ci.appveyor.com/api/projects/status/ia3t0tkyj4tuobq8/branch/master?svg=true)](https://ci.appveyor.com/project/enkessler/cql)
+[![Build Status](https://github.com/enkessler/cql/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/enkessler/cql/actions/workflows/ci.yml?query=branch%3Amaster)
 [![Coverage Status](https://coveralls.io/repos/github/enkessler/cql/badge.svg?branch=master)](https://coveralls.io/github/enkessler/cql?branch=master)
 [![Maintainability](https://api.codeclimate.com/v1/badges/a469e37db8e67c1c989b/maintainability)](https://codeclimate.com/github/enkessler/cql/maintainability)
 [![Inline docs](http://inch-ci.org/github/enkessler/cql.svg?branch=master)](https://inch-ci.org/github/enkessler/cql)
