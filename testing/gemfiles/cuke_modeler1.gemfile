@@ -7,6 +7,10 @@ if RUBY_VERSION =~ /^2\.[23456789]/
   gem 'test-unit'
 end
 
+if RUBY_VERSION =~ /^2\.[012]/
+  gem 'childprocess', '< 2.0' # Requires Ruby 2.3+ after this point
+end
+
 # Cucumber 4.x uses the `cucumber-gherkin` gem, which is incompatible with
 # the `gherkin` gem, upon which this version of the `cuke_modeler` gem depends
 gem 'cucumber', '< 4.0'
