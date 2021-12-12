@@ -1,8 +1,10 @@
 TODO: Make DSL blocks work more like regular Ruby (e.g. allow symbol keys instead of only string keys in clauses that use hashes)
-TODO - Fix RuboCop violations
-TODO - Rewrite inline method/class/etc documentation so that it is more YARD-style and useful (e.g. listed method parameters)
-TODO - Find a place to host the feature files as documentation
-     - and then organize them better for said hosting/presentation
-todo - Change clauses to target based on final attribute names (i.e. after 'as' clause) instead of original attribute name (which may contain duplicate selections resulting in ambiguity)
-todo - Possible new feature: 'order_by' clause. Would allow ordering of the results set based on an attribute (i.e. select target) and could take a block for sorting (probably passed right on to Ruby's Array sorting method). No real need for it yet but could be a useful exercise for teaching someone.
-todo - Possible new feature: 'from'-ing an arbitrary collection of models instead of a model tree. Maybe the user already built a mode lset wit ha previous query and wants to perform queries on that instead of making a single, complex query? Query chaining?
+TODO: Fix RuboCop violations
+TODO: Rewrite inline method/class/etc documentation so that it is more YARD-style and useful (e.g. listed method parameters)
+TODO: Find a place to host the feature files as documentation
+       - and then organize them better for said hosting/presentation
+TODO: Change clauses to target based on final attribute names (i.e. after 'as' clause) instead of original attribute name (which may contain duplicate selections resulting in ambiguity)
+TODO: Possible new feature: 'order_by' clause. Would allow ordering of the results set based on an attribute (i.e. select target) and could take a block for sorting (probably passed right on to Ruby's Array sorting method). No real need for it yet but could be a useful exercise for teaching someone.
+TODO: Possible new feature: 'from'-ing an arbitrary collection of models instead of a model tree. Maybe the user already built a mode lset wit ha previous query and wants to perform queries on that instead of making a single, complex query? Query chaining?
+TODO: Rewrite the feature file scenarios such that they use their own test specific feature files instead of setting up a large suite in the background
+TODO: Add warning with as/transform clauses if targeting an attribute that wasn't selected (e.g. 'select foo ; as bar => "there is no bar"')
