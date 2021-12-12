@@ -1,14 +1,14 @@
-# todo - Rewrite the scenarios such that they use their own test specific feature files instead of setting up a large suite in the background
 Feature: 'with' clause predefined filters
 
-  There are several predefined filters that can be used with the *with* clause. Like regular 'block style' conditions, they can be negated using *without*, used in a targeted fashion, etc.
+  There are several predefined filters that can be used with the *with* clause. Like regular 'block style' conditions,
+  they can be negated using *without*, used in a targeted fashion, etc.
 
   Sample usage:
   ````
   cql_repo.query do
-  select name, tags, description_text
-  from features
-  with tc lt 3
+    select name, tags, description_text
+    from features
+    with tc lt 3
   end
   ````
 
@@ -23,14 +23,16 @@ Feature: 'with' clause predefined filters
 
   The following filters are supported for models that have steps:
 
-  * line - Filters out models whose steps do not include the provided step (keywords and blocks are ignored). Can be a string or regular expression.
+  * line - Filters out models whose steps do not include the provided step (keywords and blocks are ignored). Can be
+           a string or regular expression.
   * lc   - (line count) Filters out models based on the number of steps that they have.
 
   The following filters are supported for feature models:
 
   * sc   - (scenario count) Filters out models based on the number of scenarios that they have.
   * soc  - (scenario outline count) Filters out models based on the number of outlines that they have.
-  * ssoc - (scenario and scenario outline count) Filters out models based on the total number of scenarios and outlines that they have.
+  * ssoc - (scenario and scenario outline count) Filters out models based on the total number of scenarios and
+           outlines that they have.
 
   For count based filters, the following operators are available:
 

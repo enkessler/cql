@@ -1,7 +1,10 @@
-# todo - Rewrite the scenarios such that they use their own test specific feature files instead of setting up a large suite in the background
 Feature: 'with' clause
 
-  The *with* clause specifies filter conditions that will reduce the number of things targeted by the *from* clause. The *with* clause can take one or more blocks that will filter out any object for which the block does not evaluate to true (using 'without' instead of 'with' will have the opposite effect). Alternatively, mappings of specific *from* targets to their respective filtering blocks can be provided. The *with* clause can also take predefined filters (see corresponding documentation).
+  The *with* clause specifies filter conditions that will reduce the number of things targeted by the *from* clause.
+  The *with* clause can take one or more blocks that will filter out any object for which the block does not evaluate
+  to true (using 'without' instead of 'with' will have the opposite effect). Alternatively, mappings of specific
+  *from* targets to their respective filtering blocks can be provided. The *with* clause can also take predefined
+  filters (see corresponding documentation).
 
   Sample usage:
   ````
@@ -12,7 +15,8 @@ Feature: 'with' clause
   end
   ````
 
-  This clause can be repeated multiple times. The arguments for successive clauses are simply added to the previous arguments.
+  This clause can be repeated multiple times. The arguments for successive clauses are simply added to the previous
+  arguments.
 
 
   Background: A sample Cucumber suite

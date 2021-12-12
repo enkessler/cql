@@ -1,6 +1,8 @@
 Feature: 'from' clause
 
-  The *from* clause specifies what type of models from which the *select* clause will gather its values. The *from* clause can take class objects defined in CukeModeler as well as shorthand versions thereof. The clause can also be given a special identifier in order to gather values from all models instead of specific model types.
+  The *from* clause specifies what type of models from which the *select* clause will gather its values. The *from*
+  clause can take class objects defined in CukeModeler as well as shorthand versions thereof. The clause can also be
+  given a special identifier in order to gather values from all models instead of specific model types.
 
   The following are some example values:
 
@@ -18,7 +20,8 @@ Feature: 'from' clause
   end
   ````
 
-  This clause can be repeated multiple times. The arguments for successive clauses are simply added to the previous arguments.
+  This clause can be repeated multiple times. The arguments for successive clauses are simply added to the previous
+  arguments.
 
 
   Background: A sample Cucumber suite
@@ -95,7 +98,8 @@ Feature: 'from' clause
 
   Scenario: Using the 'from' clause multiple times
 
-  Note: Selecting from different types of model should be done with care since problems can occur if the attributes specified by the 'select' clause do not exist on all of the models specified by the 'from' clause
+  Note: Selecting from different types of model should be done with care since problems can occur if the attributes
+  specified by the 'select' clause do not exist on all of the models specified by the 'from' clause
 
     When the following query is executed:
       """

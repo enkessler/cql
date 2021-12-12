@@ -1,6 +1,8 @@
 Feature: 'transform' clause
 
-  The *transform* clause allows you to change the values of the attributes specified by the *select* clause after they are gathered. Value transforming can be done as a list of transformation blocks that are applied in order or as a mapping of specific keys and their transformations.
+  The *transform* clause allows you to change the values of the attributes specified by the *select* clause after
+  they are gathered. Value transforming can be done as a list of transformation blocks that are applied in order or
+  as a mapping of specific keys and their transformations.
 
   Sample usage:
   ````
@@ -13,7 +15,10 @@ Feature: 'transform' clause
 
   This will return a list of all of the feature names but with all of their names upcased.
 
-  This clause can be repeated multiple times. When using lists of transforms, the arguments for successive clauses are simply added to the previous arguments. When using mapped transforms, the mappings are likewise combined. If the same key is mapped more than once, the mappings are tracked separately such that they can be applied to different instances of attribute retrieval (see examples below).
+  This clause can be repeated multiple times. When using lists of transforms, the arguments for successive clauses
+  are simply added to the previous arguments. When using mapped transforms, the mappings are likewise combined. If
+  the same key is mapped more than once, the mappings are tracked separately such that they can be applied to
+  different instances of attribute retrieval (see examples below).
 
   Background: A sample Cucumber suite
     Given a repository to query
@@ -127,7 +132,8 @@ Feature: 'transform' clause
 
   Reminder: Duplicate attribute selection should be used in conjunction with the 'as' clause.
 
-  Sometimes you may want to select the same attribute multiple times and perform multiple different transformations on it. This can be done with both set transforming and selective transforming.
+  Sometimes you may want to select the same attribute multiple times and perform multiple different transformations
+  on it. This can be done with both set transforming and selective transforming.
 
     When the following query is executed:
       """

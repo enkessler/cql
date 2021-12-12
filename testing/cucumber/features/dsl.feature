@@ -1,6 +1,7 @@
 Feature: DSL
 
-  The cql gem uses a DSL to specify queries on a repository object that holds the models which represent a Cucumber test suite. The DSL can query for any attribute that is available on the underlying models.
+  The cql gem uses a DSL to specify queries on a repository object that holds the models which represent a Cucumber
+  test suite. The DSL can query for any attribute that is available on the underlying models.
 
   Sample usage:
   ````
@@ -10,13 +11,17 @@ Feature: DSL
   end
   ````
 
-  Query results are returned as a list of attribute mappings for all of the models found in the repository. The sample query above might return:
+  Query results are returned as a list of attribute mappings for all of the models found in the repository. The sample
+  query above might return:
 
   ````
   [{'name' => 'Feature 1', 'source_line' => 1},
   {'name' => 'Feature 2', 'source_line' => 3},
   {'name' => 'Feature 3', 'source_line' => 10}]
   ````
+
+  For details on how each clause is used, see the corresponding documentation.
+
 
   Background: A sample Cucumber suite
     Given a repository to query
